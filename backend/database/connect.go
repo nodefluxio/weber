@@ -39,6 +39,8 @@ func InitDB() *gorm.DB {
 		return nil
 	}
 
+	DB = db
+
 	return db
 }
 
