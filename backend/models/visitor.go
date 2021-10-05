@@ -1,8 +1,9 @@
 package models
 
 import (
-	"backend/database"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Visitor struct {
@@ -15,36 +16,36 @@ type Visitor struct {
 	UpdatedAt   time.Time
 }
 
-func CreateVisitor(Visitor *Visitor) (err error) {
-	err = database.DB.Create(Visitor).Error
+func CreateVisitor(db *gorm.DB, Visitor *Visitor) (err error) {
+	err = db.Create(Visitor).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func GetVisitors(Visitor *[]Visitor) (err error) {
-	err = database.DB.Find(Visitor).Error
+func GetVisitors(db *gorm.DB, Visitor *[]Visitor) (err error) {
+	err = db.Find(Visitor).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func GetVisitor(Visitor *Visitor, id string) (err error) {
-	err = database.DB.Where("cookie_id = ?", id).First(Visitor).Error
+func GetVisitor(db *gorm.DB, Visitor *Visitor, id string) (err error) {
+	err = db.Where("cookie_id = ?", id).First(Visitor).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func UpdateVisitor(Visitor *Visitor) (err error) {
-	database.DB.Save(Visitor)
+func UpdateVisitor(db *gorm.DB, Visitor *Visitor) (err error) {
+	db.Save(Visitor)
 	return nil
 }
 
-func DeleteVisitor(Visitor *Visitor, id string) (err error) {
-	database.DB.Where("cookie_id = ?", id).Delete(Visitor)
+func DeleteVisitor(db *gorm.DB, Visitor *Visitor, id string) (err error) {
+	db.Where("cookie_id = ?", id).Delete(Visitor)
 	return nil
 }
