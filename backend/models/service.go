@@ -6,6 +6,7 @@ import (
 
 type Service struct {
 	ID               string `gorm:"primary_key"`
+	ApiKey           string
 	Type             string
 	Slug             string
 	Name             string
