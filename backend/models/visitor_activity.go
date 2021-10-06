@@ -6,7 +6,7 @@ import (
 
 type VisitorActivity struct {
 	ID        string `gorm:"primary_key"`
-	CookieID  string
+	SessionID string
 	ServiceID int
 	CreatedAt time.Time
 	UpdatedAt time.Time

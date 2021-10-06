@@ -7,7 +7,7 @@ import (
 )
 
 type Visitor struct {
-	CookieID    string `gorm:"primary_key"`
+	SessionID   string `gorm:"primary_key"`
 	Email       string
 	FullName    string
 	CompanyName string
