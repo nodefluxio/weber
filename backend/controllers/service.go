@@ -1,23 +1,22 @@
 package controllers
 
 import (
+	"backend/database"
 	"backend/models"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Service models.Service
-type Services []models.Service
-
 func CheckServiceType(serviceType string, ctx *gin.Context) {
 	switch serviceType {
 	case "analytic":
-		getServiceAnalytic()
+		getServiceAnalytic(ctx)
 	case "solution":
-		getServiceSolution()
+		getServiceSolution(ctx)
 	case "innovation":
-		getServiceInnovation()
+		getServiceInnovation(ctx)
 	case "":
 		serviceTypeIsNull(ctx)
 	default:
@@ -43,6 +42,22 @@ func serviceTypeIsNotRecognized(ctx *gin.Context) {
 	)
 }
 
-func getServiceAnalytic() {}
-func getServiceSolution() {}
-func getServiceInnovation() {}
+func getServiceAnalytic(ctx *gin.Context) {
+	db := database.GetDB()
+
+	service := &models.Service{}
+	analyticsService := &[]models.APIService{}
+
+	if err := db.Model(service).Where("type = ?", "analytic").Find(analyticsService).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok": true,
+		"message": "Get all analytics service success",
+		"data": &analyticsService,
+	})
+}
+
+func getServiceSolution(ctx *gin.Context) {}
+func getServiceInnovation(ctx *gin.Context) {}
