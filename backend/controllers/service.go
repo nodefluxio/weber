@@ -59,5 +59,20 @@ func getServiceAnalytic(ctx *gin.Context) {
 	})
 }
 
-func getServiceSolution(ctx *gin.Context) {}
+func getServiceSolution(ctx *gin.Context) {
+	db := database.GetDB()
+
+	service := &models.Service{}
+	solutionsService := &[]models.APIService{}
+
+	if err := db.Model(service).Where("type = ?", "solution").Find(solutionsService).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok": true,
+		"message": "Get all solutions service success",
+		"data": &solutionsService,
+	})
+}
 func getServiceInnovation(ctx *gin.Context) {}
