@@ -13,7 +13,7 @@ import (
 var DB *gorm.DB
 
 func GetDB(dsn string) *gorm.DB {
-	// DB = initDB()
+	DB = InitDB()
 	return DB
 }
 
