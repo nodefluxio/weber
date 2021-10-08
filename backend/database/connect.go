@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -34,18 +35,21 @@ func InitDB() *gorm.DB {
 		log.Panic("Error connecting to database: error = %v", err)
 	}
 
+	sqlDB, _ := DB.DB()
+	sqlDB.SetMaxOpenConns(25)
+	sqlDB.SetMaxIdleConns(25)
+	sqlDB.SetConnMaxLifetime(5*time.Minute)	
+
 	fmt.Println("Database connection successfully established!")
 	return DB
 }
 
 func GetDB() *gorm.DB {
-	if DB == nil {
+	sqlDB, _ := DB.DB()
+	
+	if sqlDB.Ping() != nil {
+		fmt.Println(sqlDB.Ping()) // sql: database is closed
 		InitDB()
 	}
 	return DB
-}
-
-func CloseDB(db *gorm.DB) {
-	sqlDB, _ := db.DB()
-	sqlDB.Close()
 }
