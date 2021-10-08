@@ -116,3 +116,71 @@ OR
 }
 ```
 </details>
+
+<details>
+<summary><b>Show a Service by ID</b></summary>
+Return json data about a Service by ID.
+
+- **URL**
+    
+    `/services/:id`
+- **Method**
+
+    `GET`
+- **URL Param**
+
+    **Required**
+
+    `id` type `integer`
+- **Sample Success Response**
+
+    **Code**: 200 OK
+```json
+{
+    "data": {
+        "id": 6,
+        "type": "innovation",
+        "slug": "car-damage",
+        "name": "Car Damage Detection",
+        "short_description": "Car Damage Detection Description",
+        "long_description": "Car Damage Detection Descriptiooooooooooonnnnnnnnnnnnnn",
+        "thumbnail": "car-damage.jpeg",
+        "created_at": "2021-10-08T23:13:28.755551+07:00",
+        "updated_at": "2021-10-08T23:13:28.755551+07:00"
+    },
+    "message": "Get service by id=6 success",
+    "ok": true
+}
+```
+
+- **Data Type Attributes**
+```json
+{
+    "data": [
+        {
+            "id": integer,
+            "type": enum,
+            "slug": string,
+            "name": string,
+            "short_description": string,
+            "long_description": string,
+            "thumbnail": string,
+            "created_at": string,
+            "updated_at": string
+        }
+    ],
+    "message": string,
+    "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+    **Code**: 404 Not Found
+```json
+{
+    "message": "Record not found",
+    "ok": false
+}
+```
+</details>
