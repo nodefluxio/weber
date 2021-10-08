@@ -12,36 +12,37 @@ import (
 
 var DB *gorm.DB
 
-func GetDB(dsn string) *gorm.DB {
-	DB = InitDB()
-	return DB
-}
-
 func InitDB() *gorm.DB {
 
-	err2 := godotenv.Load()
-	if err2 != nil {
+	err := godotenv.Load()
+	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
+	dbHost := os.Getenv("DB_HOST")
 	dbUsername := os.Getenv("DB_USERNAME")
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta", dbHost, dbUsername, dbPassword, dbName, dbPort)
 
-	var err error
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s "+
+	"port=%s sslmode=disable TimeZone=Asia/Jakarta",
+	dbHost, dbUsername, dbPassword, dbName, dbPort)
 
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		fmt.Println("Error connecting to database: error = %v", err)
-		return nil
+		log.Panic("Error connecting to database: error = %v", err)
 	}
 
-	DB = db
+	fmt.Println("Database connection successfully established!")
+	return DB
+}
 
-	return db
+func GetDB() *gorm.DB {
+	if DB == nil {
+		InitDB()
+	}
+	return DB
 }
 
 func CloseDB(db *gorm.DB) {
