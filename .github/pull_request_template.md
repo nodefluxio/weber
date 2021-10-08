@@ -26,7 +26,7 @@ Please check the type of change your PR introduces:
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] I have added necessary documentation (if appropriate)
 - [ ] Any dependent changes have been merged and published in downstream modules
-- [ ] I have filled the `[Unreleased]` [Changelog](https://gitlab.com/nodefluxio/fire/blaze/blob/master/CHANGELOG.md)
+- [ ] I have filled the `[Unreleased]` [Changelog](https://github.com/nodefluxio/weber/blob/main/CHANGELOG.md
 
 ## Security Pentester API Checklist
 - [ ] IDOR
