@@ -42,7 +42,7 @@ Return json data about all Services by type.
 
 - **URL**
     
-    `services?type=`
+    `/services?type=`
 - **Method**
 
     `GET`
@@ -77,6 +77,28 @@ Return json data about all Services by type.
     "ok": true
 }
 ```
+
+- **Data Type Attributes**
+```json
+{
+    "data": [
+        {
+            "id": integer,
+            "type": enum,
+            "slug": string,
+            "name": string,
+            "short_description": string,
+            "long_description": string,
+            "thumbnail": string,
+            "created_at": string,
+            "updated_at": string
+        }
+    ],
+    "message": string,
+    "ok": boolean
+}
+```
+
 - **Sample Error Response**
 
     **Code**: 400 Bad Request
