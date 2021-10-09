@@ -7,13 +7,14 @@ import (
 )
 
 type Visitor struct {
-	SessionID   string `gorm:"primary_key"`
-	Email       string
-	FullName    string
-	CompanyName string
-	JobTitle    string
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	SessionID string    `gorm:"primary_key" json:"session_id"`
+	Email     string    `json:"email" validate:"required,email"`
+	FullName  string    `json:"full_name" validate:"required,min=2,max=255"`
+	Company   string    `json:"company" validate:"required,min=2,max=255"`
+	JobTitle  string    `json:"job_title" validate:"required,min=2,max=255"`
+	Industry  string    `json:"industry" validate:"required,min=2,max=255"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 func CreateVisitor(db *gorm.DB, Visitor *Visitor) (err error) {
@@ -33,7 +34,7 @@ func GetVisitors(db *gorm.DB, Visitor *[]Visitor) (err error) {
 }
 
 func GetVisitor(db *gorm.DB, Visitor *Visitor, id string) (err error) {
-	err = db.Where("cookie_id = ?", id).First(Visitor).Error
+	err = db.Where("session_id = ?", id).First(Visitor).Error
 	if err != nil {
 		return err
 	}
@@ -46,6 +47,6 @@ func UpdateVisitor(db *gorm.DB, Visitor *Visitor) (err error) {
 }
 
 func DeleteVisitor(db *gorm.DB, Visitor *Visitor, id string) (err error) {
-	db.Where("cookie_id = ?", id).Delete(Visitor)
+	db.Where("session_id = ?", id).Delete(Visitor)
 	return nil
 }
