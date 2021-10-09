@@ -1,6 +1,7 @@
 # Weber Backend
 
-Backend REST API service for weber, Nodeflux Demo Application.
+Backend REST API service for weber, Nodeflux Demo Application.  
+ERD: https://dbdiagram.io/d/614d6c6b825b5b0146113ba7
 
 ## Getting Started
 
