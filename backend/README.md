@@ -20,7 +20,7 @@ more details about dependencies see [go.mod &rarr;](https://github.com/nodefluxi
         ```sh
         cd backend/
         ```
-- Copy or rename file `.env.example` to `env`.
+- Copy or rename file `.env.example` to `.env`.
 - Edit the `.env` to your desire database credentials.
 
 ### Running with Docker
