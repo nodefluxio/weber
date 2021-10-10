@@ -1,0 +1,32 @@
+# Development Environment
+version: "3.9"
+services:
+  postgres:
+    image: 'postgres'
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=weber
+    ports:
+      - '5432:5432'
+    volumes:
+      - weberdb:/var/lib/postgresql/data
+  weber_dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=weber
+      - DB_HOST=postgres
+      - DB_PORT=5432
+    depends_on:
+      - postgres
+    ports:
+      - '8080:8080'
+
+volumes:
+  weberdb:
