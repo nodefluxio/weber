@@ -28,7 +28,7 @@ App will be available on http://localhost:3000
 
 ```sh
 cd frontend
-docker build -t <your_username>/weber-frontend-dev -f Dockerfile.dev .
+docker build -t <your_username>/weber-frontend-dev -f dev.Dockerfile .
 docker run -p 3000:3000 <your_username>/weber-frontend-dev
 ```
 
