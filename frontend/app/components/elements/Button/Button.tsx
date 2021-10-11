@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 import styles from "./Button.module.scss";
+import { colorChoices } from "../../../types/elements";
 
 type Props = {
   children: ReactNode;
-  color: "primary"|"secondary";
+  color: colorChoices;
   href?: string;
 };
 
