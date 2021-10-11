@@ -161,6 +161,17 @@ Create a visitor and generate the session id.
 }
 ```
 
+- **Request Payload Data Type Attributes**
+```json
+{
+  "full_name": string,
+  "email": string,
+  "company": string,
+  "job_title": string,
+  "industry": string
+}
+```
+
 - **Sample Success Response**
 
   **Code**: 200 OK
@@ -177,7 +188,7 @@ Create a visitor and generate the session id.
 }
 ```
 
-- **Data Type Attributes**
+- **Response Data Type Attributes**
 
 ```json
 {
