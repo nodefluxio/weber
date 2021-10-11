@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 import styles from "./Button.module.scss";
 import { colorChoices } from "../../../types/elements";
 
@@ -8,7 +8,7 @@ type Props = {
   href?: string;
 };
 
-export const Button = ({ children, color, href }: Props) => {
+export const Button = forwardRef(({ children, color, href }: Props, ref) => {
   let tagName = "button";
   if (href != null) {
     tagName = "a";
@@ -23,7 +23,9 @@ export const Button = ({ children, color, href }: Props) => {
 
   return (
     <>
-      <Component {...attributes}>{children}</Component>
+      <Component {...attributes} ref={ref}>
+        {children}
+      </Component>
     </>
   );
-};
+});
