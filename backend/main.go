@@ -1,15 +1,15 @@
 package main
 
 import (
-	"backend/controllers"
 	"backend/database"
+	"backend/utils"
 )
 
 func main() {
 	db := database.InitDB()
 
 	// Init Translation for Validator
-	controllers.InitTranslation()
+	utils.InitTranslation()
 
 	// Migrate
 	database.Migrate(db)

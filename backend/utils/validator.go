@@ -1,4 +1,4 @@
-package controllers
+package utils
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ import (
 
 var (
 	uni      *ut.UniversalTranslator
-	validate *validator.Validate
+	Validate *validator.Validate
 	trans    ut.Translator
 )
 
@@ -21,15 +21,15 @@ func InitTranslation() {
 	en := en.New()
 	uni = ut.New(en, en)
 	trans, _ = uni.GetTranslator("en")
-	validate = validator.New()
-	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+	Validate = validator.New()
+	Validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
 		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
 		if name == "-" {
 			return ""
 		}
 		return name
 	})
-	en_translations.RegisterDefaultTranslations(validate, trans)
+	en_translations.RegisterDefaultTranslations(Validate, trans)
 }
 
 func TranslateError(err error) (errs []error) {

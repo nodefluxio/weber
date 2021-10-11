@@ -3,6 +3,7 @@ package controllers
 import (
 	"backend/database"
 	"backend/models"
+	"backend/utils"
 	"fmt"
 	"net/http"
 	"os"
@@ -21,8 +22,8 @@ func CreateVisitor(ctx *gin.Context) {
 	ctx.BindJSON(&visitor)
 
 	// Validate the inputs
-	err := validate.Struct(visitor)
-	errs := TranslateError(err)
+	err := utils.Validate.Struct(visitor)
+	errs := utils.TranslateError(err)
 	if len(errs) > 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": errs[0].Error(), "ok": false})
 		return
