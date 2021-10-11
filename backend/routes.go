@@ -14,7 +14,9 @@ func SetupRouter() *gin.Engine {
 		c.JSON(http.StatusOK, "pong")
 	})
 
-	r.POST("/visitors", controllers.CreateVisitor)
-
+	visitors := r.Group("/visitors")
+	{
+		visitors.POST("", controllers.CreateVisitor)
+	}
 	return r
 }
