@@ -10,8 +10,13 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	r.GET("ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, "pong")
+	r.GET("ping", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, "pong")
+	})
+
+	r.GET("/services", func(ctx *gin.Context) {
+		serviceType := ctx.Query("type")
+		controllers.CheckServiceType(serviceType, ctx)
 	})
 
 	visitors := r.Group("/visitors")
