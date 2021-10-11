@@ -96,13 +96,6 @@ func getServiceInnovation(ctx *gin.Context) {
 	})
 }
 
-func serviceRecordNotFound(ctx *gin.Context) {
-	ctx.JSON(http.StatusNotFound , gin.H{
-		"ok": false,
-		"message": "Record not found",
-	})
-}
-
 func GetServiceById(serviceId int, ctx *gin.Context) {
 	db := database.GetDB()
 
@@ -111,7 +104,10 @@ func GetServiceById(serviceId int, ctx *gin.Context) {
 
 	if err := db.Model(service).First(&apiService, "id = ?", serviceId).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			serviceRecordNotFound(ctx)
+			ctx.JSON(http.StatusNotFound , gin.H{
+				"ok": false,
+				"message": "Service not found",
+			})
 			return
 		}
 	}
