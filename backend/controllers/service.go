@@ -3,10 +3,13 @@ package controllers
 import (
 	"backend/database"
 	"backend/models"
+	"errors"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func CheckServiceType(serviceType string, ctx *gin.Context) {
@@ -75,6 +78,7 @@ func getServiceSolution(ctx *gin.Context) {
 		"data": &solutionsService,
 	})
 }
+
 func getServiceInnovation(ctx *gin.Context) {
 	db := database.GetDB()
 
@@ -90,5 +94,28 @@ func getServiceInnovation(ctx *gin.Context) {
 		"message": "Get all innovations service success",
 		"data": &innovationsService,
 	})
+}
 
+func GetServiceById(serviceId int, ctx *gin.Context) {
+	db := database.GetDB()
+
+	service := &models.Service{}
+	apiService := &models.APIService{}
+
+	if err := db.Model(service).First(&apiService, "id = ?", serviceId).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			ctx.JSON(http.StatusNotFound , gin.H{
+				"ok": false,
+				"message": "Service not found",
+			})
+			return
+		}
+	}
+
+	message := fmt.Sprintf("Get service by id=%v success", serviceId)
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok": true,
+		"message": message,
+		"data": &apiService,
+	})
 }
