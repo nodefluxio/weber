@@ -3,6 +3,7 @@ package main
 import (
 	"backend/controllers"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,10 +15,18 @@ func SetupRouter() *gin.Engine {
 		ctx.JSON(http.StatusOK, "pong")
 	})
 
-	r.GET("/services", func(ctx *gin.Context) {
-		serviceType := ctx.Query("type")
-		controllers.CheckServiceType(serviceType, ctx)
-	})
+	services := r.Group("/services") 
+	{
+		services.GET("", func(ctx *gin.Context) {
+			serviceType := ctx.Query("type")
+			controllers.CheckServiceType(serviceType, ctx)
+		})
+
+		services.GET("/:id", func(ctx *gin.Context) {
+			serviceId, _ := strconv.Atoi(ctx.Param("id"))
+			controllers.GetServiceById(serviceId, ctx)
+		})
+	}
 
 	return r
 }
