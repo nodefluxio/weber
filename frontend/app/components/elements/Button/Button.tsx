@@ -1,14 +1,9 @@
 import { ReactNode } from "react";
 import styles from "./Button.module.scss";
 
-enum colorChoices {
-  Primary = "primary",
-  Secondary = "secondary",
-}
-
 type Props = {
   children: ReactNode;
-  color: colorChoices;
+  color: "primary"|"secondary";
   href?: string;
 };
 
