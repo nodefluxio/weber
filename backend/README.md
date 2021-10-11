@@ -84,7 +84,7 @@ Return json data about all Services by type.
     "data": [
         {
             "id": integer,
-            "type": enum,
+            "type": string,
             "slug": string,
             "name": string,
             "short_description": string,
@@ -159,7 +159,7 @@ Return json data about a Service by ID.
     "data": [
         {
             "id": integer,
-            "type": enum,
+            "type": string,
             "slug": string,
             "name": string,
             "short_description": string,
