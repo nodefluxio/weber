@@ -28,5 +28,9 @@ func SetupRouter() *gin.Engine {
 		})
 	}
 
+	visitors := r.Group("/visitors")
+	{
+		visitors.POST("", controllers.CreateVisitor)
+	}
 	return r
 }
