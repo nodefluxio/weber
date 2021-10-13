@@ -12,21 +12,23 @@ const Home = ({ analytics, solutions }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const resAnalytics = await fetch(`http://localhost:8080/services?type=analytic`);
-  const analytics = await resAnalytics.json();
+  try {
+    const resAnalytics = await fetch(`http://localhost:8080/services?type=analytic`);
+    const analytics = await resAnalytics.json();
 
-  const resSolutions = await fetch(`http://localhost:8080/services?type=solution`);
-  const solutions = await resSolutions.json();
+    const resSolutions = await fetch(`http://localhost:8080/services?type=solution`);
+    const solutions = await resSolutions.json()
 
-  if (!analytics || !solutions) {
     return {
-      notFound: true,
+      props: { analytics: analytics.data || [], solutions: solutions.data || []},
     };
-  }
+  } catch (error) {
+    console.error(error);
 
-  return {
-    props: { analytics: analytics.data, solutions: solutions.data },
-  };
+    return {
+      props: { analytics: [], solutions: [] }
+    }
+  }
 };
 
 export default Home;
