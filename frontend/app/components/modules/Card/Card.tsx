@@ -23,7 +23,7 @@ export const Card = ({ img, title, desc, slug }: Props) => {
         <p>{desc}</p>
         <div className={styles.footer}>
           <Link href={"/" + slug} passHref>
-            <Button href={slug} color={colorChoices.Secondary}>
+            <Button type="link" color={colorChoices.Secondary}>
               Try It Now
             </Button>
           </Link>
