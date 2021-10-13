@@ -1,0 +1,38 @@
+$primary: #4c129d;
+$secondary: #45e1b3;
+
+.btn {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: whitesmoke;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-size: inherit;
+  font-family: inherit;
+
+  &:hover,
+  &:focus {
+    background-color: darken(whitesmoke, 10%);
+  }
+
+  &.primary {
+    background-color: $primary;
+    color: whitesmoke;
+
+    &:hover,
+    &:focus {
+      background-color: darken($primary, 10%);
+    }
+  }
+
+  &.secondary {
+    background-color: $secondary;
+    color: $primary;
+
+    &:hover,
+    &:focus {
+      background-color: darken($secondary, 10%);
+    }
+  }
+}

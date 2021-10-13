@@ -1,15 +1,34 @@
-import { MouseEventHandler } from 'react'
+import { ReactNode, MouseEventHandler, forwardRef } from 'react'
+import styles from './Button.module.scss'
+import { colorChoices } from '../../../types/elements'
 
 type Props = {
-  text: string
-  type?: 'button' | 'submit' | 'reset' | undefined
+  children: ReactNode
+  color: colorChoices
+  type?: 'button' | 'submit' | 'reset' | 'link' | undefined
   onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-export const Button = ({ text, type, onClick }: Props) => {
-  return (
-    <button onClick={onClick} type={type}>
-      {text}
-    </button>
-  )
-}
+export const Button = forwardRef(
+  ({ children, color, type, onClick }: Props, ref) => {
+    let tagName = 'button'
+    if (type === 'link') {
+      tagName = 'a'
+    }
+
+    const Component = tagName as React.ElementType
+
+    const attributes = {
+      className: `${styles.btn} ${color && styles[color]}`,
+      type: type === 'link' ? undefined : type,
+      onClick: onClick,
+      ref: ref,
+    }
+
+    return (
+      <>
+        <Component {...attributes}>{children}</Component>
+      </>
+    )
+  }
+)
