@@ -7,12 +7,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-func CheckServiceType(serviceType string, ctx *gin.Context) {
+func GetServicesByType(ctx *gin.Context) {
+	serviceType := ctx.Query("type")
+
 	switch serviceType {
 	case "analytic":
 		getServiceAnalytic(ctx)
@@ -21,28 +24,17 @@ func CheckServiceType(serviceType string, ctx *gin.Context) {
 	case "innovation":
 		getServiceInnovation(ctx)
 	case "":
-		serviceTypeIsNull(ctx)
+		ctx.JSON(http.StatusBadRequest, gin.H {
+			"ok": false,
+			"message":  "Expected 1 argument '?type=' with string value or "+ 
+						"1 argument '/id' with integer value",
+		})
 	default:
-		serviceTypeIsNotRecognized(ctx)
+		ctx.JSON(http.StatusBadRequest, gin.H {
+			"ok": false,
+			"message": "Value of argument '?type=' is not recognized",
+		})
 	}
-}
-
-func serviceTypeIsNull(ctx *gin.Context) {
-	ctx.JSON(http.StatusBadRequest,
-		gin.H {
-			"ok": false,
-			"message": "Expected 1 argument 'type'",
-		},
-	)
-}
-
-func serviceTypeIsNotRecognized(ctx *gin.Context) {
-	ctx.JSON(http.StatusBadRequest,
-		gin.H {
-			"ok": false,
-			"message": "Value of argument 'type' is not recognized",
-		},
-	)
 }
 
 func getServiceAnalytic(ctx *gin.Context) {
@@ -96,13 +88,21 @@ func getServiceInnovation(ctx *gin.Context) {
 	})
 }
 
-func GetServiceById(serviceId int, ctx *gin.Context) {
+func GetServiceById(ctx *gin.Context) {
 	db := database.GetDB()
-
 	service := &models.Service{}
 	apiService := &models.APIService{}
+	serviceId, err := strconv.Atoi(ctx.Param("id"))
 
-	if err := db.Model(service).First(&apiService, "id = ?", serviceId).Error; err != nil {
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest , gin.H{
+			"ok": false,
+			"message": "Expected an integer value from argument 'id'",
+		})
+		return
+	}
+
+	if err = db.Model(service).First(&apiService, "id = ?", serviceId).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound , gin.H{
 				"ok": false,
