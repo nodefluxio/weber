@@ -1,9 +1,15 @@
 package utils
 
 import (
+	"backend/database"
+	"backend/models"
 	"fmt"
+	"log"
+	"os"
 	"reflect"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
@@ -12,9 +18,10 @@ import (
 )
 
 var (
-	uni      *ut.UniversalTranslator
-	Validate *validator.Validate
-	trans    ut.Translator
+	uni      			*ut.UniversalTranslator
+	Validate 			*validator.Validate
+	trans    			ut.Translator
+	visitorCreatedAt	time.Time
 )
 
 func InitTranslation() {
@@ -42,4 +49,28 @@ func TranslateError(err error) (errs []error) {
 		errs = append(errs, translatedErr)
 	}
 	return errs
+}
+
+func IsSessionExist(sessionId string) bool {
+	db := database.GetDB()
+	var visitor	models.Visitor
+	
+	if err := models.GetVisitor(db, &visitor, sessionId); err != nil {
+		return false
+	}
+	
+	visitorCreatedAt = visitor.CreatedAt
+	return true
+}
+
+func IsSessionExpired(sessionId string) bool {
+	expirationLimit, err := strconv.Atoi(os.Getenv("SESSION_EXPIRATION"))
+	if err != nil {
+		log.Fatal("environment variable 'SESSION_EXPIRATION' is not set")
+	}
+	
+	dateExpiration := visitorCreatedAt.AddDate(0, 0, expirationLimit)
+	dateNow := time.Now()
+
+	return dateNow.After(dateExpiration)
 }
