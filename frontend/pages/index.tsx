@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 
   return {
-    props: { analytics, solutions },
+    props: { analytics: analytics.data, solutions: solutions.data },
   };
 };
 
