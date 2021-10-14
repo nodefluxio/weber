@@ -28,3 +28,27 @@ type APIService struct {
 	CreatedAt        time.Time	`json:"created_at"`
 	UpdatedAt        time.Time	`json:"updated_at"`
 }
+
+type AdditionalParams struct {
+	FaceID	string	`json:"face_id"`
+}
+
+type RequestData struct {
+	Images				[]string			`json:"images"`
+	AdditionalParams	AdditionalParams	`json:"additional_params"`
+}
+
+type ServiceRequestInput struct {
+	SessionID	string			`json:"session_id"`		
+	Data		RequestData		`json:"data"`
+}
+
+type ServiceRequestResult struct {
+	Result 	map[string]interface{} 	`json:"result"`
+}
+
+type ServiceRequestResultData struct {
+	Job 	ServiceRequestResult	`json:"job"`
+	Message string			`json:"message"`
+	Ok 		bool 			`json:"ok"`
+}
