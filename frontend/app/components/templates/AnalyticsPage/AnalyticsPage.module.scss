@@ -1,0 +1,39 @@
+.container {
+  padding: 2rem 6rem;
+  max-width: 1440px;
+}
+
+.image-options {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.column-flex {
+  display: flex;
+  flex-basis: 50%;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.double-column {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.intro {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  background: #DAE3EA;
+  margin-bottom: 1rem;
+  padding: 4rem 6rem;
+
+  .title {
+    padding-bottom: 2rem;
+  }
+}
