@@ -27,11 +27,12 @@
 }
 
 .double-column {
-  padding: 2rem 6rem;
+  padding: 2rem 0;
   display: flex;
   flex-direction: row;
   gap: 2rem;
   justify-content: center;
+  width: 100%;
 }
 
 .dropzone-container {

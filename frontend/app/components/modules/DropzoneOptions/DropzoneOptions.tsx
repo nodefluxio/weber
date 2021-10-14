@@ -4,10 +4,11 @@ import Image from "next/image"
 import styles from "./DropzoneOptions.module.scss"
 
 type Props = {
+  image: string[],
   onPhotoDrop: Function
 }
 
-export const DropzoneOptions = ({ onPhotoDrop }: Props) => {
+export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
 
   const [photos, setPhotos] = useState<any[]>([])
 
@@ -16,16 +17,35 @@ export const DropzoneOptions = ({ onPhotoDrop }: Props) => {
     const reader = new FileReader()
     reader.readAsDataURL(uploadedPhoto[0])
     reader.onload = (event) => {
-      onPhotoDrop(event.target?.result)
+      // Max accepted image file = 800kB
+      if(uploadedPhoto[0].size < 800000) {
+        onPhotoDrop(event.target?.result)
+
+        // Set Photo for Preview at Dropdown
+        setPhotos(uploadedPhoto.map((photo: any) =>
+          Object.assign(photo, {
+            preview: URL.createObjectURL(photo)
+          })
+        ))
+      }
     }
-    // Set Photo for Preview at Dropdown
-    setPhotos(uploadedPhoto.map((photo: any) =>
-      Object.assign(photo, {
-        preview: URL.createObjectURL(photo)
-      })
-    ))
   }, [])
 
+  const onChoose = useCallback(async (src: string) => {
+    const option = await (await fetch(src)).blob()
+    const reader = new FileReader()
+    reader.readAsDataURL(option)
+    reader.onload = (e) => {
+      if(option.size < 800000) {
+        onPhotoDrop(e.target?.result)
+        setPhotos([{
+          preview: URL.createObjectURL(option),
+          name: "sample.jpg"
+        }])
+      }
+    }
+  }, [])
+  
   const {
     getRootProps,
     getInputProps,
@@ -44,19 +64,6 @@ export const DropzoneOptions = ({ onPhotoDrop }: Props) => {
       key={photos[0].name}
     />
   ) : null
-
-  const onChoose = useCallback(async (src: string) => {
-    const option = await (await fetch(src)).blob()
-    const reader = new FileReader()
-    reader.readAsDataURL(option)
-    reader.onload = (e) => {
-      onPhotoDrop(e.target?.result)
-    }
-    setPhotos([{
-      preview: URL.createObjectURL(option),
-      name: "sample.jpg"
-    }])
-  }, [])
 
   // Revoke data URIs
   useEffect(() => {
@@ -80,11 +87,11 @@ export const DropzoneOptions = ({ onPhotoDrop }: Props) => {
       </div>
       <div className={styles["image-options"]}>
         {
-          [...Array(4)].map((u: any, i: number) => (
-            <div className={styles["image-option"]}>
+          image.map((imageName: any, i: number) => (
+            <div className={styles["image-option"]} key={i}>
               <Image
                 onClick={(e: any) => { onChoose(e.target.src) }}
-                src={require("./face.jpg")}
+                src={imageName}
                 layout="fill"
                 objectFit="cover" />
             </div>
