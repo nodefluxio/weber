@@ -1,10 +1,7 @@
-import { FormEvent } from 'react'
 import { RequestDemoForm } from '../../modules/RequestDemoForm/RequestDemoForm'
+import { useRouter } from 'next/router'
 export const RequestDemoPage = () => {
-  const formHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log(e.currentTarget.email.value)
-  }
+  const router = useRouter()
 
   return (
     <div>
@@ -18,7 +15,7 @@ export const RequestDemoPage = () => {
         </p>
       </div>
       <div>
-        <RequestDemoForm onSubmit={(data) => console.log(data)} />
+        <RequestDemoForm onSuccess={() => router.push('/')} />
       </div>
     </div>
   )

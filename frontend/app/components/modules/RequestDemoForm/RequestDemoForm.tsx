@@ -1,10 +1,18 @@
 import { Button } from '../../elements/Button/Button'
 import { TextField } from '../../elements/TextField/TextField'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { colorChoices } from '../../../types/elements'
+import axios from 'axios'
+import {
+  VisitorsPostErrorResponse,
+  VisitorsPostResponse,
+} from '../../../types/response'
+import { setCookie } from 'nookies'
+import { axiosErrorHandler } from '../../../utils/axios/axiosErrorHandler'
+import { useState } from 'react'
 
 type Props = {
-  onSubmit: (data: FormData) => void
+  onSuccess: () => void
 }
 
 type FormData = {
@@ -14,12 +22,40 @@ type FormData = {
   job_title: string
   industry: string
 }
-export const RequestDemoForm = ({ onSubmit }: Props) => {
+
+export const RequestDemoForm = ({ onSuccess }: Props) => {
+  const [errorMessage, setErrorMessage] = useState<string | undefined>()
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    setErrorMessage('')
+    axios
+      .post<VisitorsPostResponse>('/visitors', data)
+      .then((res) => {
+        if (res.data.ok) {
+          const { data } = res.data
+          setCookie(null, 'session_id', data[0].session_id, {
+            maxAge: data[0].max_age,
+            path: '/',
+          })
+          onSuccess()
+        }
+      })
+      .catch(
+        axiosErrorHandler<VisitorsPostErrorResponse>((cb) => {
+          if (cb.type === 'axios-error' && cb.error.response) {
+            setErrorMessage(cb.error.response.data.message)
+          } else {
+            console.log(cb.error)
+          }
+        })
+      )
+  }
 
   return (
     <form method='post' onSubmit={handleSubmit(onSubmit)}>
@@ -74,6 +110,7 @@ export const RequestDemoForm = ({ onSubmit }: Props) => {
           errors={errors}
         />
       </div>
+      <div>{errorMessage ? `*${errorMessage}` : null}</div>
       <Button type='submit' color={colorChoices.Primary}>
         Submit
       </Button>
