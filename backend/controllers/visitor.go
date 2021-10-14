@@ -37,15 +37,23 @@ func CreateVisitor(ctx *gin.Context) {
 	visitor.SessionID = sessionId.String()
 	visitor.CreatedAt = time.Now()
 	visitor.UpdatedAt = time.Now()
+	expirationLimit := os.Getenv("SESSION_EXPIRATION")
+	expirationLimitInt, err := strconv.Atoi(expirationLimit)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	expirationLimitSecond := expirationLimitInt * 24 * 60 * 60
 
 	err = models.CreateVisitor(db, &visitor)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err, "ok": false})
 		return
 	}
-	var slice []map[string]string
-	data := map[string]string{
+	var slice []map[string]interface{}
+	data := map[string]interface{}{
 		"session_id": sessionId.String(),
+		"max_age":    expirationLimitSecond,
 	}
 	slice = append(slice, data)
 
