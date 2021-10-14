@@ -15,30 +15,34 @@ ERD: https://dbdiagram.io/d/614d6c6b825b5b0146113ba7
 
 more details about dependencies see [go.mod &rarr;](https://github.com/nodefluxio/weber/blob/main/backend/go.mod)
 
-- - -
+---
 
 ## Run Backend API
+
 - First of all, make sure you're now in `backend/` directory.
-    - Linux / MacOS Terminal & Windows CMD
-        ```sh
-        cd backend/
-        ```
+  - Linux / MacOS Terminal & Windows CMD
+    ```sh
+    cd backend/
+    ```
 - Copy or rename file `.env.example` to `.env`.
 - Edit the `.env` to your desire database credentials.
 
 ### Running with Docker
+
 ```sh
 docker-compose up -d --build
 ```
 
 ### Running without Docker
+
 ```sh
 go run .
 ```
 
-- - -
+---
 
 ## API Endpoint Documentation
+
 <details>
 <summary><b>Create Visitor</b></summary>
 Create a visitor and generate the session id.
@@ -62,6 +66,7 @@ Create a visitor and generate the session id.
 ```
 
 - **Request Payload Data Type Attributes**
+
 ```json
 {
   "full_name": string,
@@ -80,6 +85,7 @@ Create a visitor and generate the session id.
 {
   "data": [
     {
+      "max_age": 86400,
       "session_id": "6a099599-cabf-4b99-bba6-bc37326dcd00"
     }
   ],
@@ -94,6 +100,7 @@ Create a visitor and generate the session id.
 {
   "data": [
     {
+      "max_age": int,
       "session_id": string
     }
   ],
@@ -217,38 +224,41 @@ OR
 Return json data about a Service by ID.
 
 - **URL**
-    
-    `/services/:id`
+  `/services/:id`
 - **Method**
 
-    `GET`
+  `GET`
+
 - **URL Param**
 
-    **Required**
+  **Required**
 
-    `id` type `integer`
+  `id` type `integer`
+
 - **Sample Success Response**
 
-    **Code**: 200 OK
+  **Code**: 200 OK
+
 ```json
 {
-    "data": {
-        "id": 6,
-        "type": "innovation",
-        "slug": "car-damage",
-        "name": "Car Damage Detection",
-        "short_description": "Car Damage Detection Description",
-        "long_description": "Car Damage Detection Descriptiooooooooooonnnnnnnnnnnnnn",
-        "thumbnail": "car-damage.jpeg",
-        "created_at": "2021-10-08T23:13:28.755551+07:00",
-        "updated_at": "2021-10-08T23:13:28.755551+07:00"
-    },
-    "message": "Get service by id=6 success",
-    "ok": true
+  "data": {
+    "id": 6,
+    "type": "innovation",
+    "slug": "car-damage",
+    "name": "Car Damage Detection",
+    "short_description": "Car Damage Detection Description",
+    "long_description": "Car Damage Detection Descriptiooooooooooonnnnnnnnnnnnnn",
+    "thumbnail": "car-damage.jpeg",
+    "created_at": "2021-10-08T23:13:28.755551+07:00",
+    "updated_at": "2021-10-08T23:13:28.755551+07:00"
+  },
+  "message": "Get service by id=6 success",
+  "ok": true
 }
 ```
 
 - **Data Type Attributes**
+
 ```json
 {
     "data": [
@@ -271,11 +281,13 @@ Return json data about a Service by ID.
 
 - **Sample Error Response**
 
-    **Code**: 404 Not Found
+  **Code**: 404 Not Found
+
 ```json
 {
-    "message": "Service not found",
-    "ok": false
+  "message": "Service not found",
+  "ok": false
 }
 ```
+
 </details>
