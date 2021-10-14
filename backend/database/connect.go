@@ -27,8 +27,8 @@ func InitDB() *gorm.DB {
 	dbPort := os.Getenv("DB_PORT")
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s "+
-	"port=%s sslmode=disable TimeZone=Asia/Jakarta",
-	dbHost, dbUsername, dbPassword, dbName, dbPort)
+		"port=%s sslmode=disable TimeZone=Asia/Jakarta",
+		dbHost, dbUsername, dbPassword, dbName, dbPort)
 
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -38,7 +38,7 @@ func InitDB() *gorm.DB {
 	sqlDB, _ := DB.DB()
 	sqlDB.SetMaxOpenConns(25)
 	sqlDB.SetMaxIdleConns(25)
-	sqlDB.SetConnMaxLifetime(5*time.Minute)	
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
 	fmt.Println("Database connection successfully established!")
 	return DB
@@ -46,7 +46,7 @@ func InitDB() *gorm.DB {
 
 func GetDB() *gorm.DB {
 	sqlDB, _ := DB.DB()
-	
+
 	if sqlDB.Ping() != nil {
 		fmt.Println(sqlDB.Ping()) // sql: database is closed
 		InitDB()

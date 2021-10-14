@@ -9,12 +9,13 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+	r.Use(CORSMiddleware())
 
 	r.GET("ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "pong")
 	})
 
-	services := r.Group("/services") 
+	services := r.Group("/services")
 	{
 		// GET Method
 		services.GET("", controllers.GetServicesByType)
