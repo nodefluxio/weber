@@ -40,7 +40,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         if (res.data.ok) {
           const { data } = res.data
           setCookie(null, 'session_id', data[0].session_id, {
-            maxAge: 24 * 60 * 60,
+            maxAge: data[0].max_age,
             path: '/',
           })
           onSuccess()

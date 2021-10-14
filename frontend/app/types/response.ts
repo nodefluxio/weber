@@ -2,6 +2,7 @@ export type VisitorsPostResponse = {
   data: [
     {
       session_id: string
+      max_age: number
     }
   ]
   message: string
