@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Service struct {
@@ -29,13 +31,9 @@ type APIService struct {
 	UpdatedAt        time.Time	`json:"updated_at"`
 }
 
-type AdditionalParams struct {
-	FaceID	string	`json:"face_id"`
-}
-
 type RequestData struct {
-	Images				[]string			`json:"images"`
-	AdditionalParams	AdditionalParams	`json:"additional_params"`
+	AdditionalParams	map[string]interface{}	`json:"additional_params"`
+	Images				[]string				`json:"images"`
 }
 
 type ServiceRequestInput struct {
@@ -49,6 +47,15 @@ type ServiceRequestResult struct {
 
 type ServiceRequestResultData struct {
 	Job 	ServiceRequestResult	`json:"job"`
-	Message string			`json:"message"`
-	Ok 		bool 			`json:"ok"`
+	Message string					`json:"message"`
+	Ok 		bool 					`json:"ok"`
+}
+
+
+func CreateService(db *gorm.DB, Service *Service) (err error) {
+	err = db.Create(Service).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
