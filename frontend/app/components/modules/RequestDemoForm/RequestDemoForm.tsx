@@ -1,6 +1,7 @@
 import { Button } from '../../elements/Button/Button'
 import { TextField } from '../../elements/TextField/TextField'
 import { useForm } from 'react-hook-form'
+import { colorChoices } from '../../../types/elements'
 
 type Props = {
   onSubmit: (data: FormData) => void
@@ -73,7 +74,9 @@ export const RequestDemoForm = ({ onSubmit }: Props) => {
           errors={errors}
         />
       </div>
-      <Button text='Request Demo' type='submit' />
+      <Button type='submit' color={colorChoices.Primary}>
+        Submit
+      </Button>
     </form>
   )
 }
