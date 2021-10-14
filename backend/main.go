@@ -2,10 +2,15 @@ package main
 
 import (
 	"backend/database"
+	"backend/utils"
+	"os"
 )
 
 func main() {
 	db := database.InitDB()
+
+	// Init Translation for Validator
+	utils.InitTranslation()
 
 	// Migrate
 	database.Migrate(db)
@@ -14,7 +19,7 @@ func main() {
 	database.Seed(db)
 
 	r := SetupRouter()
-	_ = r.Run(":8080")
 
-	defer database.CloseDB(db)
+	port := os.Getenv("APP_PORT")
+	_ = r.Run(":" + port)
 }

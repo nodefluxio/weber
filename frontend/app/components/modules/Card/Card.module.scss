@@ -1,0 +1,44 @@
+.card {
+  margin: auto;
+  width: 300px;
+  overflow: hidden;
+  border-radius: 20px;
+  color: whitesmoke;
+  margin-top: 50px;
+  position: relative;
+
+  img {
+    width: 150px;
+    height: 150px;
+    padding: 1.5rem;
+  }
+
+  h3 {
+    padding: 1.5rem;
+    margin: 0;
+  }
+
+  p {
+    padding: 0 1.5rem;
+    margin: 0;
+  }
+}
+
+.body {
+  margin-top: 1rem;
+  border-radius: 20px;
+  background-color: purple;
+  height: 300px;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.footer {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  position: absolute;
+  bottom: 1rem;
+}

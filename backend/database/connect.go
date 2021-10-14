@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -12,39 +13,43 @@ import (
 
 var DB *gorm.DB
 
-func GetDB(dsn string) *gorm.DB {
-	// DB = initDB()
-	return DB
-}
-
 func InitDB() *gorm.DB {
 
-	err2 := godotenv.Load()
-	if err2 != nil {
+	err := godotenv.Load()
+	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
+	dbHost := os.Getenv("DB_HOST")
 	dbUsername := os.Getenv("DB_USERNAME")
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta", dbHost, dbUsername, dbPassword, dbName, dbPort)
 
-	var err error
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s "+
+		"port=%s sslmode=disable TimeZone=Asia/Jakarta",
+		dbHost, dbUsername, dbPassword, dbName, dbPort)
 
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		fmt.Println("Error connecting to database: error = %v", err)
-		return nil
+		log.Panic("Error connecting to database: error = %v", err)
 	}
 
-	DB = db
+	sqlDB, _ := DB.DB()
+	sqlDB.SetMaxOpenConns(25)
+	sqlDB.SetMaxIdleConns(25)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
-	return db
+	fmt.Println("Database connection successfully established!")
+	return DB
 }
 
-func CloseDB(db *gorm.DB) {
-	sqlDB, _ := db.DB()
-	sqlDB.Close()
+func GetDB() *gorm.DB {
+	sqlDB, _ := DB.DB()
+
+	if sqlDB.Ping() != nil {
+		fmt.Println(sqlDB.Ping()) // sql: database is closed
+		InitDB()
+	}
+	return DB
 }
