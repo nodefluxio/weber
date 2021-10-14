@@ -18,7 +18,7 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
     reader.readAsDataURL(uploadedPhoto[0])
     reader.onload = (event) => {
       // Max accepted image file = 800kB
-      if(uploadedPhoto[0].size < 800000) {
+      if (uploadedPhoto[0].size < 800000) {
         onPhotoDrop(event.target?.result)
 
         // Set Photo for Preview at Dropdown
@@ -36,7 +36,7 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
     const reader = new FileReader()
     reader.readAsDataURL(option)
     reader.onload = (e) => {
-      if(option.size < 800000) {
+      if (option.size < 800000) {
         onPhotoDrop(e.target?.result)
         setPhotos([{
           preview: URL.createObjectURL(option),
@@ -45,7 +45,7 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
       }
     }
   }, [])
-  
+
   const {
     getRootProps,
     getInputProps,
@@ -88,7 +88,7 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
       <div className={styles["image-options"]}>
         {
           image.map((imageName: any, i: number) => (
-            <div className={styles["image-option"]} key={i}>
+            <div className={styles["__items"]} key={i}>
               <Image
                 onClick={(e: any) => { onChoose(e.target.src) }}
                 src={imageName}

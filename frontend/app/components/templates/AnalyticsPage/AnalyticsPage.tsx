@@ -17,23 +17,24 @@ const AnalyticsPage: NextPage = () => {
     <>
       <div className={`${styles.container} ${styles.intro}`}>
         <div className={styles.title}>
-          <h1>{ analyticsName }</h1>
-          <p>{ description }</p>
+          <h1>{analyticsName}</h1>
+          <p>{description}</p>
         </div>
         <div style={{ position: "relative", flexBasis: "40%", flexShrink: 0 }}>
           <Image
             src={require("../../../../public/static/images/placeholder.jpg")}
             layout="fill"
-            objectFit="cover"/>
+            objectFit="cover" />
         </div>
       </div>
       <div className={styles.container}>
         {/* TODO: bikin variabel buat tentuin step */}
-        <Stepper/>
+        <Stepper />
       </div>
       <div className={styles.container} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <DropzoneOptions image={[require("../../../../public/static/images/face.jpg"), 
-        require("../../../../public/static/images/face2.jpeg")]} onPhotoDrop={setPhoto}/>
+        <DropzoneOptions image={[require("../../../../public/static/images/face.jpg"),
+        require("../../../../public/static/images/face2.jpeg")]} onPhotoDrop={setPhoto} />
+        {/* TODO: Add API Call Handler */}
         <button style={{ width: "30%" }} onClick={() => console.log("API call here")}>Next Step</button>
       </div>
     </>
