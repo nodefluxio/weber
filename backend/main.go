@@ -3,6 +3,10 @@ package main
 import (
 	"backend/database"
 	"backend/utils"
+	"log"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -18,5 +22,11 @@ func main() {
 	database.Seed(db)
 
 	r := SetupRouter()
-	_ = r.Run(":8080")
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	port := os.Getenv("APP_PORT")
+	_ = r.Run(":" + port)
 }
