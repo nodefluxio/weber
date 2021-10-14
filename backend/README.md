@@ -125,6 +125,98 @@ OR
 </details>
 
 <details>
+<summary><b>Create A Service Request By ID</b></summary>
+Create a service request by id and create a new visitor_activites record.
+
+- **URL**
+
+    `/services/:id`
+- **Method**
+
+    `POST`
+- **URL Param**
+
+    **Required**
+
+    `id` type `integer`
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "message": "Service demo request success", // message from weber backend
+    "ok": true, // ok from weber backend
+    "service_data": {
+        "job": {
+            "result": {
+                "analytic_type": "FACE_RECOGNITION",
+                "result": [
+                    {
+                        "face_recognition": [
+                            {
+                                "candidates": [
+                                    {
+                                        "confidence": 1,
+                                        "face_id": "88364589938376705",
+                                        "variation": "17614081020751468384"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "status": "success"
+            }
+        },
+        "message": "Face Recognition Success", // message from service response
+        "ok": true // ok from service response
+    }
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "message": string,
+    "ok": boolean, 
+    "service_data": object // json data from service response
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
+  **Code**: 400 Bad Request
+
+```json
+{
+  "message": "Expected an integer value from argument 'id'",
+  "ok": false
+}
+```
+
+</details>
+
+<details>
 <summary><b>Show All Services by Type</b></summary>
 Return json data about all Services by type.
 
