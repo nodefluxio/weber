@@ -4,10 +4,7 @@ import (
 	"backend/database"
 	"backend/models"
 	"backend/utils"
-	"fmt"
 	"net/http"
-	"os"
-	"strconv"
 	"strings"
 	"time"
 
@@ -61,30 +58,4 @@ func CreateVisitor(ctx *gin.Context) {
 	slice = append(slice, data)
 
 	ctx.JSON(http.StatusOK, gin.H{"data": slice, "message": "Data has been processed successfully", "ok": true})
-}
-
-func CheckSession(sessionId string) bool {
-	db := database.GetDB()
-	var visitor models.Visitor
-
-	// Check if there is a record with this sessionId
-	err := models.GetVisitor(db, &visitor, sessionId)
-	if err != nil {
-		return false
-	}
-
-	// Check if the sessionId is not expired
-	expirationLimit := os.Getenv("SESSION_EXPIRATION")
-	expirationLimitInt, err := strconv.Atoi(expirationLimit)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	dateExpiration := visitor.CreatedAt.AddDate(0, 0, expirationLimitInt)
-	dateNow := time.Now()
-	if dateNow.After(dateExpiration) {
-		return false
-	}
-
-	return true
 }
