@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -147,8 +148,7 @@ func CreateServiceRequest(ctx *gin.Context) {
 
 	// Convert value of parameter id from string to int
 	// and validate if its value is am integer number
-	// serviceId, err := strconv.Atoi(ctx.Param("id")) // serviceId bakal dipake buat argumen requestToService()
-	_, err := strconv.Atoi(ctx.Param("id")) // karena requestToService() beloum ada, sementara gini biar ga error
+	serviceId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest , gin.H{
 			"ok": false,
@@ -157,11 +157,23 @@ func CreateServiceRequest(ctx *gin.Context) {
 		return
 	}
 
-	// Harusnya di sini ada kode buat
-	// Insert new record di tabel visitor_activities
-	// WILL ADDED SOON
+	// Insert new record into db
+	db := database.GetDB()
+	var visitorActivity models.VisitorActivity
 
-	// requestResult := requestToService(serviceId, inputData) // Fungsi Request to Cloud
+	visitorActivity.ServiceID = uint(serviceId)
+	visitorActivity.SessionID = sessionId
+	visitorActivity.CreatedAt = time.Now()
+
+	if err := models.CreateVisitorActivity(db, &visitorActivity); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok": false,
+			"message": err,
+		})
+		return
+	}
+
+	// requestResultString := RequestToService(serviceId, inputData) // Fungsi Request to Cloud
 
 	// Mock json data from requestToService() response
 	// Sample Response Body from 
