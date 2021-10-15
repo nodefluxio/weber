@@ -24,7 +24,7 @@ const AnalyticsPage: NextPage = () => {
         </div>
         <div className={styles.imageIntro}>
           <Image
-            src={require("../../../../public/static/images/placeholder.jpg")}
+            src={require("../../../../public/assets/images/placeholder.jpg")}
             layout="fill"
             objectFit="cover" />
         </div>
@@ -36,8 +36,8 @@ const AnalyticsPage: NextPage = () => {
           />
       </div>
       <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-        <DropzoneOptions images={[require("../../../../public/static/images/face.jpg"),
-        require("../../../../public/static/images/face2.jpeg")]} onPhotoDrop={setPhoto} />
+        <DropzoneOptions images={[require("../../../../public/assets/images/face.jpg"),
+        require("../../../../public/assets/images/face2.jpeg")]} onPhotoDrop={setPhoto} />
         {/* TODO: Add API Call Handler */}
         <Button color={colorChoices.Primary}>Next Step</Button>
       </div>

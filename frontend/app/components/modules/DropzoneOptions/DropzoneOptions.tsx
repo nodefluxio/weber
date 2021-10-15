@@ -22,7 +22,7 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
       if (uploadedPhoto[0].size < MAX_IMAGE_SIZE) {
         onPhotoDrop(event.target?.result)
 
-        // Set Photo for Preview at Dropdown
+        // Set Photo for Preview at Dropzone
         setPhotos(uploadedPhoto.map((photo: any) =>
           Object.assign(photo, {
             preview: URL.createObjectURL(photo)
