@@ -1,16 +1,17 @@
-import { useCallback, useEffect, useState } from "react"
+import { MouseEvent, useCallback, useEffect, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import Image from "next/image"
 import styles from "./DropzoneOptions.module.scss"
 
 type Props = {
-  image: string[],
+  images: string[],
   onPhotoDrop: Function
 }
 
-export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
+export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
 
   const [photos, setPhotos] = useState<any[]>([])
+  const MAX_IMAGE_SIZE = 800000 // 800kB
 
   const onDrop = useCallback(uploadedPhoto => {
     // Setup file reader
@@ -18,7 +19,7 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
     reader.readAsDataURL(uploadedPhoto[0])
     reader.onload = (event) => {
       // Max accepted image file = 800kB
-      if (uploadedPhoto[0].size < 800000) {
+      if (uploadedPhoto[0].size < MAX_IMAGE_SIZE) {
         onPhotoDrop(event.target?.result)
 
         // Set Photo for Preview at Dropdown
@@ -36,7 +37,7 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
     const reader = new FileReader()
     reader.readAsDataURL(option)
     reader.onload = (e) => {
-      if (option.size < 800000) {
+      if (option.size < MAX_IMAGE_SIZE) {
         onPhotoDrop(e.target?.result)
         setPhotos([{
           preview: URL.createObjectURL(option),
@@ -56,14 +57,14 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
     multiple: false
   })
 
-  const preview = photos[0] ? (
+  const preview = photos[0] && (
     <Image
       src={photos[0].preview}
       layout="fill"
       objectFit="contain"
       key={photos[0].name}
     />
-  ) : null
+  )
 
   // Revoke data URIs
   useEffect(() => {
@@ -71,8 +72,8 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
   }, [photos])
 
   return (
-    <div className={styles["double-column"]}>
-      <div {...getRootProps()} className={styles["dropzone-container"]}>
+    <div className={styles.doubleColumn}>
+      <div {...getRootProps()} className={styles.dropzoneContainer}>
         <input {...getInputProps()} />
         {
           photos.length === 0 ?
@@ -80,17 +81,20 @@ export const DropzoneOptions = ({ image, onPhotoDrop }: Props) => {
               <p>Drag and drop your image here, or click to select image</p>
             </aside>
             :
-            <aside className={styles["image-preview"]}>
+            <aside className={styles.imagePreview}>
               {preview}
             </aside>
         }
       </div>
-      <div className={styles["image-options"]}>
+      <div className={styles.imageOptions}>
         {
-          image.map((imageName: any, i: number) => (
-            <div className={styles["__items"]} key={i}>
+          images.map((imageName: string, i: number) => (
+            <div className={styles.items} key={i}>
               <Image
-                onClick={(e: any) => { onChoose(e.target.src) }}
+                onClick={(e: MouseEvent<HTMLImageElement>)=> { 
+                  const img = e.target as HTMLImageElement;
+                  onChoose(img.src) 
+                }}
                 src={imageName}
                 layout="fill"
                 objectFit="cover" />

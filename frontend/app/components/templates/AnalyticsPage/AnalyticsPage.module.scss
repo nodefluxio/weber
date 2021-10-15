@@ -3,26 +3,10 @@
   max-width: 1440px;
 }
 
-.image-options {
+.dropzoneColumns {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.column-flex {
-  display: flex;
-  flex-basis: 50%;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-}
-
-.double-column {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  justify-content: center;
 }
 
 .intro {
@@ -32,8 +16,18 @@
   background: #DAE3EA;
   margin-bottom: 1rem;
   padding: 4rem 6rem;
+  align-items: center;
+  justify-content: center;
 
   .title {
     padding-bottom: 2rem;
   }
+}
+
+.imageIntro {
+  position: relative;
+  height: 240px;
+  width: 360px;
+  flex-basis: 40%;
+  flex-shrink: 0;
 }

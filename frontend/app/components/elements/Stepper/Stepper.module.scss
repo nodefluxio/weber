@@ -1,13 +1,35 @@
 .stepper {
   display: flex;
-  flex-wrap: wrap;
   padding: 0;
   margin: auto;
   width: 80%;
+  justify-content: center;
 }
 
-.stepper__item {
-  flex: 1;
+.stepperBulletin {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 0 8rem;
+}
+
+.active {
+  background: grey;
+}
+.inactive {
+  background: lightgrey;
+}
+
+.stepperLine {
+  display: inline-block;
+  height: 1px;
+  margin-top: 1rem;
+  min-width: 120px;
+  max-width: 240px;
+  background-color: #B4B4B4;
+}
+
+.stepperItem {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -15,24 +37,11 @@
   h3, p {
     margin: 0;
   }
-
-  &:before {
-    --size: 2rem;
-    content: "";
-    position: relative;
-    z-index: 1;
-    display: block;
-    width: var(--size);
-    height: var(--size);
-    border-radius: 50%;
-    background-color: lightgrey;
-    margin: 0 auto;
-  }
   
   &:not(:last-child) {
     &:after {
       --circle-size: clamp(1.5rem, 5vw, 2rem);
-      --spacing: clamp(0.25rem, 2vw, 0.5rem);
+      --spacing: clamp(0.5rem, 2vw, 0.5rem);
       content: "";
       position: relative;
       top: calc(var(--circle-size) / 2);

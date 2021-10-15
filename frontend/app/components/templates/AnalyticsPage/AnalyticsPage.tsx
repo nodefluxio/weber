@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import styles from './AnalyticsPage.module.scss'
 import { Stepper } from '../../elements/Stepper/Stepper'
-import { useState } from 'react'
+import { Button } from '../../elements/Button/Button'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
+import { colorChoices } from '../../../types/elements'
 
 const AnalyticsPage: NextPage = () => {
 
@@ -20,7 +22,7 @@ const AnalyticsPage: NextPage = () => {
           <h1>{analyticsName}</h1>
           <p>{description}</p>
         </div>
-        <div style={{ position: "relative", flexBasis: "40%", flexShrink: 0 }}>
+        <div className={styles.imageIntro}>
           <Image
             src={require("../../../../public/static/images/placeholder.jpg")}
             layout="fill"
@@ -28,14 +30,16 @@ const AnalyticsPage: NextPage = () => {
         </div>
       </div>
       <div className={styles.container}>
-        {/* TODO: bikin variabel buat tentuin step */}
-        <Stepper />
+        <Stepper
+          steps={["Upload your photo", "Check your results"]}
+          activeStep={1}
+          />
       </div>
-      <div className={styles.container} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <DropzoneOptions image={[require("../../../../public/static/images/face.jpg"),
+      <div className={`${styles.container} ${styles.dropzoneColumns}`}>
+        <DropzoneOptions images={[require("../../../../public/static/images/face.jpg"),
         require("../../../../public/static/images/face2.jpeg")]} onPhotoDrop={setPhoto} />
         {/* TODO: Add API Call Handler */}
-        <button style={{ width: "30%" }} onClick={() => console.log("API call here")}>Next Step</button>
+        <Button color={colorChoices.Primary}>Next Step</Button>
       </div>
     </>
   )
