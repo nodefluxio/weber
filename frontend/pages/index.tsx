@@ -1,34 +1,35 @@
-import type { GetStaticProps } from "next";
-import type { Service } from "../app/types/elements";
-import { HomePage } from "../app/components/templates/HomePage/HomePage";
+import axios from 'axios'
+import type { GetStaticProps } from 'next'
+import type { Service } from '../app/types/elements'
+import type { ServicesGetResponse } from '../app/types/responses'
+import { HomePage } from '../app/components/templates/HomePage/HomePage'
 
 type Props = {
-  analytics: Service[];
-  solutions: Service[];
-};
+  analytics: Service[]
+  solutions: Service[]
+}
 
 const Home = ({ analytics, solutions }: Props) => {
-  return <HomePage analytics={analytics} solutions={solutions} />;
-};
+  return <HomePage analytics={analytics} solutions={solutions} />
+}
 
 export const getStaticProps: GetStaticProps = async () => {
-  try {
-    const resAnalytics = await fetch(`http://localhost:8080/services?type=analytic`);
-    const analytics = await resAnalytics.json();
-
-    const resSolutions = await fetch(`http://localhost:8080/services?type=solution`);
-    const solutions = await resSolutions.json()
-
-    return {
-      props: { analytics: analytics.data || [], solutions: solutions.data || []},
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      props: { analytics: [], solutions: [] }
+  const getAllServices = async (type: string): Promise<Service[]> => {
+    try {
+      const res = await axios.get<ServicesGetResponse>(`/services?type=${type}`)
+      return res.data.data
+    } catch (error) {
+      console.error(error)
+      return []
     }
   }
-};
 
-export default Home;
+  const analytics = await getAllServices('analytic')
+  const solutions = await getAllServices('solution')
+
+  return {
+    props: { analytics, solutions }
+  }
+}
+
+export default Home
