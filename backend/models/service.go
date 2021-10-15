@@ -63,6 +63,7 @@ type ResponseResultData struct {
 	Ok 		bool 			`json:"ok"`
 }
 
+
 func CreateService(db *gorm.DB, Service *Service) (err error) {
 	err = db.Create(Service).Error
 	if err != nil {
