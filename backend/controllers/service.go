@@ -4,7 +4,6 @@ import (
 	"backend/database"
 	"backend/models"
 	"backend/utils"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -173,44 +172,15 @@ func CreateServiceRequest(ctx *gin.Context) {
 		return
 	}
 
-	// requestResultString := RequestToService(serviceId, inputData) // Fungsi Request to Cloud
-
-	// Mock json data from requestToService() response
-	// Sample Response Body from 
-	// https://docs.nodeflux.io/visionaire-cloud/analytics-api/asynchronous/face-recognition
-	requestResultString := `
-	{
-		"job": {
-			"id": "b735df462ca567ed6e915c730ec3e44409c9ea546c5199d97b80fb841fe127e9",
-			"result": {
-				"status": "success",
-				"analytic_type": "FACE_RECOGNITION",
-				"result": [
-					{
-						"face_recognition": [
-							{
-								"candidates": [
-									{
-										"face_id": "88364589938376705",
-										"variation": "17614081020751468384",
-										"confidence": 1.0
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		},
-		"message": "Face Recognition Success",
-		"ok": true
-	}`
-
-	var serviceData models.ServiceRequestResultData
-	err = json.Unmarshal([]byte(requestResultString), &serviceData)
+	// Send a request to Service's API endpoint
+	serviceData, err := RequestToService(serviceId, inputData)
 	if err != nil {
-        fmt.Println(err)
-    }
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok": false,
+			"message": err,
+		})
+		return
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok": true,
