@@ -1,3 +1,11 @@
+import { Service } from './elements'
+
+export type ServicesGetResponse = {
+  data: Service[]
+  message: string
+  ok: boolean
+}
+
 export type VisitorsPostResponse = {
   data: [
     {
