@@ -3,164 +3,134 @@ package controllers
 import (
 	"backend/database"
 	"backend/models"
-	"backend/utils"
 	"bytes"
-	"io/ioutil"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"encoding/json"
-    "fmt"
-
+	"os"
+	"strings"
+	"time"
 )
 
-func RequestToService(serviceId int, inputData models.ServiceRequestInput){
+var (
+	accessKey     string
+	timestamp     string
+	token         string
+	authorization string
+	date          string
+)
 
-	idJob string
-
+func RequestToService(serviceId int, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
 	db := database.GetDB()
-	
-	apiService := &models.APIService{}
+	var service models.Service
+	var data models.ServiceRequestResultData
+	var err error
 
-	postBody, _ := json.Marshal(map[string]string{
-		"additional_params" : inputData.Data.AdditionalParams,
-		"images" : inputData.Data.Images,
-	})
-
-	db.Model(service).First(&apiService, "id = ?", serviceId)
-
-	if apiService.slug = "ocr-ktp"{
-		idJob := Ocr(postBody)
-		GetID(idJob)
-	} else if apiService.slug = "licence-plate-recognition"{
-		idJob := Lpr(postBody)
-		GetID(idJob)
-	} else if apiService.slug = "face-match-enrollment"{
-		idJob := FaceMatchEnroll(postBody)
-		GetID(idJob)
-	} else if apiService.slug = "face-recognition"{
-		idJob := FaceRecognise(postBody)
-		GetID(idJob)
+	if err = db.First(&service, serviceId).Error; err != nil {
+		return data, err
 	}
-		
+	postBody := []byte(fmt.Sprintf(`{ "additional_params": {}, "images":  [ "%v" ]}`,
+		strings.Join(inputData.Data.Images, `", "`)))
+
+	accessKey = service.AccessKey
+	timestamp = service.Timestamp
+	token = service.Token
+	date = timestamp[:8]
+	authorization = fmt.Sprintf("NODEFLUX-HMAC-SHA256 Credential=%s/%s/nodeflux.api.v1beta1.ImageAnalytic/StreamImageAnalytic, SignedHeaders=x-nodeflux-timestamp, Signature=%s",
+		accessKey, date, token)
+
+	var jobId string
+	switch service.Slug {
+	case "ocr-ktp":
+		jobId, _ = requestServiceOCR(postBody)
+	case "license-plate-recognition":
+		jobId, _ = requestServiceLPR(postBody)
+		// Add new cases here
+	}
+
+	for i := 1; i <= 5; i++ {
+		data, err = getJobStatus(jobId)
+		if data.Job.Result["status"] == "success" {
+			break
+		}
+
+		time.Sleep(1 * time.Second)
+	}
+	if err != nil {
+		return data, err
+	}
+	return data, nil
 }
-
-func GetID(jobId){
-
+func getJobStatus(jobId string) (models.ServiceRequestResultData, error) {
 	url := fmt.Sprintf("https://api.cloud.nodeflux.io/v1/jobs/%s", jobId)
-
-	response, err := http.NewRequest("GET", url)
+	var data models.ServiceRequestResultData
+	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Fatal(err)
+		return data, err
 	}
-
-	response.Header.Set("Authorization",os.Getenv("Authorization"))
-	response.Header.Set("x-nodeflux-timestamp",os.Getenv("x-nodeflux-timestamp"))
-
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", authorization)
+	request.Header.Set("x-nodeflux-timestamp", timestamp)
+	client := &http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		return data, err
+	}
 	defer response.Body.Close()
-
-	data,_:=ioutil.ReadAll(response.Body)
-
-	fmt.Println(string(data))
-
+	err = json.NewDecoder(response.Body).Decode(&data)
+	if err != nil {
+		return data, err
+	}
+	return data, err
 }
-
-func Ocr(postBody map[string]interface{}){
-
-	var result models.ServiceRequestResultData
-
-	response, err := http.NewRequest("POST", "https://api.cloud.nodeflux.io/v1/analytics/ocr-ktp", bytes.NewBuffer(postBody))
+func requestServiceOCR(postBody []byte) (string, error) {
+	payload := bytes.NewBuffer(postBody)
+	request, err := http.NewRequest("POST", os.Getenv("URL_ANALYTICS")+"/ocr-ktp", payload)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	//Set Header
-	response.Header.Set("Authorization",os.Getenv("Authorization"))
-	response.Header.Set("x-nodeflux-timestamp",os.Getenv("x-nodeflux-timestamp"))
-	
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", authorization)
+	request.Header.Set("x-nodeflux-timestamp", timestamp)
+	var client = &http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		return "", err
+	}
+
 	defer response.Body.Close()
+	var data models.ResponseResultData
+	err = json.NewDecoder(response.Body).Decode(&data)
+	if err != nil {
+		return "", err
+	}
 
-	data,_:=ioutil.ReadAll(response.Body)
-
-	json.Unmarshal([]byte(data), &result)
-
-	return result.Job
-
-	//fmt.Println(string(data))
-
+	return data.Job.ID, nil
 }
-
-func Lpr(postBody map[string]interface{}){
-
-	var result models.ServiceRequestResultData
-	"https://api.cloud.nodeflux.io/v1/analytics/license-plate-recognition"
-
-	response, err := http.NewRequest("POST", "https://api.cloud.nodeflux.io/v1/analytics/license-plate-recognition", bytes.NewBuffer(postBody))
+func requestServiceLPR(postBody []byte) (string, error) {
+	payload := bytes.NewBuffer(postBody)
+	request, err := http.NewRequest("POST", os.Getenv("URL_ANALYTICS")+"/license-plate-recognition", payload)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	//Set Header
-	response.Header.Set("Authorization",os.Getenv("Authorization"))
-	response.Header.Set("x-nodeflux-timestamp",os.Getenv("x-nodeflux-timestamp"))
-
-	defer response.Body.Close()
-
-	data,_:=ioutil.ReadAll(response.Body)
-
-	json.Unmarshal([]byte(data), &result)
-
-	return result.Job
-
-	//fmt.Println(string(data))
-
-}
-
-func FaceRecognise(postBody map[string]interface{}){
-
-	var result models.ServiceRequestResultData
-	
-	response, err := http.NewRequest("POST", "https://api.cloud.nodeflux.io/v1/analytics/face-recognition", bytes.NewBuffer(postBody))
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", authorization)
+	request.Header.Set("x-nodeflux-timestamp", timestamp)
+	var client = &http.Client{}
+	response, err := client.Do(request)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
-	//Set Header
-	response.Header.Set("Authorization",os.Getenv("Authorization"))
-	response.Header.Set("x-nodeflux-timestamp",os.Getenv("x-nodeflux-timestamp"))
-	
 	defer response.Body.Close()
-
-	data,_:=ioutil.ReadAll(response.Body)
-
-	json.Unmarshal([]byte(data), &result)
-
-	return result.Job
-
-	//fmt.Println(string(data))
-
-}
-
-func FaceMatchEnroll(postBody map[string]interface{}){
-
-	var result models.ServiceRequestResultData
-
-	response, err := http.NewRequest("POST", "https://api.cloud.nodeflux.io/v1/analytics/face-match-enrollment", bytes.NewBuffer(postBody))
+	var data models.ResponseResultData
+	err = json.NewDecoder(response.Body).Decode(&data)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
-	//Set Header
-	response.Header.Set("Authorization",os.Getenv("Authorization"))
-	response.Header.Set("x-nodeflux-timestamp",os.Getenv("x-nodeflux-timestamp"))
-	
-	defer response.Body.Close()
-
-	data,_:=ioutil.ReadAll(response.Body)
-
-	json.Unmarshal([]byte(data), &result)
-
-	return result.Job
-
-	//fmt.Println(string(data))
-
+	return data.Job.ID, nil
 }
