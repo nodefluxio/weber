@@ -16,17 +16,29 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetServicesByType(ctx *gin.Context) {
-	serviceType := ctx.Query("type")
+// Struct-based Enums
+type serviceType struct {
+	slug string
+}
 
-	switch serviceType {
-	case "analytic":
+var (
+	Empty 	= serviceType{""}
+	Analytic	= serviceType{"analytic"}
+	Solution	= serviceType{"solution"}
+	Innovation	= serviceType{"innovation"}
+)
+
+func GetServicesByType(ctx *gin.Context) {
+	serviceTypeQuery := ctx.Query("type")
+
+	switch serviceTypeQuery {
+	case Analytic.slug:
 		getServiceAnalytic(ctx)
-	case "solution":
+	case Solution.slug:
 		getServiceSolution(ctx)
-	case "innovation":
+	case Innovation.slug:
 		getServiceInnovation(ctx)
-	case "":
+	case Empty.slug:
 		ctx.JSON(http.StatusBadRequest, gin.H {
 			"ok": false,
 			"message":  "Expected 1 argument '?type=' with string value or "+ 
