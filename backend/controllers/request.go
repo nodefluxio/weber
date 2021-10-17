@@ -62,6 +62,7 @@ func RequestToService(serviceId int, inputData models.ServiceRequestInput) (mode
 	}
 	return data, nil
 }
+
 func getJobStatus(jobId string) (models.ServiceRequestResultData, error) {
 	url := fmt.Sprintf("https://api.cloud.nodeflux.io/v1/jobs/%s", jobId)
 	var data models.ServiceRequestResultData
@@ -84,6 +85,7 @@ func getJobStatus(jobId string) (models.ServiceRequestResultData, error) {
 	}
 	return data, err
 }
+
 func requestServiceOCR(postBody []byte) (string, error) {
 	payload := bytes.NewBuffer(postBody)
 	request, err := http.NewRequest("POST", os.Getenv("URL_ANALYTICS")+"/ocr-ktp", payload)
@@ -109,6 +111,7 @@ func requestServiceOCR(postBody []byte) (string, error) {
 
 	return data.Job.ID, nil
 }
+
 func requestServiceLPR(postBody []byte) (string, error) {
 	payload := bytes.NewBuffer(postBody)
 	request, err := http.NewRequest("POST", os.Getenv("URL_ANALYTICS")+"/license-plate-recognition", payload)
