@@ -2,6 +2,7 @@ package database
 
 import (
 	"backend/models"
+	"os"
 	"time"
 
 	"github.com/google/uuid"
@@ -58,9 +59,9 @@ func seedService(db *gorm.DB) {
 			Type:             "analytic",
 			Slug:             "ocr-ktp",
 			Thumbnail:        "ocr-ktp.jpg",
-			AccessKey:        "7IT9Z0ORX1I1TZYZHSOR0SSB2",
-			Token:            "959da373d1afee9942056475463c32bfd750e6eccc857375cc14e6c3d6b5836a",
-			Timestamp:        "20211016T133618Z",
+			AccessKey:        os.Getenv("ACCESS_KEY"),
+			Token:            os.Getenv("TOKEN"),
+			Timestamp:        os.Getenv("TIMESTAMP"),
 			ShortDescription: "OCR KTP Description",
 			LongDescription:  "OCR KTP Looonng Descriptiooonnn",
 			CreatedAt:        time.Now(),
@@ -71,9 +72,9 @@ func seedService(db *gorm.DB) {
 			Type:             "analytic",
 			Slug:             "license-plate-recognition",
 			Thumbnail:        "license-plate-recognition.jpg",
-			AccessKey:        "7IT9Z0ORX1I1TZYZHSOR0SSB2",
-			Token:            "959da373d1afee9942056475463c32bfd750e6eccc857375cc14e6c3d6b5836a",
-			Timestamp:        "20211016T133618Z",
+			AccessKey:        os.Getenv("ACCESS_KEY"),
+			Token:            os.Getenv("TOKEN"),
+			Timestamp:        os.Getenv("TIMESTAMP"),
 			ShortDescription: "LPR Description",
 			LongDescription:  "LPR Looonng Descriptiooonnn",
 			CreatedAt:        time.Now(),
