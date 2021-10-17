@@ -14,7 +14,7 @@ export type VisitorsPostErrorResponse = {
   ok: boolean
 }
 
-export type ServiceGetResponse = {
+export type ServiceByIdResponse = {
   data: [
       {
         id: number,
@@ -28,6 +28,11 @@ export type ServiceGetResponse = {
         updated_at: string
     }
   ],
+  message: string,
+  ok: boolean
+}
+
+export type ServiceByIdErrorResponse = {
   message: string,
   ok: boolean
 }

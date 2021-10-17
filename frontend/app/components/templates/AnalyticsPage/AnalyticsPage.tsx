@@ -1,30 +1,34 @@
-import { useState } from 'react'
-import { NextPage } from 'next'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styles from './AnalyticsPage.module.scss'
 import { Stepper } from '../../elements/Stepper/Stepper'
 import { Button } from '../../elements/Button/Button'
+import { AnalyticsResult } from '../../modules/AnalyticsResult/AnayticsResult'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { colorChoices } from '../../../types/elements'
 
-const AnalyticsPage: NextPage = () => {
+type Props = {
+  analyticsName: string,
+  shortDescription: string,
+  longDescription: string,
+  examples: string[]
+}
 
-  const [photo, setPhoto] = useState()
-  const [analyticsName, setAnalyticsName] = useState("OCR KTP")
-  const [description, setDescription] = useState("Visionaire Cloud is a pay-as-you-go solution, designed to analyze video and image by using leading-edge\
-      artiﬁcial intelligence and analytics, and turning it into actionable intelligence – whether to strengthen a business\
-      or as an essential business tool to help organizations streamline operations, improve monitoring and customer experience.")
+export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription, examples }: Props) => {
+
+  const [photo, setPhoto] = useState("")
+  const [currentStep, setCurrentStep] = useState(1)
 
   return (
     <>
       <div className={`${styles.container} ${styles.intro}`}>
         <div className={styles.title}>
           <h1>{analyticsName}</h1>
-          <p>{description}</p>
+          <p>{shortDescription}</p>
         </div>
         <div className={styles.imageIntro}>
           <Image
-            src={require("../../../../public/assets/images/placeholder.jpg")}
+            src={"/assets/images/placeholder.jpg"}
             layout="fill"
             objectFit="cover" />
         </div>
@@ -32,15 +36,33 @@ const AnalyticsPage: NextPage = () => {
       <div className={styles.container}>
         <Stepper
           steps={["Upload your photo", "Check your results"]}
-          activeStep={1}
+          activeStep={currentStep}
           />
       </div>
-      <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-        <DropzoneOptions images={[require("../../../../public/assets/images/face.jpg"),
-        require("../../../../public/assets/images/face2.jpeg")]} onPhotoDrop={setPhoto} />
-        {/* TODO: Add API Call Handler */}
-        <Button color={colorChoices.Primary}>Next Step</Button>
-      </div>
+        {
+          currentStep === 1 ?
+          <div className={`${styles.container} ${styles.dropzoneColumns}`}>
+            <DropzoneOptions
+              images={examples}
+              onPhotoDrop={setPhoto}
+              />
+            {
+              photo &&
+              <Button color={colorChoices.Primary} onClick={() => setCurrentStep(2)}>
+                Next Step
+              </Button>
+            }
+          </div>
+          :
+          <div className={`${styles.container} ${styles.dropzoneColumns}`}>
+            <AnalyticsResult
+              imageBase64={photo}
+            />
+            <Button color={colorChoices.Primary} onClick={() => {setCurrentStep(1); setPhoto("")}}>
+              Try Again
+            </Button>
+          </div>
+        }
     </>
   )
 }

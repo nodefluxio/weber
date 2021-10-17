@@ -1,0 +1,16 @@
+.result{
+  margin: 2rem 0;
+}
+
+.resultImage {
+  position: relative;
+  height: 320px;
+  width: 560px;
+}
+
+.resultFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}

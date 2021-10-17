@@ -5,7 +5,8 @@ import styles from "./DropzoneOptions.module.scss"
 
 type Props = {
   images: string[],
-  onPhotoDrop: Function
+  onPhotoDrop: Function,
+  // onPhotoSrc: Function
 }
 
 export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
@@ -17,6 +18,7 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
     // Setup file reader
     const reader = new FileReader()
     reader.readAsDataURL(uploadedPhoto[0])
+    console.log(uploadedPhoto[0])
     reader.onload = (event) => {
       // Max accepted image file = 800kB
       if (uploadedPhoto[0].size < MAX_IMAGE_SIZE) {
