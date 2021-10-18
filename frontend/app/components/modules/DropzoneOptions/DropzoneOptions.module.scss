@@ -1,0 +1,58 @@
+.dropzoneContainer {
+  width: 100%;
+  max-width: 640px;
+  height: 360px;
+  position: relative;
+  outline: 2px solid silver;
+  margin-left: 2rem;
+  &:hover {
+    background: ghostwhite;
+  }
+}
+
+.imagePreview {
+  width: inherit;
+  height: inherit;
+}
+
+.instruction {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  height: inherit;
+  p {
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+  }
+}
+
+.doubleColumn {
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.dropzoneContainer {
+  flex-basis: 65%;
+}
+
+.imageOptions {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .items {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    &:hover {
+      outline: 4px solid grey;
+    }
+  }
+}
