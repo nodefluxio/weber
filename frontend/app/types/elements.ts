@@ -1,6 +1,6 @@
-export enum colorChoices {
+export enum Color {
   Primary = 'primary',
-  Secondary = 'secondary',
+  Secondary = 'secondary'
 }
 
 export type Service = {
