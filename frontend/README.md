@@ -9,6 +9,7 @@ To get a local copy up and running follow these simple steps.
 - Have npm installed (for running in local)
 - Have Docker installed (for running with docker)
 - Clone the repo
+
   ```sh
   https://github.com/nodefluxio/weber.git
   ```
@@ -17,10 +18,11 @@ To get a local copy up and running follow these simple steps.
 
 ```sh
 cd frontend
+cp .env.example .env.local
 npm run dev
 ```
 
-App will be available on http://localhost:3000
+App will be available on <http://localhost:3000>
 
 ### Running with docker
 
@@ -28,21 +30,23 @@ App will be available on http://localhost:3000
 
 ```sh
 cd frontend
+cp .env.example .env.local
 docker build -t <your_username>/weber-frontend-dev -f dev.Dockerfile .
-docker run -p 3000:3000 <your_username>/weber-frontend-dev
+docker run -p 3000:3000 --env-file .env.local <your_username>/weber-frontend-dev
 ```
 
 #### Production
 
 ```sh
 cd frontend
+cp .env.example .env.production.local
 docker build -t <your_username>/weber-frontend .
-docker run -p 3000:3000 -it <your_username>/weber-frontend
+docker run -p 3000:3000 --env-file .env.production.local -it <your_username>/weber-frontend
 ```
 
-App will be available on http://localhost:3000
+App will be available on <http://localhost:3000>
 
 ### list current available pages
 
-- http://localhost:3000
-- http://localhost:3000/request-demo
+- <http://localhost:3000>
+- <http://localhost:3000/request-demo>

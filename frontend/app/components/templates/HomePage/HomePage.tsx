@@ -1,12 +1,12 @@
-import styles from "./HomePage.module.scss";
-import type {Service} from "../../../types/elements"
-import { Card } from "../../modules/Card/Card";
-import { CardFull } from "../../modules/CardFull/CardFull";
+import styles from './HomePage.module.scss'
+import type { Service } from '../../../types/elements'
+import { Card } from '../../modules/Card/Card'
+import { CardFull } from '../../modules/CardFull/CardFull'
 
 type Props = {
-  analytics: Service[];
-  solutions: Service[];
-};
+  analytics: Service[]
+  solutions: Service[]
+}
 
 export const HomePage = ({ analytics, solutions }: Props) => {
   return (
@@ -35,5 +35,5 @@ export const HomePage = ({ analytics, solutions }: Props) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

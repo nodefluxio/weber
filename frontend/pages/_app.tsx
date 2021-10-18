@@ -1,13 +1,13 @@
 import '../app/styles/app.scss'
 import type { AppProps } from 'next/app'
-import { Layout } from '../app/components/layouts/Layout'
+import { Default } from '../app/components/layouts/Default/Default'
 import '../app/utils/axios/axiosConfig'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <Default>
       <Component {...pageProps} />
-    </Layout>
+    </Default>
   )
 }
 export default MyApp
