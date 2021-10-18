@@ -16,31 +16,12 @@ import (
 	"gorm.io/gorm"
 )
 
-type ServiceType string
-
-const (
-	Analytic	ServiceType = "analytic"
-	Solution				= "solution"
-	Innovation				= "innovation"
-)
-
-func isValidServiceType(serviceType string) (bool, ServiceType) {
-	serviceTypes := [...]ServiceType{Analytic, Solution, Innovation}
-	for _, st := range serviceTypes {
-		if string(st) == serviceType {
-			return true, st
-		}
-	}
-
-	return false, ""
-}
-
 func GetServicesByType(ctx *gin.Context) {
 	serviceTypeQuery, isAnyQueryType := ctx.GetQuery("type")
 
 	// check if there is a query URL "type" 
 	// and it has an invalid value
-	isValid, serviceType := isValidServiceType(serviceTypeQuery)
+	isValid, serviceType := models.IsValidServiceType(serviceTypeQuery)
 	if isAnyQueryType && !isValid {
 		ctx.JSON(http.StatusBadRequest, gin.H {
 			"ok": false,
@@ -50,11 +31,11 @@ func GetServicesByType(ctx *gin.Context) {
 	}
 
 	switch serviceType {
-	case Analytic:
+	case models.Analytic:
 		getServiceAnalytic(ctx)
-	case Solution:
+	case models.Solution:
 		getServiceSolution(ctx)
-	case Innovation:
+	case models.Innovation:
 		getServiceInnovation(ctx)
 	// handle conditions like /services, /services?types=analytic
 	default:
