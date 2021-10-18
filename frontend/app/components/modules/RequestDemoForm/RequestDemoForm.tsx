@@ -9,7 +9,7 @@ import {
 } from '../../../types/responses'
 import { setCookie } from 'nookies'
 import { useState } from 'react'
-
+import styles from './RequestDemoForm.module.scss'
 type Props = {
   onSuccess: () => void
 }
@@ -54,7 +54,10 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
   }
 
   return (
-    <form method="post" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={styles.form}
+      method="post"
+      onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="email"
         label="Email"
@@ -106,7 +109,9 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
           errors={errors}
         />
       </div>
-      <div>{errorMessage ? `*${errorMessage}` : null}</div>
+      <div className={styles.errorMessage}>
+        {errorMessage ? `*${errorMessage}` : null}
+      </div>
       <Button type="submit" color={Color.Primary}>
         Submit
       </Button>

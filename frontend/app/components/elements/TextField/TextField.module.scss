@@ -1,4 +1,21 @@
 .container {
+  input {
+    width: 100%;
+    padding: 12px 8px;
+    margin: 8px 0;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 4px;
+  }
+  label {
+    display: inline;
+  }
+  input:focus {
+    outline: none;
+    border: 1px solid black;
+  }
+  .inputError {
+    border: 1px solid red;
+  }
   p {
     color: #bf1650;
   }

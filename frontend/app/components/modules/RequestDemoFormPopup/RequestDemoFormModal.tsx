@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { RequestDemoForm } from '../RequestDemoForm/RequestDemoForm'
-
+import styles from './RequestDemoFormPopup.module.scss'
 export const RequestDemoFormPopup = () => {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false)
   return (
-    <div>
+    <div className={styles.container}>
       {isSubmitSuccess ? (
         <h1>Success</h1>
       ) : (

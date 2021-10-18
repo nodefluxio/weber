@@ -10,26 +10,33 @@ import { parseCookies } from 'nookies'
 import useSWR from 'swr'
 import axios from 'axios'
 import { AnalyticsResponse } from '../../../types/responses'
-
+import { Modal } from '../../elements/Modal/Modal'
+import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 type Props = {
-  analyticsName: string,
-  shortDescription: string,
-  longDescription: string,
-  examples: string[],
+  analyticsName: string
+  shortDescription: string
+  longDescription: string
+  examples: string[]
   serviceID: number
 }
 
-export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription, examples, serviceID }: Props) => {
-
-  const [photo, setPhoto] = useState("")
+export const AnalyticsPage = ({
+  analyticsName,
+  shortDescription,
+  longDescription,
+  examples,
+  serviceID
+}: Props) => {
+  const [photo, setPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
+  const [openModal, setOpenModal] = useState(false)
+  const [sessionId, setSessionId] = useState('')
 
-  const fetcher = async(url: string) => {
-    const { session_id } = parseCookies()
-    if(url && session_id) {
+  const fetcher = async (url: string) => {
+    if (url) {
       try {
         const res = await axios.post<AnalyticsResponse>(url, {
-          session_id: session_id,
+          session_id: sessionId,
           data: {
             images: [photo]
           }
@@ -42,15 +49,32 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
             throw new Error("No result available")
           }
         }
-      } catch(err) {
-        throw new Error("Failed to load")
+      } catch (err) {
+        throw new Error('Failed to load')
       }
     }
   }
-  var { data, error } = useSWR( currentStep === 2 ? `services/${serviceID}` : "", fetcher)
+
+  const checkSessionId = () => {
+    const { session_id } = parseCookies()
+    if (session_id) {
+      setCurrentStep(2)
+      setSessionId(session_id)
+    } else {
+      setOpenModal(true)
+    }
+  }
+
+  const { data, error } = useSWR(
+    currentStep === 2 ? `services/${serviceID}` : '',
+    fetcher
+  )
 
   return (
     <>
+      <Modal show={openModal} onClose={() => setOpenModal(false)}>
+        <RequestDemoFormPopup />
+      </Modal>
       <div className={`${styles.container} ${styles.intro}`}>
         <div className={styles.title}>
           <h1>{analyticsName}</h1>
@@ -59,16 +83,17 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
         </div>
         <div className={styles.imageIntro}>
           <Image
-            src={"/assets/images/placeholder.jpg"}
+            src={'/assets/images/placeholder.jpg'}
             layout="fill"
-            objectFit="cover" />
+            objectFit="cover"
+          />
         </div>
       </div>
       <div className={styles.container}>
         <Stepper
-          steps={["Upload your photo", "Check your results"]}
+          steps={['Upload your photo', 'Check your results']}
           activeStep={currentStep}
-          />
+        />
       </div>
       {/* TODO: Butuh pembenahan... refactor? */}
         {
@@ -88,10 +113,7 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
           : (
             data ?
               <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-              <AnalyticsResult
-                imageBase64={photo}
-                result={data}
-              />
+              <AnalyticsResult imageBase64={photo} result={data} />
               <Button color={Color.Primary} onClick={() => {setCurrentStep(1); setPhoto("")}}>
                 Try Again
               </Button>
