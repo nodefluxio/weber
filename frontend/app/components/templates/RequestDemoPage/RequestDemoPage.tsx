@@ -1,18 +1,13 @@
 import { RequestDemoForm } from '../../modules/RequestDemoForm/RequestDemoForm'
 import { useRouter } from 'next/router'
+import styles from './RequestDemoPage.module.scss'
 export const RequestDemoPage = () => {
   const router = useRouter()
 
   return (
-    <div>
+    <div className={styles.container}>
       <div>
-        <h1>Lorem ipsum dolor</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae libero
-          voluptates magni iure perferendis aut adipisci voluptatem mollitia
-          voluptate, cupiditate eaque dicta obcaecati corrupti! Itaque atque
-          deserunt delectus cum tempore?
-        </p>
+        <h1>Request Nodeflux Demo</h1>
       </div>
       <div>
         <RequestDemoForm onSuccess={() => router.push('/')} />
