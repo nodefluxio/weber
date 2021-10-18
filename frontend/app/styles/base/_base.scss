@@ -1,17 +1,22 @@
 @import '../abstracts/mixins';
+@import '../abstracts/variables';
 
 * {
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $secondary-font;
+}
+h1,
+h2,
+h3 {
+  font-family: $primary-font;
 }
 html,
 body {
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
   font-size: 14px;
-  @include tablet {
-    font-size: 16px;
-  }
 }
 html {
   scroll-behavior: smooth;
@@ -19,6 +24,7 @@ html {
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 a {
