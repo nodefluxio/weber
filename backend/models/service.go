@@ -6,6 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
+type ServiceType string
+
+const (
+	Analytic	ServiceType = "analytic"
+	Solution				= "solution"
+	Innovation				= "innovation"
+)
+
 type Service struct {
 	ID               uint 		`gorm:"primaryKey; autoIncrement" json:"id"` 
 	Name             string 	
@@ -70,4 +78,15 @@ func CreateService(db *gorm.DB, Service *Service) (err error) {
 		return err
 	}
 	return nil
+}
+
+func IsValidServiceType(serviceType string) (bool, ServiceType) {
+	serviceTypes := [...]ServiceType{Analytic, Solution, Innovation}
+	for _, st := range serviceTypes {
+		if string(st) == serviceType {
+			return true, st
+		}
+	}
+
+	return false, ""
 }
