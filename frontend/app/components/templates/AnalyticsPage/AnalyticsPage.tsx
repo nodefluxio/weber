@@ -36,14 +36,18 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
         })
         if (res.data.ok) {
           const { service_data } = res.data
-          return service_data.job.result.result[0]
+          if(service_data.job.result.status === "success") {
+            return service_data.job.result.result[0]
+          } else {
+            throw new Error("No result available")
+          }
         }
       } catch(err) {
-        console.log(err)
+        throw new Error("Failed to load")
       }
     }
   }
-  const { data, error } = useSWR( currentStep === 2 ? `services/${serviceID}` : "", fetcher)
+  var { data, error } = useSWR( currentStep === 2 ? `services/${serviceID}` : "", fetcher)
 
   return (
     <>
@@ -88,11 +92,12 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
                 imageBase64={photo}
                 result={data}
               />
-              <Button color={Color.Primary} onClick={() => {setCurrentStep(1); setPhoto("");}}>
+              <Button color={Color.Primary} onClick={() => {setCurrentStep(1); setPhoto("")}}>
                 Try Again
               </Button>
-            </div> :
-            error ? <div>Failed to load</div> : <div>Please wait for your result...</div>
+            </div> : (
+              error ? <div>Failed to load, please reload page :(</div> : <div>Please wait for your result...</div>
+            )
           )
         }
     </>

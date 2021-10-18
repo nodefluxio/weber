@@ -50,7 +50,8 @@ export type AnalyticsResponse = {
     job: {
       result: {
         analytic_type: string,
-        result: Object[]
+        result: Object[],
+        status: string
       }
     }
   }
