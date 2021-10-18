@@ -16,38 +16,52 @@ import (
 	"gorm.io/gorm"
 )
 
-// Struct-based Enums
-type serviceType struct {
-	slug string
-}
+type ServiceType string
 
-var (
-	Empty 	= serviceType{""}
-	Analytic	= serviceType{"analytic"}
-	Solution	= serviceType{"solution"}
-	Innovation	= serviceType{"innovation"}
+const (
+	Analytic	ServiceType = "analytic"
+	Solution				= "solution"
+	Innovation				= "innovation"
 )
 
-func GetServicesByType(ctx *gin.Context) {
-	serviceTypeQuery := ctx.Query("type")
+func isValidServiceType(serviceType string) (bool, ServiceType) {
+	serviceTypes := [...]ServiceType{Analytic, Solution, Innovation}
+	for _, st := range serviceTypes {
+		if string(st) == serviceType {
+			return true, st
+		}
+	}
 
-	switch serviceTypeQuery {
-	case Analytic.slug:
+	return false, ""
+}
+
+func GetServicesByType(ctx *gin.Context) {
+	serviceTypeQuery, isAnyQueryType := ctx.GetQuery("type")
+
+	// check if there is a query URL "type" 
+	// and it has an invalid value
+	isValid, serviceType := isValidServiceType(serviceTypeQuery)
+	if isAnyQueryType && !isValid {
+		ctx.JSON(http.StatusBadRequest, gin.H {
+			"ok": false,
+			"message": "Value of argument '?type=' is not valid",
+		})
+		return
+	}
+
+	switch serviceType {
+	case Analytic:
 		getServiceAnalytic(ctx)
-	case Solution.slug:
+	case Solution:
 		getServiceSolution(ctx)
-	case Innovation.slug:
+	case Innovation:
 		getServiceInnovation(ctx)
-	case Empty.slug:
+	// handle conditions like /services, /services?types=analytic
+	default:
 		ctx.JSON(http.StatusBadRequest, gin.H {
 			"ok": false,
 			"message":  "Expected 1 argument '?type=' with string value or "+ 
 						"1 argument '/id' with integer value",
-		})
-	default:
-		ctx.JSON(http.StatusBadRequest, gin.H {
-			"ok": false,
-			"message": "Value of argument '?type=' is not recognized",
 		})
 	}
 }
