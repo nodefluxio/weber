@@ -43,10 +43,10 @@ export const AnalyticsPage = ({
         })
         if (res.data.ok) {
           const { service_data } = res.data
-          if(service_data.job.result.status === "success") {
+          if (service_data.job.result.status === "success") {
             return service_data.job.result.result[0]
           } else {
-            throw new Error("No result available")
+            throw new Error(service_data.job.result.status)
           }
         }
       } catch (err) {
@@ -96,32 +96,34 @@ export const AnalyticsPage = ({
         />
       </div>
       {/* TODO: Butuh pembenahan... refactor? */}
-        {
-          currentStep === 1 ?
-          <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-            <DropzoneOptions
-              images={examples}
-              onPhotoDrop={setPhoto}
-              />
-            {
-              photo &&
-              <Button color={Color.Primary} onClick={() => setCurrentStep(2)}>
-                Next Step
-              </Button>
-            }
-          </div>
-          : (
-            data ?
-              <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-              <AnalyticsResult imageBase64={photo} result={data} />
-              <Button color={Color.Primary} onClick={() => {setCurrentStep(1); setPhoto("")}}>
-                Try Again
-              </Button>
-            </div> : (
-              error ? <div>Failed to load, please reload page :(</div> : <div>Please wait for your result...</div>
-            )
-          )
-        }
+      {currentStep === 1 ? (
+        <div className={`${styles.container} ${styles.dropzoneColumns}`}>
+          <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
+          {photo && (
+            <Button color={Color.Primary} onClick={() => checkSessionId()}>
+              Next Step
+            </Button>
+          )}
+        </div>
+      ) : data ? (
+        <div className={`${styles.container} ${styles.dropzoneColumns}`}>
+          <AnalyticsResult imageBase64={photo} result={data} />
+          <Button
+            color={Color.Primary}
+            onClick={() => {
+              setCurrentStep(1)
+              setPhoto('')
+            }}>
+            Try Again
+          </Button>
+        </div>
+      ) : (
+        error ? (
+          <div>Failed to load. Please reload tab and upload a new photo</div>
+        ) : (
+          <div>Generating result... If you have been waiting for 15 seconds, please reload tab.</div>
+        )
+      )}
     </>
   )
 }
