@@ -3,36 +3,34 @@
 .btn {
   padding: 0.5rem 1.5rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 50px;
   background-color: whitesmoke;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   font-size: inherit;
   font-family: inherit;
+  font-weight: 800;
   cursor: pointer;
-
   &:hover,
   &:focus {
     background-color: darken(whitesmoke, 10%);
   }
 
   &.primary {
-    background-color: $primary;
+    background-color: $primary-color;
     color: whitesmoke;
 
     &:hover,
     &:focus {
-      background-color: darken($primary, 10%);
+      background-color: darken($primary-color, 10%);
     }
   }
 
   &.secondary {
-    background-color: $secondary;
-    color: $primary;
+    background-color: $secondary-color;
+    color: $primary-color;
 
     &:hover,
     &:focus {
-      background-color: darken($secondary, 10%);
+      background-color: darken($secondary-color, 10%);
     }
   }
 }

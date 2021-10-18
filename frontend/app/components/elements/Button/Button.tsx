@@ -1,16 +1,17 @@
 import { ReactNode, MouseEventHandler, forwardRef } from 'react'
 import styles from './Button.module.scss'
-import { colorChoices } from '../../../types/elements'
+import { Color } from '../../../types/elements'
 
 type Props = {
   children: ReactNode
-  color: colorChoices
+  color: Color
   type?: 'button' | 'submit' | 'reset' | 'link' | undefined
   onClick?: MouseEventHandler<HTMLButtonElement>
+  className?: string
 }
 
 export const Button = forwardRef(
-  ({ children, color, type, onClick }: Props, ref) => {
+  ({ children, color, type, onClick, className }: Props, ref) => {
     let tagName = 'button'
     if (type === 'link') {
       tagName = 'a'
@@ -19,16 +20,12 @@ export const Button = forwardRef(
     const Component = tagName as React.ElementType
 
     const attributes = {
-      className: `${styles.btn} ${color && styles[color]}`,
+      className: `${styles.btn} ${color && styles[color]} ${className}`,
       type: type === 'link' ? undefined : type,
       onClick: onClick,
-      ref: ref,
+      ref: ref
     }
 
-    return (
-      <>
-        <Component {...attributes}>{children}</Component>
-      </>
-    )
+    return <Component {...attributes}>{children}</Component>
   }
 )
