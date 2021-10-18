@@ -28,9 +28,15 @@ export const AnalyticsResult = ({ imageBase64, result }: Props) => {
               objectFit="cover"
             />
           </div>
-          <div>
+          <div className={styles.resultInfo}>
             <p>Results Here</p>
-            <p>{JSON.stringify(result)}</p>
+            <ul>
+            {
+              Object.entries(result).map(([key, value]) => (
+                <li><b>{key}</b>: {value}</li>
+              ))
+            }
+            </ul>
           </div>
         </div>     
       }

@@ -34,7 +34,7 @@ const OCR: NextPage = () => {
                 analyticsName={data.name}
                 shortDescription={data.short_description}
                 longDescription={data.long_description}
-                examples={["/assets/images/face.jpg", "/assets/images/face2.jpeg"]}
+                examples={["/assets/images/ktp1.jpg", "/assets/images/ktp2.jpeg", "/assets/images/ktp3.jpg"]}
                 serviceID={1}
               />
 }

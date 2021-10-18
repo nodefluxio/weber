@@ -5,7 +5,7 @@ import { Stepper } from '../../elements/Stepper/Stepper'
 import { Button } from '../../elements/Button/Button'
 import { AnalyticsResult } from '../../modules/AnalyticsResult/AnayticsResult'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
-import { AnalyticsParam, Color } from '../../../types/elements'
+import { Color } from '../../../types/elements'
 import { parseCookies } from 'nookies'
 import useSWR from 'swr'
 import axios from 'axios'
@@ -36,8 +36,7 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
         })
         if (res.data.ok) {
           const { service_data } = res.data
-          console.log(service_data)
-          return service_data.job.result.result
+          return service_data.job.result.result[0]
         }
       } catch(err) {
         console.log(err)
@@ -89,11 +88,11 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
                 imageBase64={photo}
                 result={data}
               />
-              <Button color={Color.Primary} onClick={() => {setCurrentStep(1); setPhoto("")}}>
+              <Button color={Color.Primary} onClick={() => {setCurrentStep(1); setPhoto("");}}>
                 Try Again
               </Button>
             </div> :
-            <div>Please wait for your result...</div>
+            error ? <div>Failed to load</div> : <div>Please wait for your result...</div>
           )
         }
     </>

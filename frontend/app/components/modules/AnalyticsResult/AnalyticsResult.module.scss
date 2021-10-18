@@ -1,11 +1,15 @@
 .result{
   margin: 2rem 0;
+  width: 100%;
 }
 
 .resultImage {
   position: relative;
-  height: 320px;
-  width: 560px;
+  flex-basis: 50%;
+  min-height: 160px;
+  min-width: 240px;
+  max-height: 320px;
+  max-width: 560px;
 }
 
 .resultFlex {
@@ -14,4 +18,11 @@
   justify-content: center;
   gap: 2rem;
   padding: 0;
+}
+
+.resultInfo {
+  li {
+    list-style: none;
+  }
+  flex-basis: 50%;
 }
