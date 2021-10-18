@@ -17,25 +17,32 @@ import (
 )
 
 func GetServicesByType(ctx *gin.Context) {
-	serviceType := ctx.Query("type")
+	serviceTypeQuery, isAnyQueryType := ctx.GetQuery("type")
+
+	// check if there is a query URL "type" 
+	// and it has an invalid value
+	isValid, serviceType := models.IsValidServiceType(serviceTypeQuery)
+	if isAnyQueryType && !isValid {
+		ctx.JSON(http.StatusBadRequest, gin.H {
+			"ok": false,
+			"message": "Value of argument '?type=' is not valid",
+		})
+		return
+	}
 
 	switch serviceType {
-	case "analytic":
+	case models.Analytic:
 		getServiceAnalytic(ctx)
-	case "solution":
+	case models.Solution:
 		getServiceSolution(ctx)
-	case "innovation":
+	case models.Innovation:
 		getServiceInnovation(ctx)
-	case "":
+	// handle conditions like /services, /services?types=analytic
+	default:
 		ctx.JSON(http.StatusBadRequest, gin.H {
 			"ok": false,
 			"message":  "Expected 1 argument '?type=' with string value or "+ 
 						"1 argument '/id' with integer value",
-		})
-	default:
-		ctx.JSON(http.StatusBadRequest, gin.H {
-			"ok": false,
-			"message": "Value of argument '?type=' is not recognized",
 		})
 	}
 }
