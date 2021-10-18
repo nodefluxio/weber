@@ -19,3 +19,23 @@ export type RequestDemoFormData = {
   job_title: string
   industry: string
 }
+
+export type AnalyticsParam = {
+  session_id: string,
+  data: {
+    additional_params: Object,
+    images: string[]
+  }
+}
+
+export type AnalyticsResult = {
+  message: string,
+  ok: boolean,
+  job: {
+    result: {
+      analytic_type: string,
+      result: Object[],
+      status: string
+    }
+  }
+}

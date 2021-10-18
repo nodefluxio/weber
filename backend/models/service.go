@@ -6,17 +6,27 @@ import (
 	"gorm.io/gorm"
 )
 
+type ServiceType string
+
+const (
+	Analytic	ServiceType = "analytic"
+	Solution				= "solution"
+	Innovation				= "innovation"
+)
+
 type Service struct {
 	ID               uint 		`gorm:"primaryKey; autoIncrement" json:"id"` 
-	ApiKey           string 	`json:"api_key"`
-	Type             string 	`json:"type"`
-	Slug             string 	`json:"slug"`
-	Name             string 	`json:"name"`
-	ShortDescription string 	`json:"short_description"`
-	LongDescription  string 	`json:"long_description"`
-	Thumbnail        string 	`json:"thumbnail"`
-	CreatedAt        time.Time	`json:"created_at"`
-	UpdatedAt        time.Time	`json:"updated_at"`
+	Name             string 	
+	Type             string 	
+	Slug             string 	
+	Thumbnail        string 	
+	AccessKey		 string 	
+	Token			 string		
+	Timestamp		 string		
+	ShortDescription string 	
+	LongDescription  string 	
+	CreatedAt        time.Time	
+	UpdatedAt        time.Time	
 }
 
 type APIService struct {
@@ -51,6 +61,16 @@ type ServiceRequestResultData struct {
 	Ok 		bool 					`json:"ok"`
 }
 
+type ResponseResult struct {
+	ID	string	`json:"id"`
+}
+
+type ResponseResultData struct {
+	Job 	ResponseResult	`json:"job"`
+	Message string			`json:"message"`
+	Ok 		bool 			`json:"ok"`
+}
+
 
 func CreateService(db *gorm.DB, Service *Service) (err error) {
 	err = db.Create(Service).Error
@@ -58,4 +78,15 @@ func CreateService(db *gorm.DB, Service *Service) (err error) {
 		return err
 	}
 	return nil
+}
+
+func IsValidServiceType(serviceType string) (bool, ServiceType) {
+	serviceTypes := [...]ServiceType{Analytic, Solution, Innovation}
+	for _, st := range serviceTypes {
+		if string(st) == serviceType {
+			return true, st
+		}
+	}
+
+	return false, ""
 }
