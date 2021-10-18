@@ -4,7 +4,7 @@
   margin: auto;
   width: 300px;
   overflow: hidden;
-  border: .25px solid $primary;
+  border: .25px solid $primary-color;
   border-radius: 30px;
   color: whitesmoke;
   position: relative;
@@ -12,7 +12,7 @@
 
 .body {
   border-radius: 30px;
-  background-color: $primary;
+  background-color: $primary-color;
   height: 300px;
 
   h3 {
