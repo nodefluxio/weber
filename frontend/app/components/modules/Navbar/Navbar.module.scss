@@ -1,0 +1,116 @@
+@import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
+
+.navbar {
+  flex: 1;
+  align-self: flex-start;
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $white-bg;
+  text-transform: uppercase;
+  @include phone {
+    padding: 2rem 2rem;
+  }
+  .imageContainer {
+    cursor: pointer;
+    max-width: 149px;
+    @include phone {
+      max-width: 120px;
+    }
+  }
+  .hamburgerButton {
+    height: 2rem;
+    width: 2rem;
+    position: relative;
+    display: none;
+    border: none;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 150%;
+      width: 150%;
+      top: -25%;
+      left: -25%;
+    }
+    @include tablet {
+      display: block;
+    }
+    .lines {
+      top: 50%;
+      margin-top: -0.125em;
+      &,
+      &:after,
+      &:before {
+        height: 2px;
+        pointer-events: none;
+        display: block;
+        content: '';
+        width: 100%;
+        background-color: $primary-color;
+        position: absolute;
+      }
+
+      &:after {
+        /* Move bottom line below center line */
+        top: -0.6rem;
+      }
+
+      &:before {
+        /* Move top line on top of center line */
+        top: 0.6rem;
+      }
+    }
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    color: $primary-color;
+    font-weight: 800;
+    @include tablet {
+      position: fixed;
+      right: 0;
+      top: 0;
+      height: 100%;
+      flex-direction: column;
+      background-color: $white-bg;
+      padding: 20vh 3rem;
+      transition: 0.2s ease-out;
+      transform: translateX(100%);
+      color: $white-text;
+      background-color: $primary-color;
+      &.openDrawer {
+        transform: translateX(0%);
+      }
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      padding-left: 4rem;
+      cursor: pointer;
+
+      @include tablet {
+        padding: 1.5rem 0;
+        &:hover {
+          color: unset;
+        }
+      }
+    }
+    .contactUs {
+      @include tablet {
+        padding-left: unset;
+      }
+      .btn {
+        transition: 0.3s ease;
+        text-transform: uppercase;
+        padding: 12px 20px;
+      }
+    }
+  }
+}
