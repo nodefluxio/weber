@@ -21,3 +21,37 @@ export type VisitorsPostErrorResponse = {
   message: string
   ok: boolean
 }
+
+export type ServiceByIdResponse = {
+  data: {
+    id: number,
+    type: string,
+    slug: string,
+    name: string,
+    short_description: string,
+    long_description: string,
+    thumbnail: string,
+    created_at: string,
+    updated_at: string
+  },
+  message: string,
+  ok: boolean
+}
+
+export type ServiceByIdErrorResponse = {
+  message: string,
+  ok: boolean
+}
+
+export type AnalyticsResponse = {
+  message: string,
+  ok: boolean,
+  service_data: {
+    job: {
+      result: {
+        analytic_type: string,
+        result: Object[]
+      }
+    }
+  }
+}

@@ -4,7 +4,6 @@ import (
 	"backend/database"
 	"backend/models"
 	"backend/utils"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -17,25 +16,32 @@ import (
 )
 
 func GetServicesByType(ctx *gin.Context) {
-	serviceType := ctx.Query("type")
+	serviceTypeQuery, isAnyQueryType := ctx.GetQuery("type")
+
+	// check if there is a query URL "type" 
+	// and it has an invalid value
+	isValid, serviceType := models.IsValidServiceType(serviceTypeQuery)
+	if isAnyQueryType && !isValid {
+		ctx.JSON(http.StatusBadRequest, gin.H {
+			"ok": false,
+			"message": "Value of argument '?type=' is not valid",
+		})
+		return
+	}
 
 	switch serviceType {
-	case "analytic":
+	case models.Analytic:
 		getServiceAnalytic(ctx)
-	case "solution":
+	case models.Solution:
 		getServiceSolution(ctx)
-	case "innovation":
+	case models.Innovation:
 		getServiceInnovation(ctx)
-	case "":
+	// handle conditions like /services, /services?types=analytic
+	default:
 		ctx.JSON(http.StatusBadRequest, gin.H {
 			"ok": false,
 			"message":  "Expected 1 argument '?type=' with string value or "+ 
 						"1 argument '/id' with integer value",
-		})
-	default:
-		ctx.JSON(http.StatusBadRequest, gin.H {
-			"ok": false,
-			"message": "Value of argument '?type=' is not recognized",
 		})
 	}
 }
@@ -173,44 +179,15 @@ func CreateServiceRequest(ctx *gin.Context) {
 		return
 	}
 
-	// requestResultString := RequestToService(serviceId, inputData) // Fungsi Request to Cloud
-
-	// Mock json data from requestToService() response
-	// Sample Response Body from 
-	// https://docs.nodeflux.io/visionaire-cloud/analytics-api/asynchronous/face-recognition
-	requestResultString := `
-	{
-		"job": {
-			"id": "b735df462ca567ed6e915c730ec3e44409c9ea546c5199d97b80fb841fe127e9",
-			"result": {
-				"status": "success",
-				"analytic_type": "FACE_RECOGNITION",
-				"result": [
-					{
-						"face_recognition": [
-							{
-								"candidates": [
-									{
-										"face_id": "88364589938376705",
-										"variation": "17614081020751468384",
-										"confidence": 1.0
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		},
-		"message": "Face Recognition Success",
-		"ok": true
-	}`
-
-	var serviceData models.ServiceRequestResultData
-	err = json.Unmarshal([]byte(requestResultString), &serviceData)
+	// Send a request to Service's API endpoint
+	serviceData, err := RequestToService(serviceId, inputData)
 	if err != nil {
-        fmt.Println(err)
-    }
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok": false,
+			"message": err,
+		})
+		return
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok": true,
