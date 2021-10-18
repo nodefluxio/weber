@@ -3,10 +3,11 @@ import { useEffect, useState } from "react"
 import styles from "./AnalyticsResult.module.scss"
 
 type Props = {
-  imageBase64: string
+  imageBase64: string,
+  result: object
 }
 
-export const AnalyticsResult = ({ imageBase64 }: Props) => {
+export const AnalyticsResult = ({ imageBase64, result }: Props) => {
 
   const [preview, setPreview] = useState("")
 
@@ -27,7 +28,10 @@ export const AnalyticsResult = ({ imageBase64 }: Props) => {
               objectFit="cover"
             />
           </div>
-          <p>Results Here</p>
+          <div>
+            <p>Results Here</p>
+            <p>{JSON.stringify(result)}</p>
+          </div>
         </div>     
       }
     </div>

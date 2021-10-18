@@ -5,19 +5,46 @@ import { Stepper } from '../../elements/Stepper/Stepper'
 import { Button } from '../../elements/Button/Button'
 import { AnalyticsResult } from '../../modules/AnalyticsResult/AnayticsResult'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
-import { colorChoices } from '../../../types/elements'
+import { AnalyticsParam, Color } from '../../../types/elements'
+import { parseCookies } from 'nookies'
+import useSWR from 'swr'
+import axios from 'axios'
+import { AnalyticsResponse } from '../../../types/responses'
 
 type Props = {
   analyticsName: string,
   shortDescription: string,
   longDescription: string,
-  examples: string[]
+  examples: string[],
+  serviceID: number
 }
 
-export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription, examples }: Props) => {
+export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription, examples, serviceID }: Props) => {
 
   const [photo, setPhoto] = useState("")
   const [currentStep, setCurrentStep] = useState(1)
+
+  const fetcher = async(url: string) => {
+    const { session_id } = parseCookies()
+    if(url && session_id) {
+      try {
+        const res = await axios.post<AnalyticsResponse>(url, {
+          session_id: session_id,
+          data: {
+            images: [photo]
+          }
+        })
+        if (res.data.ok) {
+          const { service_data } = res.data
+          console.log(service_data)
+          return service_data.job.result.result
+        }
+      } catch(err) {
+        console.log(err)
+      }
+    }
+  }
+  const { data, error } = useSWR( currentStep === 2 ? `services/${serviceID}` : "", fetcher)
 
   return (
     <>
@@ -25,6 +52,7 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
         <div className={styles.title}>
           <h1>{analyticsName}</h1>
           <p>{shortDescription}</p>
+          <p>{longDescription}</p>
         </div>
         <div className={styles.imageIntro}>
           <Image
@@ -39,6 +67,7 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
           activeStep={currentStep}
           />
       </div>
+      {/* TODO: Butuh pembenahan... refactor? */}
         {
           currentStep === 1 ?
           <div className={`${styles.container} ${styles.dropzoneColumns}`}>
@@ -48,20 +77,24 @@ export const AnalyticsPage = ({ analyticsName, shortDescription, longDescription
               />
             {
               photo &&
-              <Button color={colorChoices.Primary} onClick={() => setCurrentStep(2)}>
+              <Button color={Color.Primary} onClick={() => setCurrentStep(2)}>
                 Next Step
               </Button>
             }
           </div>
-          :
-          <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-            <AnalyticsResult
-              imageBase64={photo}
-            />
-            <Button color={colorChoices.Primary} onClick={() => {setCurrentStep(1); setPhoto("")}}>
-              Try Again
-            </Button>
-          </div>
+          : (
+            data ?
+              <div className={`${styles.container} ${styles.dropzoneColumns}`}>
+              <AnalyticsResult
+                imageBase64={photo}
+                result={data}
+              />
+              <Button color={Color.Primary} onClick={() => {setCurrentStep(1); setPhoto("")}}>
+                Try Again
+              </Button>
+            </div> :
+            <div>Please wait for your result...</div>
+          )
         }
     </>
   )
