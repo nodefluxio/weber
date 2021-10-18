@@ -1,3 +1,5 @@
+@import '../../../styles/abstracts/variables';
+
 .card {
   position: relative;
   overflow: hidden;
@@ -7,9 +9,14 @@
   color: whitesmoke;
   padding: 1.5rem;
   transition: all 0.2s;
+  background: linear-gradient( $primary, $primary );
 
   &:hover {
     transform: scale(1.025);
+
+    .image {
+      opacity: 1;
+    }
   }
 
   a {
@@ -21,9 +28,13 @@
       left: 0;
       right: 0;
       bottom: 0;
-      content: " ";
+      content: ' ';
     }
   }
+}
+
+.image{
+  opacity: .5;
 }
 
 .body {

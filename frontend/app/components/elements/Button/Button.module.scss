@@ -1,5 +1,4 @@
-$primary: #4c129d;
-$secondary: #45e1b3;
+@import '../../../styles/abstracts/variables';
 
 .btn {
   padding: 0.5rem 1.5rem;
@@ -10,6 +9,7 @@ $secondary: #45e1b3;
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   font-size: inherit;
   font-family: inherit;
+  cursor: pointer;
 
   &:hover,
   &:focus {

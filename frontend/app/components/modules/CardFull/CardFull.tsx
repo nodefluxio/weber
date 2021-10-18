@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './CardFull.module.scss'
 
 type Props = {
@@ -10,11 +11,15 @@ type Props = {
 
 export const CardFull = ({ img, title, desc, href }: Props) => {
   return (
-    <div
-      className={styles.card}
-      style={{
-        background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('${img}') center`
-      }}>
+    <div className={styles.card}>
+      <Image
+        className={styles.image}
+        alt={`image of ${title}`}
+        src={img}
+        layout="fill"
+        objectFit="cover"
+        quality={100}
+      />
       <div className={styles.body}>
         <h3>{title}</h3>
         <p>{desc}</p>

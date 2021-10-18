@@ -15,7 +15,7 @@ export const Card = ({ img, title, desc, slug }: Props) => {
   return (
     <div className={styles.card}>
       <div className={styles.cover}>
-        <Image src={img} width={150} height={150} />
+        <Image src={img} width={100} height={100} />
       </div>
 
       <div className={styles.body}>
