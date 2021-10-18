@@ -16,15 +16,17 @@ const (
 
 type Service struct {
 	ID               uint 		`gorm:"primaryKey; autoIncrement" json:"id"` 
-	ApiKey           string 	`json:"api_key"`
-	Type             string 	`json:"type"`
-	Slug             string 	`json:"slug"`
-	Name             string 	`json:"name"`
-	ShortDescription string 	`json:"short_description"`
-	LongDescription  string 	`json:"long_description"`
-	Thumbnail        string 	`json:"thumbnail"`
-	CreatedAt        time.Time	`json:"created_at"`
-	UpdatedAt        time.Time	`json:"updated_at"`
+	Name             string 	
+	Type             string 	
+	Slug             string 	
+	Thumbnail        string 	
+	AccessKey		 string 	
+	Token			 string		
+	Timestamp		 string		
+	ShortDescription string 	
+	LongDescription  string 	
+	CreatedAt        time.Time	
+	UpdatedAt        time.Time	
 }
 
 type APIService struct {
@@ -57,6 +59,16 @@ type ServiceRequestResultData struct {
 	Job 	ServiceRequestResult	`json:"job"`
 	Message string					`json:"message"`
 	Ok 		bool 					`json:"ok"`
+}
+
+type ResponseResult struct {
+	ID	string	`json:"id"`
+}
+
+type ResponseResultData struct {
+	Job 	ResponseResult	`json:"job"`
+	Message string			`json:"message"`
+	Ok 		bool 			`json:"ok"`
 }
 
 
