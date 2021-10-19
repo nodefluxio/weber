@@ -1,16 +1,27 @@
 import { useState } from 'react'
 import { RequestDemoForm } from '../RequestDemoForm/RequestDemoForm'
-
+import styles from './RequestDemoFormPopup.module.scss'
 export const RequestDemoFormPopup = () => {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false)
   return (
-    <div>
+    <div className={styles.container}>
       {isSubmitSuccess ? (
-        <h1>Success</h1>
+        <div className={styles.successContainer}>
+          <img
+            src="/assets/check-circle.svg"
+            alt="checklist circle"
+            width={117}
+            height={117}
+          />
+          <h2>You are successfully registered</h2>
+          <p>Thank you for submitting this form.</p>
+        </div>
       ) : (
-        <div>
-          <h2>Let us know you!</h2>
-          <h3>Please fill this form to continue to try our product. </h3>
+        <div className={styles.content}>
+          <div className={styles.text}>
+            <h2>Let us know you!</h2>
+            <p>Please fill this form to continue to try our product. </p>
+          </div>
           <RequestDemoForm onSuccess={() => setIsSubmitSuccess(true)} />
         </div>
       )}

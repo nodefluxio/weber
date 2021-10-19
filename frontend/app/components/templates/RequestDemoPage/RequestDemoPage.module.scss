@@ -1,0 +1,58 @@
+@import '../../../styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
+
+.container {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  @include tablet {
+    flex-direction: column;
+    justify-content: start;
+    margin: 1rem 0;
+  }
+  .content {
+    max-width: 40%;
+    padding-right: 2rem;
+    @include tablet {
+      max-width: 100%;
+      padding-right: unset;
+      margin-bottom: 24px;
+    }
+    h1 {
+      color: $primary-color;
+      font-family: $primary-font;
+      font-weight: 800;
+      font-size: 4rem;
+      @include tablet {
+        margin: 8px 0;
+      }
+    }
+    p {
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+    }
+  }
+  .formContent {
+    max-width: 50%;
+    margin-right: 30px;
+    @include tablet {
+      max-width: 100%;
+      margin-right: unset;
+      margin-bottom: 2rem;
+    }
+    .formCard {
+      padding: 2rem 3rem;
+      box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 9px;
+      .formText {
+        font-weight: 600;
+        line-height: 1.5rem;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+  .card {
+    padding: 32px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+}

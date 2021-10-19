@@ -1,7 +1,7 @@
 import { HTMLInputTypeAttribute } from 'react'
 import { DeepMap, RegisterOptions, UseFormRegister } from 'react-hook-form'
-import { ErrorMessage } from '@hookform/error-message'
 import styles from './TextField.module.scss'
+import { Label } from '../Label/Label'
 
 type Props = {
   id: string
@@ -23,13 +23,12 @@ export const TextField = ({
   const { id } = otherProps
   return (
     <div className={styles.container}>
-      <label htmlFor={id}>{label}</label>
+      <Label id={id} errors={errors} label={label} />
       {register ? (
         <input {...register(id, registerOptions)} {...otherProps} />
       ) : (
         <input {...otherProps} />
       )}
-      {errors ? <ErrorMessage errors={errors} name={id} as='p' /> : ''}
     </div>
   )
 }

@@ -1,10 +1,38 @@
-form {
-  p {
-    color: #bf1650;
+@import '../../../styles/abstracts/variables.scss';
+@import '../../../styles/abstracts/mixins';
+.form {
+  .divide {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    @include phone {
+      flex-direction: column;
+    }
+    .divideLeft {
+      width: 47%;
+      @include phone {
+        width: unset;
+      }
+    }
+    .divideRight {
+      width: 47%;
+      @include phone {
+        width: unset;
+      }
+    }
   }
+  .errorMessage {
+    color: #bf1650;
+    margin-bottom: 18px;
+  }
+  .buttonContainer {
+    width: 30%;
+    min-width: 130px;
+    margin: auto;
 
-  p::before {
-    display: inline;
-    content: '⚠ ';
+    .submitButton {
+      width: 100%;
+      padding: 12px 0;
+    }
   }
 }

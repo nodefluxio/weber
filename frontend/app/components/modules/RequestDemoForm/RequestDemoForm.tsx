@@ -9,6 +9,8 @@ import {
 } from '../../../types/responses'
 import { setCookie } from 'nookies'
 import { useState } from 'react'
+import styles from './RequestDemoForm.module.scss'
+import { SelectBox } from '../../elements/SelectBox/SelectBox'
 
 type Props = {
   onSuccess: () => void
@@ -54,14 +56,17 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
   }
 
   return (
-    <form method="post" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={styles.form}
+      method="post"
+      onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="email"
         label="Email"
         placeholder="Your business email"
         type="email"
         register={register}
-        registerOptions={{ required: 'Email is required' }}
+        registerOptions={{ required: 'required' }}
         errors={errors}
       />
       <TextField
@@ -71,9 +76,9 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         type="text"
         register={register}
         registerOptions={{
-          required: 'Full Name is required',
-          minLength: { value: 5, message: 'the minimum length is 5' },
-          maxLength: { value: 40, message: 'the maximum length is 40' }
+          required: 'required',
+          minLength: { value: 5, message: 'minimum length is 5' },
+          maxLength: { value: 40, message: 'maximum length is 40' }
         }}
         errors={errors}
       />
@@ -83,33 +88,47 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         placeholder="Company name"
         type="text"
         register={register}
-        registerOptions={{ required: 'Company is required' }}
+        registerOptions={{ required: 'required' }}
         errors={errors}
       />
-      <div>
-        <TextField
-          id="job_title"
-          label="Job Title"
-          placeholder="Job title"
-          type="text"
-          register={register}
-          registerOptions={{ required: 'Job Title is required' }}
-          errors={errors}
-        />
-        <TextField
-          id="industry"
-          label="Industry"
-          placeholder="Your company Industry"
-          type="text"
-          register={register}
-          registerOptions={{ required: 'Industry is required' }}
-          errors={errors}
-        />
+      <div className={styles.divide}>
+        <div className={styles.divideLeft}>
+          <TextField
+            id="job_title"
+            label="Job Title"
+            placeholder="Job title"
+            type="text"
+            register={register}
+            registerOptions={{ required: 'required' }}
+            errors={errors}
+          />
+        </div>
+        <div className={styles.divideRight}>
+          <SelectBox
+            id="industry"
+            label="Industry"
+            options={[
+              { name: 'Your company industry', value: '' },
+              { name: 'Technology', value: 'technology' },
+              { name: 'Artificial Intelegent', value: 'artificial_intellegent' }
+            ]}
+            register={register}
+            registerOptions={{ required: 'required' }}
+            errors={errors}
+          />
+        </div>
       </div>
-      <div>{errorMessage ? `*${errorMessage}` : null}</div>
-      <Button type="submit" color={Color.Primary}>
-        Submit
-      </Button>
+      <div className={styles.errorMessage}>
+        {errorMessage ? `*${errorMessage}` : null}
+      </div>
+      <div className={styles.buttonContainer}>
+        <Button
+          className={styles.submitButton}
+          type="submit"
+          color={Color.Primary}>
+          Submit
+        </Button>
+      </div>
     </form>
   )
 }
