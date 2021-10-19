@@ -15,7 +15,7 @@ export const HomePage = ({ analytics, solutions }: Props) => {
         {solutions.map((solution) => (
           <CardFull
             key={solution.id}
-            img={`/assets/solutions/${solution.thumbnail}`}
+            img={`/assets/images/solutions/${solution.thumbnail}`}
             title={solution.name}
             desc={solution.short_description}
             href={solution.slug}
@@ -27,7 +27,7 @@ export const HomePage = ({ analytics, solutions }: Props) => {
         {analytics.map((analytic) => (
           <Card
             key={analytic.id}
-            img={`/assets/analytics/${analytic.thumbnail}`}
+            img={`/assets/images/analytics/${analytic.thumbnail}`}
             title={analytic.name}
             desc={analytic.short_description}
             slug={analytic.slug}

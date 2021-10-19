@@ -1,20 +1,23 @@
+@import '../../../styles/abstracts/variables';
+
 .card {
   margin: auto;
   width: 300px;
   overflow: hidden;
-  border-radius: 20px;
+  border: .25px solid $primary-color;
+  border-radius: 30px;
   color: whitesmoke;
-  margin-top: 50px;
   position: relative;
+}
 
-  img {
-    width: 150px;
-    height: 150px;
-    padding: 1.5rem;
-  }
+.body {
+  border-radius: 30px;
+  background-color: $primary-color;
+  height: 300px;
 
   h3 {
-    padding: 1.5rem;
+    padding: 3rem 0 1rem 1.5rem;
+    font-size: x-large;
     margin: 0;
   }
 
@@ -24,17 +27,11 @@
   }
 }
 
-.body {
-  margin-top: 1rem;
-  border-radius: 20px;
-  background-color: purple;
-  height: 300px;
-}
-
 .cover {
   display: flex;
   justify-content: center;
   background-color: white;
+  padding: 3rem;
 }
 
 .footer {
