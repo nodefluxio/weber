@@ -1,8 +1,11 @@
+import Image from 'next/image'
 import styles from './HomePage.module.scss'
 import type { Service } from '../../../types/elements'
 import { Card } from '../../modules/Card/Card'
 import { CardFull } from '../../modules/CardFull/CardFull'
 import { Innovations } from '../../modules/Innovation/Innovations'
+import { Carousel } from '../../modules/Carousel/Carousel'
+import { CarouselItem } from '../../modules/CarouselItem/CarouselItem'
 
 type Props = {
   analytics: Service[]
@@ -37,7 +40,17 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
         ))}
       </div>
 
-      <Innovations data={innovations} />
+      <Carousel>
+        {innovations.map((innovation) => (
+          <CarouselItem
+            key={innovation.id}
+            img={`/assets/images/innovations/${innovation.thumbnail}`}
+            title={innovation.name}
+            desc={innovation.short_description}
+            slug={innovation.slug}
+          />
+        ))}
+      </Carousel>
     </div>
   )
 }

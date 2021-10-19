@@ -1,0 +1,18 @@
+@import '../../../styles/abstracts/variables';
+
+.carouselItem {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient($primary-color, $primary-color);
+}
+
+.card {
+  position: absolute;
+  left: 10vw;
+  top: 30vh;
+}
+
+.image {
+  opacity: 0.5;
+}
