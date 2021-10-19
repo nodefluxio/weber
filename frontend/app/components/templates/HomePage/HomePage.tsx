@@ -1,9 +1,7 @@
-import Image from 'next/image'
 import styles from './HomePage.module.scss'
 import { Color, Service } from '../../../types/elements'
 import { Card } from '../../modules/Card/Card'
 import { CardFull } from '../../modules/CardFull/CardFull'
-import { Innovations } from '../../modules/Innovation/Innovations'
 import { Carousel } from '../../modules/Carousel/Carousel'
 import { CarouselItem } from '../../modules/CarouselItem/CarouselItem'
 
