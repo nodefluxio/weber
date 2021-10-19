@@ -1,3 +1,24 @@
 .container {
   padding: 0rem 2rem;
+  .successContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 0;
+    img {
+      margin-bottom: 2rem;
+    }
+  }
+  .content {
+    .text {
+      margin-bottom: 2rem;
+
+      h2 {
+        font-weight: 600;
+      }
+      p {
+        font-weight: 600;
+      }
+    }
+  }
 }
