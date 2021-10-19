@@ -1,3 +1,13 @@
 @import './base/base';
 @import './abstracts/mixins';
 @import './abstracts/variables';
+
+.sectionContainer {
+  padding: 0rem 80px;
+  @include tablet {
+    padding: 0rem 40px;
+  }
+  @include phone {
+    padding: 0rem 32px;
+  }
+}
