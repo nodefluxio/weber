@@ -1,0 +1,17 @@
+@import '../../../styles/abstracts/variables';
+
+.container {
+  margin: 8px 0;
+  select {
+    width: 100%;
+    padding: 12px 8px;
+    margin: 8px 0;
+    border: 2px solid rgb(196, 196, 196);
+    border-radius: 4px;
+  }
+
+  select:focus {
+    outline: none;
+    border: 2px solid $primary-color;
+  }
+}
