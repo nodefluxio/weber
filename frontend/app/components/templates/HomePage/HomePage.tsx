@@ -2,13 +2,15 @@ import styles from './HomePage.module.scss'
 import type { Service } from '../../../types/elements'
 import { Card } from '../../modules/Card/Card'
 import { CardFull } from '../../modules/CardFull/CardFull'
+import { Innovations } from '../../modules/Innovation/Innovations'
 
 type Props = {
   analytics: Service[]
   solutions: Service[]
+  innovations: Service[]
 }
 
-export const HomePage = ({ analytics, solutions }: Props) => {
+export const HomePage = ({ analytics, solutions, innovations }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.cards}>
@@ -34,6 +36,8 @@ export const HomePage = ({ analytics, solutions }: Props) => {
           />
         ))}
       </div>
+
+      <Innovations data={innovations} />
     </div>
   )
 }
