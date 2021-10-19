@@ -4,19 +4,19 @@
   padding: 0.5rem 1.5rem;
   border: none;
   border-radius: 50px;
-  background-color: whitesmoke;
+  background-color: $white-bg;
   font-size: inherit;
   font-family: inherit;
   font-weight: 800;
   cursor: pointer;
   &:hover,
   &:focus {
-    background-color: darken(whitesmoke, 10%);
+    background-color: darken($white-bg, 10%);
   }
 
   &.primary {
     background-color: $primary-color;
-    color: whitesmoke;
+    color: $white-text;
 
     &:hover,
     &:focus {
@@ -32,5 +32,15 @@
     &:focus {
       background-color: darken($secondary-color, 10%);
     }
+  }
+
+  &.rounded {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+    color: $white-text;
   }
 }

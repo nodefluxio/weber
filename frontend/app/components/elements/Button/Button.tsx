@@ -4,14 +4,15 @@ import { Color } from '../../../types/elements'
 
 type Props = {
   children: ReactNode
-  color: Color
+  color?: Color
   type?: 'button' | 'submit' | 'reset' | 'link' | undefined
+  rounded?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }
 
 export const Button = forwardRef(
-  ({ children, color, type, onClick, className }: Props, ref) => {
+  ({ children, color, type, rounded, onClick, className }: Props, ref) => {
     let tagName = 'button'
     if (type === 'link') {
       tagName = 'a'
@@ -20,7 +21,7 @@ export const Button = forwardRef(
     const Component = tagName as React.ElementType
 
     const attributes = {
-      className: `${styles.btn} ${color && styles[color]} ${className}`,
+      className: `${styles.btn} ${color && styles[color]} ${rounded && styles.rounded} ${className}`,
       type: type === 'link' ? undefined : type,
       onClick: onClick,
       ref: ref

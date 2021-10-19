@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import styles from './HomePage.module.scss'
-import type { Service } from '../../../types/elements'
+import { Color, Service } from '../../../types/elements'
 import { Card } from '../../modules/Card/Card'
 import { CardFull } from '../../modules/CardFull/CardFull'
 import { Innovations } from '../../modules/Innovation/Innovations'
@@ -36,6 +36,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
             title={analytic.name}
             desc={analytic.short_description}
             slug={analytic.slug}
+            color={Color.Primary}
           />
         ))}
       </div>

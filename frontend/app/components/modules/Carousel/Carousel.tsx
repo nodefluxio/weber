@@ -56,6 +56,7 @@ export const Carousel = ({ children }: Props) => {
       <Button
         color={Color.Secondary}
         type={'button'}
+        rounded={true}
         onClick={() => next()}
         className={styles.next}>
         &gt;
@@ -63,6 +64,7 @@ export const Carousel = ({ children }: Props) => {
       <Button
         color={Color.Secondary}
         type={'button'}
+        rounded={true}
         onClick={() => prev()}
         className={styles.prev}>
         &lt;
