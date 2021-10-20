@@ -8,9 +8,6 @@ import { AnalyticsResult } from '../../modules/AnalyticsResult/AnayticsResult'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Color } from '../../../types/elements'
 import { parseCookies } from 'nookies'
-import useSWR from 'swr'
-import axios from 'axios'
-import { AnalyticsResponse } from '../../../types/responses'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 
@@ -32,45 +29,15 @@ export const AnalyticsPage = ({
   const [photo, setPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
-  const [sessionId, setSessionId] = useState('')
-
-  const fetcher = async (url: string) => {
-    if (url) {
-      try {
-        const res = await axios.post<AnalyticsResponse>(url, {
-          session_id: sessionId,
-          data: {
-            images: [photo]
-          }
-        })
-        if (res.data.ok) {
-          const { service_data } = res.data
-          if (service_data.job.result.status === "success") {
-            return service_data.job.result.result[0]
-          } else {
-            throw new Error(service_data.job.result.status)
-          }
-        }
-      } catch (err) {
-        throw new Error('Failed to load')
-      }
-    }
-  }
 
   const checkSessionId = () => {
     const { session_id } = parseCookies()
     if (session_id) {
       setCurrentStep(2)
-      setSessionId(session_id)
     } else {
       setOpenModal(true)
     }
   }
-
-  const { data, error } = useSWR(
-    currentStep === 2 ? `services/${serviceID}` : '',
-    fetcher
-  )
 
   return (
     <>
@@ -98,9 +65,9 @@ export const AnalyticsPage = ({
             </Button>
           )}
         </div>
-      ) : data ? (
+      ) : (
         <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-          <AnalyticsResult imageBase64={photo} result={data} />
+          <AnalyticsResult imageBase64={photo} serviceID={serviceID}/>
           <Button
             color={Color.Primary}
             onClick={() => {
@@ -110,12 +77,6 @@ export const AnalyticsPage = ({
             Try Again
           </Button>
         </div>
-      ) : (
-        error ? (
-          <div>Failed to load. Please reload tab and upload a new photo</div>
-        ) : (
-          <div>Generating result... If you have been waiting for 15 seconds, please reload tab.</div>
-        )
       )}
     </>
   )
