@@ -1,0 +1,19 @@
+.intro {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background: #DAE3EA;
+  padding: 2rem 4rem;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .title {
+    padding-bottom: 2rem;
+  }
+}
+
+.imageIntro {
+  position: relative;
+  min-width: 480px;
+  min-height: 320px;
+}

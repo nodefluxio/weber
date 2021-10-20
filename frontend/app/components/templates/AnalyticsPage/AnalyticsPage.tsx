@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from './AnalyticsPage.module.scss'
 import { Stepper } from '../../elements/Stepper/Stepper'
 import { Button } from '../../elements/Button/Button'
+import { Banner } from '../../modules/Banner/Banner'
 import { AnalyticsResult } from '../../modules/AnalyticsResult/AnayticsResult'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Color } from '../../../types/elements'
@@ -12,6 +13,7 @@ import axios from 'axios'
 import { AnalyticsResponse } from '../../../types/responses'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
+
 type Props = {
   analyticsName: string
   shortDescription: string
@@ -75,20 +77,11 @@ export const AnalyticsPage = ({
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <RequestDemoFormPopup />
       </Modal>
-      <div className={`${styles.container} ${styles.intro}`}>
-        <div className={styles.title}>
-          <h1>{analyticsName}</h1>
-          <p>{shortDescription}</p>
-          <p>{longDescription}</p>
-        </div>
-        <div className={styles.imageIntro}>
-          <Image
-            src={'/assets/images/placeholder.jpg'}
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
-      </div>
+      <Banner
+        analyticsName={analyticsName}
+        shortDescription={shortDescription}
+        longDescription={longDescription}
+        />
       <div className={styles.container}>
         <Stepper
           steps={['Upload your photo', 'Check your results']}

@@ -17,7 +17,6 @@ export const AnalyticsResult = ({ imageBase64, result }: Props) => {
 
   return (
     <div className={styles.result}>
-      <h3>See your Result</h3>
       {
         preview &&
         <div className={styles.resultFlex}>

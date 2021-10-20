@@ -1,3 +1,5 @@
+@import '../../../styles/abstracts/variables';
+
 .stepper {
   display: flex;
   padding: 0;
@@ -14,10 +16,10 @@
 }
 
 .active {
-  background: grey;
+  background: $secondary-color;
 }
 .inactive {
-  background: lightgrey;
+  background: #c9fff0;
 }
 
 .stepperLine {
