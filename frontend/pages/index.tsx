@@ -7,10 +7,11 @@ import { HomePage } from '../app/components/templates/HomePage/HomePage'
 type Props = {
   analytics: Service[]
   solutions: Service[]
+  innovations: Service[]
 }
 
-const Home = ({ analytics, solutions }: Props) => {
-  return <HomePage analytics={analytics} solutions={solutions} />
+const Home = ({ analytics, solutions, innovations }: Props) => {
+  return <HomePage analytics={analytics} solutions={solutions} innovations={innovations} />
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -26,9 +27,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const analytics = await getAllServices('analytic')
   const solutions = await getAllServices('solution')
+  const innovations = await getAllServices('innovation')
 
   return {
-    props: { analytics, solutions }
+    props: { analytics, solutions, innovations }
   }
 }
 
