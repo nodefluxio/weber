@@ -132,20 +132,34 @@ OR
 </details>
 
 <details>
-<summary><b>Create A Service Request By ID</b></summary>
-Create a service request by id and create a new visitor_activites record.
+<summary><b>Create Visitor Activities</b></summary>
+Create a visitor activity.
 
 - **URL**
-
-    `/services/:id`
+  `/activities`
 - **Method**
 
-    `POST`
-- **URL Param**
+  `POST`
 
-    **Required**
+- **Request Payload**
 
-    `id` type `integer`
+```json
+{
+  "service_id": 1,
+  "session_id": "ecec7960-5fd0-43eb-8794-11d1e9ac00a1",
+  "completeness": 80
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+  "service_id": int,
+  "session_id": string,
+  "completeness": int,
+}
+```
 
 - **Sample Success Response**
 
@@ -153,33 +167,84 @@ Create a service request by id and create a new visitor_activites record.
 
 ```json
 {
-    "message": "Service demo request success", // message from weber backend
-    "ok": true, // ok from weber backend
-    "service_data": {
-        "job": {
-            "result": {
-                "analytic_type": "FACE_RECOGNITION",
-                "result": [
-                    {
-                        "face_recognition": [
-                            {
-                                "candidates": [
-                                    {
-                                        "confidence": 1,
-                                        "face_id": "88364589938376705",
-                                        "variation": "17614081020751468384"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ],
-                "status": "success"
-            }
-        },
-        "message": "Face Recognition Success", // message from service response
-        "ok": true // ok from service response
-    }
+  "message": "Data has been processed successfully",
+  "ok": true
+}
+```
+
+- **Response Data Type Attributes**
+
+```json
+{
+  "message": string,
+  "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+</details>
+
+<details>
+<summary><b>Create A Service Request By ID</b></summary>
+Create a service request by id and create a new visitor_activites record.
+
+- **URL**
+
+  `/services/:id`
+
+- **Method**
+
+  `POST`
+
+- **URL Param**
+
+  **Required**
+
+  `id` type `integer`
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+  "message": "Service demo request success", // message from weber backend
+  "ok": true, // ok from weber backend
+  "service_data": {
+    "job": {
+      "result": {
+        "analytic_type": "FACE_RECOGNITION",
+        "result": [
+          {
+            "face_recognition": [
+              {
+                "candidates": [
+                  {
+                    "confidence": 1,
+                    "face_id": "88364589938376705",
+                    "variation": "17614081020751468384"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "status": "success"
+      }
+    },
+    "message": "Face Recognition Success", // message from service response
+    "ok": true // ok from service response
+  }
 }
 ```
 
@@ -188,7 +253,7 @@ Create a service request by id and create a new visitor_activites record.
 ```json
 {
     "message": string,
-    "ok": boolean, 
+    "ok": boolean,
     "service_data": object // json data from service response
 }
 ```
@@ -196,6 +261,7 @@ Create a service request by id and create a new visitor_activites record.
 - **Sample Error Response**
 
   **Code**: 401 Unauthorized
+
 ```json
 {
   "message": "Session ID is not valid",
@@ -212,7 +278,7 @@ OR
 }
 ```
 
-  **Code**: 400 Bad Request
+**Code**: 400 Bad Request
 
 ```json
 {
