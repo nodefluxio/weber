@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios"
-import { AnalyticsResponse, ServiceByIdResponse } from "../types/responses"
+import { AnalyticsError, AnalyticsResponse, ServiceByIdResponse } from "../types/responses"
 
 const ERROR_MESSAGE = "Something wrong has happened"
 
@@ -31,6 +31,13 @@ export const postServicePhoto = async (id: number, sessionId: string, photo: str
       }
     }
   } catch (e) {
-    throw new Error((e as Error).message)
+    if(axios.isAxiosError(e)) {
+      const error = e as AxiosError<AnalyticsError>
+      if(error && error.response) {
+        throw new Error(error.response.data.message)
+      }
+    } else {
+      throw new Error((e as Error).message)
+    }
   }
 }

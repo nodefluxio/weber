@@ -76,7 +76,7 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
     <Image
       src={photos[0].preview}
       layout="fill"
-      objectFit="contain"
+      objectFit="cover"
       key={photos[0].name}
     />
   )

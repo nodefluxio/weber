@@ -56,3 +56,8 @@ export type AnalyticsResponse = {
     }
   }
 }
+
+export type AnalyticsError = {
+  message: string,
+  ok: boolean
+}

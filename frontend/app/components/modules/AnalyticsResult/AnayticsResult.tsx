@@ -52,12 +52,12 @@ export const AnalyticsResult = ({ imageBase64, serviceID }: Props) => {
               </div>
               :
               errorMsg ?
-                <div>Error :( Please reload</div>
+                <div>{errorMsg}</div>
                 :
                 <div>Loading your results... Please wait</div>
           }
         </div>
       </div>
     </div>
-  )
+  )   
 }
