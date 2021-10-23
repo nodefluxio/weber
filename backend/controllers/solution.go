@@ -3,7 +3,6 @@ package controllers
 import (
 	"backend/models"
 	"errors"
-	"log"
 )
 
 func implementEKYCSolution(service models.Service, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
@@ -19,7 +18,6 @@ func implementEKYCSolution(service models.Service, inputData models.ServiceReque
 	}
 
 	var data models.ServiceRequestResultData
-	err := errors.New("Analytic of slug: " + service.Slug + "is not found.")
-	log.Fatal(err)
+	err := errors.New("Analytic of slug: " + inputData.AnalyticName + " is not found.")
 	return data, err
 }

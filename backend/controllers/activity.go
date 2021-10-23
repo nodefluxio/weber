@@ -36,7 +36,7 @@ func CreateActivity(ctx *gin.Context) {
 	if err := models.CreateVisitorActivity(db, &visitorActivity); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
-			"message": err,
+			"message": err.Error(),
 		})
 		return
 	}

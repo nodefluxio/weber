@@ -21,8 +21,16 @@ type dataAnalytic struct {
 func GetDataAnalytic(service models.Service, inputData models.ServiceRequestInput) dataAnalytic {
 	var dataAnalytic dataAnalytic
 	dataAnalytic.xNodefluxTimestamp = service.Timestamp
-	dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
-		os.Getenv("FACE_ID"), strings.Join(inputData.Data.Images, `", "`)))
+
+	if service.Slug == "face-match-enrollment" {
+		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
+			os.Getenv("FACE_ID"), strings.Join(inputData.Data.Images, `", "`)))
+	} else {
+		additionalParams, _ := json.Marshal(inputData.Data.AdditionalParams)
+		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
+			string(additionalParams), strings.Join(inputData.Data.Images, `", "`)))
+	}
+
 	accessKey := service.AccessKey
 	token := service.Token
 	date := dataAnalytic.xNodefluxTimestamp[:8]

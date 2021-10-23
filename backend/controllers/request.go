@@ -4,7 +4,6 @@ import (
 	"backend/database"
 	"backend/models"
 	"errors"
-	"log"
 )
 
 func RequestToService(serviceId int, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
@@ -50,8 +49,7 @@ func requestToServiceSolution(service models.Service, inputData models.ServiceRe
 
 	default:
 		var data models.ServiceRequestResultData
-		err := errors.New("Implementation of Solution from slug: " + service.Slug + "is not found.")
-		log.Fatal(err)
+		err := errors.New("Implementation of Solution from slug: " + service.Slug + " is not found.")
 		return data, err
 	}
 }
