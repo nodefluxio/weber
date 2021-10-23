@@ -6,7 +6,7 @@ import (
 	"errors"
 )
 
-func RequestToService(serviceId int, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
+func RequestToService(serviceId uint, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
 	db := database.GetDB()
 	var service models.Service
 	var data models.ServiceRequestResultData
@@ -18,6 +18,12 @@ func RequestToService(serviceId int, inputData models.ServiceRequestInput) (mode
 
 	switch service.Type {
 	case "analytic":
+		// Insert to visitor activity automatically
+		visitorActivity := &models.VisitorActivity{SessionID: inputData.SessionID, ServiceID: serviceId, Completeness: 100}
+		if err = models.CreateVisitorActivity(db, visitorActivity); err != nil {
+			return data, err
+		}
+
 		data, err = requestToServiceAnalytics(service, inputData)
 	case "solution":
 		data, err = requestToServiceSolution(service, inputData)

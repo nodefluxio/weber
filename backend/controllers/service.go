@@ -153,7 +153,7 @@ func CreateServiceRequest(ctx *gin.Context) {
 
 	// Convert value of parameter id from string to int
 	// and validate if its value is am integer number
-	serviceId, err := strconv.Atoi(ctx.Param("id"))
+	serviceId, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
@@ -163,7 +163,7 @@ func CreateServiceRequest(ctx *gin.Context) {
 	}
 
 	// Send a request to Service's API endpoint
-	serviceData, err := RequestToService(serviceId, inputData)
+	serviceData, err := RequestToService(uint(serviceId), inputData)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
