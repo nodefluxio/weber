@@ -39,3 +39,8 @@ export type AnalyticsResult = {
     }
   }
 }
+
+export type ReviewData = {
+  rating: number,
+  comment: string
+}

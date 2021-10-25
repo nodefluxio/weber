@@ -61,3 +61,8 @@ export type AnalyticsError = {
   message: string,
   ok: boolean
 }
+
+export type ReviewResponse = {
+  message: string,
+  ok: boolean
+}

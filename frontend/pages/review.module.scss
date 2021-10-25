@@ -1,0 +1,65 @@
+@import '../app/styles/abstracts/variables';
+@import '../app/styles/abstracts/mixins';
+
+.review {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin: 0.5rem auto;
+  width: 40%;
+  @include tablet {
+    width: 80%;
+  }
+  @include phone {
+    width: 90%;
+  }
+}
+
+.starFlex {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin: 0 auto;
+}
+
+.star {
+  width: 3rem;
+  height: auto;
+  cursor: pointer;
+  @include phone {
+    width: 2rem;
+  }
+}
+
+.idle {
+  svg {
+    fill: darken($white-bg, 7%);
+    transition: fill 0.2s;
+    &:hover {
+      fill: darken($white-bg, 12%);
+    }
+  }
+}
+
+.colored {
+  svg {
+    fill: $secondary-color;
+    transition: fill 0.2s;
+    &:hover {
+      fill: darken($secondary-color, 7%);
+    }
+  }  
+}
+
+.comment {
+  resize: none;
+  height: 120px;
+  border-radius: 0.25rem;
+  &:focus {
+    outline: none;
+  }
+}
+
+.buttonWrapper {
+  margin: auto;
+}
