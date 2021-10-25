@@ -155,7 +155,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               img={`/assets/images/solutions/${solution.thumbnail}`}
               title={solution.name}
               desc={solution.short_description}
-              href={solution.slug}
+              href={`/solutions/${solution.slug}`}
             />
           ))}
         </div>
@@ -185,7 +185,6 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
       <section
         className={`${styles.analyticsSection} ${styles.sectionPadding}`}>
         <h1 className={styles.titleLine}>Our Analytics</h1>
-
         <div className={styles.cards}>
           {analytics.map((analytic) => (
             <Card key={analytic.id} color={Color.Primary}>
