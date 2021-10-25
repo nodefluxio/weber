@@ -146,6 +146,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
         </div>
       </section>
       <section
+        id="solutions"
         className={`${styles.solutionsSection} ${styles.sectionPadding}`}>
         <h1 className={styles.titleLine}>Our Solutions</h1>
         <div className={styles.cards}>
@@ -183,6 +184,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
         </div>
       </section>
       <section
+        id="analytics"
         className={`${styles.analyticsSection} ${styles.sectionPadding}`}>
         <h1 className={styles.titleLine}>Our Analytics</h1>
         <div className={styles.cards}>
@@ -210,18 +212,19 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
           ))}
         </div>
       </section>
-
-      <Carousel>
-        {innovations.map((innovation) => (
-          <CarouselItem
-            key={innovation.id}
-            img={`/assets/images/innovations/${innovation.thumbnail}`}
-            title={innovation.name}
-            desc={innovation.short_description}
-            slug={innovation.slug}
-          />
-        ))}
-      </Carousel>
+      <section id="new-innovations">
+        <Carousel>
+          {innovations.map((innovation) => (
+            <CarouselItem
+              key={innovation.id}
+              img={`/assets/images/innovations/${innovation.thumbnail}`}
+              title={innovation.name}
+              desc={innovation.short_description}
+              slug={innovation.slug}
+            />
+          ))}
+        </Carousel>
+      </section>
     </div>
   )
 }
