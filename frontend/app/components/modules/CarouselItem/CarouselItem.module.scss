@@ -1,18 +1,34 @@
 @import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
 
 .carouselItem {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background: linear-gradient($primary-color, $primary-color);
-}
-
-.card {
-  position: absolute;
-  left: 10vw;
-  top: 30vh;
-}
-
-.image {
-  opacity: 0.5;
+  overflow: hidden;
+  .image {
+    opacity: 0.5;
+  }
+  .card {
+    position: absolute;
+    width: 350px;
+    left: 12%;
+    top: 30%;
+    @include tablet {
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @include phone {
+      top: 55%;
+    }
+    .cardContent {
+      padding: 4rem 3rem;
+      .footer {
+        position: absolute;
+        bottom: 4rem;
+      }
+    }
+  }
 }
