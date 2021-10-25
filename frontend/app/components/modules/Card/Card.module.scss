@@ -1,15 +1,15 @@
 @import '../../../styles/abstracts/variables';
 
 .card {
-  margin: auto;
   width: 300px;
   overflow: hidden;
-  border-width: 0.25px;
+  border-width: 2px;
   border-style: solid;
   border-color: $white-bg;
   border-radius: 30px;
   color: $grey-text;
   position: relative;
+  margin: auto;
 
   &.primary {
     border-color: $primary-color;
@@ -20,42 +20,9 @@
     border-color: $secondary-color;
     color: $primary-color;
   }
-}
 
-.body {
-  border-radius: 30px;
-  background-color: $white-bg;
-  height: 300px;
-
-  h3 {
-    padding: 3rem .5rem 1rem 1.5rem;
-    font-size: x-large;
-    margin: 0;
+  &.tertiary {
+    border-color: $tertiary-color;
+    color: $primary-color;
   }
-
-  p {
-    padding: 0 1.5rem;
-    margin: 0;
-  }
-
-  &.primary {
-    background-color: $primary-color;
-  }
-
-  &.secondary {
-    background-color: $secondary-color;
-  }
-}
-
-.cover {
-  display: flex;
-  justify-content: center;
-  background-color: $white-bg;
-  padding: 3rem;
-}
-
-.footer {
-  padding: 0 1.5rem 1.5rem 1.5rem;
-  position: absolute;
-  bottom: 1rem;
 }
