@@ -34,32 +34,38 @@ export const Footer = () => {
         <div className={styles.sosmed}>
           <div className={styles.icon}>
             <Link href="/">
-              <Image
-                src="/assets/icons/wa.png"
-                alt="whatsap"
-                width={27}
-                height={27}
-              />
+              <a>
+                <Image
+                  src="/assets/icons/wa.png"
+                  alt="whatsap"
+                  width={27}
+                  height={27}
+                />
+              </a>
             </Link>
           </div>
           <div className={styles.icon}>
             <Link href="/">
-              <Image
-                src="/assets/icons/ig.png"
-                alt="whatsap"
-                width={27}
-                height={27}
-              />
+              <a>
+                <Image
+                  src="/assets/icons/ig.png"
+                  alt="whatsap"
+                  width={27}
+                  height={27}
+                />
+              </a>
             </Link>
           </div>
           <div className={styles.icon}>
             <Link href="/">
-              <Image
-                src="/assets/icons/linkedin.png"
-                alt="whatsap"
-                width={27}
-                height={27}
-              />
+              <a>
+                <Image
+                  src="/assets/icons/linkedin.png"
+                  alt="whatsap"
+                  width={27}
+                  height={27}
+                />
+              </a>
             </Link>
           </div>
         </div>
