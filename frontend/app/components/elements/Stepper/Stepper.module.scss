@@ -16,10 +16,10 @@
 }
 
 .active {
-  background: $secondary-color;
+  background: $primary-color;
 }
 .inactive {
-  background: #c9fff0;
+  background: lighten($primary-color, 55%);
 }
 
 .stepperLine {
@@ -28,7 +28,6 @@
   margin-top: 1rem;
   min-width: 120px;
   max-width: 240px;
-  background-color: #B4B4B4;
 }
 
 .stepperItem {
@@ -50,7 +49,7 @@
       width: calc(100% - var(--circle-size) - calc(var(--spacing) * 2));
       left: calc(50% + calc(var(--circle-size) / 2 + var(--spacing)));
       height: 2px;
-      background-color: #e0e0e0;
+      background-color: lighten($primary-color, 55%);
       order: -1;
     }
   }
