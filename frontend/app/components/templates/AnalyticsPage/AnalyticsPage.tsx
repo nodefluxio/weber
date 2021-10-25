@@ -10,6 +10,7 @@ import { Color } from '../../../types/elements'
 import { parseCookies } from 'nookies'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
+import { postServicePhoto, SESSION_ID_ERROR } from '../../../api/analyticsAPI'
 
 type Props = {
   analyticsName: string
@@ -26,16 +27,33 @@ export const AnalyticsPage = ({
   examples,
   serviceID
 }: Props) => {
-  const [photo, setPhoto] = useState('')
+
+  const [photo, setPhoto] = useState("")
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
+  const [result, setResult] = useState<object>()
 
-  const checkSessionId = () => {
+  const handleAnalytics = async () => {
     const { session_id } = parseCookies()
     if (session_id) {
       setCurrentStep(2)
+      await resolveAnalytics(session_id)
     } else {
       setOpenModal(true)
+    }
+  }
+
+  const resolveAnalytics = async (session_id: string) => {
+    try {
+      const res = await postServicePhoto(serviceID, session_id, photo)
+      setResult(res!)
+    } catch (err) {
+      if ((err as Error).message === SESSION_ID_ERROR) {
+        setOpenModal(true)
+      } else {
+        setErrorMsg((err as Error).message)
+      }
     }
   }
 
@@ -48,7 +66,7 @@ export const AnalyticsPage = ({
         analyticsName={analyticsName}
         shortDescription={shortDescription}
         longDescription={longDescription}
-        />
+      />
       <div className={styles.container}>
         <Stepper
           steps={['Upload your photo', 'Check your results']}
@@ -60,24 +78,29 @@ export const AnalyticsPage = ({
         <div className={`${styles.container} ${styles.dropzoneColumns}`}>
           <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
           {photo && (
-            <Button color={Color.Primary} onClick={() => checkSessionId()}>
+            <Button color={Color.Primary} onClick={() => handleAnalytics()}>
               Next Step
             </Button>
           )}
         </div>
-      ) : (
-        <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-          <AnalyticsResult imageBase64={photo} serviceID={serviceID}/>
-          <Button
-            color={Color.Primary}
-            onClick={() => {
-              setCurrentStep(1)
-              setPhoto('')
-            }}>
-            Try Again
-          </Button>
-        </div>
-      )}
+      ) :
+        result ?
+          (
+            <div className={`${styles.container} ${styles.dropzoneColumns}`}>
+              <AnalyticsResult imageBase64={photo} result={result} errorMsg={errorMsg} />
+              <Button
+                color={Color.Primary}
+                onClick={() => {
+                  setCurrentStep(1)
+                  setPhoto("")
+                  setResult({})
+                }}>
+                Try Again
+              </Button>
+            </div>
+          ) :
+          <div>Loading result...</div>
+      }
     </>
   )
 }

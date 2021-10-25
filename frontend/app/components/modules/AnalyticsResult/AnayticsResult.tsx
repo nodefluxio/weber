@@ -1,52 +1,23 @@
 import Image from "next/image"
-import { parseCookies } from "nookies"
-import { useEffect, useState } from "react"
-import { postServicePhoto, SESSION_ID_ERROR } from "../../../api/analyticsAPI"
 import styles from "./AnalyticsResult.module.scss"
-import { Modal } from '../../elements/Modal/Modal'
-import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 
 type Props = {
   imageBase64: string,
-  serviceID: number
+  result: object,
+  errorMsg: string
 }
 
-export const AnalyticsResult = ({ imageBase64, serviceID }: Props) => {
-
-  const [preview, setPreview] = useState("")
-  const [result, setResult] = useState<object>()
-  const [errorMsg, setErrorMsg] = useState("")
-  const [openModal, setOpenModal] = useState(false)
-
-  useEffect(() => {
-    setPreview(imageBase64)
-    const { session_id } = parseCookies()
-    postServicePhoto(serviceID, session_id, imageBase64)
-      .then(res => {
-        setResult(res!)
-        setOpenModal(false)
-      })
-      .catch(err => {
-        if ((err as Error).message === SESSION_ID_ERROR) {
-          setOpenModal(true)
-        } else {
-          setErrorMsg((err as Error).message)
-        }
-      })
-  }, [])
+export const AnalyticsResult = ({ imageBase64, result, errorMsg }: Props) => {
 
   return (
     <>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <RequestDemoFormPopup />
-      </Modal>
       <div className={styles.result}>
         <div className={styles.resultFlex}>
           <div className={styles.resultImage}>
             {
-              preview &&
+              imageBase64 &&
               <Image
-                src={preview}
+                src={imageBase64}
                 layout="fill"
                 objectFit="contain"
               />
