@@ -1,51 +1,42 @@
-import type { NextPage } from 'next'
-import {
-  ServiceByIdErrorResponse,
-  ServiceByIdResponse
-} from '../../app/types/responses'
 import AnalyticsPage from '../../app/components/templates/AnalyticsPage/AnalyticsPage'
-import { useEffect, useState } from 'react'
-import axios, { AxiosError } from 'axios'
-import { Service } from '../../app/types/elements'
-import useSWR from 'swr'
+import { getServiceById } from '../../app/api/analyticsAPI'
 
-const OCR: NextPage = () => {
-  const fetcher = async (url: string) => {
-    try {
-      // Sementara ID nya di hardcode dulu
-      // TODO: find alternative
-      const res = await axios.get<ServiceByIdResponse>(url)
-      if (res.data.ok) {
-        return res.data.data
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const e = err as AxiosError<ServiceByIdErrorResponse>
-        console.log(e.message)
-      } else {
-        console.log(err)
+interface Props {
+  name: string,
+  short_description: string,
+  long_description: string
+}
+
+const OCR_ANALYTICS_ID = 1
+
+export const getStaticProps = async () => {
+  try {
+    const res = await getServiceById(OCR_ANALYTICS_ID)
+    return {
+      props: {
+        ...res?.data
       }
     }
+  } catch (e) {
+    return (e as Error).message
   }
+}
 
-  const { data, error } = useSWR(`/services/1`, fetcher)
+const OCR: React.FC<Props> = ({ name, short_description, long_description }) => {
 
-  if (error) return <p>Failed to load page :(</p>
-  if (!data) return <p>Loading contents...</p>
-  else
-    return (
-      <AnalyticsPage
-        analyticsName={data.name}
-        shortDescription={data.short_description}
-        longDescription={data.long_description}
-        examples={[
-          '/assets/images/ktp1.jpg',
-          '/assets/images/ktp2.jpeg',
-          '/assets/images/ktp3.jpg'
-        ]}
-        serviceID={1}
-      />
-    )
+  return (
+    <AnalyticsPage
+      analyticsName={name}
+      shortDescription={short_description}
+      longDescription={long_description}
+      examples={[
+        '/assets/images/ktp1.jpg',
+        '/assets/images/ktp2.jpeg',
+        '/assets/images/ktp3.jpg'
+      ]}
+      serviceID={OCR_ANALYTICS_ID}
+    />
+  )
 }
 
 export default OCR

@@ -1,45 +1,50 @@
 import Image from "next/image"
-import { useEffect, useState } from "react"
 import styles from "./AnalyticsResult.module.scss"
 
 type Props = {
   imageBase64: string,
-  result: object
+  result: object,
+  errorMsg: string
 }
 
-export const AnalyticsResult = ({ imageBase64, result }: Props) => {
-
-  const [preview, setPreview] = useState("")
-
-  useEffect(() => {
-    setPreview(imageBase64)
-  }, [])
+export const AnalyticsResult = ({ imageBase64, result, errorMsg }: Props) => {
 
   return (
-    <div className={styles.result}>
-      <h3>See your Result</h3>
-      {
-        preview &&
+    <>
+      <div className={styles.result}>
         <div className={styles.resultFlex}>
           <div className={styles.resultImage}>
-            <Image
-              src={preview}
-              layout="fill"
-              objectFit="cover"
-            />
+            {
+              imageBase64 &&
+              <Image
+                src={imageBase64}
+                layout="fill"
+                objectFit="contain"
+              />
+            }
           </div>
           <div className={styles.resultInfo}>
-            <p>Results Here</p>
-            <ul>
             {
-              Object.entries(result).map(([key, value]) => (
-                <li><b>{key}</b>: {value}</li>
-              ))
+              result ?
+                <div>
+                  <p>Results Here</p>
+                  <ul>
+                    {
+                      Object.entries(result).map(([key, value]) => (
+                        <li key={key}><b>{key}</b>: {value}</li>
+                      ))
+                    }
+                  </ul>
+                </div>
+                :
+                errorMsg ?
+                  <div>{errorMsg}</div>
+                  :
+                  <div>Loading your results... Please wait</div>
             }
-            </ul>
           </div>
-        </div>     
-      }
-    </div>
+        </div>
+      </div>
+    </>
   )
 }

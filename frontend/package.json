@@ -18,8 +18,7 @@
     "react-dropzone": "^11.4.2",
     "react-hook-form": "^7.17.1",
     "react-webcam": "^6.0.0",
-    "sass": "^1.42.1",
-    "swr": "^1.0.1"
+    "sass": "^1.42.1"
   },
   "devDependencies": {
     "@types/react": "17.0.25",

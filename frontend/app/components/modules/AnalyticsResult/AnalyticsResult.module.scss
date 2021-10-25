@@ -5,11 +5,8 @@
 
 .resultImage {
   position: relative;
-  flex-basis: 50%;
-  min-height: 160px;
-  min-width: 240px;
-  max-height: 320px;
-  max-width: 560px;
+  min-height: 360px;
+  min-width: 480px;
 }
 
 .resultFlex {
@@ -24,5 +21,4 @@
   li {
     list-style: none;
   }
-  flex-basis: 50%;
 }
