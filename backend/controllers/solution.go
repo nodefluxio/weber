@@ -5,7 +5,7 @@ import (
 	"errors"
 )
 
-func implementEKYCSolution(service models.Service, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
+func ImplementEKYCSolution(service models.Service, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
 	// Define 3 analytics in EKYC Solution
 	analyticNames := [3]string{"face-liveness", "ocr-ktp", "face-match"}
 

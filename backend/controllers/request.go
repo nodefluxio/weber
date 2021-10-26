@@ -50,7 +50,7 @@ func requestToServiceAnalytics(service models.Service, inputData models.ServiceR
 func requestToServiceSolution(service models.Service, inputData models.ServiceRequestInput) (models.ServiceRequestResultData, error) {
 	switch service.Slug {
 	case "ekyc":
-		return implementEKYCSolution(service, inputData)
+		return ImplementEKYCSolution(service, inputData)
 	// Add another solution case here
 
 	default:
