@@ -132,20 +132,94 @@ OR
 </details>
 
 <details>
+<summary><b>Create Visitor Activities</b></summary>
+Create a visitor activity.
+
+- **URL**
+  `/activities`
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+
+```json
+{
+  "service_id": 1,
+  "session_id": "ecec7960-5fd0-43eb-8794-11d1e9ac00a1",
+  "completeness": 80
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+  "service_id": int,
+  "session_id": string,
+  "completeness": int,
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+  "message": "Data has been processed successfully",
+  "ok": true
+}
+```
+
+- **Response Data Type Attributes**
+
+```json
+{
+  "message": string,
+  "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
+</details>
+
+<details>
 <summary><b>Create A Service Request By ID</b></summary>
 Create a service request by id and create a new visitor_activites record.
 
 - **URL**
 
-    `/services/:id`
+  `/services/:id`
+
 - **Method**
 
-    `POST`
+  `POST`
+
 - **URL Param**
 
-    **Required**
+  **Required**
 
-    `id` type `integer`
+  `id` type `integer`
 
 - **Request Payload**
 ```json
@@ -182,33 +256,33 @@ Note: `analytic_name` only be required on analytics that are part of the solutio
 
 ```json
 {
-    "message": "Service demo request success", // message from weber backend
-    "ok": true, // ok from weber backend
-    "service_data": {
-        "job": {
-            "result": {
-                "analytic_type": "FACE_RECOGNITION",
-                "result": [
-                    {
-                        "face_recognition": [
-                            {
-                                "candidates": [
-                                    {
-                                        "confidence": 1,
-                                        "face_id": "88364589938376705",
-                                        "variation": "17614081020751468384"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ],
-                "status": "success"
-            }
-        },
-        "message": "Face Recognition Success", // message from service response
-        "ok": true // ok from service response
-    }
+  "message": "Service demo request success", // message from weber backend
+  "ok": true, // ok from weber backend
+  "service_data": {
+    "job": {
+      "result": {
+        "analytic_type": "FACE_RECOGNITION",
+        "result": [
+          {
+            "face_recognition": [
+              {
+                "candidates": [
+                  {
+                    "confidence": 1,
+                    "face_id": "88364589938376705",
+                    "variation": "17614081020751468384"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "status": "success"
+      }
+    },
+    "message": "Face Recognition Success", // message from service response
+    "ok": true // ok from service response
+  }
 }
 ```
 
@@ -217,7 +291,7 @@ Note: `analytic_name` only be required on analytics that are part of the solutio
 ```json
 {
     "message": string,
-    "ok": boolean, 
+    "ok": boolean,
     "service_data": object // json data from service response
 }
 ```
@@ -225,6 +299,7 @@ Note: `analytic_name` only be required on analytics that are part of the solutio
 - **Sample Error Response**
 
   **Code**: 401 Unauthorized
+
 ```json
 {
   "message": "Session ID is not valid",
@@ -241,7 +316,7 @@ OR
 }
 ```
 
-  **Code**: 400 Bad Request
+**Code**: 400 Bad Request
 
 ```json
 {
