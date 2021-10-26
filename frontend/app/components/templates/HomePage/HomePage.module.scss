@@ -1,15 +1,240 @@
-.container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+@import '../../../styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
 
+.container {
+  .title {
+    font-weight: 800;
+    font-size: 2rem;
+    color: $primary-color;
+    text-align: center;
+    position: relative;
+    margin-bottom: 5rem;
+  }
+  .titleLine {
+    font-weight: 800;
+    font-size: 2rem;
+    color: $primary-color;
+    text-align: center;
+    position: relative;
+    margin-bottom: 5rem;
+    &::after {
+      display: block;
+      content: '';
+      width: 100px;
+      border-radius: 50px;
+      height: 3px;
+      background: $secondary-color;
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .heroSection {
+    overflow: hidden;
+    width: 100%;
+    height: 90vh;
+    position: relative;
+    h1 {
+      position: absolute;
+      text-align: center;
+      width: 50%;
+      top: 45%;
+      left: 50%;
+      line-height: 3.5rem;
+      font-size: 2.5rem;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      font-weight: 800;
+      color: $primary-color;
+      @include tablet {
+        width: 80%;
+      }
+    }
+  }
+  .productsSection {
+    .productCards {
+      display: flex;
+      justify-content: space-around;
+      font-weight: 600;
+      line-height: 1.5rem;
+      @include tablet {
+        flex-direction: column;
+      }
+      .cardImage {
+        padding: 3rem 10vw;
+      }
+      .card {
+        width: 35%;
+        margin: auto;
+        @include tablet {
+          width: 80%;
+        }
+        .cardContent {
+          padding: 3rem;
+        }
+      }
+      .visionaire {
+        @include tablet {
+          margin-bottom: 2rem;
+        }
+        .cardContent {
+          padding-bottom: 4rem;
+          @include tablet {
+            padding-bottom: 3rem;
+          }
+        }
+      }
+      .identifai {
+        .cardImage {
+          padding: 2.2rem 10vw;
+        }
+      }
+    }
+  }
+  .awardsSection {
+    background-color: $secondary-color;
+    padding: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .title {
+      margin-bottom: 3rem;
+    }
+    .whiteContainer {
+      padding: 3rem;
+      background-color: $white-bg;
+      border-radius: 50px;
+      max-width: 50%;
+      margin-bottom: 2rem;
+      @include tablet {
+        max-width: 80%;
+      }
+    }
+    .awardsContainer {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, auto));
+      justify-items: center;
+      align-items: center;
+
+      @include tablet {
+        grid-template-columns: repeat(2, minmax(0, auto));
+        gap: 1rem;
+      }
+    }
+    .recognitionsContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      h4 {
+        font-weight: 400;
+        letter-spacing: 2px;
+        margin: 2rem 0;
+      }
+      h3 {
+        color: $primary-color;
+        margin: 0 0 1rem 0;
+        font-family: $secondary-font;
+        font-weight: 800;
+      }
+    }
+  }
+  .ourDemoSection {
+    .texts {
+      .title {
+        &:nth-child(1) {
+          margin-bottom: 6px;
+        }
+        &:nth-child(2) {
+          margin-top: 0;
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+
+  .intersection {
+    background-color: $secondary-color;
+    padding: 2rem 0;
+    position: relative;
+    @include tablet {
+      padding: 4rem 0;
+    }
+    .container {
+      display: flex;
+      align-items: center;
+      @include tablet {
+        justify-content: center;
+      }
+      .imageContainer {
+        width: 40%;
+        @include tablet {
+          display: none;
+        }
+      }
+      .imageProduct {
+        margin-left: 10%;
+      }
+      .texts {
+        text-align: center;
+        width: 40%;
+        @include tablet {
+          width: 80%;
+        }
+        h1 {
+          color: $primary-color;
+          font-size: 3rem;
+          font-weight: 800;
+          font-family: $secondary-font;
+          &:nth-child(2) {
+            font-weight: 600;
+            font-family: $secondary-font;
+            color: $white-text;
+          }
+          @include tablet {
+            font-size: 2rem;
+          }
+        }
+      }
+      .logogramContainer {
+        position: absolute;
+        right: 0;
+        bottom: -4px;
+        @include tablet {
+          width: 30%;
+        }
+      }
+    }
+  }
+
+  .analyticsSection {
+    .cards {
+      .footer {
+        position: absolute;
+        bottom: 2.5rem;
+      }
+    }
+  }
+}
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
-  margin: 2rem 0;
+  justify-content: center;
+  gap: 5rem;
+  grid-template-columns: repeat(3, minmax(0, auto));
+  @include tablet {
+    grid-template-columns: repeat(2, minmax(0, auto));
+    gap: 3rem;
+  }
+  @include phone {
+    grid-template-columns: repeat(1, minmax(0, auto));
+    gap: 2rem;
+  }
+}
+
+.sectionPadding {
+  padding: 6rem 0 10rem 0;
+  @include tablet {
+    padding: 4rem 0 7rem 0;
+  }
 }
