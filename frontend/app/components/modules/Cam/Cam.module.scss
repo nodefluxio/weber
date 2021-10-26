@@ -7,6 +7,10 @@
   width: 500px;
   padding: 0.5rem;
 
+  &.flash {
+    animation: blinker 1s linear 0s;
+  }
+
   &::after {
     content: '';
     position: absolute;
@@ -33,6 +37,12 @@
   & video {
     width: 100%;
     display: block;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
   }
 }
 

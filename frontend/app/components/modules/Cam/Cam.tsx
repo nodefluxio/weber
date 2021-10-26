@@ -1,6 +1,12 @@
 import styles from './Cam.module.scss'
 import Webcam from 'react-webcam'
-import { MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { Button } from '../../elements/Button/Button'
 import { Color } from '../../../types/elements'
 
@@ -13,6 +19,7 @@ export const Cam = ({ localkey, nextStep }: Props) => {
   const webcamRef = useRef<Webcam>(null)
 
   const [disabled, setDisabled] = useState(true)
+  const [flash, setFlash] = useState(false)
 
   useEffect(() => {
     if (localStorage.getItem(localkey)) {
@@ -26,14 +33,17 @@ export const Cam = ({ localkey, nextStep }: Props) => {
 
       if (snapshot) {
         localStorage.setItem(localkey, snapshot)
+
         setDisabled(false)
+        setFlash(true)
+        setTimeout(() => setFlash(false), 1000)
       }
     }
   }, [webcamRef])
 
   return (
     <div className={styles.container}>
-      <div className={styles.cam}>
+      <div className={`${styles.cam} ${flash ? styles.flash : ''}`}>
         <Webcam
           audio={false}
           height={360}
@@ -48,7 +58,11 @@ export const Cam = ({ localkey, nextStep }: Props) => {
           Take a photo
         </Button>
 
-        <Button color={Color.Primary} className={styles.btn} onClick={nextStep} disabled={disabled}>
+        <Button
+          color={Color.Primary}
+          className={styles.btn}
+          onClick={nextStep}
+          disabled={disabled}>
           Next
         </Button>
       </div>
