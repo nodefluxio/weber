@@ -61,3 +61,10 @@ export type AnalyticsError = {
   message: string,
   ok: boolean
 }
+
+export type FaceLiveness = {
+  face_liveness: {
+    live: boolean
+    liveness: number
+  }
+}

@@ -15,9 +15,10 @@ export const getServiceById = async (id: number) => {
   }
 }
 
-export const postServicePhoto = async (id: number, sessionId: string, photo: string) => {
+export const postServicePhoto = async(id: number, sessionId: string, photo: string, analyticName?: string) => {
   try {
     const res = await axios.post<AnalyticsResponse>(`/services/${id}`, {
+      analytic_name: analyticName,
       session_id: sessionId,
       data: {
         images: [photo]

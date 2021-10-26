@@ -4,3 +4,20 @@
   text-align: center;
   padding: 3rem;
 }
+
+.result {
+  .head {
+    font-size: large;
+  }
+  .body {
+    font-size: 10rem;
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .btnGroup {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1rem;
+  }
+}
