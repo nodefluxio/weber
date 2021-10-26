@@ -147,6 +147,35 @@ Create a service request by id and create a new visitor_activites record.
 
     `id` type `integer`
 
+- **Request Payload**
+```json
+{
+   "analytic_name" : "ocr-ktp", 
+   "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+   "data": {
+       "additional_params": {},
+       "images": [
+         "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"
+       ]
+   }
+}
+```
+
+Note: `analytic_name` only be required on analytics that are part of the solution service, so it can be omitted when requesting an independent analytics service.
+
+- **Request Payload Data Type Attributes**
+```json
+{
+   "analytic_name" : string,
+   "session_id": string,
+   "data": object {
+       "additional_params": object,
+       "images": string array
+   }
+}
+
+```
+
 - **Sample Success Response**
 
   **Code**: 200 OK
