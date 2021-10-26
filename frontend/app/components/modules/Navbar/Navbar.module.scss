@@ -9,6 +9,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: $white-bg;
+  z-index: 300;
   text-transform: uppercase;
   @include phone {
     padding: 2rem 2rem;
@@ -16,6 +17,7 @@
   .imageContainer {
     cursor: pointer;
     max-width: 149px;
+    height: 46px;
     @include phone {
       max-width: 120px;
     }
@@ -73,6 +75,8 @@
     color: $primary-color;
     font-weight: 800;
     @include tablet {
+      z-index: 300;
+
       position: fixed;
       right: 0;
       top: 0;

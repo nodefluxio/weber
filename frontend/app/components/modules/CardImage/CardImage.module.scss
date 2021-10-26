@@ -1,0 +1,8 @@
+@import '../../../styles/abstracts/variables';
+
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: $white-bg;
+  padding: 3rem;
+}
