@@ -192,6 +192,15 @@ Create a visitor activity.
 }
 ```
 
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
 </details>
 
 <details>
