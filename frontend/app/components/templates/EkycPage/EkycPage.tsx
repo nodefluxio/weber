@@ -3,19 +3,24 @@ import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
 import { Stepper } from '../../elements/Stepper/Stepper'
 import { Banner } from '../../modules/Banner/Banner'
-import { Cam } from '../../modules/Cam/Cam'
+import { FaceLiveness } from '../../modules/FaceLiveness/FaceLiveness'
 import styles from './EkycPage.module.scss'
 
-export const EkycPage = () => {
+type Props = {
+  name: string,
+  shortDesc: string,
+  longDesc: string
+}
+
+export const EkycPage = ({name, shortDesc, longDesc}: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
-  const [isResult, setIsResult] = useState(false)
 
   return (
     <>
       <Banner
-        analyticsName="Face Liveness"
-        shortDescription="hello"
-        longDescription="hello2"
+        analyticsName={name}
+        shortDescription={shortDesc}
+        longDescription={longDesc}
       />
       <Stepper
         steps={['Start', 'Face Liveness', 'OCR KTP', 'Face Match', 'Finish']}
@@ -36,20 +41,8 @@ export const EkycPage = () => {
           </div>
         )}
 
-        {currentStep === 2  && isResult === false && (
-          <Cam
-            localkey="liveness_snapshot"
-            nextStep={() => setIsResult(true)}
-          />
-        )}
-
-        {currentStep === 2 && isResult === true && (
-          <div>
-            <span>Liveness Result</span>
-            <span>75%</span>
-            <Button color={Color.Primary} onClick={() => setCurrentStep(3)}>Next</Button>
-            <Button color={Color.Primary} onClick={() => setIsResult(false)}>Try Again</Button>
-          </div>
+        {currentStep === 2 && (
+          <FaceLiveness nextStep={() => setCurrentStep(2)} />
         )}
       </div>
     </>
