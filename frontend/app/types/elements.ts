@@ -1,6 +1,7 @@
 export enum Color {
   Primary = 'primary',
-  Secondary = 'secondary'
+  Secondary = 'secondary',
+  Tertiary = 'tertiary'
 }
 
 export type Service = {
@@ -21,20 +22,20 @@ export type RequestDemoFormData = {
 }
 
 export type AnalyticsParam = {
-  session_id: string,
+  session_id: string
   data: {
-    additional_params: Object,
+    additional_params: Object
     images: string[]
   }
 }
 
 export type AnalyticsResult = {
-  message: string,
-  ok: boolean,
+  message: string
+  ok: boolean
   job: {
     result: {
-      analytic_type: string,
-      result: Object[],
+      analytic_type: string
+      result: Object[]
       status: string
     }
   }

@@ -32,6 +32,7 @@ export const Carousel = ({ children }: Props) => {
 
   return (
     <div className={styles.carousel}>
+      <h1>New Innovations</h1>
       {children.map((child, index) => (
         <div
           key={index}
@@ -41,7 +42,6 @@ export const Carousel = ({ children }: Props) => {
           {child}
         </div>
       ))}
-
       <div className={styles.dot}>
         {children.map((_, index) => (
           <div
@@ -52,22 +52,21 @@ export const Carousel = ({ children }: Props) => {
             }`}></div>
         ))}
       </div>
-
-      <Button
-        color={Color.Secondary}
-        type={'button'}
-        rounded={true}
-        onClick={() => next()}
-        className={styles.next}>
-        &gt;
-      </Button>
       <Button
         color={Color.Secondary}
         type={'button'}
         rounded={true}
         onClick={() => prev()}
         className={styles.prev}>
-        &lt;
+        ➜
+      </Button>
+      <Button
+        color={Color.Secondary}
+        type={'button'}
+        rounded={true}
+        onClick={() => next()}
+        className={styles.next}>
+        ➜
       </Button>
     </div>
   )
