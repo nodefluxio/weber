@@ -23,3 +23,11 @@ func CreateVisitorActivity(db *gorm.DB, VisitorActivity *VisitorActivity) (err e
 	}
 	return nil
 }
+
+func GetLastActivity(db *gorm.DB, VisitorActivity *VisitorActivity, session_id string, service_id int) (err error) {
+	err = db.Where("session_id = ? AND service_id = ?", session_id, service_id).Last(VisitorActivity).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
