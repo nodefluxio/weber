@@ -11,9 +11,8 @@ type ReviewReqBody = {
 
 export const postReview = async ({ id, session_id, rating, comment }: ReviewReqBody) => {
   try {
-    const res = await axios.post<ReviewResponse>(`/feedback/${id}`, {
-      session_id, rating, comment
-    })
+    const res = await axios.post<ReviewResponse>(`/feedback/${id}`,
+      { session_id, rating, comment })
     if (res.data.ok) {
       return res.data
     }

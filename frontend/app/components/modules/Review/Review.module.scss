@@ -1,17 +1,21 @@
-@import '../app/styles/abstracts/variables';
-@import '../app/styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
 
 .review {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
-  margin: 0.5rem auto;
-  width: 40%;
+  width: 30%;
+  margin: 1rem 0;
+  h3 {
+    margin: auto;
+    color: $primary-color;
+  }
   @include tablet {
-    width: 80%;
+    width: 60%;
   }
   @include phone {
-    width: 90%;
+    width: 85%;
   }
 }
 
@@ -26,9 +30,6 @@
   width: 3rem;
   height: auto;
   cursor: pointer;
-  @include phone {
-    width: 2rem;
-  }
 }
 
 .idle {
@@ -46,20 +47,34 @@
     fill: $secondary-color;
     transition: fill 0.2s;
     &:hover {
-      fill: darken($secondary-color, 7%);
+      fill: darken($secondary-color, 10%);
     }
   }  
 }
 
 .comment {
   resize: none;
-  height: 120px;
+  height: 100px;
   border-radius: 0.25rem;
   &:focus {
     outline: none;
+    border-color: $primary-color;
   }
 }
 
 .buttonWrapper {
   margin: auto;
+}
+
+.thankYou {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  margin: 1rem;
+  h3 {
+    margin: auto;
+    color: $primary-color;
+  }
 }

@@ -11,6 +11,7 @@ import { parseCookies } from 'nookies'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import { postServicePhoto, SESSION_ID_ERROR } from '../../../api/analyticsAPI'
+import Review from '../../modules/Review/Review'
 
 type Props = {
   analyticsName: string
@@ -88,15 +89,20 @@ export const AnalyticsPage = ({
           (
             <div className={`${styles.container} ${styles.dropzoneColumns}`}>
               <AnalyticsResult imageBase64={photo} result={result} errorMsg={errorMsg} />
-              <Button
-                color={Color.Primary}
-                onClick={() => {
-                  setCurrentStep(1)
-                  setPhoto("")
-                  setResult({})
-                }}>
-                Try Again
-              </Button>
+              <div style={{ display: "flex", gap: "1rem", width: "90%", justifyContent: "center" }}>
+                <Review id={serviceID}/>
+                <div style={{ margin: "auto 0" }}>
+                  <Button
+                    color={Color.Primary}
+                    onClick={() => {
+                      setCurrentStep(1)
+                      setPhoto("")
+                      setResult({})
+                    }}>
+                    Try Again
+                  </Button>
+                </div>
+              </div>
             </div>
           ) :
           <div>Loading result...</div>
