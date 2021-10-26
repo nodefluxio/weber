@@ -4,8 +4,8 @@
 .review {
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
-  width: 30%;
+  row-gap: 0.6rem;
+  width: 40%;
   margin: 1rem 0;
   h3 {
     margin: auto;
@@ -27,7 +27,7 @@
 }
 
 .star {
-  width: 3rem;
+  width: 2.8rem;
   height: auto;
   cursor: pointer;
 }
@@ -54,7 +54,7 @@
 
 .comment {
   resize: none;
-  height: 100px;
+  height: 130px;
   border-radius: 0.25rem;
   &:focus {
     outline: none;

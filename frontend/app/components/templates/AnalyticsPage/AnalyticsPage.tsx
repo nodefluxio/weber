@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
+import { useState } from 'react'
 import styles from './AnalyticsPage.module.scss'
 import { Stepper } from '../../elements/Stepper/Stepper'
 import { Button } from '../../elements/Button/Button'
@@ -74,7 +73,6 @@ export const AnalyticsPage = ({
           activeStep={currentStep}
         />
       </div>
-      {/* TODO: Butuh pembenahan... refactor? */}
       {currentStep === 1 ? (
         <div className={`${styles.container} ${styles.dropzoneColumns}`}>
           <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
@@ -89,20 +87,18 @@ export const AnalyticsPage = ({
           (
             <div className={`${styles.container} ${styles.dropzoneColumns}`}>
               <AnalyticsResult imageBase64={photo} result={result} errorMsg={errorMsg} />
-              <div style={{ display: "flex", gap: "1rem", width: "90%", justifyContent: "center" }}>
-                <Review id={serviceID}/>
-                <div style={{ margin: "auto 0" }}>
-                  <Button
-                    color={Color.Primary}
-                    onClick={() => {
-                      setCurrentStep(1)
-                      setPhoto("")
-                      setResult({})
-                    }}>
-                    Try Again
-                  </Button>
-                </div>
+              <div style={{ marginBottom: "1rem" }}>
+                <Button
+                  color={Color.Primary}
+                  onClick={() => {
+                    setCurrentStep(1)
+                    setPhoto("")
+                    setResult({})
+                  }}>
+                  Try Again
+                </Button>
               </div>
+              <Review id={serviceID} />
             </div>
           ) :
           <div>Loading result...</div>

@@ -31,7 +31,6 @@ const Review = ({ id }: ReviewProp) => {
     setErrorMsg("")
     try {
       const { session_id } = parseCookies() // Assume cookies exist
-      // setSuccess(true)
       const res = await postReview({ id, session_id, ...data })
       if (res!.ok) {
         setSuccess(true)
