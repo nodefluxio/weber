@@ -55,6 +55,8 @@ export const FaceLiveness = ({ nextStep, setOpenModal }: Props) => {
         <Cam localkey="liveness_snapshot" nextStep={() => handleAnalytics()} />
       )}
 
+      {isResult && !result && <div>Loading...</div>}
+
       {isResult && result && (
         <div className={styles.result}>
           <h3 className={styles.head}>Liveness Result</h3>
