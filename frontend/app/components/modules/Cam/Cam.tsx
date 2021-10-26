@@ -7,6 +7,7 @@ import {
   useRef,
   useState
 } from 'react'
+import Image from 'next/image'
 import { Button } from '../../elements/Button/Button'
 import { Color } from '../../../types/elements'
 
@@ -20,6 +21,7 @@ export const Cam = ({ localkey, nextStep }: Props) => {
 
   const [disabled, setDisabled] = useState(true)
   const [flash, setFlash] = useState(false)
+  const [photo, setPhoto] = useState('')
 
   useEffect(() => {
     if (localStorage.getItem(localkey)) {
@@ -34,6 +36,7 @@ export const Cam = ({ localkey, nextStep }: Props) => {
       if (snapshot) {
         localStorage.setItem(localkey, snapshot)
 
+        setPhoto(snapshot)
         setDisabled(false)
         setFlash(true)
         setTimeout(() => setFlash(false), 1000)
@@ -41,22 +44,42 @@ export const Cam = ({ localkey, nextStep }: Props) => {
     }
   }, [webcamRef])
 
+  const tryAgain = () => {
+    setPhoto('')
+  }
+
   return (
     <div className={styles.container}>
       <div className={`${styles.cam} ${flash ? styles.flash : ''}`}>
-        <Webcam
-          audio={false}
-          height={360}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          width={640}
-        />
+        {!photo ? (
+          <Webcam
+            audio={false}
+            height={360}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            width={640}
+          />
+        ) : (
+          photo && <Image src={photo} height={360} width={486} />
+        )}
       </div>
 
       <div className={styles.btnGroup}>
-        <Button onClick={capture} color={Color.Primary} className={styles.btn}>
-          Take a photo
-        </Button>
+        {!photo ? (
+          <Button
+            onClick={capture}
+            color={Color.Primary}
+            className={styles.btn}>
+            Take a photo
+          </Button>
+        ) : (
+          <Button
+            onClick={tryAgain}
+            color={Color.Primary}
+            className={styles.btn}>
+            Try Again
+          </Button>
+        )}
 
         <Button
           color={Color.Primary}
