@@ -32,5 +32,11 @@ func SetupRouter() *gin.Engine {
 	{
 		activities.POST("", controllers.CreateActivity)
 	}
+
+	feedbacks := r.Group("/feedback")
+	{
+		feedbacks.POST("/:id", controllers.CreateFeedback)
+	}
+
 	return r
 }
