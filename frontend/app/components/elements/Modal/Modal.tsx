@@ -15,7 +15,6 @@ export const Modal = ({ show, onClose, children }: Props) => {
   }, [])
 
   const handleCloseClick = (e: any) => {
-    console.log(e)
     e.preventDefault()
     onClose()
   }
@@ -24,7 +23,7 @@ export const Modal = ({ show, onClose, children }: Props) => {
     <div className={styles.overlay}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <a href='#' onClick={handleCloseClick}>
+          <a href="#" onClick={handleCloseClick}>
             x
           </a>
         </div>
