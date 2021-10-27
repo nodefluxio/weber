@@ -35,7 +35,7 @@ func SetupRouter() *gin.Engine {
 
 	feedbacks := r.Group("/feedback")
 	{
-		feedbacks.POST("/:id", controllers.CreateFeedback)
+		feedbacks.POST("/:service_id", controllers.CreateFeedback)
 	}
 
 	return r
