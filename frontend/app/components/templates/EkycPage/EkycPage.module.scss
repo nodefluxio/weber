@@ -1,6 +1,23 @@
+.stepper {
+  padding: 2rem 4rem;
+}
+
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 3rem;
+  padding: 1rem 5rem;
+  min-height: 30vw;
+}
+
+.title {
+  margin: 0;
+  padding-bottom: .5rem;
+  font-size: 3rem;
+}
+
+.desc {
+  font-size: 1.25rem;
+  padding: 0 30rem;
 }

@@ -38,16 +38,19 @@ export const EkycPage = ({ name, shortDesc, longDesc }: Props) => {
         shortDescription={shortDesc}
         longDescription={longDesc}
       />
-      <Stepper
-        steps={['Start', 'Face Liveness', 'OCR KTP', 'Face Match', 'Finish']}
-        activeStep={currentStep}
-      />
+
+      <div className={styles.stepper}>
+        <Stepper
+          steps={['Start', 'Face Liveness', 'OCR KTP', 'Face Match', 'Finish']}
+          activeStep={currentStep}
+        />
+      </div>
 
       <div className={styles.container}>
         {currentStep === 1 && (
           <div>
-            <h3>Welcome to e-KYC Demo</h3>
-            <p>
+            <h3 className={styles.title}>Welcome to e-KYC Demo</h3>
+            <p className={styles.desc}>
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
