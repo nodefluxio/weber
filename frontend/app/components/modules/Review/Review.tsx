@@ -10,15 +10,16 @@ import { Color } from "../../../types/elements"
 import { ReviewData } from "../../../types/elements"
 import styles from "./Review.module.scss"
 
-type ReviewProp = {
+interface ReviewProp {
   id: number
 }
 
-const Review = ({ id }: ReviewProp) => {
+const Review: React.FC<ReviewProp> = ({ id }) => {
 
   const [rating, setRating] = useState(0)
-  const [errorMsg, setErrorMsg] = useState("")
-  const [success, setSuccess] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [message, setMessage] = useState("Thank you!")
 
   const {
     register,
@@ -28,57 +29,64 @@ const Review = ({ id }: ReviewProp) => {
   } = useForm<ReviewData>()
 
   const onSubmit: SubmitHandler<ReviewData> = async (data) => {
-    setErrorMsg("")
+    if (rating === 0) return 
     try {
       const { session_id } = parseCookies() // Assume cookies exist
       const res = await postReview({ id, session_id, ...data })
-      if (res!.ok) {
-        setSuccess(true)
+      if (res && res.ok) {
+        setMessage(res.message)
+        setIsSuccess(true)
+      } else {
+        throw new Error("Something wrong has happened")
       }
     } catch (err) {
-      console.log((err as Error).message)
+      setMessage((err as Error).message)
+      setIsSuccess(false)
+    } finally {
+      setIsSubmitted(true)
     }
   }
 
   return (
-    success ?
-    <div className={styles.thankYou}>
-      <Image src={"/assets/icons/thankyou.svg"} width={75} height={75} />
-      <h3>Thanks for your feedback!</h3>
-    </div>
-    :
-    <form
-      className={styles.review}
-      method="post"
-      onSubmit={handleSubmit(onSubmit)}>
-      <h3>How was your experience?</h3>
-      <div className={styles.starFlex}>
-        {
-          [...Array(5)].map((_, i) =>
-            <Star
-              key={i}
-              onClick={() => {
-                setValue("rating", i + 1)
-                setRating(i + 1)
-              }}
-              className={`${styles.star} ${i + 1 <= rating ? styles.colored : styles.idle}`}
-            />
-          )
-        }
+    isSubmitted && isSuccess ?
+      <div className={styles.thankYou}>
+        <Image src={"/assets/icons/thankyou.svg"} width={75} height={75} />
+        <h3>{message}</h3>
       </div>
-      <Label id={"comment"} errors={errors} label={"Comment"} />
-      <textarea
-        id="comment"
-        className={styles.comment}
-        placeholder="Tell us your experience"
-        {...register("comment", {
-          required: rating < 4 ? "required" : undefined,
-          minLength: rating < 4 ? { value: 20, message: "min. 20 characters"} :  undefined
+      :
+      <form
+        className={styles.review}
+        method="post"
+        onSubmit={handleSubmit(onSubmit)}>
+        { isSubmitted && "Try Again" }
+        <h3>How was your experience?</h3>
+        <div className={styles.starFlex}>
+          {
+            [...Array(5)].map((_, i) =>
+              <Star
+                key={i}
+                onClick={() => {
+                  setValue("rating", i + 1)
+                  setRating(i + 1)
+                }}
+                className={`${styles.star} ${i + 1 <= rating ? styles.colored : styles.idle}`}
+              />
+            )
+          }
+        </div>
+        <Label id={"comment"} errors={errors} label={"Comment"} />
+        <textarea
+          id="comment"
+          className={styles.comment}
+          placeholder="Tell us your experience"
+          {...register("comment", {
+            required: rating < 4 ? "required" : undefined,
+            minLength: rating < 4 ? { value: 20, message: "min. 20 characters" } : undefined
           })} />
-      <div className={styles.buttonWrapper}>
-        <Button type="submit" color={Color.Secondary}>Submit</Button>
-      </div>
-    </form>
+        <div className={styles.buttonWrapper}>
+          <Button type="submit" color={Color.Secondary}>Submit</Button>
+        </div>
+      </form>
   )
 }
 

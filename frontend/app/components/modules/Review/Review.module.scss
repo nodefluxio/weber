@@ -54,7 +54,7 @@
 
 .comment {
   resize: none;
-  height: 130px;
+  height: 140px;
   border-radius: 0.25rem;
   &:focus {
     outline: none;
@@ -77,4 +77,10 @@
     margin: auto;
     color: $primary-color;
   }
+}
+
+.ratingError {
+  text-align: right;
+  font-weight: 600;
+  color: #bf1650;
 }
