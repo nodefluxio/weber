@@ -10,16 +10,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type feedbackInput struct {
-	SessionID string `json:"session_id"`
-	Rating    uint   `json:"rating" validate:"required,min=1,max=5"`
-	Comment   string `json:"comment" validate:"max=255"`
-}
-
 func CreateFeedback(ctx *gin.Context) {
 
-	serviceId, _ := strconv.Atoi(ctx.Param("id"))
-	var feedbackInput feedbackInput
+	serviceId, _ := strconv.Atoi(ctx.Param("service_id"))
+	var feedbackInput models.FeedbackInput
 	ctx.BindJSON(&feedbackInput)
 
 	// Check if session is not exist in our record
@@ -43,20 +37,22 @@ func CreateFeedback(ctx *gin.Context) {
 	//validate Input
 	if feedbackInput.Rating < 4 {
 		if feedbackInput.Comment == "" {
-			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Your Feedback is Required!!", "ok": false})
+			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Your comment for this feedback is required", "ok": false})
 			return
 		}
 	}
 
-	if err := utils.Validate.Struct(feedbackInput); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+	err := utils.Validate.Struct(feedbackInput)
+	errs := utils.TranslateError(err)
+	if len(errs) > 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": errs[0].Error(), "ok": false})
 		return
 	}
 
 	db := database.GetDB()
 
 	var lastActivity models.VisitorActivity
-	if err := models.GetLastActivity(db, &lastActivity, feedbackInput.SessionID, serviceId); err != nil {
+	if err := models.GetCurrentVisitorActivity(db, &lastActivity, feedbackInput.SessionID, serviceId); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
