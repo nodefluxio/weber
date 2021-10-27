@@ -1,48 +1,40 @@
-import Image from "next/image"
-import styles from "./AnalyticsResult.module.scss"
+import Image from 'next/image'
+import { ReactNode } from 'react'
+import { Color } from '../../../types/elements'
+import { Button } from '../../elements/Button/Button'
+import styles from './AnalyticsResult.module.scss'
 
 type Props = {
-  imageBase64: string,
-  result: object,
-  errorMsg: string
+  imageBase64: string
+  children: ReactNode
+  handleTryAgain: () => void
 }
 
-export const AnalyticsResult = ({ imageBase64, result, errorMsg }: Props) => {
-
+export const AnalyticsResult = ({
+  imageBase64,
+  children,
+  handleTryAgain
+}: Props) => {
   return (
     <>
       <div className={styles.result}>
         <div className={styles.resultFlex}>
           <div className={styles.resultImage}>
-            {
-              imageBase64 &&
-              <Image
-                src={imageBase64}
-                layout="fill"
-                objectFit="contain"
-              />
-            }
+            {imageBase64 && (
+              <Image src={imageBase64} layout="fill" objectFit="contain" />
+            )}
           </div>
           <div className={styles.resultInfo}>
-            {
-              result ?
-                <div>
-                  <p>Results Here</p>
-                  <ul>
-                    {
-                      Object.entries(result).map(([key, value]) => (
-                        <li key={key}><b>{key}</b>: {value}</li>
-                      ))
-                    }
-                  </ul>
-                </div>
-                :
-                errorMsg ?
-                  <div>{errorMsg}</div>
-                  :
-                  <div>Loading your results... Please wait</div>
-            }
+            <div>
+              <h2>Results</h2>
+              {children}
+            </div>
           </div>
+        </div>
+        <div className={styles.buttonContainer}>
+          <Button color={Color.Primary} onClick={() => handleTryAgain()}>
+            Try Again
+          </Button>
         </div>
       </div>
     </>

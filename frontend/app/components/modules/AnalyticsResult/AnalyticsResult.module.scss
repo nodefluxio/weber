@@ -1,24 +1,48 @@
-.result{
-  margin: 2rem 0;
+@import '../../../styles/abstracts/mixins';
+
+.result {
   width: 100%;
-}
-
-.resultImage {
-  position: relative;
-  min-height: 360px;
-  min-width: 480px;
-}
-
-.resultFlex {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2rem;
-  padding: 0;
-}
-
-.resultInfo {
-  li {
-    list-style: none;
+  margin-top: 2rem;
+  .resultFlex {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    @include tablet {
+      flex-direction: column;
+    }
+    .resultImage {
+      position: relative;
+      min-height: 360px;
+      min-width: 480px;
+      width: 60%;
+      margin-right: 4rem;
+      @include tablet {
+        width: 90%;
+        min-width: 80vw;
+        min-height: 200px;
+        margin-right: unset;
+        margin: auto;
+        margin-bottom: 2rem;
+      }
+    }
+    .resultInfo {
+      width: 40%;
+      @include tablet {
+        width: 80%;
+        margin: auto;
+      }
+      h2 {
+        margin-top: 0;
+        @include tablet {
+          text-align: center;
+        }
+      }
+    }
+  }
+  .buttonContainer {
+    text-align: center;
+    margin-top: 4rem;
   }
 }
