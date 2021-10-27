@@ -487,3 +487,118 @@ Return json data about a Service by ID.
 ```
 
 </details>
+
+<details>
+<summary><b>Create Visitor Feedback by Service ID</b></summary>
+
+- **URL**
+  `/feedback/:service_id`
+- **Method**
+
+  `POST`
+
+- **URL Param**
+
+  **Required**
+
+  `service_id` type `integer`
+
+- **Request Payload**
+
+there will be a condition where
+If visitor give rating below 4, then comment will be required to fill
+
+```json
+{
+   "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+   "rating": 3,
+   "comment": "This feauture need some improvement"
+}
+```
+
+```json
+{
+   "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+   "rating": 5,
+   "comment": ""
+}
+```
+
+- **Request Payload Data Type Attributes**
+```json
+{
+   "session_id": string,
+   "rating": integer,
+   "comment": string
+}
+
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "message": "Feedback Submited",
+    "ok": true
+  }
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "message": string,
+    "ok": boolean,
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
+**Code**: 400 Bad Request
+
+```json
+{
+  "message": "Your comment for this feedback is required",
+  "ok": false
+}
+```
+This error will appear if visitor give rating below 4.
+
+```json
+{
+  "message": "rating is a required field",
+  "ok": false
+}
+```
+This error will appear if visitor do not give feedback rating.
+
+```json
+{
+  "message": "rating must be 5 or less",
+  "ok": false
+}
+```
+This error will appear if visitor give feedback rating more than 5.
+
+</details>
