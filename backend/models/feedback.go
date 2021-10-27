@@ -15,6 +15,12 @@ type Feedback struct {
 	CreatedAt         time.Time
 }
 
+type FeedbackInput struct {
+	SessionID string `json:"session_id"`
+	Rating    uint   `json:"rating" validate:"required,min=1,max=5"`
+	Comment   string `json:"comment" validate:"max=255"`
+}
+
 func CreateFeedbackDb(db *gorm.DB, Feedback *Feedback) (err error) {
 	err = db.Create(Feedback).Error
 	if err != nil {
