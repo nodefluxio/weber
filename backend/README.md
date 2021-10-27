@@ -492,6 +492,7 @@ Return json data about a Service by ID.
 <summary><b>Create Visitor Feedback by Service ID</b></summary>
 
 - **URL**
+
   `/feedback/:service_id`
 - **Method**
 
@@ -505,8 +506,7 @@ Return json data about a Service by ID.
 
 - **Request Payload**
 
-there will be a condition where
-If visitor give rating below 4, then comment will be required to fill
+Note: attribute `comment` is required when rating less than equal 3, when rating is 4 or 5 the `comment` become optional.
 
 ```json
 {
@@ -540,9 +540,8 @@ If visitor give rating below 4, then comment will be required to fill
 
 ```json
 {
-    "message": "Feedback Submited",
+    "message": "Feedback submited!",
     "ok": true
-  }
 }
 ```
 
