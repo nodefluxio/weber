@@ -62,7 +62,7 @@ export const EkycPage = ({ name, shortDesc, longDesc }: Props) => {
 
         {currentStep === 2 && (
           <FaceLiveness
-            nextStep={() => nextStep(2)}
+            nextStep={() => nextStep(3)}
             setOpenModal={setOpenModal}
           />
         )}
