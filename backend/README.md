@@ -451,7 +451,7 @@ Return json data about a Service by slug.
     "created_at": "2021-10-08T23:13:28.755551+07:00",
     "updated_at": "2021-10-08T23:13:28.755551+07:00"
   },
-  "message": "Get service by slug=ocr-ktp success",
+  "message": "Get service by slug=car-damage success",
   "ok": true
 }
 ```
