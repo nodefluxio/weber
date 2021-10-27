@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func seedVisitor(db *gorm.DB) {
+func seedVisitor(db *gorm.DB) []string {
 	var visitors = []models.Visitor{
 		{
 			SessionID: "",
@@ -44,10 +44,26 @@ func seedVisitor(db *gorm.DB) {
 		// Add new visitor here
 	}
 
+	sessionIds := []string{}
+
 	for _, visitor := range visitors {
 		sessionId := uuid.New()
+		sessionIds = append(sessionIds, sessionId.String())
 		visitor.SessionID = sessionId.String()
 		models.CreateVisitor(db, &visitor)
+	}
+
+	return sessionIds
+}
+
+func seedVisitorActivity(db *gorm.DB, sessionIds []string) {
+	for _, sessionId := range sessionIds {
+		var visitorActivity = &models.VisitorActivity{
+			SessionID:    sessionId,
+			ServiceID:    1,
+			Completeness: 100,
+		}
+		models.CreateVisitorActivity(db, visitorActivity)
 	}
 }
 
@@ -141,6 +157,7 @@ func seedService(db *gorm.DB) {
 }
 
 func Seed(db *gorm.DB) {
-	seedVisitor(db)
+	sessionIds := seedVisitor(db)
 	seedService(db)
+	seedVisitorActivity(db, sessionIds)
 }
