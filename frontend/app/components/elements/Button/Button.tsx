@@ -24,9 +24,9 @@ export const Button = forwardRef(
     const attributes = {
       className: `${styles.btn} ${color && styles[color]} ${rounded && styles.rounded} ${className}`,
       type: type === 'link' ? undefined : type,
-      disabled: disabled,
-      onClick: onClick,
-      ref: ref
+      disabled,
+      onClick,
+      ref
     }
 
     return <Component {...attributes}>{children}</Component>
