@@ -12,7 +12,7 @@
     flex-direction: column;
     text-align: center;
 
-    @include phone {
+    @include tablet {
       display: none;
 
       &.current {
