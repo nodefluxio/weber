@@ -1,7 +1,7 @@
-import { getServiceById } from '../../app/api/analyticsAPI'
+import { getServiceBySlug } from '../../app/api/analyticsAPI'
 import { EkycPage } from '../../app/components/templates/EkycPage/EkycPage'
 
-const EKYC_SOLUTION_ID = 5
+const EKYC_SOLUTION_SLUG = 'ekyc'
 
 interface Props {
   id: number
@@ -30,7 +30,7 @@ const Ekyc: React.FC<Props> = ({
 
 export const getStaticProps = async () => {
   try {
-    const res = await getServiceById(EKYC_SOLUTION_ID)
+    const res = await getServiceBySlug(EKYC_SOLUTION_SLUG)
     return {
       props: {
         ...res?.data

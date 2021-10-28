@@ -29,7 +29,7 @@ export const postServicePhoto = async <AnalyticsResultResponse>(
     const res = await axios.post<AnalyticsResponse<AnalyticsResultResponse>>(
       `/services/${id}`,
       {
-        analyticName: analyticName,
+        analytic_name: analyticName,
         session_id: sessionId,
         data: {
           images: [photo]

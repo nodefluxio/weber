@@ -64,12 +64,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
         longDescription={longDesc}
       />
 
-      <div className={styles.stepper}>
-        <Stepper
-          steps={['Start', 'Face Liveness', 'OCR KTP', 'Face Match', 'Finish']}
-          activeStep={currentStep}
-        />
-      </div>
+      <Stepper
+        steps={['Start', 'Face Liveness', 'OCR KTP', 'Face Match', 'Finish']}
+        activeStep={currentStep}
+      />
 
       <div className={styles.container}>
         {currentStep === 1 && (
@@ -87,9 +85,9 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
         {currentStep === 2 && (
           <FaceLiveness
+            solutionId={serviceId}
             nextStep={() => nextStep(3)}
             setOpenModal={setOpenModal}
-            createVisitorActivities={createVisitorActivities}
             onArrival={() => createVisitorActivities(serviceId, session_id, 40)}
             onChecking={() => createVisitorActivities(serviceId, session_id, 50)}
             onResult={() => createVisitorActivities(serviceId, session_id, 60)}

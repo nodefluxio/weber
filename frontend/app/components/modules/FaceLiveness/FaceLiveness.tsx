@@ -8,7 +8,6 @@ import {
 } from 'react'
 import { postServicePhoto } from '../../../api/analyticsAPI'
 import { SESSION_ID_ERROR } from '../../../constants/message'
-import { FACE_LIVENESS_ID } from '../../../constants/services'
 import { Color } from '../../../types/elements'
 import { FaceLiveness as FL } from '../../../types/responses'
 import { Button } from '../../elements/Button/Button'
@@ -16,21 +15,21 @@ import { Cam } from '../../modules/Cam/Cam'
 import styles from './FaceLiveness.module.scss'
 
 type Props = {
+  solutionId: number
   nextStep: MouseEventHandler<HTMLButtonElement>
   setOpenModal: Dispatch<SetStateAction<boolean>>
-  createVisitorActivities: (serviceId: number, sessionId: string, completeness: number) => void
   onArrival: () => void
   onChecking: () => void
   onResult: () => void
 }
 
 export const FaceLiveness = ({
+  solutionId,
   nextStep,
   setOpenModal,
-  createVisitorActivities,
   onArrival,
   onChecking,
-  onResult,
+  onResult
 }: Props) => {
   const [isResult, setIsResult] = useState(false)
   const [result, setResult] = useState<FL | undefined>(undefined)
@@ -52,14 +51,9 @@ export const FaceLiveness = ({
     try {
       const photo = localStorage.getItem('liveness_snapshot')
       if (photo) {
-        const res = await postServicePhoto(
-          FACE_LIVENESS_ID,
-          session_id,
-          photo,
-          'face-liveness'
-        )
+        const res = await postServicePhoto<FL>(solutionId, session_id, photo, 'face-liveness')
         if (res) {
-          setResult(res as FL)
+          setResult(res)
           setIsResult(true)
           onResult()
         }
