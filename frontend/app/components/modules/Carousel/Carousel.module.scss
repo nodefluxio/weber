@@ -1,48 +1,74 @@
 @import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
 
 .carousel {
   position: relative;
-}
+  h1 {
+    position: absolute;
+    color: $secondary-color;
+    z-index: 3;
+    left: 12%;
+    top: 15%;
+    font-size: 2.5rem;
+    font-weight: 800;
+    @include tablet {
+      width: 100%;
+      text-align: center;
+      top: 17%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @include phone {
+      top: 15%;
+    }
+  }
+  .slide {
+    position: relative;
+    display: none;
+  }
 
-.slide {
-  position: relative;
-  display: none;
-}
+  .slideActive {
+    display: block;
+  }
 
-.slideActive {
-  display: block;
-}
+  .next {
+    position: absolute;
+    right: 5vw;
+    top: 50vh;
+    @include phone {
+      top: 90vh;
+    }
+  }
 
-.next {
-  position: absolute;
-  right: 5vw;
-  top: 50vh;
-}
+  .prev {
+    position: absolute;
+    left: 5vw;
+    top: 50vh;
+    transform: scaleX(-1);
+    @include phone {
+      top: 90vh;
+    }
+  }
 
-.prev {
-  position: absolute;
-  left: 5vw;
-  top: 50vh;
-}
+  .dot {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+  }
 
-.dot {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-}
+  .dotItem {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 5px;
+    background: $white-bg;
+    cursor: pointer;
+  }
 
-.dotItem {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin: 0 5px;
-  background: $white-bg;
-  cursor: pointer;
-}
-
-.dotActive {
-  background: $secondary-color;
-  cursor: auto;
+  .dotActive {
+    background: $secondary-color;
+    cursor: auto;
+  }
 }

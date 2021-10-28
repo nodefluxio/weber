@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
+import Image from 'next/image'
 import styles from './Navbar.module.scss'
 
 export const Navbar = () => {
@@ -25,9 +25,9 @@ export const Navbar = () => {
       <Link href="/">
         <div className={styles.imageContainer}>
           <Image
-            src={'/assets/nodeflux-logo.png'}
-            width={203}
-            height={62}
+            src={'/assets/images/nodeflux-logo.png'}
+            width={149}
+            height={46}
             quality={100}
           />
         </div>

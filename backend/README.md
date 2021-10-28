@@ -132,20 +132,35 @@ OR
 </details>
 
 <details>
-<summary><b>Create A Service Request By ID</b></summary>
-Create a service request by id and create a new visitor_activites record.
+<summary><b>Create Visitor Activities</b></summary>
+Create a visitor activity.
 
 - **URL**
 
-    `/services/:id`
+  `/activities`
 - **Method**
 
-    `POST`
-- **URL Param**
+  `POST`
 
-    **Required**
+- **Request Payload**
 
-    `id` type `integer`
+```json
+{
+  "service_id": 1,
+  "session_id": "ecec7960-5fd0-43eb-8794-11d1e9ac00a1",
+  "completeness": 80
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+  "service_id": int,
+  "session_id": string,
+  "completeness": int,
+}
+```
 
 - **Sample Success Response**
 
@@ -153,49 +168,24 @@ Create a service request by id and create a new visitor_activites record.
 
 ```json
 {
-    "message": "Service demo request success", // message from weber backend
-    "ok": true, // ok from weber backend
-    "service_data": {
-        "job": {
-            "result": {
-                "analytic_type": "FACE_RECOGNITION",
-                "result": [
-                    {
-                        "face_recognition": [
-                            {
-                                "candidates": [
-                                    {
-                                        "confidence": 1,
-                                        "face_id": "88364589938376705",
-                                        "variation": "17614081020751468384"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ],
-                "status": "success"
-            }
-        },
-        "message": "Face Recognition Success", // message from service response
-        "ok": true // ok from service response
-    }
+  "message": "Data has been processed successfully",
+  "ok": true
 }
 ```
 
-- **Data Type Attributes**
+- **Response Data Type Attributes**
 
 ```json
 {
-    "message": string,
-    "ok": boolean, 
-    "service_data": object // json data from service response
+  "message": string,
+  "ok": boolean
 }
 ```
 
 - **Sample Error Response**
 
   **Code**: 401 Unauthorized
+
 ```json
 {
   "message": "Session ID is not valid",
@@ -212,7 +202,122 @@ OR
 }
 ```
 
-  **Code**: 400 Bad Request
+</details>
+
+<details>
+<summary><b>Create A Service Request By ID</b></summary>
+Create a service request by id and create a new visitor_activites record.
+
+- **URL**
+
+  `/services/:id`
+
+- **Method**
+
+  `POST`
+
+- **URL Param**
+
+  **Required**
+
+  `id` type `integer`
+
+- **Request Payload**
+```json
+{
+   "analytic_name" : "ocr-ktp", 
+   "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+   "data": {
+       "additional_params": {},
+       "images": [
+         "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"
+       ]
+   }
+}
+```
+
+Note: `analytic_name` only be required on analytics that are part of the solution service, so it can be omitted when requesting an independent analytics service.
+
+- **Request Payload Data Type Attributes**
+```json
+{
+   "analytic_name" : string,
+   "session_id": string,
+   "data": object {
+       "additional_params": object,
+       "images": string array
+   }
+}
+
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+  "message": "Service demo request success", // message from weber backend
+  "ok": true, // ok from weber backend
+  "service_data": {
+    "job": {
+      "result": {
+        "analytic_type": "FACE_RECOGNITION",
+        "result": [
+          {
+            "face_recognition": [
+              {
+                "candidates": [
+                  {
+                    "confidence": 1,
+                    "face_id": "88364589938376705",
+                    "variation": "17614081020751468384"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "status": "success"
+      }
+    },
+    "message": "Face Recognition Success", // message from service response
+    "ok": true // ok from service response
+  }
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "message": string,
+    "ok": boolean,
+    "service_data": object // json data from service response
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
+**Code**: 400 Bad Request
 
 ```json
 {
@@ -228,6 +333,7 @@ OR
 Return json data about all Services by type.
 
 - **URL**
+
   `/services?type=`
 - **Method**
 
@@ -312,11 +418,12 @@ OR
 </details>
 
 <details>
-<summary><b>Show a Service by ID</b></summary>
-Return json data about a Service by ID.
+<summary><b>Show A Service by Slug</b></summary>
+Return json data about a Service by slug.
 
 - **URL**
-  `/services/:id`
+
+  `/services/:slug`
 - **Method**
 
   `GET`
@@ -325,7 +432,7 @@ Return json data about a Service by ID.
 
   **Required**
 
-  `id` type `integer`
+  `slug` type `string`
 
 - **Sample Success Response**
 
@@ -344,7 +451,7 @@ Return json data about a Service by ID.
     "created_at": "2021-10-08T23:13:28.755551+07:00",
     "updated_at": "2021-10-08T23:13:28.755551+07:00"
   },
-  "message": "Get service by id=6 success",
+  "message": "Get service by slug=car-damage success",
   "ok": true
 }
 ```
@@ -381,5 +488,119 @@ Return json data about a Service by ID.
   "ok": false
 }
 ```
+
+</details>
+
+<details>
+<summary><b>Create Visitor Feedback by Service ID</b></summary>
+
+- **URL**
+
+  `/feedback/:service_id`
+- **Method**
+
+  `POST`
+
+- **URL Param**
+
+  **Required**
+
+  `service_id` type `integer`
+
+- **Request Payload**
+
+Note: attribute `comment` is required when rating less than equal 3, when rating is 4 or 5 the `comment` become optional.
+
+```json
+{
+   "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+   "rating": 3,
+   "comment": "This feauture need some improvement"
+}
+```
+
+```json
+{
+   "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+   "rating": 5,
+   "comment": ""
+}
+```
+
+- **Request Payload Data Type Attributes**
+```json
+{
+   "session_id": string,
+   "rating": integer,
+   "comment": string
+}
+
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "message": "Feedback submited!",
+    "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "message": string,
+    "ok": boolean,
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
+**Code**: 400 Bad Request
+
+```json
+{
+  "message": "Your comment for this feedback is required",
+  "ok": false
+}
+```
+This error will appear if visitor give rating below 4.
+
+```json
+{
+  "message": "rating is a required field",
+  "ok": false
+}
+```
+This error will appear if visitor do not give feedback rating.
+
+```json
+{
+  "message": "rating must be 5 or less",
+  "ok": false
+}
+```
+This error will appear if visitor give feedback rating more than 5.
 
 </details>

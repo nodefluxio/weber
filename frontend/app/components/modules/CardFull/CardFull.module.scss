@@ -9,7 +9,20 @@
   color: whitesmoke;
   padding: 1.5rem;
   transition: all 0.2s;
-  background: linear-gradient( $primary-color, $primary-color );
+  background: linear-gradient($primary-color, $primary-color);
+  margin: auto;
+
+  .image {
+    opacity: 0.5;
+  }
+
+  .body {
+    position: absolute;
+    bottom: 20px;
+    h3 {
+      font-size: 1.4rem;
+    }
+  }
 
   &:hover {
     transform: scale(1.025);
@@ -31,13 +44,4 @@
       content: ' ';
     }
   }
-}
-
-.image{
-  opacity: .5;
-}
-
-.body {
-  position: absolute;
-  bottom: 20px;
 }
