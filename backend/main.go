@@ -20,6 +20,8 @@ func main() {
 
 	r := SetupRouter()
 
+	host := os.Getenv("APP_HOST")
 	port := os.Getenv("APP_PORT")
-	_ = r.Run(":" + port)
+
+	_ = r.Run(host + ":" + port)
 }

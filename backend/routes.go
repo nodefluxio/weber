@@ -18,7 +18,7 @@ func SetupRouter() *gin.Engine {
 	services := r.Group("/services")
 	{
 		services.GET("", controllers.GetServicesByType)
-		services.GET("/:id", controllers.GetServiceById)
+		services.GET("/:slug", controllers.GetServiceBySlug)
 
 		services.POST("/:id", controllers.CreateServiceRequest)
 	}
@@ -27,5 +27,16 @@ func SetupRouter() *gin.Engine {
 	{
 		visitors.POST("", controllers.CreateVisitor)
 	}
+
+	activities := r.Group("/activities")
+	{
+		activities.POST("", controllers.CreateActivity)
+	}
+
+	feedbacks := r.Group("/feedback")
+	{
+		feedbacks.POST("/:service_id", controllers.CreateFeedback)
+	}
+
 	return r
 }
