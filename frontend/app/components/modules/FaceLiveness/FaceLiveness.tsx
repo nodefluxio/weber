@@ -19,12 +19,18 @@ type Props = {
   nextStep: MouseEventHandler<HTMLButtonElement>
   setOpenModal: Dispatch<SetStateAction<boolean>>
   createVisitorActivities: (serviceId: number, sessionId: string, completeness: number) => void
+  onArrival: () => void
+  onChecking: () => void
+  onResult: () => void
 }
 
 export const FaceLiveness = ({
   nextStep,
   setOpenModal,
   createVisitorActivities,
+  onArrival,
+  onChecking,
+  onResult,
 }: Props) => {
   const [isResult, setIsResult] = useState(false)
   const [result, setResult] = useState<FL | undefined>(undefined)
@@ -32,12 +38,12 @@ export const FaceLiveness = ({
   const { session_id } = parseCookies()
 
   useEffect(() => {
-    createVisitorActivities(5, session_id, 40)
+    onArrival()
   }, [])
 
   const handleAnalytics = async () => {
     if (session_id) {
-      createVisitorActivities(5, session_id, 50)
+      onChecking()
       await resolveAnalytics(session_id)
     }
   }
@@ -55,7 +61,7 @@ export const FaceLiveness = ({
         if (res) {
           setResult(res as FL)
           setIsResult(true)
-          createVisitorActivities(5, session_id, 60)
+          onResult()
         }
       }
     } catch (err) {

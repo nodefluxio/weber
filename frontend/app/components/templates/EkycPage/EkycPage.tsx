@@ -90,6 +90,9 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             nextStep={() => nextStep(3)}
             setOpenModal={setOpenModal}
             createVisitorActivities={createVisitorActivities}
+            onArrival={() => createVisitorActivities(serviceId, session_id, 40)}
+            onChecking={() => createVisitorActivities(serviceId, session_id, 50)}
+            onResult={() => createVisitorActivities(serviceId, session_id, 60)}
           />
         )}
 
