@@ -1,38 +1,42 @@
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import styles from './AnalyticsPage.module.scss'
-import { Stepper } from '../../elements/Stepper/Stepper'
-import { Button } from '../../elements/Button/Button'
-import { Banner } from '../../modules/Banner/Banner'
-import { AnalyticsResult } from '../../modules/AnalyticsResult/AnayticsResult'
-import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
-import { Color } from '../../../types/elements'
+import {
+  postServicePhoto,
+  SESSION_ID_ERROR
+} from '../../../../app/api/analyticsAPI'
+import { ReactNode, useState } from 'react'
 import { parseCookies } from 'nookies'
-import { Modal } from '../../elements/Modal/Modal'
-import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
-import { postServicePhoto, SESSION_ID_ERROR } from '../../../api/analyticsAPI'
+import { AnalyticsContainer } from '../../../components/modules/AnalyticsContainer/AnalyticsContainer'
+import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
+import { Button } from '../../elements/Button/Button'
+import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
+import { Color } from '../../../types/elements'
+import styles from './AnalyticsPage.module.scss'
 
 type Props = {
   analyticsName: string
   shortDescription: string
   longDescription: string
+  children: ReactNode
   examples: string[]
   serviceID: number
+  handleResult: (res: any) => void
+  addionalStepOneNode?: ReactNode
 }
 
-export const AnalyticsPage = ({
+export const AnalyticsPage: React.FC<Props> = ({
   analyticsName,
   shortDescription,
   longDescription,
+  children,
   examples,
-  serviceID
-}: Props) => {
-
-  const [photo, setPhoto] = useState("")
+  serviceID,
+  handleResult,
+  addionalStepOneNode
+}) => {
+  const [photo, setPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
-  const [errorMsg, setErrorMsg] = useState("")
-  const [result, setResult] = useState<object>()
+  const [isResult, setIsResult] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
   const handleAnalytics = async () => {
     const { session_id } = parseCookies()
@@ -47,62 +51,61 @@ export const AnalyticsPage = ({
   const resolveAnalytics = async (session_id: string) => {
     try {
       const res = await postServicePhoto(serviceID, session_id, photo)
-      setResult(res!)
+      handleResult(res)
+      setIsResult(true)
     } catch (err) {
+      console.log(err)
       if ((err as Error).message === SESSION_ID_ERROR) {
         setOpenModal(true)
+        setCurrentStep(1)
       } else {
         setErrorMsg((err as Error).message)
+        setIsResult(false)
       }
     }
   }
 
   return (
-    <>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <RequestDemoFormPopup />
-      </Modal>
-      <Banner
-        analyticsName={analyticsName}
-        shortDescription={shortDescription}
-        longDescription={longDescription}
-      />
+    <AnalyticsContainer
+      analyticsName={analyticsName}
+      shortDescription={shortDescription}
+      longDescription={longDescription}
+      currentStep={currentStep}
+      openModal={openModal}
+      onModalClose={() => setOpenModal(false)}>
       <div className={styles.container}>
-        <Stepper
-          steps={['Upload your photo', 'Check your results']}
-          activeStep={currentStep}
-        />
+        {currentStep === 1 && (
+          <div className={styles.dropzoneColumns}>
+            {addionalStepOneNode}
+            <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
+            {photo && (
+              <div className={styles.buttonContainer}>
+                <Button color={Color.Primary} onClick={handleAnalytics}>
+                  Next Step
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+        {currentStep === 2 && (
+          <AnalyticsResultWrapper
+            imageBase64={photo}
+            handleTryAgain={() => {
+              setCurrentStep(1)
+              setPhoto('')
+              handleResult(undefined)
+              setIsResult(false)
+            }}>
+            {isResult ? (
+              children
+            ) : errorMsg ? (
+              <div>{errorMsg}</div>
+            ) : (
+              <div>Loading your results... Please wait</div>
+            )}
+          </AnalyticsResultWrapper>
+        )}
       </div>
-      {/* TODO: Butuh pembenahan... refactor? */}
-      {currentStep === 1 ? (
-        <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-          <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
-          {photo && (
-            <Button color={Color.Primary} onClick={() => handleAnalytics()}>
-              Next Step
-            </Button>
-          )}
-        </div>
-      ) :
-        result ?
-          (
-            <div className={`${styles.container} ${styles.dropzoneColumns}`}>
-              <AnalyticsResult imageBase64={photo} result={result} errorMsg={errorMsg} />
-              <Button
-                color={Color.Primary}
-                onClick={() => {
-                  setCurrentStep(1)
-                  setPhoto("")
-                  setResult({})
-                }}>
-                Try Again
-              </Button>
-            </div>
-          ) :
-          <div>Loading result...</div>
-      }
-    </>
+    </AnalyticsContainer>
   )
 }
-
-export default AnalyticsPage

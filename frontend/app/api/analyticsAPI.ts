@@ -1,12 +1,16 @@
-import axios, { AxiosError } from "axios"
-import { AnalyticsError, AnalyticsResponse, ServiceByIdResponse } from "../types/responses"
+import axios, { AxiosError } from 'axios'
+import {
+  AnalyticsError,
+  AnalyticsResponse,
+  ServiceBySlugResponse
+} from '../types/responses'
 
-const ERROR_MESSAGE = "Something wrong has happened"
-export const SESSION_ID_ERROR = "Please fill out the form"
+const ERROR_MESSAGE = 'Something wrong has happened'
+export const SESSION_ID_ERROR = 'Please fill out the form'
 
-export const getServiceById = async (id: number) => {
+export const getServiceBySlug = async (slug: string) => {
   try {
-    const res = await axios.get<ServiceByIdResponse>(`/services/${id}`)
+    const res = await axios.get<ServiceBySlugResponse>(`/services/${slug}`)
     if (res.data.ok) {
       return res.data
     }
@@ -15,27 +19,35 @@ export const getServiceById = async (id: number) => {
   }
 }
 
-export const postServicePhoto = async(id: number, sessionId: string, photo: string, analyticName?: string) => {
+export const postServicePhoto = async <AnalyticsResultResponse>(
+  id: number,
+  sessionId: string,
+  photo: string,
+  analyticName?: string
+) => {
   try {
-    const res = await axios.post<AnalyticsResponse>(`/services/${id}`, {
-      analytic_name: analyticName,
-      session_id: sessionId,
-      data: {
-        images: [photo]
+    const res = await axios.post<AnalyticsResponse<AnalyticsResultResponse>>(
+      `/services/${id}`,
+      {
+        analyticName: analyticName,
+        session_id: sessionId,
+        data: {
+          images: [photo]
+        }
       }
-    })
+    )
     if (res.data.ok) {
       const { service_data } = res.data
-      if (service_data.job.result.status === "success") {
+      if (service_data.job.result.status === 'success') {
         return service_data.job.result.result[0]
       } else {
         throw new Error(service_data.job.result.status)
       }
     }
   } catch (e) {
-    if(axios.isAxiosError(e)) {
+    if (axios.isAxiosError(e)) {
       const error = e as AxiosError<AnalyticsError>
-      if(error && error.response) {
+      if (error && error.response) {
         throw new Error(SESSION_ID_ERROR)
       }
     } else {

@@ -24,7 +24,7 @@ export const CardFull = ({ img, title, desc, href }: Props) => {
         <h3>{title}</h3>
         <p>{desc}</p>
       </div>
-      <Link href={'/' + href}>
+      <Link href={href}>
         <a>Try it now</a>
       </Link>
     </div>
