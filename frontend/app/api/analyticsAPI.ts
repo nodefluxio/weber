@@ -2,15 +2,15 @@ import axios, { AxiosError } from 'axios'
 import {
   AnalyticsError,
   AnalyticsResponse,
-  ServiceByIdResponse
+  ServiceBySlugResponse
 } from '../types/responses'
 
 const ERROR_MESSAGE = 'Something wrong has happened'
 export const SESSION_ID_ERROR = 'Please fill out the form'
 
-export const getServiceById = async (id: number) => {
+export const getServiceBySlug = async (slug: string) => {
   try {
-    const res = await axios.get<ServiceByIdResponse>(`/services/${id}`)
+    const res = await axios.get<ServiceBySlugResponse>(`/services/${slug}`)
     if (res.data.ok) {
       return res.data
     }
@@ -46,7 +46,6 @@ export const postServicePhoto = async <AnalyticsResultResponse>(
     if (axios.isAxiosError(e)) {
       const error = e as AxiosError<AnalyticsError>
       if (error && error.response) {
-        // TODO: FIX ERROR HANDLING HERE
         throw new Error(SESSION_ID_ERROR)
       }
     } else {
