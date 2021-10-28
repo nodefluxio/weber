@@ -96,21 +96,13 @@ func getServiceInnovation(ctx *gin.Context) {
 	})
 }
 
-func GetServiceById(ctx *gin.Context) {
+func GetServiceBySlug(ctx *gin.Context) {
 	db := database.GetDB()
 	service := &models.Service{}
 	apiService := &models.APIService{}
-	serviceId, err := strconv.Atoi(ctx.Param("id"))
+	slug := ctx.Param("slug")
 
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"ok":      false,
-			"message": "Expected an integer value from argument 'id'",
-		})
-		return
-	}
-
-	if err = db.Model(service).First(&apiService, "id = ?", serviceId).Error; err != nil {
+	if err := db.Model(service).First(&apiService, "slug = ?", slug).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"ok":      false,
@@ -120,7 +112,7 @@ func GetServiceById(ctx *gin.Context) {
 		}
 	}
 
-	message := fmt.Sprintf("Get service by id=%v success", serviceId)
+	message := fmt.Sprintf("Get service by slug=%v success", slug)
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":      true,
 		"message": message,

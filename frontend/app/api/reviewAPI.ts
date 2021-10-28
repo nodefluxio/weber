@@ -1,5 +1,4 @@
 import axios, { AxiosError } from "axios"
-import { ReviewData } from "../types/elements"
 import { ReviewResponse } from "../types/responses"
 
 type ReviewReqBody = {

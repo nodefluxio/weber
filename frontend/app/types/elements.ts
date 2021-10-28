@@ -4,6 +4,12 @@ export enum Color {
   Tertiary = 'tertiary'
 }
 
+export enum AnalyticsSlug {
+  FACE_MATCH_ENROLLMENT = 'face-match-enrollment',
+  LICENSE_PLATE_RECOGNITION = 'license-plate-recognition',
+  OCR_KTP = 'ocr-ktp'
+}
+
 export type Service = {
   id: number
   name: string
@@ -21,27 +27,7 @@ export type RequestDemoFormData = {
   industry: string
 }
 
-export type AnalyticsParam = {
-  session_id: string
-  data: {
-    additional_params: Object
-    images: string[]
-  }
-}
-
-export type AnalyticsResult = {
-  message: string
-  ok: boolean
-  job: {
-    result: {
-      analytic_type: string
-      result: Object[]
-      status: string
-    }
-  }
-}
-
-export type ReviewData = {
+export type FeedbackData = {
   rating: number,
   comment: string
 }

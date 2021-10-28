@@ -1,40 +1,11 @@
 .container {
-  padding: 2rem 4rem;
-}
-
-.dropzoneColumns {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
-  margin: auto;
-}
-
-.dropzoneRows {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.intro {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  background: #DAE3EA;
-  margin-bottom: 1rem;
-  padding: 4rem 6rem;
-  align-items: center;
-  justify-content: center;
-
-  .title {
-    padding-bottom: 2rem;
+  padding: 2rem 0 5rem 0;
+  .dropzoneColumns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .buttonContainer {
+      margin-top: 2rem;
+    }
   }
-}
-
-.imageIntro {
-  position: relative;
-  height: 240px;
-  width: 360px;
-  flex-basis: 40%;
-  flex-shrink: 0;
 }
