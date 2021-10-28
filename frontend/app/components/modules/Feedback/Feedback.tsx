@@ -65,7 +65,7 @@ const Feedback: React.FC<ReviewProp> = ({ id, onClick }) => {
   return (
     isSubmitted && isSuccess ?
       <div className={styles.thankYou}>
-        <Image src={"/assets/icons/thankyou.svg"} width={75} height={75} />
+        <Image src={"/assets/icons/thankyou.svg"} width={90} height={90} />
         <h3>{message}</h3>
         <Button type="button" color={Color.Primary} onClick={onClick}>Try again with another photo</Button>
         <Link passHref href="/">
