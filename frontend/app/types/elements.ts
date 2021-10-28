@@ -26,3 +26,8 @@ export type RequestDemoFormData = {
   job_title: string
   industry: string
 }
+
+export type FeedbackData = {
+  rating: number,
+  comment: string
+}

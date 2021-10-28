@@ -85,6 +85,11 @@ export type FaceLiveness = {
   }
 }
 
+export type ReviewResponse = {
+  message: string,
+  ok: boolean
+}
+
 export type OCRResultResponse = {
   agama: string
   alamat: string

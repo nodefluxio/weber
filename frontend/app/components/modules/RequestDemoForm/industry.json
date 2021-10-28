@@ -1,0 +1,19 @@
+{
+    "Industries": [
+        {"name":"Your company industry", "value":""},
+        {"name":"Agriculture and Mining", "value":"agriculture_and_mining"},
+        {"name":"BUMD", "value":"bumd"},
+        {"name":"BUMN", "value":"bumn"},
+        {"name":"Business Services", "value":"business_services"},
+        {"name":"Computer and Electror", "value":"computer_and_electror"},
+        {"name":"Education", "value":"education"},
+        {"name":"Energy and Utilities", "value":"energy_and_utilities"},
+        {"name":"Financial Services", "value":"financial_services"},
+        {"name":"Government", "value":"government"},
+        {"name":"Health Pharmaceuticals and Biotech", "value":"health_pharmaceuticals_and_biotech"},
+        {"name":"Industrial Area", "value":"industrial_area"},
+        {"name":"Law Enforcement Bodies", "value":"law_enforcement_bodies"},
+        {"name":"Manufacture", "value":"manufacture"},
+        {"name":"Non-Profit", "value":"non-profit"}
+    ]
+}
