@@ -13,6 +13,9 @@
   &:focus {
     background-color: darken($white-bg, 10%);
   }
+  &:disabled {
+    background-color: lighten($white-bg, 50%);
+  }
 
   &.primary {
     background-color: $primary-color;
@@ -21,6 +24,10 @@
     &:hover,
     &:focus {
       background-color: darken($primary-color, 10%);
+    }
+    &:disabled {
+      background-color: lighten($primary-color, 50%);
+      cursor: not-allowed;
     }
   }
 
@@ -31,6 +38,9 @@
     &:hover,
     &:focus {
       background-color: darken($secondary-color, 10%);
+    }
+    &:disabled {
+      background-color: lighten($secondary-color, 50%);
     }
   }
 
