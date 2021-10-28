@@ -54,7 +54,6 @@ export const AnalyticsPage: React.FC<Props> = ({
       handleResult(res)
       setIsResult(true)
     } catch (err) {
-      console.log(err)
       if ((err as Error).message === SESSION_ID_ERROR) {
         setOpenModal(true)
         setCurrentStep(1)
