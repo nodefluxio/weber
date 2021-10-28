@@ -11,6 +11,9 @@ import { setCookie } from 'nookies'
 import { useState } from 'react'
 import styles from './RequestDemoForm.module.scss'
 import { SelectBox } from '../../elements/SelectBox/SelectBox'
+import data from './industry.json';
+
+const industry = (data).Industry;
 
 type Props = {
   onSuccess: () => void
@@ -107,11 +110,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
           <SelectBox
             id="industry"
             label="Industry"
-            options={[
-              { name: 'Your company industry', value: '' },
-              { name: 'Technology', value: 'technology' },
-              { name: 'Artificial Intelegent', value: 'artificial_intellegent' }
-            ]}
+            options= {industry}
             register={register}
             registerOptions={{ required: 'required' }}
             errors={errors}
