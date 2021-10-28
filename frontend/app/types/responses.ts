@@ -73,6 +73,11 @@ export type AnalyticsError = {
   ok: boolean
 }
 
+export type ReviewResponse = {
+  message: string,
+  ok: boolean
+}
+
 export type OCRResultResponse = {
   agama: string
   alamat: string
