@@ -103,6 +103,7 @@ export const AnalyticsPage: React.FC<Props> = ({
             ) : (
               <div>Loading your results... Please wait</div>
             )}
+            {/* isResult && <Review> */}
           </AnalyticsResultWrapper>
         )}
       </div>

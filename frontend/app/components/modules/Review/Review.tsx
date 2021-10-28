@@ -7,7 +7,7 @@ import { Button } from "../../../components/elements/Button/Button"
 import { Label } from "../../../components/elements/Label/Label"
 import { Star } from "../../../components/elements/Star/Star"
 import { Color } from "../../../types/elements"
-import { ReviewData } from "../../../types/elements"
+import { FeedbackData } from "../../../types/elements"
 import styles from "./Feedback.module.scss"
 
 interface ReviewProp {
@@ -26,9 +26,9 @@ const Feedback: React.FC<ReviewProp> = ({ id }) => {
     setValue,
     handleSubmit,
     formState: { errors }
-  } = useForm<ReviewData>()
+  } = useForm<FeedbackData>()
 
-  const onSubmit: SubmitHandler<ReviewData> = async (data) => {
+  const onSubmit: SubmitHandler<FeedbackData> = async (data) => {
     if (rating === 0) return 
     try {
       const { session_id } = parseCookies() // Assume cookies exist
