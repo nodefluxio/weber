@@ -14,6 +14,8 @@ import {
   LPRResult,
   OCRResult
 } from '../../app/components/modules/AnalyticsResult/AnalyticsResult'
+import { GetServerSideProps } from 'next'
+import { ParsedUrlQuery } from 'querystring'
 
 const Analytics = ({
   name,
@@ -57,21 +59,22 @@ const Analytics = ({
 
 export default Analytics
 
-type Params = {
-  params: {
-    analytic_name: string
-  }
+interface Params extends ParsedUrlQuery {
+  analytic_name: string
 }
 
-export const getServerSideProps = async ({ params }: Params) => {
+export const getServerSideProps: GetServerSideProps<any, Params> = async ({
+  params
+}) => {
   try {
-    const res = await getServiceBySlug(params.analytic_name)
+    const res = await getServiceBySlug(params!.analytic_name)
     return {
       props: {
         ...res?.data
       }
     }
   } catch (e) {
-    return (e as Error).message
+    console.error(e)
+    return { notFound: true }
   }
 }
