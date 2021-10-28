@@ -64,7 +64,7 @@ const Feedback: React.FC<ReviewProp> = ({ id }) => {
     isSubmitted && isSuccess ?
       <div className={styles.thankYou}>
         <Image src={"/assets/icons/thankyou.svg"} width={75} height={75} />
-        <h3>{ message }</h3>
+        <h3>{message}</h3>
       </div>
       :
       <form
@@ -72,7 +72,7 @@ const Feedback: React.FC<ReviewProp> = ({ id }) => {
         method="post"
         onSubmit={handleSubmit(onSubmit)}>
         <h3>How was your experience?</h3>
-        { isSubmitted && <span>{ message }</span> }
+        {isSubmitted && <span>{message}</span>}
         <div className={styles.starFlex}>
           {
             [...Array(5)].map((_, i) =>
@@ -87,7 +87,10 @@ const Feedback: React.FC<ReviewProp> = ({ id }) => {
             )
           }
         </div>
-        <Label id={"comment"} errors={errors} label={"Comment (min. 20 characters)"} />
+        <Label
+          id={"comment"}
+          errors={errors}
+          label={watchRating < 4 ? "Leave a comment (min. 20 characters)" : "Comment"}/>
         <textarea
           id="comment"
           className={styles.comment}
