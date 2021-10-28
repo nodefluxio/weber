@@ -79,19 +79,20 @@ export const FaceLiveness = ({
         <div className={styles.result}>
           <h3 className={styles.head}>Liveness Result</h3>
 
-          <p className={styles.body}>
-            {`${Math.trunc(result.face_liveness.liveness * 100)}%`}
-          </p>
+          <div className={styles.body}>
+            <span className={styles.percentage}>{`${Math.trunc(result.face_liveness.liveness * 100)}%`}</span>
+            <span className={`${styles.text} ${result.face_liveness.live ? styles.passed : styles.notPassed}`}>{result.face_liveness.live ? 'PASSED' : 'NOT PASSED'}</span>
+          </div>
 
           <div className={styles.btnGroup}>
+            <Button color={Color.Primary} onClick={() => setIsResult(false)}>
+              Try Again
+            </Button>
             <Button
               color={Color.Primary}
               onClick={nextStep}
               disabled={result.face_liveness.live === false}>
               Next
-            </Button>
-            <Button color={Color.Primary} onClick={() => setIsResult(false)}>
-              Try Again
             </Button>
           </div>
         </div>
