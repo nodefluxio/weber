@@ -17,7 +17,7 @@ func SetupRouter() *gin.Engine {
 
 	services := r.Group("/services")
 	{
-		services.GET("", controllers.GetServicesByType)
+		services.GET("", controllers.GetServices)
 		services.GET("/:slug", controllers.GetServiceBySlug)
 
 		services.POST("/:id", controllers.CreateServiceRequest)

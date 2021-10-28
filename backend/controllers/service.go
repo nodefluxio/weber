@@ -14,7 +14,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetServicesByType(ctx *gin.Context) {
+func GetServices(ctx *gin.Context) {
 	serviceTypeQuery, isAnyQueryType := ctx.GetQuery("type")
 
 	// check if there is a query URL "type"
@@ -29,20 +29,32 @@ func GetServicesByType(ctx *gin.Context) {
 	}
 
 	switch serviceType {
-	case models.Analytic:
+	case models.AnalyticServiceType:
 		getServiceAnalytic(ctx)
-	case models.Solution:
+	case models.SolutionServiceType:
 		getServiceSolution(ctx)
-	case models.Innovation:
+	case models.InnovationServiceType:
 		getServiceInnovation(ctx)
-	// handle conditions like /services, /services?types=analytic
 	default:
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"ok": false,
-			"message": "Expected 1 argument '?type=' with string value or " +
-				"1 argument '/id' with integer value",
-		})
+		getAllServices(ctx)
 	}
+}
+
+func getAllServices(ctx *gin.Context) {
+	db := database.GetDB()
+
+	service := &models.Service{}
+	analyticsService := &[]models.APIService{}
+
+	if err := db.Model(service).Find(analyticsService).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok":      true,
+		"message": "Get all services success",
+		"data":    &analyticsService,
+	})
 }
 
 func getServiceAnalytic(ctx *gin.Context) {
