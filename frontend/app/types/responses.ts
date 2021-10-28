@@ -22,7 +22,7 @@ export type VisitorsPostErrorResponse = {
   ok: boolean
 }
 
-export type ServiceByIdResponse = {
+export type ServiceBySlugResponse = {
   data: {
     id: number
     type: string
@@ -36,6 +36,17 @@ export type ServiceByIdResponse = {
   }
   message: string
   ok: boolean
+}
+export type ServiceBySlugResponseData = {
+  id: number
+  type: string
+  slug: string
+  name: string
+  short_description: string
+  long_description: string
+  thumbnail: string
+  created_at: string
+  updated_at: string
 }
 
 export type ServiceByIdErrorResponse = {
@@ -104,3 +115,8 @@ export type FMEResultResponse = {
     similarity: number
   }
 }
+
+export type AnyResultResponse =
+  | FMEResultResponse
+  | OCRResultResponse
+  | LPRResultResponse
