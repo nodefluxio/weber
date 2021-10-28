@@ -8,6 +8,7 @@ import { Modal } from '../../elements/Modal/Modal'
 import { Stepper } from '../../elements/Stepper/Stepper'
 import { Banner } from '../../modules/Banner/Banner'
 import { FaceLiveness } from '../../modules/FaceLiveness/FaceLiveness'
+import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import styles from './EkycPage.module.scss'
 
@@ -94,7 +95,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
           />
         )}
 
-        {currentStep === 3 && <h3>See you next week 👋</h3>}
+        {currentStep === 3 && <Feedback id={serviceId} onClick={() => setCurrentStep(1)}/>}
       </div>
     </>
   )

@@ -11,6 +11,7 @@ import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/Ana
 import Feedback from '../../modules/Feedback/Feedback'
 import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
+import { useRouter } from 'next/router'
 
 type Props = {
   analyticsName: string
@@ -38,6 +39,7 @@ export const AnalyticsPage: React.FC<Props> = ({
   const [openModal, setOpenModal] = useState(false)
   const [isResult, setIsResult] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const router = useRouter()
 
   const handleAnalytics = async () => {
     const { session_id } = parseCookies()
@@ -105,7 +107,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               <div>Loading your results... Please wait</div>
             )}
           </AnalyticsResultWrapper>
-          { isResult && <Feedback id={serviceID}/> }
+          { isResult && <Feedback id={serviceID} onClick={() => setCurrentStep(1)}/> }
           </>
         )}
       </div>

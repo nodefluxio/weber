@@ -1,5 +1,5 @@
 import { parseCookies } from "nookies"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { postFeedback } from "../../../api/feedbackAPI"
@@ -9,12 +9,14 @@ import { Star } from "../../elements/Star/Star"
 import { Color } from "../../../types/elements"
 import { FeedbackData } from "../../../types/elements"
 import styles from "./Feedback.module.scss"
+import Link from "next/link"
 
 interface ReviewProp {
   id: number
+  onClick: () => void
 }
 
-const Feedback: React.FC<ReviewProp> = ({ id }) => {
+const Feedback: React.FC<ReviewProp> = ({ id, onClick }) => {
 
   const [rating, setRating] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -65,6 +67,10 @@ const Feedback: React.FC<ReviewProp> = ({ id }) => {
       <div className={styles.thankYou}>
         <Image src={"/assets/icons/thankyou.svg"} width={75} height={75} />
         <h3>{message}</h3>
+        <Button type="button" color={Color.Primary} onClick={onClick}>Try again with another photo</Button>
+        <Link passHref href="/">
+          <Button type="link" color={Color.Secondary}>Explore More</Button>
+        </Link>
       </div>
       :
       <form
@@ -90,7 +96,7 @@ const Feedback: React.FC<ReviewProp> = ({ id }) => {
         <Label
           id={"comment"}
           errors={errors}
-          label={watchRating < 4 ? "Leave a comment (min. 20 characters)" : "Comment"}/>
+          label={watchRating < 4 ? "Leave a comment (min. 20 characters)" : "Comment"} />
         <textarea
           id="comment"
           className={styles.comment}
