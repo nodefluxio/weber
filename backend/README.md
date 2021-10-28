@@ -136,6 +136,7 @@ OR
 Create a visitor activity.
 
 - **URL**
+
   `/activities`
 - **Method**
 
@@ -332,6 +333,7 @@ OR
 Return json data about all Services by type.
 
 - **URL**
+
   `/services?type=`
 - **Method**
 
@@ -416,11 +418,12 @@ OR
 </details>
 
 <details>
-<summary><b>Show a Service by ID</b></summary>
-Return json data about a Service by ID.
+<summary><b>Show A Service by Slug</b></summary>
+Return json data about a Service by slug.
 
 - **URL**
-  `/services/:id`
+
+  `/services/:slug`
 - **Method**
 
   `GET`
@@ -429,7 +432,7 @@ Return json data about a Service by ID.
 
   **Required**
 
-  `id` type `integer`
+  `slug` type `string`
 
 - **Sample Success Response**
 
@@ -448,7 +451,7 @@ Return json data about a Service by ID.
     "created_at": "2021-10-08T23:13:28.755551+07:00",
     "updated_at": "2021-10-08T23:13:28.755551+07:00"
   },
-  "message": "Get service by id=6 success",
+  "message": "Get service by slug=car-damage success",
   "ok": true
 }
 ```
