@@ -8,13 +8,13 @@ import { Label } from "../../../components/elements/Label/Label"
 import { Star } from "../../../components/elements/Star/Star"
 import { Color } from "../../../types/elements"
 import { ReviewData } from "../../../types/elements"
-import styles from "./Review.module.scss"
+import styles from "./Feedback.module.scss"
 
 interface ReviewProp {
   id: number
 }
 
-const Review: React.FC<ReviewProp> = ({ id }) => {
+const Feedback: React.FC<ReviewProp> = ({ id }) => {
 
   const [rating, setRating] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -90,4 +90,4 @@ const Review: React.FC<ReviewProp> = ({ id }) => {
   )
 }
 
-export default Review;
+export default Feedback;

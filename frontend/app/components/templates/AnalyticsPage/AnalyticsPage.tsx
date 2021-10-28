@@ -10,7 +10,7 @@ import { parseCookies } from 'nookies'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import { postServicePhoto, SESSION_ID_ERROR } from '../../../api/analyticsAPI'
-import Review from '../../modules/Review/Review'
+import Feedback from '../../modules/Review/Review'
 
 type Props = {
   analyticsName: string
@@ -98,7 +98,7 @@ export const AnalyticsPage = ({
                   Try Again
                 </Button>
               </div>
-              <Review id={serviceID} />
+              <Feedback id={serviceID} />
             </div>
           ) :
           <div>Loading result...</div>
