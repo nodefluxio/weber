@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { GetStaticProps } from 'next'
+import type { GetServerSideProps } from 'next'
 import type { Service } from '../app/types/elements'
 import type { ServicesGetResponse } from '../app/types/responses'
 import { HomePage } from '../app/components/templates/HomePage/HomePage'
@@ -11,10 +11,16 @@ type Props = {
 }
 
 const Home = ({ analytics, solutions, innovations }: Props) => {
-  return <HomePage analytics={analytics} solutions={solutions} innovations={innovations} />
+  return (
+    <HomePage
+      analytics={analytics}
+      solutions={solutions}
+      innovations={innovations}
+    />
+  )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const getAllServices = async (type: string): Promise<Service[]> => {
     try {
       const res = await axios.get<ServicesGetResponse>(`/services?type=${type}`)
