@@ -1,3 +1,5 @@
+@import '../../../styles/abstracts/mixins';
+
 .intro {
   display: flex;
   flex-direction: row;
@@ -16,4 +18,9 @@
   position: relative;
   min-width: 480px;
   min-height: 320px;
+
+  @include phone {
+    min-width: 360px;
+    min-height: 240px;
+  }
 }

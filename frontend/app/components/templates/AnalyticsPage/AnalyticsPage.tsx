@@ -67,6 +67,13 @@ export const AnalyticsPage: React.FC<Props> = ({
     }
   }
 
+  const refreshState = () => {
+    setCurrentStep(1)
+    setPhoto('')
+    handleResult(undefined)
+    setIsResult(false)
+  }
+
   return (
     <AnalyticsContainer
       analyticsName={analyticsName}
@@ -93,12 +100,7 @@ export const AnalyticsPage: React.FC<Props> = ({
           <>
           <AnalyticsResultWrapper
             imageBase64={photo}
-            handleTryAgain={() => {
-              setCurrentStep(1)
-              setPhoto('')
-              handleResult(undefined)
-              setIsResult(false)
-            }}>
+            handleTryAgain={() => refreshState()}>
             {isResult ? (
               children
             ) : errorMsg ? (
@@ -107,7 +109,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               <div>Loading your results... Please wait</div>
             )}
           </AnalyticsResultWrapper>
-          { isResult && <Feedback id={serviceID} onClick={() => setCurrentStep(1)}/> }
+          { isResult && <Feedback id={serviceID} onClick={() => refreshState()}/> }
           </>
         )}
       </div>
