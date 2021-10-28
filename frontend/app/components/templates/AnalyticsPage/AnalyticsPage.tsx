@@ -7,7 +7,7 @@ import { parseCookies } from 'nookies'
 import { AnalyticsContainer } from '../../../components/modules/AnalyticsContainer/AnalyticsContainer'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
-import { AnalyticsResult } from '../../modules/AnalyticsResult/AnayticsResult'
+import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
 import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
 
@@ -54,10 +54,10 @@ export const AnalyticsPage: React.FC<Props> = ({
       handleResult(res)
       setIsResult(true)
     } catch (err) {
-      // TODO: FIX ERROR HANDLING
       console.log(err)
       if ((err as Error).message === SESSION_ID_ERROR) {
         setOpenModal(true)
+        setCurrentStep(1)
       } else {
         setErrorMsg((err as Error).message)
         setIsResult(false)
@@ -88,7 +88,7 @@ export const AnalyticsPage: React.FC<Props> = ({
           </div>
         )}
         {currentStep === 2 && (
-          <AnalyticsResult
+          <AnalyticsResultWrapper
             imageBase64={photo}
             handleTryAgain={() => {
               setCurrentStep(1)
@@ -103,7 +103,7 @@ export const AnalyticsPage: React.FC<Props> = ({
             ) : (
               <div>Loading your results... Please wait</div>
             )}
-          </AnalyticsResult>
+          </AnalyticsResultWrapper>
         )}
       </div>
     </AnalyticsContainer>
