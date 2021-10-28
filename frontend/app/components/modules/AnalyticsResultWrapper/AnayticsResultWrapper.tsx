@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { ReactNode } from 'react'
 import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
-import styles from './AnalyticsResult.module.scss'
+import styles from './AnalyticsResultWrapper.module.scss'
 
 type Props = {
   imageBase64: string
@@ -10,7 +10,7 @@ type Props = {
   handleTryAgain: () => void
 }
 
-export const AnalyticsResult = ({
+export const AnalyticsResultWrapper = ({
   imageBase64,
   children,
   handleTryAgain
