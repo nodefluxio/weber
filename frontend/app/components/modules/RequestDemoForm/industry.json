@@ -1,5 +1,6 @@
 {
-    "Industry": [
+    "Industries": [
+        {"name":"Your company industry", "value":""},
         {"name":"Agriculture and Mining", "value":"agriculture_and_mining"},
         {"name":"BUMD", "value":"bumd"},
         {"name":"BUMN", "value":"bumn"},

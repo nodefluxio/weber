@@ -13,7 +13,7 @@ import styles from './RequestDemoForm.module.scss'
 import { SelectBox } from '../../elements/SelectBox/SelectBox'
 import data from './industry.json';
 
-const industry = (data).Industry;
+const Industries = (data).Industries;
 
 type Props = {
   onSuccess: () => void
@@ -110,7 +110,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
           <SelectBox
             id="industry"
             label="Industry"
-            options= {industry}
+            options= {Industries}
             register={register}
             registerOptions={{ required: 'required' }}
             errors={errors}
