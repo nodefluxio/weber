@@ -1,6 +1,13 @@
-.fme {
-}
-.ocr {
-}
-.lpr {
+.container {
+  p {
+    margin: 0;
+  }
+  div {
+    padding: 4px 0rem 4px 1rem;
+    p {
+      &:nth-child(1) {
+        font-weight: 700;
+      }
+    }
+  }
 }
