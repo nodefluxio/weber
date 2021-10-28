@@ -48,6 +48,7 @@ go run .
 Create a visitor and generate the session id.
 
 - **URL**
+
   `/visitors`
 - **Method**
 
@@ -329,6 +330,86 @@ OR
 </details>
 
 <details>
+<summary><b>Show All Services</b></summary>
+Return json data about all Services.
+
+- **URL**
+
+  `/services`
+- **Method**
+
+  `GET`
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "type": "analytic",
+            "slug": "ocr-ktp",
+            "name": "Optical Character Recognition KTP",
+            "short_description": "OCR KTP Description",
+            "long_description": "OCR KTP Looonng Descriptiooonnn",
+            "thumbnail": "ocr-ktp.png",
+            "created_at": "2021-10-28T21:44:57.828988+07:00",
+            "updated_at": "2021-10-28T21:44:57.828988+07:00"
+        },
+        {
+            "id": 2,
+            "type": "solution",
+            "slug": "ekyc",
+            "name": "Electronic Know Your Customer",
+            "short_description": "Electronic Know Your Customer Description",
+            "long_description": "Electronic Know Your Customer Looonng Descriptiooonnn",
+            "thumbnail": "ekyc.png",
+            "created_at": "2021-10-28T21:44:57.828992+07:00",
+            "updated_at": "2021-10-28T21:44:57.828992+07:00"
+        },
+        {
+            "id": 3,
+            "type": "innovation",
+            "slug": "rotten-fruit",
+            "name": "Rotten Fruit Detection",
+            "short_description": "Rotten Fruit Detection Description",
+            "long_description": "Rotten Fruit Detection Looonng Descriptiooonnn",
+            "thumbnail": "rotten-fruit.png",
+            "created_at": "2021-10-28T21:44:57.828992+07:00",
+            "updated_at": "2021-10-28T21:44:57.828992+07:00"
+        }
+    ],
+    "message": "Get all services success",
+    "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "data": [
+        {
+            "id": integer,
+            "type": string,
+            "slug": string,
+            "name": string,
+            "short_description": string,
+            "long_description": string,
+            "thumbnail": string,
+            "created_at": string,
+            "updated_at": string
+        }
+    ],
+    "message": string,
+    "ok": boolean
+}
+```
+</details>
+
+<details>
 <summary><b>Show All Services by Type</b></summary>
 Return json data about all Services by type.
 
@@ -401,20 +482,10 @@ Return json data about all Services by type.
 
 ```json
 {
-  "message": "Value of argument 'type' is not recognized.",
+  "message": "Value of argument '?type=' is not valid",
   "ok": false
 }
 ```
-
-OR
-
-```json
-{
-  "message": "Expected 1 argument 'type'.",
-  "ok": false
-}
-```
-
 </details>
 
 <details>
