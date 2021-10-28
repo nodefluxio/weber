@@ -40,7 +40,9 @@
       background-color: darken($secondary-color, 10%);
     }
     &:disabled {
-      background-color: lighten($secondary-color, 50%);
+      color: desaturate(lighten($primary-color, 30%), 65%);
+      background-color: lighten($secondary-color, 30%);
+      cursor: not-allowed;
     }
   }
 

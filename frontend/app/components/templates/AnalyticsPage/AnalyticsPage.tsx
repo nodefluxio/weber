@@ -8,6 +8,7 @@ import { AnalyticsContainer } from '../../../components/modules/AnalyticsContain
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
 import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
+import Feedback from '../../modules/Review/Feedback'
 import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
 
@@ -88,6 +89,7 @@ export const AnalyticsPage: React.FC<Props> = ({
           </div>
         )}
         {currentStep === 2 && (
+          <>
           <AnalyticsResultWrapper
             imageBase64={photo}
             handleTryAgain={() => {
@@ -103,8 +105,9 @@ export const AnalyticsPage: React.FC<Props> = ({
             ) : (
               <div>Loading your results... Please wait</div>
             )}
-            {/* isResult && <Review> */}
           </AnalyticsResultWrapper>
+          { isResult && <Feedback id={serviceID}/> }
+          </>
         )}
       </div>
     </AnalyticsContainer>

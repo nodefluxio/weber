@@ -8,7 +8,7 @@ type ReviewReqBody = {
   comment: string
 }
 
-export const postReview = async ({ id, session_id, rating, comment }: ReviewReqBody): Promise<ReviewResponse|undefined> => {
+export const postFeedback = async ({ id, session_id, rating, comment }: ReviewReqBody): Promise<ReviewResponse|undefined> => {
   try {
     const res = await axios.post<ReviewResponse>(`/feedback/${id}`,
       { session_id, rating, comment })
