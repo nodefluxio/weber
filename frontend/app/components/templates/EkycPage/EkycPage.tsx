@@ -1,5 +1,7 @@
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
+import { postActivities } from '../../../api/activitiesAPI'
+import { SESSION_ID_ERROR } from '../../../constants/message'
 import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
 import { Modal } from '../../elements/Modal/Modal'
@@ -10,17 +12,35 @@ import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/Request
 import styles from './EkycPage.module.scss'
 
 type Props = {
+  serviceId: number
   name: string
   shortDesc: string
   longDesc: string
 }
 
-export const EkycPage = ({ name, shortDesc, longDesc }: Props) => {
+export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
 
+  const { session_id } = parseCookies()
+
+  const createVisitorActivities = async (
+    serviceId: number,
+    sessionId: string,
+    completeness: number
+  ) => {
+    try {
+      await postActivities(serviceId, sessionId, completeness)
+    } catch (err) {
+      if ((err as Error).message === SESSION_ID_ERROR) {
+        setOpenModal(true)
+      } else {
+        console.log((err as Error).message)
+      }
+    }
+  }
+
   const nextStep = async (page: number) => {
-    const { session_id } = parseCookies()
     if (session_id) {
       setCurrentStep(page)
     } else {
@@ -30,9 +50,14 @@ export const EkycPage = ({ name, shortDesc, longDesc }: Props) => {
 
   return (
     <>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal
+        show={openModal}
+        onClose={() => {
+          setOpenModal(false)
+        }}>
         <RequestDemoFormPopup />
       </Modal>
+
       <Banner
         analyticsName={name}
         shortDescription={shortDesc}
@@ -64,6 +89,7 @@ export const EkycPage = ({ name, shortDesc, longDesc }: Props) => {
           <FaceLiveness
             nextStep={() => nextStep(3)}
             setOpenModal={setOpenModal}
+            createVisitorActivities={createVisitorActivities}
           />
         )}
 

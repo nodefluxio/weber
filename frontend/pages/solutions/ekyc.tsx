@@ -1,16 +1,17 @@
-import type { GetStaticProps, NextPage } from 'next'
 import { getServiceById } from '../../app/api/analyticsAPI'
 import { EkycPage } from '../../app/components/templates/EkycPage/EkycPage'
 
 const EKYC_SOLUTION_ID = 5
 
 interface Props {
+  id: number
   name: string
   short_description: string
   long_description: string
 }
 
 const Ekyc: React.FC<Props> = ({
+  id,
   name,
   short_description,
   long_description
@@ -18,6 +19,7 @@ const Ekyc: React.FC<Props> = ({
   return (
     <>
       <EkycPage
+        serviceId={id}
         name={name}
         shortDesc={short_description}
         longDesc={long_description}
@@ -35,7 +37,9 @@ export const getStaticProps = async () => {
       }
     }
   } catch (e) {
-    return (e as Error).message
+    return {
+      notFound: true
+    }
   }
 }
 

@@ -22,6 +22,11 @@ export type VisitorsPostErrorResponse = {
   ok: boolean
 }
 
+export type ActivitiesPostResponse = {
+  message: string
+  ok: boolean
+}
+
 export type ServiceByIdResponse = {
   data: {
     id: number,

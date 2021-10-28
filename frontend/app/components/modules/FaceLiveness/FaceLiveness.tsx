@@ -1,5 +1,11 @@
 import { parseCookies } from 'nookies'
-import { Dispatch, MouseEventHandler, SetStateAction, useState } from 'react'
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useEffect,
+  useState
+} from 'react'
 import { postServicePhoto } from '../../../api/analyticsAPI'
 import { SESSION_ID_ERROR } from '../../../constants/message'
 import { FACE_LIVENESS_ID } from '../../../constants/services'
@@ -12,15 +18,26 @@ import styles from './FaceLiveness.module.scss'
 type Props = {
   nextStep: MouseEventHandler<HTMLButtonElement>
   setOpenModal: Dispatch<SetStateAction<boolean>>
+  createVisitorActivities: (serviceId: number, sessionId: string, completeness: number) => void
 }
 
-export const FaceLiveness = ({ nextStep, setOpenModal }: Props) => {
+export const FaceLiveness = ({
+  nextStep,
+  setOpenModal,
+  createVisitorActivities,
+}: Props) => {
   const [isResult, setIsResult] = useState(false)
   const [result, setResult] = useState<FL | undefined>(undefined)
 
+  const { session_id } = parseCookies()
+
+  useEffect(() => {
+    createVisitorActivities(5, session_id, 40)
+  }, [])
+
   const handleAnalytics = async () => {
-    const { session_id } = parseCookies()
     if (session_id) {
+      createVisitorActivities(5, session_id, 50)
       await resolveAnalytics(session_id)
     }
   }
@@ -38,6 +55,7 @@ export const FaceLiveness = ({ nextStep, setOpenModal }: Props) => {
         if (res) {
           setResult(res as FL)
           setIsResult(true)
+          createVisitorActivities(5, session_id, 60)
         }
       }
     } catch (err) {
