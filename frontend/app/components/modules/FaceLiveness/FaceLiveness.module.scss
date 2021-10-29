@@ -1,0 +1,38 @@
+@import '../../../styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
+
+.result {
+  .head {
+    font-size: large;
+  }
+  .body {
+    margin: 0;
+    font-weight: 700;
+
+    span {
+      display: block;
+
+      &.percentage {
+        font-size: 10rem;
+      }
+
+      &.text {
+        font-size: 2rem;
+      }
+
+      &.passed {
+        color: #45e5b7;
+      }
+
+      &.notPassed {
+        color: #ff6961;
+      }
+    }
+  }
+
+  .btnGroup {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1rem;
+  }
+}

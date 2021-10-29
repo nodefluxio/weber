@@ -22,6 +22,11 @@ export type VisitorsPostErrorResponse = {
   ok: boolean
 }
 
+export type ActivitiesPostResponse = {
+  message: string
+  ok: boolean
+}
+
 export type ServiceBySlugResponse = {
   data: {
     id: number
@@ -71,6 +76,13 @@ export type AnalyticsResponse<AnalyticsResultResponse> = {
 export type AnalyticsError = {
   message: string
   ok: boolean
+}
+
+export type FaceLiveness = {
+  face_liveness: {
+    live: boolean
+    liveness: number
+  }
 }
 
 export type ReviewResponse = {

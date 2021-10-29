@@ -1,0 +1,57 @@
+.container {
+  width: fit-content;
+}
+
+.cam {
+  position: relative;
+  width: 500px;
+  padding: 0.5rem;
+
+  &.flash {
+    animation: blinker 1s linear 0s;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    clip-path: polygon(
+      0% 0%,
+      0% 100%,
+      25% 100%,
+      25% 25%,
+      75% 25%,
+      75% 75%,
+      25% 75%,
+      25% 100%,
+      100% 100%,
+      100% 0%
+    );
+    border-radius: 5px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  & video {
+    width: 100%;
+    display: block;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.btnGroup {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 1rem;
+}
+
+.btn {
+  width: 16rem;
+}

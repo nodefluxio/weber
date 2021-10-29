@@ -31,11 +31,6 @@ export const AnalyticsResultWrapper = ({
             </div>
           </div>
         </div>
-        <div className={styles.buttonContainer}>
-          <Button color={Color.Primary} onClick={() => handleTryAgain()}>
-            Try with another photo
-          </Button>
-        </div>
       </div>
     </>
   )

@@ -22,12 +22,14 @@ export const getServiceBySlug = async (slug: string) => {
 export const postServicePhoto = async <AnalyticsResultResponse>(
   id: number,
   sessionId: string,
-  photo: string
+  photo: string,
+  analyticName?: string
 ) => {
   try {
     const res = await axios.post<AnalyticsResponse<AnalyticsResultResponse>>(
       `/services/${id}`,
       {
+        analytic_name: analyticName,
         session_id: sessionId,
         data: {
           images: [photo]

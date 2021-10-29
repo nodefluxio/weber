@@ -11,6 +11,7 @@ import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/Ana
 import Feedback from '../../modules/Feedback/Feedback'
 import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
+import { useRouter } from 'next/router'
 
 type Props = {
   analyticsName: string
@@ -38,6 +39,7 @@ export const AnalyticsPage: React.FC<Props> = ({
   const [openModal, setOpenModal] = useState(false)
   const [isResult, setIsResult] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const router = useRouter()
 
   const handleAnalytics = async () => {
     const { session_id } = parseCookies()
@@ -63,6 +65,13 @@ export const AnalyticsPage: React.FC<Props> = ({
         setIsResult(false)
       }
     }
+  }
+
+  const refreshState = () => {
+    setCurrentStep(1)
+    setPhoto('')
+    handleResult(undefined)
+    setIsResult(false)
   }
 
   return (
@@ -91,12 +100,7 @@ export const AnalyticsPage: React.FC<Props> = ({
           <>
           <AnalyticsResultWrapper
             imageBase64={photo}
-            handleTryAgain={() => {
-              setCurrentStep(1)
-              setPhoto('')
-              handleResult(undefined)
-              setIsResult(false)
-            }}>
+            handleTryAgain={() => refreshState()}>
             {isResult ? (
               children
             ) : errorMsg ? (
@@ -105,7 +109,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               <div>Loading your results... Please wait</div>
             )}
           </AnalyticsResultWrapper>
-          { isResult && <Feedback id={serviceID}/> }
+          { isResult && <Feedback id={serviceID} onClick={() => refreshState()}/> }
           </>
         )}
       </div>
