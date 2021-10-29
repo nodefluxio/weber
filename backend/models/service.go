@@ -9,9 +9,9 @@ import (
 type ServiceType string
 
 const (
-	Analytic   ServiceType = "analytic"
-	Solution               = "solution"
-	Innovation             = "innovation"
+	AnalyticServiceType   ServiceType = "analytic"
+	SolutionServiceType               = "solution"
+	InnovationServiceType             = "innovation"
 )
 
 type Service struct {
@@ -81,7 +81,7 @@ func CreateService(db *gorm.DB, Service *Service) (err error) {
 }
 
 func IsValidServiceType(serviceType string) (bool, ServiceType) {
-	serviceTypes := [...]ServiceType{Analytic, Solution, Innovation}
+	serviceTypes := [...]ServiceType{AnalyticServiceType, SolutionServiceType, InnovationServiceType}
 	for _, st := range serviceTypes {
 		if string(st) == serviceType {
 			return true, st
