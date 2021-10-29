@@ -5,7 +5,7 @@
         {"name":"BUMD", "value":"bumd"},
         {"name":"BUMN", "value":"bumn"},
         {"name":"Business Services", "value":"business_services"},
-        {"name":"Computer and Electror", "value":"computer_and_electror"},
+        {"name":"Computer and Electronics", "value":"computer_and_electronics"},
         {"name":"Education", "value":"education"},
         {"name":"Energy and Utilities", "value":"energy_and_utilities"},
         {"name":"Financial Services", "value":"financial_services"},
@@ -14,6 +14,18 @@
         {"name":"Industrial Area", "value":"industrial_area"},
         {"name":"Law Enforcement Bodies", "value":"law_enforcement_bodies"},
         {"name":"Manufacture", "value":"manufacture"},
-        {"name":"Non-Profit", "value":"non-profit"}
+        {"name":"Non-Profit", "value":"non_profit"},
+        {"name":"Pemerintah Kabupaten", "value":"pemerintah_kabupaten"},
+        {"name":"Pemerintah Kota", "value":"pemerintah_kota"},
+        {"name":"Pemerintah Provinsi", "value":"pemerintah_provinsi"},
+        {"name":"Pemerintah Pusat", "value":"pemerintah_pusat"},
+        {"name":"Real Estate and Construction", "value":"real_estate_and_construction"},
+        {"name":"Retail", "value":"retail"},
+        {"name":"Software and Internet", "value":"software_and_internet"},
+        {"name":"Telecommunications", "value":"telecommunications"},
+        {"name":"Transportation and Logistics", "value":"transportation_and_logistics"},
+        {"name":"Travel Recreation and Leisure", "value":"travel_recreation_and_leisure"},
+        {"name":"Warehousing and Storage", "value":"warehousing_and_storage"},
+        {"name":"Other", "value":"other"}
     ]
 }
