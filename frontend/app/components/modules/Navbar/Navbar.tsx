@@ -26,8 +26,8 @@ export const Navbar = () => {
         <div className={styles.imageContainer}>
           <Image
             src={'/assets/images/nodeflux-logo.png'}
-            width={149}
-            height={46}
+            width={130}
+            height={40}
             quality={100}
           />
         </div>

@@ -86,7 +86,7 @@ export type FaceLiveness = {
 }
 
 export type ReviewResponse = {
-  message: string,
+  message: string
   ok: boolean
 }
 
