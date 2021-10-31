@@ -1,21 +1,12 @@
 import { AnalyticsPage } from '../../app/components/templates/AnalyticsPage/AnalyticsPage'
 import { useState } from 'react'
 import { getServiceBySlug } from '../../app/api/analyticsAPI'
-import {
-  AnyResultResponse,
-  FMEResultResponse,
-  LPRResultResponse,
-  OCRResultResponse,
-  ServiceBySlugResponseData
-} from '../../app/types/responses'
-import { AnalyticsSlug } from '../../app/types/elements'
-import {
-  FMEResult,
-  LPRResult,
-  OCRResult
-} from '../../app/components/modules/AnalyticsResult/AnalyticsResult'
+import { ServiceBySlugResponseData } from '../../app/types/responses'
 import { GetServerSideProps } from 'next'
 import { ParsedUrlQuery } from 'querystring'
+import resultMap from './analytics_result.json'
+import React from 'react'
+import styles from './[analytic_name].module.scss'
 
 const Analytics = ({
   name,
@@ -24,20 +15,71 @@ const Analytics = ({
   id,
   slug
 }: ServiceBySlugResponseData) => {
-  const [result, setResult] = useState<AnyResultResponse>()
+  const [result, setResult] = useState<any>()
+
+  const createDisplayResultEl = (
+    mappedResultResponse: any,
+    fields: any,
+    i: number
+  ) => (
+    <div className={styles.field}>
+      <p className={styles.label}>{fields[i].label}</p>
+      {fields[i].fields ? (
+        fields[i].fields.map((_: any, j: number) =>
+          createDisplayResultEl(
+            mappedResultResponse[fields[i].key],
+            fields[i].fields,
+            j
+          )
+        )
+      ) : (
+        <p className={styles.result}>{`${
+          mappedResultResponse[fields[i].key]
+        }`}</p>
+      )}
+    </div>
+  )
+
+  const generateFieldList = (
+    i: number,
+    j: number,
+    fields: any,
+    fieldList: any[],
+    mappedResultResponse: any
+  ) => {
+    for (i; i < fields.length; i++) {
+      if (fields[i].new_column) {
+        j++
+        i++
+      }
+      if (!fieldList[j]) fieldList[j] = []
+
+      fieldList[j].push(createDisplayResultEl(mappedResultResponse, fields, i))
+    }
+  }
 
   const displayResult = () => {
-    if (result)
-      switch (slug) {
-        case AnalyticsSlug.FACE_MATCH_ENROLLMENT:
-          return <FMEResult result={result as FMEResultResponse} />
-        case AnalyticsSlug.LICENSE_PLATE_RECOGNITION:
-          return <LPRResult result={result as LPRResultResponse} />
-        case AnalyticsSlug.OCR_KTP:
-          return <OCRResult result={result as OCRResultResponse} />
-        default:
-          return <div>{result}</div>
+    if (result) {
+      // @ts-ignore
+      if (resultMap[slug]) {
+        // @ts-ignore
+        let analyticSlugResultMap = resultMap[slug]
+        let mappedResultResponse = result
+        if (analyticSlugResultMap.starting_key)
+          mappedResultResponse = result[analyticSlugResultMap.starting_key]
+        let i = 0
+        let j = 0
+        let fieldListColumns: any[] = []
+        let fields = analyticSlugResultMap.fields
+        if (analyticSlugResultMap.type === 'array') {
+          mappedResultResponse = mappedResultResponse[0]
+        }
+        generateFieldList(i, j, fields, fieldListColumns, mappedResultResponse)
+        return fieldListColumns.map((column) => (
+          <div className={styles.col}>{column}</div>
+        ))
       }
+    }
   }
 
   return (
@@ -52,7 +94,7 @@ const Analytics = ({
       ]}
       serviceID={id}
       handleResult={(res) => setResult(res)}>
-      {result && displayResult()}
+      <div className={styles.resultsContainer}>{result && displayResult()}</div>
     </AnalyticsPage>
   )
 }
