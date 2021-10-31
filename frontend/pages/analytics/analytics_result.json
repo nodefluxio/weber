@@ -1,0 +1,51 @@
+{
+  "ocr-ktp": {
+    "fields": [
+      { "label": "Agama", "key": "agama" },
+      { "label": "Alamat", "key": "alamat" },
+      { "label": "Berlaku hingga", "key": "berlaku_hingga" },
+      { "label": "Golongan darah", "key": "golongan_darah" },
+      { "label": "Jenis kelamin", "key": "jenis_kelamin" },
+      { "label": "Kabupaten kota", "key": "kabupaten_kota" },
+      { "label": "Kecamatan", "key": "kecamatan" },
+      { "label": "Kelurahan desa", "key": "kelurahan_desa" },
+      { "label": "Kewarganegaraan", "key": "kewarganegaraan" },
+      { "new_column": true },
+      { "label": "Nama", "key": "nama" },
+      { "label": "NIK", "key": "nik" },
+      { "label": "Pekerjaan", "key": "pekerjaan" },
+      { "label": "Provinsi", "key": "provinsi" },
+      { "label": "RT/RW", "key": "rt_rw" },
+      { "label": "Status perkawinan", "key": "status_perkawinan" },
+      { "label": "Tanggal lahir", "key": "tanggal_lahir" },
+      { "label": "Tempat lahir", "key": "tempat_lahir" }
+    ]
+  },
+  "license-plate-recognition": {
+    "type": "array",
+    "starting_key": "license_plate_recognitions",
+    "fields": [
+      {
+        "label": "Bounding box",
+        "key": "bounding_box",
+        "fields": [
+          { "label": "Width", "key": "width" },
+          { "label": "Height", "key": "height" },
+          { "label": "Left", "key": "left" },
+          { "label": "Top", "key": "top" }
+        ]
+      },
+      { "new_column": true },
+      { "label": "Confidence", "key": "confidence" },
+      { "label": "Detected", "key": "detected" },
+      { "label": "License plate number", "key": "license_plate_number" }
+    ]
+  },
+  "face-match-enrollment": {
+    "starting_key": "face_match",
+    "fields": [
+      { "label": "Match?", "key": "match" },
+      { "label": "Similarity", "key": "similarity" }
+    ]
+  }
+}
