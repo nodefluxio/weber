@@ -8,18 +8,17 @@
     color: $secondary-color;
     z-index: 3;
     left: 12%;
-    top: 15%;
+    top: 8vh;
     font-size: 2.5rem;
     font-weight: 800;
     @include tablet {
       width: 100%;
       text-align: center;
-      top: 17%;
       left: 50%;
       transform: translate(-50%, -50%);
     }
     @include phone {
-      top: 15%;
+      top: 10vh;
     }
   }
   .slide {
