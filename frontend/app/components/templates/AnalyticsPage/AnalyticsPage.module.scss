@@ -1,5 +1,9 @@
+@import '../../../styles/abstracts/mixins';
 .container {
   padding: 2rem 0 5rem 0;
+  @include tablet {
+    padding-bottom: 3rem;
+  }
   .dropzoneColumns {
     display: flex;
     flex-direction: column;
