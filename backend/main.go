@@ -9,14 +9,11 @@ import (
 func main() {
 	db := database.InitDB()
 
+	// Handle args for database purposes
+	handleArgs(db)
+
 	// Init Translation for Validator
 	utils.InitTranslation()
-
-	// Migrate
-	database.Migrate(db)
-
-	// Seed
-	database.Seed(db)
 
 	r := SetupRouter()
 
