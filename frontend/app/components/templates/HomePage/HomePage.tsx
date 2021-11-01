@@ -192,8 +192,8 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
             <Card key={analytic.id} color={Color.Primary}>
               <CardImage
                 img={`/assets/images/analytics/${analytic.thumbnail}`}
-                imgWidth={100}
-                imgHeight={100}
+                imgWidth={171}
+                imgHeight={171}
               />
               <CardContent
                 color={Color.Primary}
