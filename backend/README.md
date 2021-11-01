@@ -34,7 +34,26 @@ docker-compose up -d --build
 ```
 
 ### Running without Docker
+Before running the backend service, you can run some additional commands below to handle migrations and seeds:
 
+- To migrate without removing the data
+```sh
+go run . migrate
+```
+- To migrate with removing the data
+```sh
+go run . migrate-fresh
+```
+- To run the seeder
+```sh
+go run . seed
+```
+- To migrate with removing the data and run the seeder
+```sh
+go run . refresh
+```
+
+Finally run the backend service:
 ```sh
 go run .
 ```
