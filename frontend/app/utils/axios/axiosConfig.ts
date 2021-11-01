@@ -1,3 +1,4 @@
 import axios from 'axios'
-
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig()
+axios.defaults.baseURL = publicRuntimeConfig.BACKEND_URL
