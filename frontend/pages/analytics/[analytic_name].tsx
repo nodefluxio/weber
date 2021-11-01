@@ -22,7 +22,7 @@ const Analytics = ({
     fields: any,
     i: number
   ) => (
-    <div className={styles.field}>
+    <div key={fields[i].key} className={styles.field}>
       <p className={styles.label}>{fields[i].label}</p>
       {fields[i].fields ? (
         fields[i].fields.map((_: any, j: number) =>
@@ -75,8 +75,10 @@ const Analytics = ({
           mappedResultResponse = mappedResultResponse[0]
         }
         generateFieldList(i, j, fields, fieldListColumns, mappedResultResponse)
-        return fieldListColumns.map((column) => (
-          <div className={styles.col}>{column}</div>
+        return fieldListColumns.map((column, i) => (
+          <div key={i} className={styles.col}>
+            {column}
+          </div>
         ))
       }
     }
