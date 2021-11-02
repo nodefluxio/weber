@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Color } from '../../../types/elements'
 import styles from './Card.module.scss'
 import { ReactNode } from 'react'

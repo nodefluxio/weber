@@ -2,12 +2,10 @@
 @import '../../../styles/abstracts/variables';
 
 .container {
-  margin: 2rem 0;
-  height: 90vh;
+  margin: 2rem 0 5rem 0;
   display: flex;
   justify-content: space-between;
   @include tablet {
-    height: unset;
     flex-direction: column;
     justify-content: start;
     margin: 1rem 0;

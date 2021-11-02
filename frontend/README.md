@@ -18,7 +18,7 @@ To get a local copy up and running follow these simple steps.
 
 ```sh
 cd frontend
-cp .env.example .env.local
+cp .env.example .env
 npm install
 npm run dev
 ```
