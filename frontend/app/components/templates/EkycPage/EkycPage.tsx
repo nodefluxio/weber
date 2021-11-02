@@ -1,5 +1,6 @@
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
+import Image from 'next/image'
 import { postActivities } from '../../../api/activitiesAPI'
 import { SESSION_ID_ERROR } from '../../../constants/message'
 import { Color } from '../../../types/elements'
@@ -38,6 +39,20 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     } else {
       setOpenModal(true)
     }
+  }
+
+  const getImageFromLocalStorage = (
+    key: string,
+    fallbackStep: number
+  ): string => {
+    const image = localStorage.getItem(key)
+
+    if (!image) {
+      setCurrentStep(fallbackStep)
+      return ''
+    }
+
+    return image
   }
 
   return (
@@ -96,14 +111,38 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <div className={styles.buttonContainer}>
               <Button
                 color={Color.Primary}
-                onClick={() => {
+                onClick={async () => {
+                  localStorage.setItem('ktp_image', photo)
                   nextStep(4)
-                  localStorage.setItem('ocr-ktp', photo)
                 }}>
                 Next Step
               </Button>
             </div>
           )}
+        </div>
+      )}
+
+      {currentStep === 4 && (
+        <div className={styles.container}>
+          <div className={styles.imgContainer}>
+            <Image
+              src={getImageFromLocalStorage('liveness_snapshot', 2)}
+              height={180}
+              width={243}
+            />
+            <Image
+              className={styles.imgItem}
+              src={getImageFromLocalStorage('ktp_image', 3)}
+              height={180}
+              width={243}
+            />
+            <div className={styles.btnGroup}>
+              <Button color={Color.Primary}>Change Image</Button>
+              <Button color={Color.Primary} onClick={() => nextStep(5)}>
+                Next
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 

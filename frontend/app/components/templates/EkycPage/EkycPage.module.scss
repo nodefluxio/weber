@@ -27,3 +27,16 @@
     margin-top: 2rem;
   }
 }
+
+.imgContainer {
+  position: relative;
+
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.btnGroup {
+  display: flex;
+  gap: 1rem;
+}
