@@ -1,0 +1,23 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+
+  .formOutline {
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 9px;
+    padding: 2rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .buttonWrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .subtitle {
+    margin-bottom: 1.5rem;
+    h2, p {
+      text-align: center;
+    }
+  }
+}
