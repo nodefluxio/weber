@@ -38,5 +38,10 @@ func SetupRouter() *gin.Engine {
 		feedbacks.POST("/:service_id", controllers.CreateFeedback)
 	}
 
+	ekyc := r.Group("/ekyc")
+	{
+		ekyc.POST("", controllers.GetEKYCResult)
+	}
+
 	return r
 }
