@@ -18,17 +18,17 @@ type dataAnalytic struct {
 	xNodefluxTimestamp string
 }
 
-func GetDataAnalytic(service models.Service, inputData models.ServiceRequestInput) dataAnalytic {
+func GetDataAnalytic(service models.Service, requestData models.RequestData) dataAnalytic {
 	var dataAnalytic dataAnalytic
 	dataAnalytic.xNodefluxTimestamp = service.Timestamp
 
 	if service.Slug == "face-match-enrollment" {
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
-			os.Getenv("FACE_ID"), strings.Join(inputData.Data.Images, `", "`)))
+			os.Getenv("FACE_ID"), strings.Join(requestData.Images, `", "`)))
 	} else {
-		additionalParams, _ := json.Marshal(inputData.Data.AdditionalParams)
+		additionalParams, _ := json.Marshal(requestData.AdditionalParams)
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
-			string(additionalParams), strings.Join(inputData.Data.Images, `", "`)))
+			string(additionalParams), strings.Join(requestData.Images, `", "`)))
 	}
 
 	accessKey := service.AccessKey

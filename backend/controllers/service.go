@@ -166,9 +166,10 @@ func CreateServiceRequest(ctx *gin.Context) {
 		return
 	}
 
-	// Send a request to Service's API endpoint
-	serviceData, err := RequestToService(uint(serviceId), inputData)
-	if err != nil {
+	// Get service data from database
+	var service models.Service
+	db := database.GetDB()
+	if err = db.First(&service, serviceId).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -176,9 +177,23 @@ func CreateServiceRequest(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"ok":           true,
-		"message":      "Service demo request success",
-		"service_data": &serviceData,
+	if service.Type == "analytic" {
+		visitorActivity := &models.VisitorActivity{SessionID: inputData.SessionID, ServiceID: service.ID, Completeness: 100}
+		if err = models.CreateVisitorActivity(db, visitorActivity); err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+				"ok":      false,
+				"message": err.Error(),
+			})
+			return
+		}
+		RequestToServiceAnalytics(ctx, service, inputData)
+		return
+	}
+
+	ctx.JSON(http.StatusInternalServerError, gin.H{
+		"ok":      false,
+		"message": "Undefined implementation of: " + service.Slug,
 	})
+	return
+
 }
