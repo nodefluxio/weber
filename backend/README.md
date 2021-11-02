@@ -34,26 +34,35 @@ docker-compose up -d --build
 ```
 
 ### Running without Docker
+
 Before running the backend service, you can run some additional commands below to handle migrations and seeds:
 
 - To migrate without removing the data
+
 ```sh
 go run . migrate
 ```
+
 - To migrate with removing the data
+
 ```sh
 go run . migrate-fresh
 ```
+
 - To run the seeder
+
 ```sh
 go run . seed
 ```
+
 - To migrate with removing the data and run the seeder
+
 ```sh
 go run . refresh
 ```
 
 Finally run the backend service:
+
 ```sh
 go run .
 ```
@@ -227,7 +236,182 @@ OR
 </details>
 
 <details>
-<summary><b>Create A Service Request By ID</b></summary>
+<summary><b>Create A Service Request for e-KYC [Solution]</b></summary>
+Create a service request for E-KYC solution.
+
+- **URL**
+
+  `/ekyc`
+
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+
+```json
+{
+  "session_id": "146fdca6-5103-426b-a341-e6fa43db9cd1",
+  "data": {
+    "face_liveness": {
+      "additional_params": {},
+      "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+    },
+    "ocr_ktp": {
+      "additional_params": {},
+      "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+    },
+    "face_match": {
+      "additional_params": {},
+      "images": [
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/",
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"
+      ]
+    }
+  }
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+  "session_id": string,
+  "data": object {
+    "face_liveness": object {
+      "additional_params": object,
+      "images": string array
+    },
+    "ocr_ktp": object {
+      "additional_params": object,
+      "images": string array
+    },
+    "face_match": object {
+      "additional_params": object,
+      "images": string array
+    }
+  }
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+  "message": "Service demo request success",
+  "ok": true,
+  "service_data": {
+    "face_liveness": {
+      "job": {
+        "result": {
+          "analytic_type": "FACE_LIVENESS",
+          "result": [
+            {
+              "face_liveness": {
+                "live": true,
+                "liveness": 0.9963422417640686
+              }
+            }
+          ],
+          "status": "success"
+        }
+      },
+      "message": "Face Liveness Success",
+      "ok": true
+    },
+    "ocr_ktp": {
+      "job": {
+        "result": {
+          "analytic_type": "OCR_KTP",
+          "result": [
+            {
+              "agama": "ISLAM",
+              "alamat": "GEREM DUSUN KALIMATI",
+              "berlaku_hingga": "03-10-2018",
+              "golongan_darah": "-",
+              "jenis_kelamin": "LAKI-LAKI",
+              "kabupaten_kota": "KABUPATEN LAMPUNG SELATAN",
+              "kecamatan": "SIDOMULYO",
+              "kelurahan_desa": "BANDAR DALAM",
+              "kewarganegaraan": "WNI",
+              "nama": "SATRIA BAJA HITAM",
+              "nik": "1801070310930005",
+              "pekerjaan": "BELUM/TIDAK BEKERJA",
+              "provinsi": "LAMPUNG",
+              "rt_rw": "003/005",
+              "status_perkawinan": "BELUM KAWIN",
+              "tanggal_lahir": "03-10-1993",
+              "tempat_lahir": ""
+            }
+          ],
+          "status": "success"
+        }
+      },
+      "message": "OCR_KTP Service Success",
+      "ok": true
+    },
+    "face_match": {
+      "job": {
+        "result": {
+          "analytic_type": "FACE_MATCH",
+          "result": [
+            {
+              "face_match": {
+                "match": false,
+                "similarity": 0.45065901198775055
+              }
+            }
+          ],
+          "status": "success"
+        }
+      },
+      "message": "The Face Pair Not Match",
+      "ok": true
+    }
+  }
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "message": string,
+    "ok": boolean,
+    "service_data": object {
+      "face_liveness": object, // response is directly from cloud
+      "ocr_ktp": object, // response is directly from cloud
+      "face_match": object // response is directly from cloud
+    }
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
+</details>
+
+<details>
+<summary><b>Create A Service Request By ID [Analytics]</b></summary>
 Create a service request by id and create a new visitor_activites record.
 
 - **URL**
@@ -248,7 +432,6 @@ Create a service request by id and create a new visitor_activites record.
 
 ```json
 {
-  "analytic_name": "ocr-ktp",
   "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
   "data": {
     "additional_params": {},
@@ -257,13 +440,10 @@ Create a service request by id and create a new visitor_activites record.
 }
 ```
 
-Note: `analytic_name` only be required on analytics that are part of the solution service, so it can be omitted when requesting an independent analytics service.
-
 - **Request Payload Data Type Attributes**
 
 ```json
 {
-   "analytic_name" : string,
    "session_id": string,
    "data": object {
        "additional_params": object,
