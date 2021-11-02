@@ -3,6 +3,10 @@
 .result {
   width: 100%;
   margin-top: 2rem;
+  margin-bottom: 4rem;
+  @include tablet {
+    margin-bottom: 2rem;
+  }
   .resultFlex {
     width: 80%;
     margin: auto;
@@ -10,13 +14,14 @@
     flex-direction: row;
     justify-content: center;
     @include tablet {
+      width: 90%;
       flex-direction: column;
     }
     .resultImage {
       position: relative;
       min-height: 360px;
       min-width: 480px;
-      width: 60%;
+      width: 50%;
       margin-right: 4rem;
       @include tablet {
         width: 90%;
@@ -28,9 +33,9 @@
       }
     }
     .resultInfo {
-      width: 40%;
+      width: 50%;
       @include tablet {
-        width: 80%;
+        width: 90%;
         margin: auto;
       }
       h2 {
