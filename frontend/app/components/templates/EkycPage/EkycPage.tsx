@@ -13,6 +13,10 @@ import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import styles from './EkycPage.module.scss'
+import {
+  AnalyticsResult,
+  OCRResult
+} from '../../modules/AnalyticsResult/AnalyticsResult'
 
 type Props = {
   serviceId: number
@@ -27,6 +31,26 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     `/assets/images/analytics/ocr-ktp/example2.jpg`,
     `/assets/images/analytics/ocr-ktp/example3.jpg`
   ]
+
+  const dummyOCRResult = {
+    agama: 'islam',
+    alamat: 'bojong',
+    berlaku_hingga: 'senin',
+    golongan_darah: 'O',
+    jenis_kelamin: 'laki',
+    kabupaten_kota: 'bekasi',
+    kecamatan: 'rawa',
+    kelurahan_desa: 'rawa bebek',
+    kewarganegaraan: 'indonesia',
+    nama: 'ferdi',
+    nik: '2240',
+    pekerjaan: 'petani',
+    provinsi: 'jawa barat',
+    rt_rw: '07/14',
+    status_perkawinan: 'cerai',
+    tanggal_lahir: '6 okt 2002',
+    tempat_lahir: 'bekasi'
+  }
 
   const [photo, setPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
@@ -129,12 +153,14 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               src={getImageFromLocalStorage('liveness_snapshot', 2)}
               height={180}
               width={243}
+              alt="face liveness snapshot"
             />
             <Image
               className={styles.imgItem}
               src={getImageFromLocalStorage('ktp_image', 3)}
               height={180}
               width={243}
+              alt="ktp image"
             />
             <div className={styles.btnGroup}>
               <Button color={Color.Primary}>Change Image</Button>
@@ -142,6 +168,27 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 Next
               </Button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {currentStep === 5 && (
+        <div className={styles.container}>
+          <div className={styles.result}>
+            <div className={styles.percentage}>
+              <span>93%</span>
+              <p>Verified</p>
+            </div>
+            <div className={styles.percentage}>
+              <span>93%</span>
+              <p>Verified</p>
+            </div>
+            <div className={styles.ocrKtp}>
+              <AnalyticsResult result={dummyOCRResult} slug={'ocr-ktp'} />
+            </div>
+            <Button color={Color.Primary} onClick={() => nextStep(6)}>
+              Next
+            </Button>
           </div>
         </div>
       )}
