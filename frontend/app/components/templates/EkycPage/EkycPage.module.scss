@@ -9,11 +9,21 @@
 
 .title {
   margin: 0;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
   font-size: 3rem;
 }
 
 .desc {
   font-size: 1.25rem;
   padding: 0;
+}
+
+.dzContainer {
+  text-align: center;
+  padding: 1rem 5rem;
+  min-height: 30vw;
+
+  button {
+    margin-top: 2rem;
+  }
 }
