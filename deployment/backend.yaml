@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weber-backend
+  namespace: demo
+  labels:
+    app: weber-backend
+spec:
+  selector:
+    matchLabels:
+      app: weber-backend
+  template:
+    metadata:
+      labels:
+        app: weber-backend
+    spec:
+      imagePullSecrets:
+        - name: nodeflux-registry
+      containers:
+        - name: weber-backend
+          image: registry.gitlab.com/nodefluxio/demo-apps/weber/backend:latest
+          imagePullPolicy: Always
+          env:
+            - name: APP_HOST
+              value: "0.0.0.0"
+            - name: APP_PORT
+              value: "8080"
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: weber
+                  key: db_username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: weber
+                  key: db_password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: weber
+                  key: db_name
+            - name: DB_HOST
+              value: "10.85.160.3"
+            - name: DB_PORT
+              value: "5432"
+            - name: SESSION_EXPIRATION
+              value: "1"
+            - name: URL_ANALYTICS
+              value: https://api.cloud.nodeflux.io/v1/analytics/
+            - name: FACE_ID
+              value: "148197557409939457"
+          ports:
+            - containerPort: 8080
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: weber-backend
+  namespace: demo
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: weber-backend
+
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: weber-backend
+  namespace: demo
+spec:
+  host: demo.nodeflux.io
+  prefix: /weber/
+  service: weber-backend.demo
+  bypass_auth: true
+  timeout_ms: 30000
