@@ -53,6 +53,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
   const { session_id } = parseCookies()
 
   const [ktpPhoto, setKtpPhoto] = useState('')
+  const [photoToCompare, setPhotoToCompare] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
 
@@ -88,7 +89,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     reader.readAsDataURL(file)
     reader.onload = () => {
       if (reader.result) {
-        setKtpPhoto(reader.result as string)
+        setPhotoToCompare(reader.result as string)
       }
     }
   }
@@ -178,7 +179,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             </span>
             <div className={styles.imgItem}>
               <Image
-                src={ktpPhoto}
+                src={photoToCompare || ktpPhoto}
                 layout="fill"
                 objectFit="contain"
                 alt="ktp image"
@@ -189,7 +190,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <div className={styles.btnGroup}>
               <div className={styles.btnUpload}>
                 <Button color={Color.Primary}>Change Photo (b)</Button>
-                <input type="file" onChange={(e) => changeTheImageToCompare(e)} />
+                <input
+                  type="file"
+                  onChange={(e) => changeTheImageToCompare(e)}
+                />
               </div>
               <Button color={Color.Primary} onClick={() => nextStep(5)}>
                 Next
