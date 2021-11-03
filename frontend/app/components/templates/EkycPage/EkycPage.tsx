@@ -13,10 +13,7 @@ import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import styles from './EkycPage.module.scss'
-import {
-  AnalyticsResult,
-  OCRResult
-} from '../../modules/AnalyticsResult/AnalyticsResult'
+import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
 
 type Props = {
   serviceId: number
@@ -52,7 +49,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     tempat_lahir: 'bekasi'
   }
 
-  const [photo, setPhoto] = useState('')
+  const [ktpPhoto, setKtpPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
 
@@ -77,6 +74,18 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     }
 
     return image
+  }
+
+  const changeKtpHandler = (e: any) => {
+    const file = e.target.files[0]
+
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      if (reader.result) {
+        setKtpPhoto(reader.result as string)
+      }
+    }
   }
 
   return (
@@ -130,15 +139,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
       {currentStep === 3 && (
         <div className={styles.dzContainer}>
-          <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
-          {photo && (
+          <DropzoneOptions images={examples} onPhotoDrop={setKtpPhoto} />
+          {ktpPhoto && (
             <div className={styles.buttonContainer}>
-              <Button
-                color={Color.Primary}
-                onClick={async () => {
-                  localStorage.setItem('ktp_image', photo)
-                  nextStep(4)
-                }}>
+              <Button color={Color.Primary} onClick={() => nextStep(4)}>
                 Next Step
               </Button>
             </div>
@@ -157,13 +161,16 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             />
             <Image
               className={styles.imgItem}
-              src={getImageFromLocalStorage('ktp_image', 3)}
+              src={ktpPhoto}
               height={180}
               width={243}
               alt="ktp image"
             />
             <div className={styles.btnGroup}>
-              <Button color={Color.Primary}>Change Image</Button>
+              <div className={styles.btnUpload}>
+                <Button color={Color.Primary}>Change KTP Photo</Button>
+                <input type="file" onChange={(e) => changeKtpHandler(e)} />
+              </div>
               <Button color={Color.Primary} onClick={() => nextStep(5)}>
                 Next
               </Button>
