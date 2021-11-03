@@ -18,16 +18,6 @@
   padding: 0;
 }
 
-.dzContainer {
-  text-align: center;
-  padding: 1rem 5rem;
-  min-height: 30vw;
-
-  button {
-    margin-top: 2rem;
-  }
-}
-
 .imgContainer {
   position: relative;
 
@@ -51,20 +41,6 @@
   justify-content: center;
   gap: 1rem;
 }
-
-// .btnUpload {
-//   position: relative;
-//   overflow: hidden;
-//   display: inline-block;
-//   cursor: pointer;
-
-//   input[type='file'] {
-//     position: absolute;
-//     left: 0;
-//     top: 0;
-//     opacity: 0;
-//   }
-// }
 
 .result {
   display: grid;

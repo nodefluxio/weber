@@ -1,6 +1,5 @@
 import { parseCookies } from 'nookies'
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
+import { useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
 import { SESSION_ID_ERROR } from '../../../constants/message'
 import { Color } from '../../../types/elements'
@@ -9,12 +8,10 @@ import { Modal } from '../../elements/Modal/Modal'
 import { Stepper } from '../../elements/Stepper/Stepper'
 import { Banner } from '../../modules/Banner/Banner'
 import { Cam } from '../../modules/Cam/Cam'
-import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import styles from './EkycPage.module.scss'
 import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
-import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
 
 type Props = {
   serviceId: number
@@ -24,12 +21,6 @@ type Props = {
 }
 
 export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
-  const examples = [
-    `/assets/images/analytics/ocr-ktp/example1.jpg`,
-    `/assets/images/analytics/ocr-ktp/example2.jpg`,
-    `/assets/images/analytics/ocr-ktp/example3.jpg`
-  ]
-
   const dummyOCRResult = {
     agama: 'islam',
     alamat: 'bojong',
@@ -52,8 +43,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
   const { session_id } = parseCookies()
 
-  // const [ktpPhoto, setKtpPhoto] = useState('')
-  // const [photoToCompare, setPhotoToCompare] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
 
@@ -82,18 +71,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     }
   }
 
-  // const changeTheImageToCompare = (e: any) => {
-  //   const file = e.target.files[0]
-
-  //   const reader = new FileReader()
-  //   reader.readAsDataURL(file)
-  //   reader.onload = () => {
-  //     if (reader.result) {
-  //       setPhotoToCompare(reader.result as string)
-  //     }
-  //   }
-  // }
-
   return (
     <>
       <Modal
@@ -115,7 +92,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
           'Start',
           'Face Liveness',
           'OCR KTP',
-          'Face Match 1:1',
           'Result',
           'Finish'
         ]}
@@ -161,51 +137,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
       {currentStep === 4 && (
         <div className={styles.container}>
-          <div className={styles.imgContainer}>
-            <h3 className={styles.title}>Face Match 1:1</h3>
-            <div className={styles.imgItem}>
-              <Image
-                src={getImageFromLocalStorage('liveness_snapshot', () =>
-                  setCurrentStep(2)
-                )}
-                layout="fill"
-                objectFit="contain"
-                alt="face liveness snapshot"
-              />
-            </div>
-            <span className={styles.caption}>
-              (a) Face Photo 1 (from selfie)
-            </span>
-            <div className={styles.imgItem}>
-              <Image
-                src={getImageFromLocalStorage('ktp_snapshot', () =>
-                  setCurrentStep(3)
-                )}
-                layout="fill"
-                objectFit="contain"
-                alt="ktp image"
-              />
-            </div>
-            <span className={styles.caption}>(b) Face Photo 2 (from ktp)</span>
-
-            <div className={styles.btnGroup}>
-              {/* <div className={styles.btnUpload}>
-                <Button color={Color.Primary}>Change Photo (b)</Button>
-                <input
-                  type="file"
-                  onChange={(e) => changeTheImageToCompare(e)}
-                />
-              </div> */}
-              <Button color={Color.Primary} onClick={() => nextStep(5)}>
-                Next
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {currentStep === 5 && (
-        <div className={styles.container}>
           <div className={styles.result}>
             <div className={styles.percentage}>
               <h3 className={styles.title}>Liveness result</h3>
@@ -221,14 +152,14 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               <h3 className={styles.title}>OCR KTP Result</h3>
               <AnalyticsResult result={dummyOCRResult} slug={'ocr-ktp'} />
             </div>
-            <Button color={Color.Primary} onClick={() => nextStep(6)}>
+            <Button color={Color.Primary} onClick={() => nextStep(5)}>
               Next
             </Button>
           </div>
         </div>
       )}
 
-      {currentStep === 6 && (
+      {currentStep === 5 && (
         <div className={styles.container}>
           <div>
             <h3 className={styles.title}>
