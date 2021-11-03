@@ -68,7 +68,7 @@ Create a visitor and generate the session id.
 
 - **URL**
 
-  `/visitors`
+  `/api/v1/visitors`
 
 - **Method**
 
@@ -158,7 +158,7 @@ Create a visitor activity.
 
 - **URL**
 
-  `/activities`
+  `/api/v1/activities`
 
 - **Method**
 
@@ -232,7 +232,7 @@ Create a service request by id and create a new visitor_activites record.
 
 - **URL**
 
-  `/services/:id`
+  `/api/v1/services/:id`
 
 - **Method**
 
@@ -356,7 +356,7 @@ Return json data about all Services.
 
 - **URL**
 
-  `/services`
+  `/api/v1/services`
 
 - **Method**
 
@@ -442,7 +442,7 @@ Return json data about all Services by type.
 
 - **URL**
 
-  `/services?type=`
+  `/api/v1/services?type=`
 
 - **Method**
 
@@ -525,7 +525,7 @@ Return json data about a Service by slug.
 
 - **URL**
 
-  `/services/:slug`
+  `/api/v1/services/:slug`
 
 - **Method**
 
@@ -601,7 +601,7 @@ Return json data about a Service by slug.
 
 - **URL**
 
-  `/feedback/:service_id`
+  `/api/v1/feedback/:service_id`
 
 - **Method**
 
