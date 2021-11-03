@@ -34,7 +34,26 @@ docker-compose up -d --build
 ```
 
 ### Running without Docker
+Before running the backend service, you can run some additional commands below to handle migrations and seeds:
 
+- To migrate without removing the data
+```sh
+go run . migrate
+```
+- To migrate with removing the data
+```sh
+go run . migrate-fresh
+```
+- To run the seeder
+```sh
+go run . seed
+```
+- To migrate with removing the data and run the seeder
+```sh
+go run . refresh
+```
+
+Finally run the backend service:
 ```sh
 go run .
 ```
@@ -49,7 +68,8 @@ Create a visitor and generate the session id.
 
 - **URL**
 
-  `/visitors`
+  `/api/v1/visitors`
+
 - **Method**
 
   `POST`
@@ -138,7 +158,8 @@ Create a visitor activity.
 
 - **URL**
 
-  `/activities`
+  `/api/v1/activities`
+
 - **Method**
 
   `POST`
@@ -211,7 +232,7 @@ Create a service request by id and create a new visitor_activites record.
 
 - **URL**
 
-  `/services/:id`
+  `/api/v1/services/:id`
 
 - **Method**
 
@@ -224,22 +245,22 @@ Create a service request by id and create a new visitor_activites record.
   `id` type `integer`
 
 - **Request Payload**
+
 ```json
 {
-   "analytic_name" : "ocr-ktp", 
-   "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
-   "data": {
-       "additional_params": {},
-       "images": [
-         "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"
-       ]
-   }
+  "analytic_name": "ocr-ktp",
+  "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+  "data": {
+    "additional_params": {},
+    "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+  }
 }
 ```
 
 Note: `analytic_name` only be required on analytics that are part of the solution service, so it can be omitted when requesting an independent analytics service.
 
 - **Request Payload Data Type Attributes**
+
 ```json
 {
    "analytic_name" : string,
@@ -335,7 +356,8 @@ Return json data about all Services.
 
 - **URL**
 
-  `/services`
+  `/api/v1/services`
+
 - **Method**
 
   `GET`
@@ -346,43 +368,46 @@ Return json data about all Services.
 
 ```json
 {
-    "data": [
-        {
-            "id": 1,
-            "type": "analytic",
-            "slug": "ocr-ktp",
-            "name": "Optical Character Recognition KTP",
-            "short_description": "OCR KTP Description",
-            "long_description": "OCR KTP Looonng Descriptiooonnn",
-            "thumbnail": "ocr-ktp.png",
-            "created_at": "2021-10-28T21:44:57.828988+07:00",
-            "updated_at": "2021-10-28T21:44:57.828988+07:00"
-        },
-        {
-            "id": 2,
-            "type": "solution",
-            "slug": "ekyc",
-            "name": "Electronic Know Your Customer",
-            "short_description": "Electronic Know Your Customer Description",
-            "long_description": "Electronic Know Your Customer Looonng Descriptiooonnn",
-            "thumbnail": "ekyc.png",
-            "created_at": "2021-10-28T21:44:57.828992+07:00",
-            "updated_at": "2021-10-28T21:44:57.828992+07:00"
-        },
-        {
-            "id": 3,
-            "type": "innovation",
-            "slug": "rotten-fruit",
-            "name": "Rotten Fruit Detection",
-            "short_description": "Rotten Fruit Detection Description",
-            "long_description": "Rotten Fruit Detection Looonng Descriptiooonnn",
-            "thumbnail": "rotten-fruit.png",
-            "created_at": "2021-10-28T21:44:57.828992+07:00",
-            "updated_at": "2021-10-28T21:44:57.828992+07:00"
-        }
-    ],
-    "message": "Get all services success",
-    "ok": true
+  "data": [
+    {
+      "id": 1,
+      "type": "analytic",
+      "slug": "ocr-ktp",
+      "name": "Optical Character Recognition KTP",
+      "short_description": "OCR KTP Description",
+      "long_description": "OCR KTP Looonng Descriptiooonnn",
+      "special_instruction": "Special Instruction for OCR KTP",
+      "thumbnail": "ocr-ktp.png",
+      "created_at": "2021-10-28T21:44:57.828988+07:00",
+      "updated_at": "2021-10-28T21:44:57.828988+07:00"
+    },
+    {
+      "id": 2,
+      "type": "solution",
+      "slug": "ekyc",
+      "name": "Electronic Know Your Customer",
+      "short_description": "Electronic Know Your Customer Description",
+      "long_description": "Electronic Know Your Customer Looonng Descriptiooonnn",
+      "special_instruction": "Special Instruction for LPR",
+      "thumbnail": "ekyc.png",
+      "created_at": "2021-10-28T21:44:57.828992+07:00",
+      "updated_at": "2021-10-28T21:44:57.828992+07:00"
+    },
+    {
+      "id": 3,
+      "type": "innovation",
+      "slug": "rotten-fruit",
+      "name": "Rotten Fruit Detection",
+      "short_description": "Rotten Fruit Detection Description",
+      "long_description": "Rotten Fruit Detection Looonng Descriptiooonnn",
+      "special_instruction": "Special Instruction for Face Match with Enrollment",
+      "thumbnail": "rotten-fruit.png",
+      "created_at": "2021-10-28T21:44:57.828992+07:00",
+      "updated_at": "2021-10-28T21:44:57.828992+07:00"
+    }
+  ],
+  "message": "Get all services success",
+  "ok": true
 }
 ```
 
@@ -398,6 +423,7 @@ Return json data about all Services.
             "name": string,
             "short_description": string,
             "long_description": string,
+            "special_instruction": string,
             "thumbnail": string,
             "created_at": string,
             "updated_at": string
@@ -407,6 +433,7 @@ Return json data about all Services.
     "ok": boolean
 }
 ```
+
 </details>
 
 <details>
@@ -415,7 +442,8 @@ Return json data about all Services by type.
 
 - **URL**
 
-  `/services?type=`
+  `/api/v1/services?type=`
+
 - **Method**
 
   `GET`
@@ -444,6 +472,7 @@ Return json data about all Services by type.
       "name": "Face Recognition",
       "short_description": "Face Recoginition Description",
       "long_description": "Face Recoginition Descriptiooooooooooonnnnnnnnnnnnnn",
+      "special_instruction": "Special Instruction for Face Recognition",
       "thumbnail": "face-recognition.jpeg",
       "created_at": "2021-10-07T13:36:26.892822+07:00",
       "updated_at": "2021-10-07T13:36:26.892822+07:00"
@@ -466,6 +495,7 @@ Return json data about all Services by type.
             "name": string,
             "short_description": string,
             "long_description": string,
+            "special_instruction": string,
             "thumbnail": string,
             "created_at": string,
             "updated_at": string
@@ -486,6 +516,7 @@ Return json data about all Services by type.
   "ok": false
 }
 ```
+
 </details>
 
 <details>
@@ -494,7 +525,8 @@ Return json data about a Service by slug.
 
 - **URL**
 
-  `/services/:slug`
+  `/api/v1/services/:slug`
+
 - **Method**
 
   `GET`
@@ -518,6 +550,7 @@ Return json data about a Service by slug.
     "name": "Car Damage Detection",
     "short_description": "Car Damage Detection Description",
     "long_description": "Car Damage Detection Descriptiooooooooooonnnnnnnnnnnnnn",
+    "special_instruction": "Special Instruction for Car Damage Detection",
     "thumbnail": "car-damage.jpeg",
     "created_at": "2021-10-08T23:13:28.755551+07:00",
     "updated_at": "2021-10-08T23:13:28.755551+07:00"
@@ -539,6 +572,7 @@ Return json data about a Service by slug.
             "name": string,
             "short_description": string,
             "long_description": string,
+            "special_instruction": string,
             "thumbnail": string,
             "created_at": string,
             "updated_at": string
@@ -567,7 +601,8 @@ Return json data about a Service by slug.
 
 - **URL**
 
-  `/feedback/:service_id`
+  `/api/v1/feedback/:service_id`
+
 - **Method**
 
   `POST`
@@ -584,21 +619,22 @@ Note: attribute `comment` is required when rating less than equal 3, when rating
 
 ```json
 {
-   "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
-   "rating": 3,
-   "comment": "This feauture need some improvement"
+  "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+  "rating": 3,
+  "comment": "This feauture need some improvement"
 }
 ```
 
 ```json
 {
-   "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
-   "rating": 5,
-   "comment": ""
+  "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+  "rating": 5,
+  "comment": ""
 }
 ```
 
 - **Request Payload Data Type Attributes**
+
 ```json
 {
    "session_id": string,
@@ -614,8 +650,8 @@ Note: attribute `comment` is required when rating less than equal 3, when rating
 
 ```json
 {
-    "message": "Feedback submited!",
-    "ok": true
+  "message": "Feedback submited!",
+  "ok": true
 }
 ```
 
@@ -656,6 +692,7 @@ OR
   "ok": false
 }
 ```
+
 This error will appear if visitor give rating below 4.
 
 ```json
@@ -664,6 +701,7 @@ This error will appear if visitor give rating below 4.
   "ok": false
 }
 ```
+
 This error will appear if visitor do not give feedback rating.
 
 ```json
@@ -672,6 +710,7 @@ This error will appear if visitor do not give feedback rating.
   "ok": false
 }
 ```
+
 This error will appear if visitor give feedback rating more than 5.
 
 </details>

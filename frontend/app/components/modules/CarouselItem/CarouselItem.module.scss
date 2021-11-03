@@ -13,10 +13,11 @@
   .card {
     position: absolute;
     width: 350px;
+    height: 60vh;
     left: 12%;
-    top: 30%;
+    top: 22vh;
     @include tablet {
-      top: 60%;
+      top: 50vh;
       left: 50%;
       transform: translate(-50%, -50%);
     }

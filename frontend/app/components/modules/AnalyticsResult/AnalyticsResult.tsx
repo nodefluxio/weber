@@ -1,82 +1,79 @@
-import {
-  FMEResultResponse,
-  LPRResultResponse,
-  OCRResultResponse
-} from '../../../types/responses'
 import styles from './AnalyticsResult.module.scss'
+import resultMap from './analytics_result.json'
 
-type Props<T> = {
-  result: T
+type Props = {
+  result: any
+  slug: string
 }
 
-export const FMEResult = ({ result }: Props<FMEResultResponse>) => {
-  const { face_match } = result
-  const { match, similarity } = face_match
-  return (
-    <div className={styles.container}>
-      <div>
-        <p>match</p>
-        <p>{match ? 'true' : 'false'}</p>
-      </div>
-      <div>
-        <p>similarity</p>
-        <p>{similarity}</p>
-      </div>
+export const AnalyticsResult = ({ result, slug }: Props) => {
+  const createDisplayResultEl = (
+    mappedResultResponse: any,
+    fields: any,
+    i: number
+  ) => (
+    <div key={fields[i].key} className={styles.field}>
+      <p className={styles.label}>{fields[i].label}</p>
+      {fields[i].fields ? (
+        fields[i].fields.map((_: any, j: number) =>
+          createDisplayResultEl(
+            mappedResultResponse[fields[i].key],
+            fields[i].fields,
+            j
+          )
+        )
+      ) : (
+        <p className={styles.result}>{`${
+          mappedResultResponse[fields[i].key]
+        }`}</p>
+      )}
     </div>
   )
-}
 
-export const OCRResult = ({ result }: Props<OCRResultResponse>) => {
+  const generateFieldList = (
+    i: number,
+    j: number,
+    fields: any,
+    fieldList: any[],
+    mappedResultResponse: any
+  ) => {
+    for (i; i < fields.length; i++) {
+      if (fields[i].new_column) {
+        j++
+        i++
+      }
+      if (!fieldList[j]) fieldList[j] = []
+
+      fieldList[j].push(createDisplayResultEl(mappedResultResponse, fields, i))
+    }
+  }
+
+  const displayResult = () => {
+    if (result) {
+      // @ts-ignore
+      if (resultMap[slug]) {
+        // @ts-ignore
+        let analyticSlugResultMap = resultMap[slug]
+        let mappedResultResponse = result
+        if (analyticSlugResultMap.starting_key)
+          mappedResultResponse = result[analyticSlugResultMap.starting_key]
+        let i = 0
+        let j = 0
+        let fieldListColumns: any[] = []
+        let fields = analyticSlugResultMap.fields
+        if (analyticSlugResultMap.type === 'array') {
+          mappedResultResponse = mappedResultResponse[0]
+        }
+        generateFieldList(i, j, fields, fieldListColumns, mappedResultResponse)
+        return fieldListColumns.map((column, i) => (
+          <div key={i} className={styles.col}>
+            {column}
+          </div>
+        ))
+      }
+    }
+  }
   return (
-    <div className={styles.container}>
-      {Object.entries(result).map(([key, value]) => (
-        <div key={key}>
-          <p>{key}</p>
-          <p>{value}</p>
-        </div>
-      ))}
-    </div>
-  )
-}
-
-export const LPRResult = ({ result }: Props<LPRResultResponse>) => {
-  const { license_plate_recognitions } = result
-  const { bounding_box, confidence, detected, license_plate_number } =
-    license_plate_recognitions[0]
-
-  return (
-    <div className={styles.container}>
-      <div>
-        <p>Bounding Box</p>
-        <div>
-          <p>width</p>
-          <p>{bounding_box.width}</p>
-        </div>
-        <div>
-          <p>height</p>
-          <p>{bounding_box.height}</p>
-        </div>
-        <div>
-          <p>top</p>
-          <p>{bounding_box.top}</p>
-        </div>
-        <div>
-          <p>left</p>
-          <p>{bounding_box.left}</p>
-        </div>
-      </div>
-      <div>
-        <p>confidence</p>
-        <p>{confidence}</p>
-      </div>
-      <div>
-        <p>detected</p>
-        <p>{detected}</p>
-      </div>
-      <div>
-        <p>license_plate_number</p>
-        <p>{license_plate_number}</p>
-      </div>
-    </div>
+    <div className={styles.resultsContainer}>{result && displayResult()}</div>
   )
 }

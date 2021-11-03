@@ -27,7 +27,7 @@ export const CarouselItem = ({ img, title, desc, slug }: Props) => {
         <CardContent
           className={styles.cardContent}
           title={title}
-          height={'400px'}>
+          height={'100%'}>
           {desc}
           <div className={styles.footer}>
             <Link href={'/innovations/' + slug} passHref>

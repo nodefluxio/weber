@@ -4,18 +4,20 @@
 .navbar {
   flex: 1;
   align-self: flex-start;
-  padding: 2rem 4rem;
+  padding: 1.5rem 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: $white-bg;
   z-index: 300;
   text-transform: uppercase;
-  @include phone {
-    padding: 2rem 2rem;
+  width: 100%;
+  @include tablet {
+    padding: 1.5rem 2rem;
   }
   .imageContainer {
     cursor: pointer;
+    padding-top: 2px;
     max-width: 149px;
     height: 46px;
     @include phone {
@@ -98,11 +100,16 @@
       align-items: center;
       padding-left: 4rem;
       cursor: pointer;
-
       @include tablet {
         padding: 1.5rem 0;
         &:hover {
           color: unset;
+        }
+      }
+      a {
+        padding: 1rem 0;
+        @include tablet {
+          padding: unset;
         }
       }
     }

@@ -1,21 +1,10 @@
 import { AnalyticsPage } from '../../app/components/templates/AnalyticsPage/AnalyticsPage'
 import { useState } from 'react'
 import { getServiceBySlug } from '../../app/api/analyticsAPI'
-import {
-  AnyResultResponse,
-  FMEResultResponse,
-  LPRResultResponse,
-  OCRResultResponse,
-  ServiceBySlugResponseData
-} from '../../app/types/responses'
-import { AnalyticsSlug } from '../../app/types/elements'
-import {
-  FMEResult,
-  LPRResult,
-  OCRResult
-} from '../../app/components/modules/AnalyticsResult/AnalyticsResult'
+import { ServiceBySlugResponseData } from '../../app/types/responses'
 import { GetServerSideProps } from 'next'
 import { ParsedUrlQuery } from 'querystring'
+import { AnalyticsResult } from '../../app/components/modules/AnalyticsResult/AnalyticsResult'
 
 const Analytics = ({
   name,
@@ -24,21 +13,7 @@ const Analytics = ({
   id,
   slug
 }: ServiceBySlugResponseData) => {
-  const [result, setResult] = useState<AnyResultResponse>()
-
-  const displayResult = () => {
-    if (result)
-      switch (slug) {
-        case AnalyticsSlug.FACE_MATCH_ENROLLMENT:
-          return <FMEResult result={result as FMEResultResponse} />
-        case AnalyticsSlug.LICENSE_PLATE_RECOGNITION:
-          return <LPRResult result={result as LPRResultResponse} />
-        case AnalyticsSlug.OCR_KTP:
-          return <OCRResult result={result as OCRResultResponse} />
-        default:
-          return <div>{result}</div>
-      }
-  }
+  const [result, setResult] = useState<any>()
 
   return (
     <AnalyticsPage
@@ -52,7 +27,7 @@ const Analytics = ({
       ]}
       serviceID={id}
       handleResult={(res) => setResult(res)}>
-      {result && displayResult()}
+      <AnalyticsResult result={result} slug={slug} />
     </AnalyticsPage>
   )
 }
