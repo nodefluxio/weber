@@ -81,7 +81,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     }
   }
 
-  const changeKtpHandler = (e: any) => {
+  const changeTheImageToCompare = (e: any) => {
     const file = e.target.files[0]
 
     const reader = new FileReader()
@@ -189,7 +189,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <div className={styles.btnGroup}>
               <div className={styles.btnUpload}>
                 <Button color={Color.Primary}>Change Photo (b)</Button>
-                <input type="file" onChange={(e) => changeKtpHandler(e)} />
+                <input type="file" onChange={(e) => changeTheImageToCompare(e)} />
               </div>
               <Button color={Color.Primary} onClick={() => nextStep(5)}>
                 Next
