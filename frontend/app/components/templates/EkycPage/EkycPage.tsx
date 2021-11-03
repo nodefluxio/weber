@@ -88,18 +88,12 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       />
 
       <Stepper
-        steps={[
-          'Start',
-          'Face Liveness',
-          'OCR KTP',
-          'Result',
-          'Finish'
-        ]}
+        steps={['Start', 'Face Liveness', 'OCR KTP', 'Result', 'Finish']}
         activeStep={currentStep}
       />
 
-      {currentStep === 1 && (
-        <div className={styles.container}>
+      <div className={styles.container}>
+        {currentStep === 1 && (
           <div>
             <h3 className={styles.title}>Welcome to e-KYC Demo</h3>
             <p className={styles.desc}>
@@ -110,20 +104,16 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               Start
             </Button>
           </div>
-        </div>
-      )}
+        )}
 
-      {currentStep === 2 && (
-        <div className={styles.container}>
+        {currentStep === 2 && (
           <div>
             <h3 className={styles.title}>Take A Selfie Photo</h3>
             <Cam localkey="liveness_snapshot" nextStep={() => nextStep(3)} />
           </div>
-        </div>
-      )}
+        )}
 
-      {currentStep === 3 && (
-        <div className={styles.container}>
+        {currentStep === 3 && (
           <div>
             <h3 className={styles.title}>KTP Photo</h3>
             <Cam
@@ -132,11 +122,9 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               videoConstraints={{ facingMode: { ideal: 'environment' } }}
             />
           </div>
-        </div>
-      )}
+        )}
 
-      {currentStep === 4 && (
-        <div className={styles.container}>
+        {currentStep === 4 && (
           <div className={styles.result}>
             <div className={styles.percentage}>
               <h3 className={styles.title}>Liveness result</h3>
@@ -156,19 +144,17 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               Next
             </Button>
           </div>
-        </div>
-      )}
+        )}
 
-      {currentStep === 5 && (
-        <div className={styles.container}>
-          <div>
+        {currentStep === 5 && (
+          <div className={styles.review}>
             <h3 className={styles.title}>
               Thank you for Using e-KYC Demo App!
             </h3>
             <Feedback id={serviceId} onClick={() => setCurrentStep(1)} />
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   )
 }
