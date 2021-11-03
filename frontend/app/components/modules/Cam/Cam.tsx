@@ -24,10 +24,12 @@ export const Cam = ({ localkey, nextStep }: Props) => {
   const [photo, setPhoto] = useState('')
 
   useEffect(() => {
-    if (localStorage.getItem(localkey)) {
+    const storedPhoto =  localStorage.getItem(localkey)
+    if (storedPhoto) {
+      setPhoto(storedPhoto)
       setDisabled(false)
     }
-  }, [])
+  }, [localkey])
 
   const capture = useCallback(() => {
     if (webcamRef.current !== null) {
@@ -60,7 +62,7 @@ export const Cam = ({ localkey, nextStep }: Props) => {
             width={640}
           />
         ) : (
-          photo && <Image src={photo} height={360} width={486} />
+          photo && <Image src={photo} height={360} width={486} alt='captured photos' />
         )}
       </div>
 
