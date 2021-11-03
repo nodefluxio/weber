@@ -1,5 +1,5 @@
 import { parseCookies } from 'nookies'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { postActivities } from '../../../api/activitiesAPI'
 import { SESSION_ID_ERROR } from '../../../constants/message'
@@ -50,13 +50,31 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     tempat_lahir: 'bekasi'
   }
 
+  const { session_id } = parseCookies()
+
   const [ktpPhoto, setKtpPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
 
+  const createVisitorActivities = async (
+    serviceId: number,
+    sessionId: string,
+    completeness: number
+  ) => {
+    try {
+      await postActivities(serviceId, sessionId, completeness)
+    } catch (err) {
+      if ((err as Error).message === SESSION_ID_ERROR) {
+        setOpenModal(true)
+      } else {
+        console.log((err as Error).message)
+      }
+    }
+  }
+
   const nextStep = async (page: number) => {
-    const { session_id } = parseCookies()
     if (session_id) {
+      createVisitorActivities(5, session_id, page)
       setCurrentStep(page)
     } else {
       setOpenModal(true)
