@@ -52,8 +52,8 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
   const { session_id } = parseCookies()
 
-  const [ktpPhoto, setKtpPhoto] = useState('')
-  const [photoToCompare, setPhotoToCompare] = useState('')
+  // const [ktpPhoto, setKtpPhoto] = useState('')
+  // const [photoToCompare, setPhotoToCompare] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
 
@@ -82,17 +82,17 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     }
   }
 
-  const changeTheImageToCompare = (e: any) => {
-    const file = e.target.files[0]
+  // const changeTheImageToCompare = (e: any) => {
+  //   const file = e.target.files[0]
 
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => {
-      if (reader.result) {
-        setPhotoToCompare(reader.result as string)
-      }
-    }
-  }
+  //   const reader = new FileReader()
+  //   reader.readAsDataURL(file)
+  //   reader.onload = () => {
+  //     if (reader.result) {
+  //       setPhotoToCompare(reader.result as string)
+  //     }
+  //   }
+  // }
 
   return (
     <>
@@ -147,16 +147,15 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       )}
 
       {currentStep === 3 && (
-        <div className={styles.dzContainer}>
-          <h3 className={styles.title}>KTP Photo</h3>
-          <DropzoneOptions images={examples} onPhotoDrop={setKtpPhoto} />
-          {ktpPhoto && (
-            <div className={styles.buttonContainer}>
-              <Button color={Color.Primary} onClick={() => nextStep(4)}>
-                Next Step
-              </Button>
-            </div>
-          )}
+        <div className={styles.container}>
+          <div>
+            <h3 className={styles.title}>KTP Photo</h3>
+            <Cam
+              localkey="ktp_snapshot"
+              nextStep={() => nextStep(4)}
+              videoConstraints={{ facingMode: { ideal: 'environment' } }}
+            />
+          </div>
         </div>
       )}
 
@@ -179,7 +178,9 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             </span>
             <div className={styles.imgItem}>
               <Image
-                src={photoToCompare || ktpPhoto}
+                src={getImageFromLocalStorage('ktp_snapshot', () =>
+                  setCurrentStep(3)
+                )}
                 layout="fill"
                 objectFit="contain"
                 alt="ktp image"
@@ -188,13 +189,13 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <span className={styles.caption}>(b) Face Photo 2 (from ktp)</span>
 
             <div className={styles.btnGroup}>
-              <div className={styles.btnUpload}>
+              {/* <div className={styles.btnUpload}>
                 <Button color={Color.Primary}>Change Photo (b)</Button>
                 <input
                   type="file"
                   onChange={(e) => changeTheImageToCompare(e)}
                 />
-              </div>
+              </div> */}
               <Button color={Color.Primary} onClick={() => nextStep(5)}>
                 Next
               </Button>

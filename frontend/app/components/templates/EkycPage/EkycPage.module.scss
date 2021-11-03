@@ -48,22 +48,23 @@
 
 .btnGroup {
   display: flex;
+  justify-content: center;
   gap: 1rem;
 }
 
-.btnUpload {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  cursor: pointer;
+// .btnUpload {
+//   position: relative;
+//   overflow: hidden;
+//   display: inline-block;
+//   cursor: pointer;
 
-  input[type='file'] {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-  }
-}
+//   input[type='file'] {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     opacity: 0;
+//   }
+// }
 
 .result {
   display: grid;
