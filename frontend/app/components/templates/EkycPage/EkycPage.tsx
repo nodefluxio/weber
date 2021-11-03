@@ -14,6 +14,7 @@ import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import styles from './EkycPage.module.scss'
 import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
+import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
 
 type Props = {
   serviceId: number
@@ -60,20 +61,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     } else {
       setOpenModal(true)
     }
-  }
-
-  const getImageFromLocalStorage = (
-    key: string,
-    fallbackStep: number
-  ): string => {
-    const image = localStorage.getItem(key)
-
-    if (!image) {
-      setCurrentStep(fallbackStep)
-      return ''
-    }
-
-    return image
   }
 
   const changeKtpHandler = (e: any) => {
@@ -160,7 +147,9 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <h3 className={styles.title}>Face Match 1:1</h3>
             <div className={styles.imgItem}>
               <Image
-                src={getImageFromLocalStorage('liveness_snapshot', 2)}
+                src={getImageFromLocalStorage('liveness_snapshot', () =>
+                  setCurrentStep(2)
+                )}
                 layout="fill"
                 objectFit="contain"
                 alt="face liveness snapshot"
