@@ -10,6 +10,22 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 
+
+## [0.2.0 - 29/10/2021]
+### Added
+- [FRONTEND] Feedback form
+- [FRONTEND] Agnostic analytic page
+- [FRONTEND] Analytic result for Face Match w/ Enrollment and LPR
+- [FRONTEND] Open Camera and Capture Image
+- [FRONTEND] e-KYC analytic face liveness
+- [BACKEND] Completeness tracker
+- [BACKEND] Feedback recorder
+### Changed
+- [FRONTEND] Fixing Industry as dropdown input
+- [FRONTEND] More proper styling on landing page
+- Feedback validation (1-3 stars requires comment before submit, 0 will unable to submit)
+### Removed
+[FRONTEND] Try again button on analytics page
 ## [0.1.0 - 19/10/2021]
 
 ### Added
