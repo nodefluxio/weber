@@ -1,4 +1,4 @@
-# Weber is the derived unit of magnetic flux, 
+# Weber 
 
 In physics, [Weber (Wb)](https://en.wikipedia.org/wiki/Weber_(unit)) is the SI derived unit of magnetic flux. This project is initiated philosophically like a magnetic surface for [nodeflux.io](https://nodeflux.io) to engage potential users or partners interactively by experiencing nodeflux's analytics and solution through web browser. Currently, Weber provides demonstrations and trials for some nodeflux analytics, solutions, and new innovations. 
 
@@ -9,7 +9,7 @@ In physics, [Weber (Wb)](https://en.wikipedia.org/wiki/Weber_(unit)) is the SI d
 - Docker
 - Docker-Compose
 
-### Setting up Env
+### Setting up Env.
 
 ```bash
 $ cp .env.example .env
