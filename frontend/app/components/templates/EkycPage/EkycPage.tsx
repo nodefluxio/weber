@@ -133,12 +133,16 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
       {currentStep === 2 && (
         <div className={styles.container}>
-          <Cam localkey="liveness_snapshot" nextStep={() => nextStep(3)} />
+          <div>
+            <h3 className={styles.title}>Take A Selfie Photo</h3>
+            <Cam localkey="liveness_snapshot" nextStep={() => nextStep(3)} />
+          </div>
         </div>
       )}
 
       {currentStep === 3 && (
         <div className={styles.dzContainer}>
+          <h3 className={styles.title}>KTP Photo</h3>
           <DropzoneOptions images={examples} onPhotoDrop={setKtpPhoto} />
           {ktpPhoto && (
             <div className={styles.buttonContainer}>
@@ -153,22 +157,31 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       {currentStep === 4 && (
         <div className={styles.container}>
           <div className={styles.imgContainer}>
-            <Image
-              src={getImageFromLocalStorage('liveness_snapshot', 2)}
-              height={180}
-              width={243}
-              alt="face liveness snapshot"
-            />
-            <Image
-              className={styles.imgItem}
-              src={ktpPhoto}
-              height={180}
-              width={243}
-              alt="ktp image"
-            />
+            <h3 className={styles.title}>Face Match 1:1</h3>
+            <div className={styles.imgItem}>
+              <Image
+                src={getImageFromLocalStorage('liveness_snapshot', 2)}
+                layout="fill"
+                objectFit="contain"
+                alt="face liveness snapshot"
+              />
+            </div>
+            <span className={styles.caption}>
+              (a) Face Photo 1 (from selfie)
+            </span>
+            <div className={styles.imgItem}>
+              <Image
+                src={ktpPhoto}
+                layout="fill"
+                objectFit="contain"
+                alt="ktp image"
+              />
+            </div>
+            <span className={styles.caption}>(b) Face Photo 2 (from ktp)</span>
+
             <div className={styles.btnGroup}>
               <div className={styles.btnUpload}>
-                <Button color={Color.Primary}>Change KTP Photo</Button>
+                <Button color={Color.Primary}>Change Photo (b)</Button>
                 <input type="file" onChange={(e) => changeKtpHandler(e)} />
               </div>
               <Button color={Color.Primary} onClick={() => nextStep(5)}>
@@ -183,14 +196,17 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
         <div className={styles.container}>
           <div className={styles.result}>
             <div className={styles.percentage}>
+              <h3 className={styles.title}>Liveness result</h3>
               <span>93%</span>
               <p>Verified</p>
             </div>
             <div className={styles.percentage}>
+              <h3 className={styles.title}>Face Match Result</h3>
               <span>93%</span>
               <p>Verified</p>
             </div>
             <div className={styles.ocrKtp}>
+              <h3 className={styles.title}>OCR KTP Result</h3>
               <AnalyticsResult result={dummyOCRResult} slug={'ocr-ktp'} />
             </div>
             <Button color={Color.Primary} onClick={() => nextStep(6)}>
@@ -202,7 +218,12 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
       {currentStep === 6 && (
         <div className={styles.container}>
-          <Feedback id={serviceId} onClick={() => setCurrentStep(1)} />
+          <div>
+            <h3 className={styles.title}>
+              Thank you for Using e-KYC Demo App!
+            </h3>
+            <Feedback id={serviceId} onClick={() => setCurrentStep(1)} />
+          </div>
         </div>
       )}
     </>
