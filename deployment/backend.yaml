@@ -41,7 +41,10 @@ spec:
                   name: weber
                   key: db_name
             - name: DB_HOST
-              value: "10.85.160.3"
+              valueFrom:
+                secretKeyRef:
+                  name: weber
+                  key: db_host
             - name: DB_PORT
               value: "5432"
             - name: SESSION_EXPIRATION
