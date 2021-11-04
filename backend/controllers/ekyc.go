@@ -4,7 +4,6 @@ import (
 	"backend/database"
 	"backend/models"
 	"backend/utils"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,7 +26,7 @@ type ekycServiceData struct {
 	FaceMatch    models.ServiceRequestResultData `json:"face_match"`
 }
 
-func GetEKYCResult(ctx *gin.Context) {
+func CreateEKYCRequest(ctx *gin.Context) {
 	var inputData ekycRequestInput
 	ctx.BindJSON(&inputData)
 	sessionId := inputData.SessionID
@@ -58,35 +57,60 @@ func GetEKYCResult(ctx *gin.Context) {
 }
 
 func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData ekycRequestInput) {
-	resultFaceLiveness, err := getResultFaceLiveness(service, inputData.Data.FaceLiveness)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"ok":      false,
-			"message": "Error during fetching API face liveness: " + err.Error(),
-		})
-		return
-	}
-	resultOCRKTP, err := getResultOCRKTP(service, inputData.Data.OCRKTP)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"ok":      false,
-			"message": "Error during fetching API ocr ktp: " + err.Error(),
-		})
-		return
-	}
-	resultFaceMatch, err := getResultFaceMatch(service, inputData.Data.FaceMatch)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"ok":      false,
-			"message": "Error during fetching API face match: " + err.Error(),
-		})
-		return
-	}
+	// Declare channels
+	resultFaceLivenessChannel := make(chan models.ServiceRequestResultData)
+	resultOCRKTPChannel := make(chan models.ServiceRequestResultData)
+	resultFaceMatchChannel := make(chan models.ServiceRequestResultData)
+	errorFaceLivenessChannel := make(chan error)
+	errorOCRKTPChannel := make(chan error)
+	errorFaceMatchChannel := make(chan error)
+
+	// Create and execute goroutines
+	go func() {
+		resultFaceLiveness, err := GetResultFaceLiveness(service, inputData.Data.FaceLiveness)
+		errorFaceLivenessChannel <- err
+		resultFaceLivenessChannel <- resultFaceLiveness
+	}()
+	go func() {
+		resultOCRKTP, err := GetResultOCRKTP(service, inputData.Data.OCRKTP)
+		errorOCRKTPChannel <- err
+		resultOCRKTPChannel <- resultOCRKTP
+	}()
+	go func() {
+		resultFaceMatch, err := GetResultFaceMatch(service, inputData.Data.FaceMatch)
+		errorFaceMatchChannel <- err
+		resultFaceMatchChannel <- resultFaceMatch
+	}()
 
 	var serviceData ekycServiceData
-	serviceData.FaceLiveness = resultFaceLiveness
-	serviceData.OCRKTP = resultOCRKTP
-	serviceData.FaceMatch = resultFaceMatch
+	var err error = nil
+
+	// Share the results with channel - select
+	for i := 0; i < 3; i++ {
+		select {
+		case resultFaceLiveness := <-resultFaceLivenessChannel:
+			serviceData.FaceLiveness = resultFaceLiveness
+		case resultOCRKTP := <-resultOCRKTPChannel:
+			serviceData.OCRKTP = resultOCRKTP
+		case resultFaceMatch := <-resultFaceMatchChannel:
+			serviceData.FaceMatch = resultFaceMatch
+		case errorFaceLiveness := <-errorFaceLivenessChannel:
+			err = errorFaceLiveness
+		case errorOCRKTP := <-errorOCRKTPChannel:
+			err = errorOCRKTP
+		case errorFaceMatch := <-errorFaceMatchChannel:
+			err = errorFaceMatch
+		}
+	}
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok":           false,
+			"message":      err.Error(),
+			"service_data": &serviceData,
+		})
+		return
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":           true,
@@ -94,38 +118,4 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 		"service_data": &serviceData,
 	})
 
-}
-
-func getResultFaceLiveness(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
-	fmt.Println(input)
-	var result models.ServiceRequestResultData
-	dataAnalytic := GetDataAnalytic(service, input)
-	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness")
-	if err != nil {
-		fmt.Println("Error during fetching API face liveness: ", err)
-		return result, err
-	}
-	return result, nil
-}
-
-func getResultOCRKTP(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
-	var result models.ServiceRequestResultData
-	dataAnalytic := GetDataAnalytic(service, input)
-	result, err := RequestToAnalyticSync(dataAnalytic, "ocr-ktp")
-	if err != nil {
-		fmt.Println("Error during fetching API ocr ktp: ", err)
-		return result, err
-	}
-	return result, nil
-}
-
-func getResultFaceMatch(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
-	var result models.ServiceRequestResultData
-	dataAnalytic := GetDataAnalytic(service, input)
-	result, err := RequestToAnalyticSync(dataAnalytic, "face-match")
-	if err != nil {
-		fmt.Println("Error during fetching API face match: ", err)
-		return result, err
-	}
-	return result, nil
 }
