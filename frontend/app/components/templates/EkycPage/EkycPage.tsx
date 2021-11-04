@@ -64,7 +64,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
   const nextStep = async (page: number) => {
     if (session_id) {
-      createVisitorActivities(5, session_id, page)
+      createVisitorActivities(5, session_id, page - 1)
       setCurrentStep(page)
     } else {
       setOpenModal(true)
@@ -73,11 +73,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
   return (
     <>
-      <Modal
-        show={openModal}
-        onClose={() => {
-          setOpenModal(false)
-        }}>
+      <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <RequestDemoFormPopup />
       </Modal>
 
@@ -131,15 +127,18 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               <span>93%</span>
               <p>Verified</p>
             </div>
+
             <div className={styles.percentage}>
               <h3 className={styles.title}>Face Match Result</h3>
               <span>93%</span>
               <p>Verified</p>
             </div>
+
             <div className={styles.ocrKtp}>
               <h3 className={styles.title}>OCR KTP Result</h3>
               <AnalyticsResult result={dummyOCRResult} slug={'ocr-ktp'} />
             </div>
+
             <Button color={Color.Primary} onClick={() => nextStep(5)}>
               Next
             </Button>
@@ -151,7 +150,11 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <h3 className={styles.title}>
               Thank you for Using e-KYC Demo App!
             </h3>
-            <Feedback id={serviceId} onClick={() => setCurrentStep(1)} />
+            <Feedback
+              id={serviceId}
+              onTryAgain={() => setCurrentStep(1)}
+              afterSubmit={() => createVisitorActivities(5, session_id, 5)}
+            />
           </div>
         )}
       </div>
