@@ -1,0 +1,50 @@
+.orderSummary {
+  max-width: 400px;
+  margin: auto;
+  .container {
+    padding: 0 1rem;
+  }
+  .imgContainer {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-right: 1rem;
+  }
+  .items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .qAndTotal {
+      margin-left: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .total {
+    margin-bottom: 1.5rem;
+  }
+}
+.backButton {
+  transform: scaleX(-1);
+  font-size: 2rem;
+  padding: 0;
+  &:hover {
+    background-color: unset;
+  }
+}
+
+.submitBtn {
+  display: block;
+  width: 50%;
+  margin: auto;
+}
+
+.title {
+  font-weight: 600;
+}
