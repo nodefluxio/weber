@@ -28,7 +28,7 @@ export const FacePaymentPage = ({ id, name, short_description, long_description 
   const nextStep = (step: number) => {
     if (session_id) {
       setCurrentStep(step)
-    } else { // Cookie did not exist... opening modal
+    } else { // Cookie does not exist... opening modal
       setOpenModal(true)
     }
   }

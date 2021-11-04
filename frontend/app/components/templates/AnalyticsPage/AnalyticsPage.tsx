@@ -109,7 +109,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               <div>Loading your results... Please wait</div>
             )}
           </AnalyticsResultWrapper>
-          { isResult && <Feedback id={serviceID} onClick={() => refreshState()}/> }
+          { isResult && <Feedback id={serviceID} onTryAgain={() => refreshState()}/> }
           </>
         )}
       </div>

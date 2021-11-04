@@ -18,6 +18,8 @@ const FacePayment: React.FC<Props> = (props) => {
 
 export const getServerSideProps = async () => {
   try {
+    // Waiting backend API to be built
+    // Temporarily we will use predefined template
     // const res = await getServiceBySlug('face-payment')
     return {
       props: {

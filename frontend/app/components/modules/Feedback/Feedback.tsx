@@ -13,10 +13,11 @@ import Link from "next/link"
 
 interface ReviewProp {
   id: number
-  onClick: () => void
+  onTryAgain: () => void
+  afterSubmit?: () => void
 }
 
-const Feedback: React.FC<ReviewProp> = ({ id, onClick }) => {
+const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
 
   const [rating, setRating] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -51,6 +52,10 @@ const Feedback: React.FC<ReviewProp> = ({ id, onClick }) => {
       if (res && res.ok) {
         setMessage(res.message)
         setIsSuccess(true)
+
+        if (afterSubmit) {
+          afterSubmit()
+        }
       } else {
         throw new Error("Empty response")
       }
@@ -67,7 +72,7 @@ const Feedback: React.FC<ReviewProp> = ({ id, onClick }) => {
       <div className={styles.thankYou}>
         <Image src={"/assets/icons/thankyou.svg"} width={90} height={90} />
         <h3>{message}</h3>
-        <Button type="button" color={Color.Primary} onClick={onClick}>Try again with another photo</Button>
+        <Button type="button" color={Color.Primary} onClick={onTryAgain}>Try again with another photo</Button>
         <Link passHref href="/">
           <Button type="link" color={Color.Secondary}>Explore More</Button>
         </Link>
