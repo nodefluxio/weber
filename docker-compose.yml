@@ -1,0 +1,76 @@
+# Production Environment
+version: "3.9"
+services:
+  postgres:
+    image: 'postgres'
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    networks:
+      - webernet
+    volumes:
+      - weberdb:/var/lib/postgresql/data
+  backend:
+    build: 
+      context: backend
+      dockerfile: Dockerfile
+    # command: refresh
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - APP_HOST=${APP_HOST}
+      - APP_PORT=${APP_PORT}
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    links:
+      - postgres
+    networks:
+      - webernet
+    volumes:
+      - .env:/app/.env
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    environment:
+      - BACKEND_URL=${BACKEND_URL}
+      - PORT=${WEB_PORT}
+      - HOSTNAME=${WEB_HOSTNAME}
+      - HOST=${WEB_HOST}
+    depends_on:
+      - backend
+    links:
+      - backend
+    networks:
+      - webernet
+    ports:
+      - "3000:3000"
+  proxy:
+    image: 'nginx'
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+      - frontend
+    links:
+      - backend
+      - frontend
+    networks:
+      - webernet
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
+volumes:
+  weberdb:
+
+networks:
+  webernet:
+    driver: bridge

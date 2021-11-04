@@ -27,12 +27,6 @@ more details about dependencies see [go.mod &rarr;](https://github.com/nodefluxi
 - Copy or rename file `.env.example` to `.env`.
 - Edit the `.env` to your desire database credentials.
 
-### Running with Docker
-
-```sh
-docker-compose up -d --build
-```
-
 ### Running without Docker
 Before running the backend service, you can run some additional commands below to handle migrations and seeds:
 
@@ -68,7 +62,7 @@ Create a visitor and generate the session id.
 
 - **URL**
 
-  `/visitors`
+  `/api/v1/visitors`
 
 - **Method**
 
@@ -158,7 +152,7 @@ Create a visitor activity.
 
 - **URL**
 
-  `/activities`
+  `/api/v1/activities`
 
 - **Method**
 
@@ -232,7 +226,7 @@ Create a service request by id and create a new visitor_activites record.
 
 - **URL**
 
-  `/services/:id`
+  `/api/v1/services/:id`
 
 - **Method**
 
@@ -356,7 +350,7 @@ Return json data about all Services.
 
 - **URL**
 
-  `/services`
+  `/api/v1/services`
 
 - **Method**
 
@@ -442,7 +436,7 @@ Return json data about all Services by type.
 
 - **URL**
 
-  `/services?type=`
+  `/api/v1/services?type=`
 
 - **Method**
 
@@ -525,7 +519,7 @@ Return json data about a Service by slug.
 
 - **URL**
 
-  `/services/:slug`
+  `/api/v1/services/:slug`
 
 - **Method**
 
@@ -601,7 +595,7 @@ Return json data about a Service by slug.
 
 - **URL**
 
-  `/feedback/:service_id`
+  `/api/v1/feedback/:service_id`
 
 - **Method**
 

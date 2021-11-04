@@ -12,8 +12,10 @@ FROM alpine:3.14 AS runtime
 WORKDIR /app
 
 COPY --from=build /go/bin/backend /usr/bin/
+COPY docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
 
 EXPOSE 8080
 ENV GIN_MODE=release
 
-CMD ["backend"]
+ENTRYPOINT [ "sh", "docker-entrypoint.sh" ] 
