@@ -118,7 +118,7 @@ func CreateFacePaymentAccount(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok": false,
-			"message": err, 
+			"message": err.Error(), 
 		})
 		return
 	}
