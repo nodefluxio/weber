@@ -100,11 +100,16 @@
       align-items: center;
       padding-left: 4rem;
       cursor: pointer;
-
       @include tablet {
         padding: 1.5rem 0;
         &:hover {
           color: unset;
+        }
+      }
+      a {
+        padding: 1rem 0;
+        @include tablet {
+          padding: unset;
         }
       }
     }

@@ -17,7 +17,6 @@ func SetupRouter() *gin.Engine {
 
 	apis := r.Group("/api/v1")
 	{
-
 		services := apis.Group("/services")
 		{
 			services.GET("", controllers.GetServices)
@@ -45,7 +44,6 @@ func SetupRouter() *gin.Engine {
 		{
 			ekyc.POST("", controllers.CreateEKYCRequest)
 		}
-
 	}
 
 	return r
