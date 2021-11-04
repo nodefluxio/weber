@@ -11,16 +11,16 @@ type RegistPayload = {
 
 type Props = {
   onChecking: Function,
-  openModal: Function
+  openModal: Function,
+  onFinished: Function
 }
 
-export const FaceRegistration = ({ onChecking, openModal }: Props) => {
+export const FaceRegistration = ({ onChecking, openModal, onFinished }: Props) => {
 
   const [isFormFilled, setIsFormFilled] = useState(false)
   const [payload, setPayload] = useState<RegistPayload>()
 
   const onFormFilled = (data: any) => {
-    // Handle data from form
     onChecking()
     setPayload({ ...data })
     setIsFormFilled(true)
@@ -35,7 +35,7 @@ export const FaceRegistration = ({ onChecking, openModal }: Props) => {
             <FaceEnrollment
               openModal={openModal}
               payload={payload}
-              nextStep={() => console.log("Final step")}
+              nextStep={onFinished}
               />
           )
           :

@@ -6,6 +6,7 @@ import { Modal } from "../../elements/Modal/Modal"
 import { RequestDemoFormPopup } from "../../modules/RequestDemoFormPopup/RequestDemoFormModal"
 import { SESSION_ID_ERROR } from "../../../constants/message"
 import { Banner } from "../../modules/Banner/Banner"
+import { Stepper } from "../../elements/Stepper/Stepper"
 import { Button } from "../../elements/Button/Button"
 import { Color } from "../../../types/elements"
 import { parseCookies } from "nookies"
@@ -27,7 +28,7 @@ export const FacePaymentPage = ({ id, name, short_description, long_description 
   const nextStep = (step: number) => {
     if (session_id) {
       setCurrentStep(step)
-    } else { // Cookie did not exist... open modal
+    } else { // Cookie did not exist... opening modal
       setOpenModal(true)
     }
   }
@@ -62,12 +63,17 @@ export const FacePaymentPage = ({ id, name, short_description, long_description 
         longDescription={long_description}
       />
 
+      <Stepper
+        steps={["Start", "Registration", "Activate Account", "Face Payment", "Finish"]}
+        activeStep={currentStep}
+      />
+
       <div className={styles.container}>
         {
           currentStep === 1 &&
           <div className={styles.welcome}>
             <h2>Welcome to {name} Demo</h2>
-            <p>
+            <p style={{ width: "65%", margin: "2rem auto" }}>
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
@@ -80,9 +86,13 @@ export const FacePaymentPage = ({ id, name, short_description, long_description 
         {
           currentStep === 2 &&
           <FaceRegistration
-            onChecking={() => console.log("act")}
+            onChecking={() => createVisitorActivities(id, session_id, 1)}
+            onFinished={() => { 
+              createVisitorActivities(id, session_id, 2)
+              nextStep(3)
+            }}
             openModal={() => setOpenModal(true)}
-            />
+          />
         }
       </div>
     </>

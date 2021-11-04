@@ -5,7 +5,6 @@ import { TextField } from "../../elements/TextField/TextField"
 import { Label } from "../../elements/Label/Label"
 import styles from "./PaymentForm.module.scss"
 import { parseCookies } from "nookies"
-import { postActivities } from "../../../api/activitiesAPI"
 import { registerAccount } from "../../../api/paymentAPI"
 import { SESSION_ID_ERROR } from "../../../constants/message"
 
