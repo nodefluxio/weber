@@ -115,9 +115,8 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"ok":           false,
-			"message":      err.Error(),
-			"service_data": &serviceData,
+			"ok":      false,
+			"message": err.Error(),
 		})
 		return
 	}
