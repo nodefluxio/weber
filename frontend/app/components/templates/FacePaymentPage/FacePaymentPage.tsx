@@ -6,18 +6,20 @@ import { Modal } from "../../elements/Modal/Modal"
 import { RequestDemoFormPopup } from "../../modules/RequestDemoFormPopup/RequestDemoFormModal"
 import { SESSION_ID_ERROR } from "../../../constants/message"
 import { Banner } from "../../modules/Banner/Banner"
+import { Button } from "../../elements/Button/Button"
+import { Color } from "../../../types/elements"
 import { parseCookies } from "nookies"
 
-type Props ={
-  serviceId: number,
+type Props = {
+  id: number,
   name: string,
-  shortDesc: string,
-  longDesc: string
+  short_description: string,
+  long_description: string
 }
 
-export const FacePaymentPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
+export const FacePaymentPage = ({ id, name, short_description, long_description }: Props) => {
 
-  const [currentStep, setCurrentStep] = useState(2)
+  const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
 
   const { session_id } = parseCookies()
@@ -25,8 +27,7 @@ export const FacePaymentPage = ({ serviceId, name, shortDesc, longDesc }: Props)
   const nextStep = (step: number) => {
     if (session_id) {
       setCurrentStep(step)
-    } else {
-      // Cookie did not exist
+    } else { // Cookie did not exist... open modal
       setOpenModal(true)
     }
   }
@@ -57,16 +58,30 @@ export const FacePaymentPage = ({ serviceId, name, shortDesc, longDesc }: Props)
 
       <Banner
         analyticsName={name}
-        shortDescription={shortDesc}
-        longDescription={longDesc}
+        shortDescription={short_description}
+        longDescription={long_description}
       />
 
       <div className={styles.container}>
         {
+          currentStep === 1 &&
+          <div>
+            <h3 className={styles.title}>Welcome to {name} Demo</h3>
+            <p className={styles.desc}>
+              Please access this demo via smartphone or any device with at least
+              HD camera resolution for better performance and experience
+            </p>
+            <Button color={Color.Primary} onClick={() => nextStep(2)}>
+              Start
+            </Button>
+          </div>
+        }
+
+        {
           currentStep === 2 &&
           <FaceRegistration
-            onArrival={() => createVisitorActivities(serviceId, session_id, 1)}
-            onChecking={() => createVisitorActivities(serviceId, session_id, 2)}/>
+            onArrival={() => createVisitorActivities(id, session_id, 1)}
+            onChecking={() => createVisitorActivities(id, session_id, 2)} />
         }
       </div>
     </>
