@@ -276,15 +276,12 @@ Create a service request for E-KYC solution.
   "session_id": string,
   "data": object {
     "face_liveness": object {
-      "additional_params": object,
       "images": string array
     },
     "ocr_ktp": object {
-      "additional_params": object,
       "images": string array
     },
     "face_match": object {
-      "additional_params": object,
       "images": string array
     }
   }
