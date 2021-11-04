@@ -6,8 +6,8 @@ import styles from './OrderSummary.module.scss'
 
 type Props = {
   cart: ShoppingItem
-  onNext: (total: number) => {}
-  onBack?: () => {}
+  onNext: (total: number) => void
+  onBack?: () => void
 }
 const SHIPPING_FEE = 15000
 
