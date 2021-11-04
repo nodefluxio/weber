@@ -1,3 +1,5 @@
+import { OCRResultResponse } from "./responses"
+
 export enum Color {
   Primary = 'primary',
   Secondary = 'secondary',
@@ -30,4 +32,16 @@ export type RequestDemoFormData = {
 export type FeedbackData = {
   rating: number,
   comment: string
+}
+
+export type EKYC = {
+  face_liveness: {
+    live: Boolean
+    liveness: number
+  }
+  face_match: {
+    match: Boolean
+    similarity: number
+  }
+  ocr_ktp: OCRResultResponse
 }

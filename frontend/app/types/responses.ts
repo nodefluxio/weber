@@ -59,6 +59,16 @@ export type ServiceByIdErrorResponse = {
   ok: boolean
 }
 
+export type NodefluxCloudResponse<AnalyticsResultResponse> = {
+  job: {
+    result: {
+      analytic_type: string
+      result: [AnalyticsResultResponse]
+      status: string
+    }
+  }
+}
+
 export type AnalyticsResponse<AnalyticsResultResponse> = {
   message: string
   ok: boolean
@@ -130,6 +140,16 @@ export type FMEResultResponse = {
   face_match: {
     match: boolean
     similarity: number
+  }
+}
+
+export type EKYCResultResponse = {
+  message: string
+  ok: boolean
+  service_data: {
+    face_liveness: NodefluxCloudResponse<FaceLiveness>
+    ocr_ktp: NodefluxCloudResponse<OCRResultResponse>
+    face_match: NodefluxCloudResponse<FMEResultResponse>
   }
 }
 

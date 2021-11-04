@@ -2,7 +2,7 @@ import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
 import { SESSION_ID_ERROR } from '../../../constants/message'
-import { Color } from '../../../types/elements'
+import { Color, EKYC } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
 import { Modal } from '../../elements/Modal/Modal'
 import { Stepper } from '../../elements/Stepper/Stepper'
@@ -10,8 +10,10 @@ import { Banner } from '../../modules/Banner/Banner'
 import { Cam } from '../../modules/Cam/Cam'
 import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
-import styles from './EkycPage.module.scss'
 import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
+import { postEKYC } from '../../../api/solutionsAPI'
+import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
+import styles from './EkycPage.module.scss'
 
 type Props = {
   serviceId: number
@@ -21,30 +23,12 @@ type Props = {
 }
 
 export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
-  const dummyOCRResult = {
-    agama: 'islam',
-    alamat: 'bojong',
-    berlaku_hingga: 'senin',
-    golongan_darah: 'O',
-    jenis_kelamin: 'laki',
-    kabupaten_kota: 'bekasi',
-    kecamatan: 'rawa',
-    kelurahan_desa: 'rawa bebek',
-    kewarganegaraan: 'indonesia',
-    nama: 'ferdi',
-    nik: '2240',
-    pekerjaan: 'petani',
-    provinsi: 'jawa barat',
-    rt_rw: '07/14',
-    status_perkawinan: 'cerai',
-    tanggal_lahir: '6 okt 2002',
-    tempat_lahir: 'bekasi'
-  }
-
   const { session_id } = parseCookies()
 
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
+  const [result, setResult] = useState<EKYC>()
+  const [loading, setLoading] = useState(true)
 
   const createVisitorActivities = async (
     serviceId: number,
@@ -62,10 +46,43 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     }
   }
 
+  const handleEKYC = async (sessionId: string) => {
+    if (sessionId) {
+      await resolveEKYC(sessionId)
+      setLoading(false)
+    } else {
+      setOpenModal(true)
+    }
+  }
+
+  const resolveEKYC = async (session_id: string) => {
+    try {
+      const res = await postEKYC(
+        session_id,
+        getImageFromLocalStorage('liveness_snapshot', () => setCurrentStep(2)),
+        getImageFromLocalStorage('ktp_snapshot', () => setCurrentStep(3))
+      )
+
+      if (res) {
+        setResult(res)
+      }
+    } catch (err) {
+      if ((err as Error).message === SESSION_ID_ERROR) {
+        setOpenModal(true)
+      } else {
+        console.log(err)
+      }
+    }
+  }
+
   const nextStep = async (page: number) => {
     if (session_id) {
-      createVisitorActivities(5, session_id, page - 1)
+      if (page === 4) {
+        handleEKYC(session_id)
+      }
+
       setCurrentStep(page)
+      createVisitorActivities(5, session_id, page - 1)
     } else {
       setOpenModal(true)
     }
@@ -124,19 +141,41 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
           <div className={styles.result}>
             <div className={styles.percentage}>
               <h3 className={styles.title}>Liveness result</h3>
-              <span>93%</span>
-              <p>Verified</p>
+              {!loading && result ? (
+                <>
+                  <span>{`${Math.trunc(
+                    result.face_liveness.liveness * 100
+                  )}%`}</span>
+                  <p>
+                    {result.face_liveness.live ? 'Verified' : 'Not Verified'}
+                  </p>
+                </>
+              ) : (
+                <span>Loading...</span>
+              )}
             </div>
 
             <div className={styles.percentage}>
               <h3 className={styles.title}>Face Match Result</h3>
-              <span>93%</span>
-              <p>Verified</p>
+              {!loading && result ? (
+                <>
+                  <span>{`${Math.trunc(
+                    result.face_match.similarity * 100
+                  )}%`}</span>
+                  <p>{result.face_match.match ? 'Verified' : 'Not Verified'}</p>
+                </>
+              ) : (
+                <span>Loading...</span>
+              )}
             </div>
 
             <div className={styles.ocrKtp}>
               <h3 className={styles.title}>OCR KTP Result</h3>
-              <AnalyticsResult result={dummyOCRResult} slug={'ocr-ktp'} />
+              {!loading && result ? (
+                <AnalyticsResult result={result.ocr_ktp} slug={'ocr-ktp'} />
+              ) : (
+                <span>Loading...</span>
+              )}
             </div>
 
             <Button color={Color.Primary} onClick={() => nextStep(5)}>
