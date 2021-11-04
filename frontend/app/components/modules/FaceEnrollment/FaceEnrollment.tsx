@@ -53,14 +53,14 @@ export const FaceEnrollment = () => {
       {
         isPhotoTaken ?
           <div className={styles.subtitle}>
-            <h2>{messages[+isSuccess].title}</h2>
-            <Image src={messages[+isSuccess].imgPath} width={80} height={80} />
-            <p>{messages[+isSuccess].description}</p>
+            <h2>{ messages[+isSuccess].title }</h2>
+            <Image src={ messages[+isSuccess].imgPath } width={80} height={80} />
+            <p>{ messages[+isSuccess].description }</p>
             <Button
               type="button"
               color={Color.Primary}
               onClick={handleClick}
-            >{messages[+isSuccess].button}</Button>
+            >{ messages[+isSuccess].button }</Button>
           </div>
           :
           <>

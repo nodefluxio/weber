@@ -7,6 +7,14 @@
     border-radius: 9px;
     padding: 2rem 2rem;
     margin-bottom: 1.5rem;
+    
+    .radios {
+      display: flex;
+      flex-direction: row;
+      column-gap: 1rem;
+      justify-content: center;
+      margin: 8px 0;
+    }
   }
 
   .buttonWrapper {

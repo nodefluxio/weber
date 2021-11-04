@@ -4,11 +4,12 @@ import { Banner } from "../../app/components/modules/Banner/Banner";
 const FacePayment = () => {
   return (
     <>
-      <Banner
-        analyticsName="Face Payment"
-        shortDescription="Short desc."
-        longDescription="Long desc."/>
-      <FacePaymentPage />
+      <FacePaymentPage
+        serviceId={6}
+        name="Face Payment"
+        shortDesc="Face Payment Short Description"
+        longDesc="Face Payment Long Description"
+        />
     </>
   )
 }

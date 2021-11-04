@@ -103,7 +103,6 @@ const Feedback: React.FC<ReviewProp> = ({ id, onClick }) => {
           placeholder="Tell us your experience"
           {...register("comment")} />
         <div className={styles.buttonWrapper}>
-          {/* TODO: kemungkinan abis submit baru muncul tombol "Try Again Analytics" */}
           <Button
             type="submit"
             color={Color.Secondary}
