@@ -65,9 +65,9 @@ export const FacePaymentPage = ({ id, name, short_description, long_description 
       <div className={styles.container}>
         {
           currentStep === 1 &&
-          <div>
-            <h3 className={styles.title}>Welcome to {name} Demo</h3>
-            <p className={styles.desc}>
+          <div className={styles.welcome}>
+            <h2>Welcome to {name} Demo</h2>
+            <p>
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
@@ -80,8 +80,9 @@ export const FacePaymentPage = ({ id, name, short_description, long_description 
         {
           currentStep === 2 &&
           <FaceRegistration
-            onArrival={() => createVisitorActivities(id, session_id, 1)}
-            onChecking={() => createVisitorActivities(id, session_id, 2)} />
+            onChecking={() => console.log("act")}
+            openModal={() => setOpenModal(true)}
+            />
         }
       </div>
     </>

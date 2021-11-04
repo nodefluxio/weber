@@ -5,10 +5,23 @@ import { Cam } from "../Cam/Cam"
 import { Button } from "../../elements/Button/Button"
 import styles from "./FaceEnrollment.module.scss"
 import { parseCookies } from "nookies"
+import { registerAccount } from "../../../api/paymentAPI"
+import { SESSION_ID_ERROR } from "../../../constants/message"
 
 const ENROLL_SNAPSHOT = "enroll_snapshot"
 
-export const FaceEnrollment = () => {
+type Props = {
+  openModal: Function,
+  nextStep: Function,
+  payload: {
+    session_id: string,
+    name: string,
+    phone_num: string,
+    have_twin: boolean
+  }
+}
+
+export const FaceEnrollment = ({ openModal, payload,nextStep }: Props) => {
 
   const [isPhotoTaken, setIsPhotoTaken] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -28,21 +41,39 @@ export const FaceEnrollment = () => {
     }
   ]
 
-  const enrollPhoto = () => {
+  const getPhoto = () => {
     if (session_id) {
-      // TODO : Handle API call
       const photo = localStorage.getItem(ENROLL_SNAPSHOT)
-      console.log(photo)
       setIsPhotoTaken(true)
+      enroll()
     } else {
-      // TODO : if enrollment failed
       localStorage.removeItem(ENROLL_SNAPSHOT)
+      openModal() 
+    }
+  }
+
+  const enroll = async() => {
+    if (payload) {
+      const { session_id } = parseCookies()
+      try {
+        const res = await registerAccount(session_id, payload.phone_num, payload.name, payload.have_twin, payload.images)
+        if (res.ok) {
+          setIsSuccess(true)
+        } else {
+          if (res.message === SESSION_ID_ERROR) {
+            openModal()
+          }
+        }
+      } catch (e) {
+        console.log((e as Error).message)
+        setIsSuccess(false)
+      }
     }
   }
 
   const handleClick = () => {
     if (isSuccess) {
-      console.log("Success")
+      nextStep()
     } else {
       setIsPhotoTaken(false)
     }
@@ -68,7 +99,7 @@ export const FaceEnrollment = () => {
               <h2>Say Cheese!</h2>
               <p>Take a selfie to register your payment account</p>
             </div>
-            <Cam localkey={ENROLL_SNAPSHOT} nextStep={() => enrollPhoto()} />
+            <Cam localkey={ENROLL_SNAPSHOT} nextStep={() => getPhoto()} />
           </>
       }
     </div>

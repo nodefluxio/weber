@@ -1,28 +1,28 @@
 import { PaymentForm } from "../PaymentForm/PaymentForm"
 import { FaceEnrollment } from "../FaceEnrollment/FaceEnrollment"
 import { useState } from "react"
-import { postActivities } from "../../../api/activitiesAPI"
 
 type RegistPayload = {
   session_id: string,
   name: string,
   phone_num: string,
-  have_twin: boolean,
-  images: string[]
+  have_twin: boolean
 }
 
 type Props = {
-  onArrival: Function
-  onChecking: Function
+  onChecking: Function,
+  openModal: Function
 }
 
-export const FaceRegistration = ({ onArrival, onChecking }: Props) => {
+export const FaceRegistration = ({ onChecking, openModal }: Props) => {
 
   const [isFormFilled, setIsFormFilled] = useState(false)
   const [payload, setPayload] = useState<RegistPayload>()
 
   const onFormFilled = (data: any) => {
-    setPayload({...data})
+    // Handle data from form
+    onChecking()
+    setPayload({ ...data })
     setIsFormFilled(true)
   }
 
@@ -30,9 +30,21 @@ export const FaceRegistration = ({ onArrival, onChecking }: Props) => {
     <>
       {
         isFormFilled ?
-          <FaceEnrollment />
+          (
+            payload &&
+            <FaceEnrollment
+              openModal={openModal}
+              payload={payload}
+              nextStep={() => console.log("Final step")}
+              />
+          )
           :
-          <PaymentForm onNextStep={onFormFilled} />
+          (
+          <PaymentForm
+            onNextStep={onFormFilled}
+            onInvalidSession={openModal}
+          />
+          )
       }
     </>
   )

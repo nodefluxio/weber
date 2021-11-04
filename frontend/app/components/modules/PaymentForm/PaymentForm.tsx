@@ -6,16 +6,18 @@ import { Label } from "../../elements/Label/Label"
 import styles from "./PaymentForm.module.scss"
 import { parseCookies } from "nookies"
 import { postActivities } from "../../../api/activitiesAPI"
+import { registerAccount } from "../../../api/paymentAPI"
+import { SESSION_ID_ERROR } from "../../../constants/message"
 
 type PaymentFormData = {
   name: string,
-  phone_num: string,
+  phone: string,
   have_twin: string
 }
 
 type Props = {
   onNextStep: Function,
-  onInvalidSession?: Function
+  onInvalidSession: Function
 }
 
 export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
@@ -23,17 +25,36 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors }
   } = useForm<PaymentFormData>()
 
-  const onSubmit: SubmitHandler<PaymentFormData> = (data) => {
+  const onSubmit: SubmitHandler<PaymentFormData> = async (data) => {
     const { session_id } = parseCookies()
     if (session_id) {
-      // postActivities()
-      onNextStep({
-        ...data,
-        have_twin: data.have_twin === 'true'
-      })
+      try {
+        const res = await registerAccount(session_id, data.phone)
+        if (res.ok) {
+          onNextStep({
+            ...data,
+            have_twin: data.have_twin === 'true'
+          })
+        } else {
+          if (res.message === SESSION_ID_ERROR) {
+            onInvalidSession()
+          } else {
+            setError("phone",
+              {
+                type: "server",
+                message: "please choose another number"
+              })
+          }
+        }
+      } catch (e) {
+        console.log((e as Error).message)
+      }
+    } else {
+      onInvalidSession()
     }
   }
 
@@ -55,14 +76,14 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
             registerOptions={{ required: "required" }}
             errors={errors} />
           <TextField
-            id="phone_num"
+            id="phone"
             label="Phone Number"
             placeholder="Your phone number"
             type="text"
             register={register}
             registerOptions={{
               required: "required",
-              pattern: { value: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/, message: "wrong format" }
+              pattern: { value: /^[0-9]*$/, message: "wrong format" }
             }}
             errors={errors} />
           <div style={{ textAlign: "center" }}>
