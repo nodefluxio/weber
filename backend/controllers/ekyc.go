@@ -9,10 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type ekycAnalyticBody struct {
+	Images []string `json:"images"`
+}
+
 type ekycRequestData struct {
-	FaceLiveness models.RequestData `json:"face_liveness"`
-	OCRKTP       models.RequestData `json:"ocr_ktp"`
-	FaceMatch    models.RequestData `json:"face_match"`
+	FaceLiveness ekycAnalyticBody `json:"face_liveness"`
+	OCRKTP       ekycAnalyticBody `json:"ocr_ktp"`
+	FaceMatch    ekycAnalyticBody `json:"face_match"`
 }
 
 type ekycRequestInput struct {
@@ -67,17 +71,23 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 
 	// Create and execute goroutines
 	go func() {
-		resultFaceLiveness, err := GetResultFaceLiveness(service, inputData.Data.FaceLiveness)
+		var inputDataToAnalytic models.RequestData
+		inputDataToAnalytic.Images = inputData.Data.FaceLiveness.Images
+		resultFaceLiveness, err := GetResultFaceLiveness(service, inputDataToAnalytic)
 		errorFaceLivenessChannel <- err
 		resultFaceLivenessChannel <- resultFaceLiveness
 	}()
 	go func() {
-		resultOCRKTP, err := GetResultOCRKTP(service, inputData.Data.OCRKTP)
+		var inputDataToAnalytic models.RequestData
+		inputDataToAnalytic.Images = inputData.Data.OCRKTP.Images
+		resultOCRKTP, err := GetResultOCRKTP(service, inputDataToAnalytic)
 		errorOCRKTPChannel <- err
 		resultOCRKTPChannel <- resultOCRKTP
 	}()
 	go func() {
-		resultFaceMatch, err := GetResultFaceMatch(service, inputData.Data.FaceMatch)
+		var inputDataToAnalytic models.RequestData
+		inputDataToAnalytic.Images = inputData.Data.FaceMatch.Images
+		resultFaceMatch, err := GetResultFaceMatch(service, inputDataToAnalytic)
 		errorFaceMatchChannel <- err
 		resultFaceMatchChannel <- resultFaceMatch
 	}()
@@ -86,7 +96,7 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 	var err error = nil
 
 	// Share the results with channel - select
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 6; i++ {
 		select {
 		case resultFaceLiveness := <-resultFaceLivenessChannel:
 			serviceData.FaceLiveness = resultFaceLiveness
