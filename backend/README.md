@@ -254,15 +254,12 @@ Create a service request for E-KYC solution.
   "session_id": "146fdca6-5103-426b-a341-e6fa43db9cd1",
   "data": {
     "face_liveness": {
-      "additional_params": {},
       "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
     },
     "ocr_ktp": {
-      "additional_params": {},
       "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
     },
     "face_match": {
-      "additional_params": {},
       "images": [
         "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/",
         "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"
