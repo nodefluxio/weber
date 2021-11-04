@@ -14,6 +14,7 @@ import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
 import { postEKYC } from '../../../api/solutionsAPI'
 import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
 import styles from './EkycPage.module.scss'
+import { Spinner } from '../../elements/Spinner/Spinner'
 
 type Props = {
   serviceId: number
@@ -151,7 +152,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                   </p>
                 </>
               ) : (
-                <span>Loading...</span>
+                <Spinner />
               )}
             </div>
 
@@ -165,7 +166,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                   <p>{result.face_match.match ? 'Verified' : 'Not Verified'}</p>
                 </>
               ) : (
-                <span>Loading...</span>
+                <Spinner />
               )}
             </div>
 
@@ -174,11 +175,14 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               {!loading && result ? (
                 <AnalyticsResult result={result.ocr_ktp} slug={'ocr-ktp'} />
               ) : (
-                <span>Loading...</span>
+                <Spinner />
               )}
             </div>
 
-            <Button color={Color.Primary} onClick={() => nextStep(5)}>
+            <Button
+              color={Color.Primary}
+              onClick={() => nextStep(5)}
+              disabled={loading}>
               Next
             </Button>
           </div>
