@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- [FRONTEND] Face Payment Registration Form
+- [FRONTEND] Face Payment Webcam Photo Uploader
+- [FRONTEND] Face Payment Store Catalog
 
 ### Changed
 
