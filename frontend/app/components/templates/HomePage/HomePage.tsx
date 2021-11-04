@@ -39,8 +39,8 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
             <CardImage
               className={styles.cardImage}
               img={`/assets/images/visionaire-logo.png`}
-              imgWidth={341}
-              imgHeight={110}
+              width={341}
+              height={110}
             />
             <CardContent className={styles.cardContent} color={Color.Secondary}>
               VisionAIre represents years of experience in AI. It is positioned
@@ -56,8 +56,8 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
             <CardImage
               className={styles.cardImage}
               img={`/assets/images/identifai-logo.png`}
-              imgWidth={246}
-              imgHeight={110}
+              width={246}
+              height={110}
             />
             <CardContent className={styles.cardContent} color={Color.Tertiary}>
               IdentifAI provide e-KYC for business solutions to identify,
@@ -192,8 +192,8 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
             <Card key={analytic.id} color={Color.Primary}>
               <CardImage
                 img={`/assets/images/analytics/${analytic.thumbnail}`}
-                imgWidth={171}
-                imgHeight={171}
+                width={171}
+                height={171}
               />
               <CardContent
                 color={Color.Primary}

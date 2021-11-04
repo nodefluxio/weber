@@ -3,15 +3,30 @@ import styles from './CardImage.module.scss'
 
 type Props = {
   img: string
-  imgWidth: number
-  imgHeight: number
+  width?: number
+  height?: number
+  layout?: 'fixed' | 'fill' | 'intrinsic' | 'responsive' | undefined
+  objectFit?: 'cover' | undefined
   className?: string
 }
 
-export const CardImage = ({ img, imgWidth, imgHeight, className }: Props) => {
+export const CardImage = ({
+  img,
+  width,
+  height,
+  layout,
+  objectFit,
+  className
+}: Props) => {
   return (
     <div className={`${styles.container} ${className}`}>
-      <Image src={img} width={imgWidth} height={imgHeight} />
+      <Image
+        src={img}
+        width={width}
+        height={height}
+        layout={layout}
+        objectFit={objectFit}
+      />
     </div>
   )
 }
