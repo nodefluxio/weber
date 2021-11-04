@@ -28,6 +28,14 @@ export type RequestDemoFormData = {
 }
 
 export type FeedbackData = {
-  rating: number,
+  rating: number
   comment: string
+}
+
+export type ShoppingItem = {
+  id: string
+  quantity: number
+  name: string
+  image: string
+  price: number
 }
