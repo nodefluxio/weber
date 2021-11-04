@@ -3,6 +3,8 @@ import { useState } from "react"
 import { Banner } from "../../modules/Banner/Banner"
 import { RequestDemoFormPopup } from "../../modules/RequestDemoFormPopup/RequestDemoFormModal"
 import { Modal } from "../../elements/Modal/Modal"
+import { Button } from "../../elements/Button/Button"
+import { Color } from "../../../types/elements"
 import styles from "./FacePaymentPage.module.scss"
 
 type Props = {
@@ -42,9 +44,21 @@ export const FacePaymentPage = ({ id, name, short_description, long_description 
       />
 
       <div className={styles.container}>
-        <h2>Replace Me</h2>
-        <p>Delete this div</p>
+        {
+          currentStep === 1 &&
+          <div>
+            <h3>Welcome to {name} Demo</h3>
+            <p>
+              Please access this demo via smartphone or any device with at least
+              HD camera resolution for better performance and experience
+            </p>
+            <Button color={Color.Primary} onClick={() => nextStep(2)}>
+              Start
+            </Button>
+          </div>
+        }
       </div>
+      {/* Add your components... */}
 
     </>
   )
