@@ -26,7 +26,7 @@ const Ekyc: React.FC<Props> = ({
   )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   try {
     const res = await getServiceBySlug('ekyc')
     return {
