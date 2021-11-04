@@ -61,7 +61,7 @@ go run .
 ---
 
 ## API Endpoint Documentation
-
+### Visitors & Feedback
 <details>
 <summary><b>Create Visitor</b></summary>
 Create a visitor and generate the session id.
@@ -226,6 +226,126 @@ OR
 
 </details>
 
+<details>
+<summary><b>Create Visitor Feedback by Service ID</b></summary>
+
+- **URL**
+
+  `/api/v1/feedback/:service_id`
+
+- **Method**
+
+  `POST`
+
+- **URL Param**
+
+  **Required**
+
+  `service_id` type `integer`
+
+- **Request Payload**
+
+Note: attribute `comment` is required when rating less than equal 3, when rating is 4 or 5 the `comment` become optional.
+
+```json
+{
+  "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+  "rating": 3,
+  "comment": "This feauture need some improvement"
+}
+```
+
+```json
+{
+  "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
+  "rating": 5,
+  "comment": ""
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+   "session_id": string,
+   "rating": integer,
+   "comment": string
+}
+
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+  "message": "Feedback submited!",
+  "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "message": string,
+    "ok": boolean,
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
+  "ok": false
+}
+```
+
+**Code**: 400 Bad Request
+
+```json
+{
+  "message": "Your comment for this feedback is required",
+  "ok": false
+}
+```
+
+This error will appear if visitor give rating below 4.
+
+```json
+{
+  "message": "rating is a required field",
+  "ok": false
+}
+```
+
+This error will appear if visitor do not give feedback rating.
+
+```json
+{
+  "message": "rating must be 5 or less",
+  "ok": false
+}
+```
+
+This error will appear if visitor give feedback rating more than 5.
+
+</details>
+
+### Services
 <details>
 <summary><b>Create A Service Request By ID</b></summary>
 Create a service request by id and create a new visitor_activites record.
@@ -596,40 +716,38 @@ Return json data about a Service by slug.
 
 </details>
 
+### Solution Services (In Particular)
 <details>
-<summary><b>Create Visitor Feedback by Service ID</b></summary>
+<summary><b>Create A Service Request for E-KYC</b></summary>
+Create a service request for E-KYC solution.
 
 - **URL**
 
-  `/api/v1/feedback/:service_id`
+  `/api/v1//ekyc`
 
 - **Method**
 
   `POST`
 
-- **URL Param**
-
-  **Required**
-
-  `service_id` type `integer`
-
 - **Request Payload**
 
-Note: attribute `comment` is required when rating less than equal 3, when rating is 4 or 5 the `comment` become optional.
-
 ```json
 {
-  "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
-  "rating": 3,
-  "comment": "This feauture need some improvement"
-}
-```
-
-```json
-{
-  "session_id": "12827c26-2052-4b6b-aa9a-e85a0eca6a34",
-  "rating": 5,
-  "comment": ""
+  "session_id": "146fdca6-5103-426b-a341-e6fa43db9cd1",
+  "data": {
+    "face_liveness": {
+      "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+    },
+    "ocr_ktp": {
+      "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+    },
+    "face_match": {
+      "images": [
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/",
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"
+      ]
+    }
+  }
 }
 ```
 
@@ -637,11 +755,19 @@ Note: attribute `comment` is required when rating less than equal 3, when rating
 
 ```json
 {
-   "session_id": string,
-   "rating": integer,
-   "comment": string
+  "session_id": string,
+  "data": object {
+    "face_liveness": object {
+      "images": string array
+    },
+    "ocr_ktp": object {
+      "images": string array
+    },
+    "face_match": object {
+      "images": string array
+    }
+  }
 }
-
 ```
 
 - **Sample Success Response**
@@ -650,8 +776,77 @@ Note: attribute `comment` is required when rating less than equal 3, when rating
 
 ```json
 {
-  "message": "Feedback submited!",
-  "ok": true
+  "message": "Service demo request success",
+  "ok": true,
+  "service_data": {
+    "face_liveness": {
+      "job": {
+        "result": {
+          "analytic_type": "FACE_LIVENESS",
+          "result": [
+            {
+              "face_liveness": {
+                "live": true,
+                "liveness": 0.9963422417640686
+              }
+            }
+          ],
+          "status": "success"
+        }
+      },
+      "message": "Face Liveness Success",
+      "ok": true
+    },
+    "ocr_ktp": {
+      "job": {
+        "result": {
+          "analytic_type": "OCR_KTP",
+          "result": [
+            {
+              "agama": "ISLAM",
+              "alamat": "GEREM DUSUN KALIMATI",
+              "berlaku_hingga": "03-10-2018",
+              "golongan_darah": "-",
+              "jenis_kelamin": "LAKI-LAKI",
+              "kabupaten_kota": "KABUPATEN LAMPUNG SELATAN",
+              "kecamatan": "SIDOMULYO",
+              "kelurahan_desa": "BANDAR DALAM",
+              "kewarganegaraan": "WNI",
+              "nama": "SATRIA BAJA HITAM",
+              "nik": "1801070310930005",
+              "pekerjaan": "BELUM/TIDAK BEKERJA",
+              "provinsi": "LAMPUNG",
+              "rt_rw": "003/005",
+              "status_perkawinan": "BELUM KAWIN",
+              "tanggal_lahir": "03-10-1993",
+              "tempat_lahir": ""
+            }
+          ],
+          "status": "success"
+        }
+      },
+      "message": "OCR_KTP Service Success",
+      "ok": true
+    },
+    "face_match": {
+      "job": {
+        "result": {
+          "analytic_type": "FACE_MATCH",
+          "result": [
+            {
+              "face_match": {
+                "match": false,
+                "similarity": 0.45065901198775055
+              }
+            }
+          ],
+          "status": "success"
+        }
+      },
+      "message": "The Face Pair Not Match",
+      "ok": true
+    }
+  }
 }
 ```
 
@@ -661,6 +856,11 @@ Note: attribute `comment` is required when rating less than equal 3, when rating
 {
     "message": string,
     "ok": boolean,
+    "service_data": object {
+      "face_liveness": object, // response is directly from cloud
+      "ocr_ktp": object, // response is directly from cloud
+      "face_match": object // response is directly from cloud
+    }
 }
 ```
 
@@ -684,33 +884,73 @@ OR
 }
 ```
 
-**Code**: 400 Bad Request
-
-```json
-{
-  "message": "Your comment for this feedback is required",
-  "ok": false
-}
-```
-
-This error will appear if visitor give rating below 4.
-
-```json
-{
-  "message": "rating is a required field",
-  "ok": false
-}
-```
-
-This error will appear if visitor do not give feedback rating.
-
-```json
-{
-  "message": "rating must be 5 or less",
-  "ok": false
-}
-```
-
-This error will appear if visitor give feedback rating more than 5.
-
 </details>
+
+<details>
+<summary><b>Create New Face Payment Account</b></summary>
+Create a new account for Face Payment solution demonstration.
+
+- **URL**
+
+  `/api/v1/face-payment/account`
+
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+```json
+{
+   "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+   "full_name": "Bruce Wayne",
+   "phone": "1337",
+   "have_twin": true,
+   "data": {
+       "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+   }
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+   "session_id": string,
+   "full_name": string,
+   "phone": string,
+   "have_twin": boolean,
+   "data": object {
+       "images": string array
+   }
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+   "message": "Face payment account registration has been successful",
+   "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+   "message": string,
+   "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 400 Bad Request
+```json
+{
+  "message": "Liveness result for the inputted image is false",
+  "ok": false
+}
+```
