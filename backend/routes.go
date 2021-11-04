@@ -15,32 +15,37 @@ func SetupRouter() *gin.Engine {
 		ctx.JSON(http.StatusOK, "pong")
 	})
 
-	services := r.Group("/services")
+	apis := r.Group("/api/v1")
 	{
-		services.GET("", controllers.GetServices)
-		services.GET("/:slug", controllers.GetServiceBySlug)
 
-		services.POST("/:id", controllers.CreateServiceRequest)
-	}
+		services := apis.Group("/services")
+		{
+			services.GET("", controllers.GetServices)
+			services.GET("/:slug", controllers.GetServiceBySlug)
 
-	visitors := r.Group("/visitors")
-	{
-		visitors.POST("", controllers.CreateVisitor)
-	}
+			services.POST("/:id", controllers.CreateServiceRequest)
+		}
 
-	activities := r.Group("/activities")
-	{
-		activities.POST("", controllers.CreateActivity)
-	}
+		visitors := apis.Group("/visitors")
+		{
+			visitors.POST("", controllers.CreateVisitor)
+		}
 
-	feedbacks := r.Group("/feedback")
-	{
-		feedbacks.POST("/:service_id", controllers.CreateFeedback)
-	}
+		activities := apis.Group("/activities")
+		{
+			activities.POST("", controllers.CreateActivity)
+		}
 
-	ekyc := r.Group("/ekyc")
-	{
-		ekyc.POST("", controllers.GetEKYCResult)
+		feedbacks := apis.Group("/feedback")
+		{
+			feedbacks.POST("/:service_id", controllers.CreateFeedback)
+		}
+
+		ekyc := apis.Group("/ekyc")
+		{
+			ekyc.POST("", controllers.CreateEKYCRequest)
+		}
+
 	}
 
 	return r
