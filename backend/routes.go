@@ -39,6 +39,11 @@ func SetupRouter() *gin.Engine {
 		{
 			feedbacks.POST("/:service_id", controllers.CreateFeedback)
 		}
+
+		facePayments := apis.Group("/face-payment")
+		{
+			facePayments.POST("/account", controllers.CreateFacePaymentAccount)
+		}
 	}
 
 	return r
