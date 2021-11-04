@@ -1,24 +1,29 @@
-# Weber
+# Weber 
 
-*what is this things?*
+In physics, [Weber (Wb)](https://en.wikipedia.org/wiki/Weber_(unit)) is the SI derived unit of magnetic flux. This project is initiated philosophically like a magnetic surface for [nodeflux.io](https://nodeflux.io) to engage potential users or partners interactively by experiencing nodeflux's analytics and solution through web browser. Currently, Weber provides demonstrations and trials for some nodeflux analytics, solutions, and new innovations. 
 
 ## Getting started
 
 ### Prerequisites
 
-*This is an example of how to list things you need to use the software and how to install them.*
+- Docker
+- Docker-Compose
 
-### How to run
+### Setting up Env.
 
-*Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.*
+```bash
+$ cp .env.example .env
+```
 
-#### Backend
+Copy and edit .env file to set the required access key for nodeflux's analytics API and overwrite preset settings
 
-*Write steps to run backend*
+### Running the App
 
-#### Frontend
+```bash
+$ docker-compose --env-file .env up
+```
 
-*Write steps to run frontend*
+Suply argument `--build` to `docker-compose` command to rebuild the images. After running the containers using docker-compose, by default nginx will forward port `80` on the container to port `8000` on the host machine [Click-Me](http://localhost:8000/) to avoid requesting permission when running the app.
 
 ## Contributing
 

@@ -27,12 +27,6 @@ more details about dependencies see [go.mod &rarr;](https://github.com/nodefluxi
 - Copy or rename file `.env.example` to `.env`.
 - Edit the `.env` to your desire database credentials.
 
-### Running with Docker
-
-```sh
-docker-compose up -d --build
-```
-
 ### Running without Docker
 Before running the backend service, you can run some additional commands below to handle migrations and seeds:
 
