@@ -111,3 +111,36 @@ func getJobStatus(dataAnalytic dataAnalytic, jobId string) (models.ServiceReques
 
 	return data, err
 }
+
+func GetResultFaceLiveness(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness")
+	if err != nil {
+		fmt.Println("Error during fetching API face liveness: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
+func GetResultOCRKTP(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "ocr-ktp")
+	if err != nil {
+		fmt.Println("Error during fetching API ocr ktp: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
+func GetResultFaceMatch(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-match")
+	if err != nil {
+		fmt.Println("Error during fetching API face match: ", err)
+		return result, err
+	}
+	return result, nil
+}
