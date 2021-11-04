@@ -954,3 +954,70 @@ Create a new account for Face Payment solution demonstration.
   "ok": false
 }
 ```
+</details>
+
+<details>
+<summary><b>Validate Phone of the New Face Payment Account</b></summary>
+Validate the inputted phone number (it must be unique) before create a new account for Face Payment solution demonstration.
+
+- **URL**
+
+  `/api/v1/face-payment/account`
+
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+```json
+{
+    "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+    "phone": "1122334455"
+}
+```
+
+- **Request Payload Data Type Attributes**
+```json
+{
+    "session_id": string,
+    "phone": string
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+   "message": "Phone number is valid",
+   "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+   "message": string,
+   "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 400 Bad Request
+```json
+{
+   "message": "Phone number must be a valid positive numeric value",
+   "ok": false
+}
+```
+OR
+```json
+{
+   "message": "Phone number already exist, try to use another number",
+   "ok": false
+}
+```
+</details>
