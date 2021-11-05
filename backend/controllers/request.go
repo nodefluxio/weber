@@ -3,9 +3,14 @@ package controllers
 import (
 	"backend/models"
 	"net/http"
+	"log"
+	"image"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mitchellh/mapstructure"
 )
+
+type Thumbnails []string
 
 func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputData models.ServiceRequestInput) {
 	var serviceData models.ServiceRequestResultData
@@ -21,51 +26,51 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 		return
 	}
 
-	var thumbnails []string
-	parseMap(data.Job.Result, &thumbnails)
-	fmt.Println(thumbnails)
+	thumbnails := make(Thumbnails, 0) 
+	img, cfg, err := DecodeBase64Image(inputData.Data.Images[0])
+	parseMap(serviceData.Job.Result, img, cfg, &thumbnails)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":           true,
 		"message":      "Service demo request success",
 		"service_data": &serviceData,
+		"thumbnails": 	&thumbnails,
 	})
 }
 
-func parseMap(aMap map[string]interface{}, thumbnails *[]string) {
+func parseMap(aMap map[string]interface{}, img image.Image, cfg image.Config, thumbnails *Thumbnails) {
     for key, val := range aMap {
-        switch concreteVal := val.(type) {
+        switch val.(type) {
         case map[string]interface{}:
-            fmt.Println(key)
 			if key == "bounding_box" {
 				var bbox models.BoundingBox
 				err := mapstructure.Decode(val, &bbox)
 				if err != nil {
-					log.Fatal("Failed to decode bounding_box, err=", err)
+					log.Println("Failed to decode bounding_box, err=", err)
+				} else {
+					thumbnail, id, err := CropImage(img, cfg, bbox)
+					if err != nil {
+						log.Println("Failed to crop image, err=", err)
+					} else {
+						log.Println("Generating thumbnail for bbox=...", id)
+						*thumbnails = append(*thumbnails, thumbnail)
+					}
 				}
-				fmt.Println("found", bbox)
 			}
-            parseMap(val.(map[string]interface{}), thumbnails)
+            parseMap(val.(map[string]interface{}), img, cfg, thumbnails)
         case []interface{}:
-            fmt.Println(key)
-            parseArray(val.([]interface{}), thumbnails)
-        default:
-            fmt.Println(key, ":", concreteVal)
+            parseArray(val.([]interface{}), img, cfg, thumbnails)
         }
     }
 }
 
-func parseArray(anArray []interface{}, thumbnails *[]string) {
-    for i, val := range anArray {
-        switch concreteVal := val.(type) {
+func parseArray(anArray []interface{}, img image.Image, cfg image.Config, thumbnails *Thumbnails) {
+    for _, val := range anArray {
+        switch val.(type) {
         case map[string]interface{}:
-            fmt.Println("Index:", i)
-            parseMap(val.(map[string]interface{}), thumbnails)
+            parseMap(val.(map[string]interface{}), img, cfg, thumbnails)
         case []interface{}:
-            fmt.Println("Index:", i)
-            parseArray(val.([]interface{}), thumbnails)
-        default:
-            fmt.Println("Index", i, ":", concreteVal)
+            parseArray(val.([]interface{}), img, cfg, thumbnails)
         }
     }
 }
