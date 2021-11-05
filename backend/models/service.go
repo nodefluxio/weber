@@ -73,6 +73,13 @@ type ResponseResultData struct {
 	Ok      bool           `json:"ok"`
 }
 
+type BoundingBox struct {
+	Left	float64 `json:"left"`
+	Top		float64 `json:"top"`
+	Width	float64 `json:"width"`
+	Height	float64 `json:"height"`
+}
+
 func CreateService(db *gorm.DB, Service *Service) (err error) {
 	err = db.Create(Service).Error
 	if err != nil {
