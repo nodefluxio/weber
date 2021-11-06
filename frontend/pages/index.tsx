@@ -21,19 +21,21 @@ const Home = ({ analytics, solutions, innovations }: Props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const getAllServices = async (type: string): Promise<Service[]> => {
+  const getAllServices = async (): Promise<Service[]> => {
     try {
-      const res = await axios.get<ServicesGetResponse>(`/services?type=${type}`)
+      const res = await axios.get<ServicesGetResponse>(`/services`)
       return res.data.data
     } catch (error) {
       console.error(error)
       return []
     }
   }
-
-  const analytics = await getAllServices('analytic')
-  const solutions = await getAllServices('solution')
-  const innovations = await getAllServices('innovation')
+  const services = await getAllServices()
+  const analytics = services.filter((service) => service.type === 'analytic')
+  const solutions = services.filter((service) => service.type === 'solution')
+  const innovations = services.filter(
+    (service) => service.type === 'innovation'
+  )
 
   return {
     props: { analytics, solutions, innovations }
