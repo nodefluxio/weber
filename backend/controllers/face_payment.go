@@ -39,14 +39,25 @@ func CreateFacePaymentAccount(ctx *gin.Context) {
 		return
 	}
 
-	// Condition to validate phone input on first hit from frontend
+	// Condition to validate new account data and phone input 
+	// on first hit from frontend
 	if len(inputDataToAnalytic.Images) < 1 {		
-		// Validate the phone input must be a valid numeric value
-		// and positive 
-		if isNumeric := isPhoneValueNumeric(phone); !isNumeric {
+		// Validate the inputs
+		err := utils.Validate.Struct(newAccountData)
+		errs := utils.TranslateError(err)
+		if len(errs) > 0 {
 			ctx.JSON(http.StatusBadRequest, gin.H{
 				"ok": false,
-				"message": "Phone number must be a valid positive numeric value",
+				"message": errs[0].Error(), 
+			})
+			return
+		}
+
+		// Validate the phone input must be a positive number
+		if isPositive := isPhoneValuePositive(phone); !isPositive {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"ok": false,
+				"message": "phone must be a valid positive numeric value",
 			})
 			return
 		}
@@ -55,7 +66,7 @@ func CreateFacePaymentAccount(ctx *gin.Context) {
 		if phoneExist := isPhoneAlreadyExists(phone); phoneExist {
 			ctx.JSON(http.StatusBadRequest, gin.H{
 				"ok": false,
-				"message": "Phone number already exist, try to use another number",
+				"message": "phone number already exist, try to use another number",
 			})
 			return
 		}
@@ -110,7 +121,7 @@ func CreateFacePaymentAccount(ctx *gin.Context) {
 	newAccount.SessionID = sessionId
 	newAccount.FullName = newAccountData.FullName
 	newAccount.Phone = newAccountData.Phone
-	newAccount.HaveTwin = newAccountData.HaveTwin
+	newAccount.HaveTwin = *newAccountData.HaveTwin
 	newAccount.CreatedAt = time.Now()
 	newAccount.UpdatedAt = newAccount.CreatedAt
 
@@ -129,8 +140,8 @@ func CreateFacePaymentAccount(ctx *gin.Context) {
 	})
 }
 
-func isPhoneValueNumeric(phone string) bool {
-	if num, err := strconv.Atoi(phone); num <= 0 || err != nil {
+func isPhoneValuePositive(phone string) bool {
+	if num, _ := strconv.Atoi(phone); num <= 0 {
 		return false
 	}
 
