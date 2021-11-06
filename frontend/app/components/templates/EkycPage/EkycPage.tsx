@@ -150,15 +150,16 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <div className={styles.percentage}>
               <h3 className={styles.title}>Liveness result</h3>
               {!loading ? (
-                result?.service_data.face_liveness.ok ? (
+                result?.service_data.face_liveness.job.result.result.length ===
+                1 ? (
                   <>
                     <span>{`${Math.trunc(
                       result.service_data.face_liveness.job.result.result[0]
-                        .liveness * 100
+                        .face_liveness.liveness * 100
                     )}%`}</span>
                     <p>
                       {result.service_data.face_liveness.job.result.result[0]
-                        .live
+                        .face_liveness.live
                         ? 'Verified'
                         : 'Not Verified'}
                     </p>
@@ -174,14 +175,16 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <div className={styles.percentage}>
               <h3 className={styles.title}>Face Match Result</h3>
               {!loading ? (
-                result?.service_data.face_match.ok ? (
+                result?.service_data.face_match.job.result.result.length ===
+                1 ? (
                   <>
                     <span>{`${Math.trunc(
                       result.service_data.face_match.job.result.result[0]
-                        .similarity * 100
+                        .face_match.similarity * 100
                     )}%`}</span>
                     <p>
-                      {result.service_data.face_match.job.result.result[0].match
+                      {result.service_data.face_match.job.result.result[0]
+                        .face_match.match
                         ? 'Verified'
                         : 'Not Verified'}
                     </p>
@@ -197,7 +200,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <div className={styles.ocrKtp}>
               <h3 className={styles.title}>OCR KTP Result</h3>
               {!loading ? (
-                result?.service_data.ocr_ktp.ok ? (
+                result?.service_data.ocr_ktp.job.result.result.length === 1 ? (
                   <AnalyticsResult
                     result={result.service_data.ocr_ktp.job.result.result[0]}
                     slug={'ocr-ktp'}

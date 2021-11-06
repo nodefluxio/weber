@@ -142,9 +142,9 @@ export type EKYCResultResponse = {
   message: string
   ok: boolean
   service_data: {
-    face_liveness: NodefluxCloudResponse<FaceLiveness>
+    face_liveness: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>
     ocr_ktp: NodefluxCloudResponse<OCRKTP>
-    face_match: NodefluxCloudResponse<FaceMatch>
+    face_match: NodefluxCloudResponse<{ face_match: FaceMatch }>
   }
 }
 
