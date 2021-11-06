@@ -15,6 +15,10 @@ import { postEKYC } from '../../../api/solutionsAPI'
 import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
 import styles from './EkycPage.module.scss'
 import { Spinner } from '../../elements/Spinner/Spinner'
+import {
+  FL_LOCAL_STORAGE,
+  KTP_LOCAL_STORAGE
+} from '../../../constants/localStorage'
 
 type Props = {
   serviceId: number
@@ -60,8 +64,8 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     try {
       const res = await postEKYC(
         session_id,
-        getImageFromLocalStorage('liveness_snapshot', () => setCurrentStep(2)),
-        getImageFromLocalStorage('ktp_snapshot', () => setCurrentStep(3))
+        getImageFromLocalStorage(FL_LOCAL_STORAGE, () => setCurrentStep(2)),
+        getImageFromLocalStorage(KTP_LOCAL_STORAGE, () => setCurrentStep(3))
       )
 
       if (res) {
@@ -125,7 +129,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
         {currentStep === 2 && (
           <div>
             <h3 className={styles.title}>Take A Selfie Photo</h3>
-            <Cam localkey="liveness_snapshot" nextStep={() => nextStep()} />
+            <Cam localkey={FL_LOCAL_STORAGE} nextStep={() => nextStep()} />
           </div>
         )}
 
@@ -133,7 +137,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
           <div>
             <h3 className={styles.title}>KTP Photo</h3>
             <Cam
-              localkey="ktp_snapshot"
+              localkey={KTP_LOCAL_STORAGE}
               nextStep={() => nextStep()}
               videoConstraints={{ facingMode: { ideal: 'environment' } }}
             />
@@ -198,7 +202,13 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <Feedback
               id={serviceId}
               onTryAgain={() => setCurrentStep(1)}
-              afterSubmit={() => createVisitorActivities(5, session_id, 5)}
+              afterSubmit={() => {
+                createVisitorActivities(5, session_id, 5)
+                setResult(undefined)
+                setLoading(true)
+                localStorage.removeItem(FL_LOCAL_STORAGE)
+                localStorage.removeItem(KTP_LOCAL_STORAGE)
+              }}
             />
           </div>
         )}
