@@ -348,6 +348,8 @@ This error will appear if visitor give feedback rating more than 5.
 
 </details>
 
+- - -
+
 ### Services
 <details>
 <summary><b>Create A Service Request By ID</b></summary>
@@ -715,6 +717,8 @@ Return json data about a Service by slug.
 
 </details>
 
+- - -
+
 ### Solution Services (In Particular)
 <details>
 <summary><b>Create A Service Request for E-KYC</b></summary>
@@ -971,7 +975,9 @@ Validate the inputted data: full name, phone number (it must be unique), and hav
 ```json
 {
     "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
-    "phone": "1122334455"
+    "full_name": "Bruce Wayne",
+    "phone": "1337",
+    "have_twin": true
 }
 ```
 
@@ -979,7 +985,9 @@ Validate the inputted data: full name, phone number (it must be unique), and hav
 ```json
 {
     "session_id": string,
-    "phone": string
+    "full_name": string,
+    "phone": string,
+    "have_twin": boolean
 }
 ```
 
@@ -1008,15 +1016,125 @@ Validate the inputted data: full name, phone number (it must be unique), and hav
   **Code**: 400 Bad Request
 ```json
 {
-   "message": "Phone number must be a valid positive numeric value",
+   "message": "full_name must be at least 2 characters in length",
    "ok": false
 }
 ```
 OR
 ```json
 {
-   "message": "Phone number already exist, try to use another number",
+   "message": "full_name must be a maximum of 255 characters in length",
    "ok": false
+}
+```
+OR
+```json
+{
+   "message": "phone must be a valid numeric value",
+   "ok": false
+}
+```
+OR
+```json
+{
+   "message": "phone must be a valid positive numeric value",
+   "ok": false
+}
+```
+OR
+```json
+{
+   "message": "phone number already exist, try to use another number",
+   "ok": false
+}
+```
+</details>
+
+<details>
+<summary><b>Activate Pin and Create A Wallet of The New Face Payment Account </b></summary>
+Activate a new account by adding a pin, updating the minimum payment, and create a new account wallet for face payment solution demonstration.
+
+- **URL**
+
+  `/api/v1/face-payment/account`
+
+- **Method**
+
+  `PATCH`
+
+- **Request Payload**
+```json
+{
+    "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+    "pin": "133007",
+    "minimum_payment": 987654
+}
+```
+
+- **Request Payload Data Type Attributes**
+```json
+{
+    "session_id": string,
+    "pin": string,
+    "minimum_payment": 50000 <= int <= 1000000
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "message": "Account activation and wallet creation has been successful",
+    "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+   "message": string,
+   "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 400 Bad Request
+```json
+{
+   "message": "pin must be a valid numeric value",
+   "ok": false
+}
+```
+OR
+```json
+{
+   "message": "pin must be a valid positive numeric value",
+   "ok": false
+}
+```
+OR
+```json
+{
+   "message": "pin must be a maximum of 6 characters in length",
+   "ok": false
+}
+```
+OR
+```json
+{
+    "message": "minimum_payment must be 50,000 or greater",
+    "ok": false
+}
+```
+OR
+```json
+{
+    "message": "minimum_payment must be 1,000,000 or less",
+    "ok": false
 }
 ```
 </details>
