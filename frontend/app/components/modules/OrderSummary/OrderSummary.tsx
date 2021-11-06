@@ -74,8 +74,7 @@ export const OrderSummary = ({ cart, onBack, onNext }: Props) => {
       <Button
         onClick={() => onNext(totalPay)}
         className={styles.submitBtn}
-        color={Color.Primary}
-        rect>
+        color={Color.Primary}>
         Next
       </Button>
     </div>

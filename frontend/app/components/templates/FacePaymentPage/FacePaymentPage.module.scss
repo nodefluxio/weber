@@ -2,6 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem 5rem;
-  min-height: 30vw;
+  padding: 2rem 0 5rem 0;
+
+  .welcome {
+    text-align: center;
+  }
 }

@@ -65,8 +65,7 @@ export const Cart = ({ item, onBack, onCheckout }: Props) => {
       <Button
         className={styles.submitBtn}
         color={Color.Primary}
-        onClick={() => onCheckout({ ...item, quantity: quantity })}
-        rect>
+        onClick={() => onCheckout({ ...item, quantity: quantity })}>
         Checkout
       </Button>
     </div>
