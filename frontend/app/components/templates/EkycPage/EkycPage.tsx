@@ -76,8 +76,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
     }
   }
 
-  const nextStep = async (page: number) => {
+  const nextStep = async () => {
     if (session_id) {
+      const page = currentStep + 1
+
       if (page === 4) {
         handleEKYC(session_id)
       }
@@ -114,7 +116,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
-            <Button color={Color.Primary} onClick={() => nextStep(2)}>
+            <Button color={Color.Primary} onClick={() => nextStep()}>
               Start
             </Button>
           </div>
@@ -123,7 +125,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
         {currentStep === 2 && (
           <div>
             <h3 className={styles.title}>Take A Selfie Photo</h3>
-            <Cam localkey="liveness_snapshot" nextStep={() => nextStep(3)} />
+            <Cam localkey="liveness_snapshot" nextStep={() => nextStep()} />
           </div>
         )}
 
@@ -132,7 +134,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <h3 className={styles.title}>KTP Photo</h3>
             <Cam
               localkey="ktp_snapshot"
-              nextStep={() => nextStep(4)}
+              nextStep={() => nextStep()}
               videoConstraints={{ facingMode: { ideal: 'environment' } }}
             />
           </div>
@@ -181,7 +183,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
             <Button
               color={Color.Primary}
-              onClick={() => nextStep(5)}
+              onClick={() => nextStep()}
               disabled={loading}>
               Next
             </Button>
