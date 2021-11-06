@@ -18,17 +18,17 @@ type dataAnalytic struct {
 	xNodefluxTimestamp string
 }
 
-func GetDataAnalytic(service models.Service, inputData models.ServiceRequestInput) dataAnalytic {
+func GetDataAnalytic(service models.Service, requestData models.RequestData) dataAnalytic {
 	var dataAnalytic dataAnalytic
 	dataAnalytic.xNodefluxTimestamp = service.Timestamp
 
 	if service.Slug == "face-match-enrollment" {
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
-			os.Getenv("FACE_ID"), strings.Join(inputData.Data.Images, `", "`)))
+			os.Getenv("FACE_ID"), strings.Join(requestData.Images, `", "`)))
 	} else {
-		additionalParams, _ := json.Marshal(inputData.Data.AdditionalParams)
+		additionalParams, _ := json.Marshal(requestData.AdditionalParams)
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
-			string(additionalParams), strings.Join(inputData.Data.Images, `", "`)))
+			string(additionalParams), strings.Join(requestData.Images, `", "`)))
 	}
 
 	accessKey := service.AccessKey
@@ -110,4 +110,37 @@ func getJobStatus(dataAnalytic dataAnalytic, jobId string) (models.ServiceReques
 	}
 
 	return data, err
+}
+
+func GetResultFaceLiveness(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness")
+	if err != nil {
+		fmt.Println("Error during fetching API face liveness: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
+func GetResultOCRKTP(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "ocr-ktp")
+	if err != nil {
+		fmt.Println("Error during fetching API ocr ktp: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
+func GetResultFaceMatch(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-match")
+	if err != nil {
+		fmt.Println("Error during fetching API face match: ", err)
+		return result, err
+	}
+	return result, nil
 }
