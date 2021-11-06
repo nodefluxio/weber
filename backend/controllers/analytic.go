@@ -126,6 +126,28 @@ func GetResultFaceLiveness(service models.Service, input models.RequestData) (mo
 	return result, nil
 }
 
+func GetResultOCRKTP(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "ocr-ktp")
+	if err != nil {
+		fmt.Println("Error during fetching API ocr ktp: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
+func GetResultFaceMatch(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-match")
+	if err != nil {
+		fmt.Println("Error during fetching API face match: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
 func GetResultFaceEnrollment(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
 	var result models.ServiceRequestResultData
 	dataAnalytic := GetDataAnalytic(service, input)

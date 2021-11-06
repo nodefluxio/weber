@@ -30,6 +30,13 @@ type NewAccountData struct {
 	UpdatedAt 	time.Time 	`json:"updated_at"`
 }
 
+type AccountActivationData struct {
+	SessionID   	string  	`json:"session_id"`
+	Pin				string		`json:"pin" validate:"required,numeric,min=6,max=6"`
+	MinimumPayment	int			`json:"minimum_payment" validate:"required,min=50000,max=1000000"`
+	UpdatedAt 		time.Time 	`json:"updated_at"`
+}
+
 type FacePaymentWallet struct {
 	ID					uint				`gorm:"primaryKey; autoIncrement" json:"id"`
 	AccountID			uint
@@ -51,5 +58,39 @@ func CreateAccount(db *gorm.DB, newAccount *FacePaymentAccount) (err error) {
 	if err != nil {
 		return err
 	}
+  
+	return nil
+}
+
+func ActivateAccount(db *gorm.DB, newAccount *FacePaymentAccount) (err error) {
+	err = db.Model(newAccount).Select("Pin", "MinimumPayment", "IsActive", "UpdatedAt").
+			Where("session_id = ?", newAccount.SessionID).
+			Updates(FacePaymentAccount{
+				Pin: newAccount.Pin, 
+				MinimumPayment: newAccount.MinimumPayment,
+				IsActive: true,
+				UpdatedAt: newAccount.UpdatedAt,
+			},
+		).Error
+
+	if err != nil {
+		return err
+	}
+  
+	return nil
+}
+
+func CreateAccountWallet(db *gorm.DB, sessionId string, newAccount *FacePaymentAccount, newAccountWallet *FacePaymentWallet) (err error) {
+	err = db.Select("id").Find(newAccount).Where("session_id = ?", sessionId).Error
+	if err != nil {
+		return err
+	}
+	
+	newAccountWallet.AccountID = newAccount.ID
+	err = db.Create(newAccountWallet).Error
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
