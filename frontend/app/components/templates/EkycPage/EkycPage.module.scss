@@ -51,6 +51,12 @@
   row-gap: 1rem;
   padding: 2rem;
 
+  p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
   .percentage {
     margin: 0;
     font-weight: 700;
@@ -59,12 +65,6 @@
       display: block;
       font-size: 5rem;
       font-weight: 100;
-    }
-
-    p {
-      font-size: 2rem;
-      font-weight: 500;
-      margin: 0;
     }
 
     & p.passed {

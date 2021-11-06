@@ -165,7 +165,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                     </p>
                   </>
                 ) : (
-                  <span>{result?.service_data.face_liveness.message}</span>
+                  <p>{result?.service_data.face_liveness.message}</p>
                 )
               ) : (
                 <Spinner />
@@ -190,7 +190,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                     </p>
                   </>
                 ) : (
-                  <span>{result?.service_data.face_match.message}</span>
+                  <p>{result?.service_data.face_match.message}</p>
                 )
               ) : (
                 <Spinner />
@@ -206,7 +206,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                     slug={'ocr-ktp'}
                   />
                 ) : (
-                  <span>{result?.service_data.ocr_ktp.message}</span>
+                  <p>{result?.service_data.ocr_ktp.message}</p>
                 )
               ) : (
                 <Spinner />
