@@ -58,6 +58,7 @@ func CreateAccount(db *gorm.DB, newAccount *FacePaymentAccount) (err error) {
 	if err != nil {
 		return err
 	}
+  
 	return nil
 }
 
@@ -75,6 +76,7 @@ func ActivateAccount(db *gorm.DB, newAccount *FacePaymentAccount) (err error) {
 	if err != nil {
 		return err
 	}
+  
 	return nil
 }
 

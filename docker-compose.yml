@@ -17,6 +17,7 @@ services:
     build: 
       context: backend
       dockerfile: Dockerfile
+    # command: refresh
     environment:
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
@@ -52,7 +53,21 @@ services:
       - webernet
     ports:
       - "3000:3000"
-      
+  proxy:
+    image: 'nginx'
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+      - frontend
+    links:
+      - backend
+      - frontend
+    networks:
+      - webernet
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
 volumes:
   weberdb:
 
