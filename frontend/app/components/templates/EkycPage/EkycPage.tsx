@@ -2,7 +2,7 @@ import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
 import { SESSION_ID_ERROR } from '../../../constants/message'
-import { Color, EKYC } from '../../../types/elements'
+import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
 import { Modal } from '../../elements/Modal/Modal'
 import { Stepper } from '../../elements/Stepper/Stepper'
@@ -19,6 +19,7 @@ import {
   FL_LOCAL_STORAGE,
   KTP_LOCAL_STORAGE
 } from '../../../constants/localStorage'
+import { EKYCResultResponse } from '../../../types/responses'
 
 type Props = {
   serviceId: number
@@ -32,7 +33,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
-  const [result, setResult] = useState<EKYC>()
+  const [result, setResult] = useState<EKYCResultResponse>()
   const [loading, setLoading] = useState(true)
 
   const createVisitorActivities = async (
@@ -148,15 +149,23 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
           <div className={styles.result}>
             <div className={styles.percentage}>
               <h3 className={styles.title}>Liveness result</h3>
-              {!loading && result ? (
-                <>
-                  <span>{`${Math.trunc(
-                    result.face_liveness.liveness * 100
-                  )}%`}</span>
-                  <p>
-                    {result.face_liveness.live ? 'Verified' : 'Not Verified'}
-                  </p>
-                </>
+              {!loading ? (
+                result?.service_data.face_liveness.ok ? (
+                  <>
+                    <span>{`${Math.trunc(
+                      result.service_data.face_liveness.job.result.result[0]
+                        .liveness * 100
+                    )}%`}</span>
+                    <p>
+                      {result.service_data.face_liveness.job.result.result[0]
+                        .live
+                        ? 'Verified'
+                        : 'Not Verified'}
+                    </p>
+                  </>
+                ) : (
+                  <span>{result?.service_data.face_liveness.message}</span>
+                )
               ) : (
                 <Spinner />
               )}
@@ -164,13 +173,22 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
             <div className={styles.percentage}>
               <h3 className={styles.title}>Face Match Result</h3>
-              {!loading && result ? (
-                <>
-                  <span>{`${Math.trunc(
-                    result.face_match.similarity * 100
-                  )}%`}</span>
-                  <p>{result.face_match.match ? 'Verified' : 'Not Verified'}</p>
-                </>
+              {!loading ? (
+                result?.service_data.face_match.ok ? (
+                  <>
+                    <span>{`${Math.trunc(
+                      result.service_data.face_match.job.result.result[0]
+                        .similarity * 100
+                    )}%`}</span>
+                    <p>
+                      {result.service_data.face_match.job.result.result[0].match
+                        ? 'Verified'
+                        : 'Not Verified'}
+                    </p>
+                  </>
+                ) : (
+                  <span>{result?.service_data.face_match.message}</span>
+                )
               ) : (
                 <Spinner />
               )}
@@ -178,8 +196,15 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
             <div className={styles.ocrKtp}>
               <h3 className={styles.title}>OCR KTP Result</h3>
-              {!loading && result ? (
-                <AnalyticsResult result={result.ocr_ktp} slug={'ocr-ktp'} />
+              {!loading ? (
+                result?.service_data.ocr_ktp.ok ? (
+                  <AnalyticsResult
+                    result={result.service_data.ocr_ktp.job.result.result[0]}
+                    slug={'ocr-ktp'}
+                  />
+                ) : (
+                  <span>{result?.service_data.ocr_ktp.message}</span>
+                )
               ) : (
                 <Spinner />
               )}
