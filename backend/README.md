@@ -27,33 +27,36 @@ more details about dependencies see [go.mod &rarr;](https://github.com/nodefluxi
 - Copy or rename file `.env.example` to `.env`.
 - Edit the `.env` to your desire database credentials.
 
-### Running with Docker
-
-```sh
-docker-compose up -d --build
-```
-
 ### Running without Docker
+
 Before running the backend service, you can run some additional commands below to handle migrations and seeds:
 
 - To migrate without removing the data
+
 ```sh
 go run . migrate
 ```
+
 - To migrate with removing the data
+
 ```sh
 go run . migrate-fresh
 ```
+
 - To run the seeder
+
 ```sh
 go run . seed
 ```
+
 - To migrate with removing the data and run the seeder
+
 ```sh
 go run . refresh
 ```
 
 Finally run the backend service:
+
 ```sh
 go run .
 ```
@@ -368,7 +371,6 @@ Create a service request by id and create a new visitor_activites record.
 
 ```json
 {
-  "analytic_name": "ocr-ktp",
   "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
   "data": {
     "additional_params": {},
@@ -377,13 +379,10 @@ Create a service request by id and create a new visitor_activites record.
 }
 ```
 
-Note: `analytic_name` only be required on analytics that are part of the solution service, so it can be omitted when requesting an independent analytics service.
-
 - **Request Payload Data Type Attributes**
 
 ```json
 {
-   "analytic_name" : string,
    "session_id": string,
    "data": object {
        "additional_params": object,
@@ -957,8 +956,8 @@ Create a new account for Face Payment solution demonstration.
 </details>
 
 <details>
-<summary><b>Validate Phone of the New Face Payment Account</b></summary>
-Validate the inputted phone number (it must be unique) before create a new account for Face Payment solution demonstration.
+<summary><b>Validate New Face Payment Account Data</b></summary>
+Validate the inputted data: full name, phone number (it must be unique), and have twin is required before create a new account for Face Payment solution demonstration.
 
 - **URL**
 

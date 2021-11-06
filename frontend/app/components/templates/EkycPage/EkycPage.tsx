@@ -90,12 +90,16 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             nextStep={() => nextStep(3)}
             setOpenModal={setOpenModal}
             onArrival={() => createVisitorActivities(serviceId, session_id, 40)}
-            onChecking={() => createVisitorActivities(serviceId, session_id, 50)}
+            onChecking={() =>
+              createVisitorActivities(serviceId, session_id, 50)
+            }
             onResult={() => createVisitorActivities(serviceId, session_id, 60)}
           />
         )}
 
-        {currentStep === 3 && <Feedback id={serviceId} onClick={() => setCurrentStep(1)}/>}
+        {currentStep === 3 && (
+          <Feedback id={serviceId} onTryAgain={() => setCurrentStep(1)} />
+        )}
       </div>
     </>
   )

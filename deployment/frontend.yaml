@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weber-frontend
+  namespace: demo
+  labels:
+    app: weber-frontend
+spec:
+  selector:
+    matchLabels:
+      app: weber-frontend
+  template: 
+    metadata:
+      labels:
+        app: weber-frontend
+    spec:
+      imagePullSecrets:
+        - name: nodeflux-registry
+      containers:
+        - name: weber-frontend
+          image: registry.gitlab.com/nodefluxio/demo-apps/weber/frontend:latest
+          imagePullPolicy: Always
+          env:
+            - name: BACKEND_URL
+              value: https://demo.nodeflux.io/weber/api/v1
+          ports:
+            - containerPort: 3000
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: weber-frontend
+  namespace: demo
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  selector:
+    app: weber-frontend
+
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: weber-frontend
+  namespace: demo
+spec:
+  host: demo.nodeflux.io
+  prefix: /
+  service: weber-frontend.demo
+  bypass_auth: true
+  timeout_ms: 30000
+
