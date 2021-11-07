@@ -1,4 +1,4 @@
-import { Service } from './elements'
+import { FaceLiveness, FaceMatch, OCRKTP, Service } from './elements'
 
 type StandardResponse = {
   message: string,
@@ -53,6 +53,18 @@ export type ServiceBySlugResponseData = {
 }
 
 export type ServiceByIdErrorResponse = StandardResponse
+
+export type NodefluxCloudResponse<AnalyticsResultResponse> = {
+  job: {
+    result: {
+      analytic_type: string
+      result: [AnalyticsResultResponse]
+      status: string
+    }
+  }
+  message: string
+  ok: boolean
+}
 
 export type AnalyticsResponse<AnalyticsResultResponse> = {
   message: string
@@ -119,6 +131,16 @@ export type FMEResultResponse = {
   face_match: {
     match: boolean
     similarity: number
+  }
+}
+
+export type EKYCResultResponse = {
+  message: string
+  ok: boolean
+  service_data: {
+    face_liveness: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>
+    ocr_ktp: NodefluxCloudResponse<OCRKTP>
+    face_match: NodefluxCloudResponse<{ face_match: FaceMatch }>
   }
 }
 

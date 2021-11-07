@@ -21,23 +21,30 @@ func SetupRouter() *gin.Engine {
 		{
 			services.GET("", controllers.GetServices)
 			services.GET("/:slug", controllers.GetServiceBySlug)
-	
+
 			services.POST("/:id", controllers.CreateServiceRequest)
 		}
-	
+
 		visitors := apis.Group("/visitors")
 		{
 			visitors.POST("", controllers.CreateVisitor)
 		}
-	
+
 		activities := apis.Group("/activities")
 		{
 			activities.POST("", controllers.CreateActivity)
 		}
-	
+
 		feedbacks := apis.Group("/feedback")
 		{
 			feedbacks.POST("/:service_id", controllers.CreateFeedback)
+		}
+
+		facePayments := apis.Group("/face-payment")
+		{
+			facePayments.POST("/account", controllers.CreateFacePaymentAccount)
+
+			facePayments.PATCH("/account", controllers.UpdateFacePaymentAccount)
 		}
 	}
 

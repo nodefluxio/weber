@@ -49,9 +49,8 @@ type RequestData struct {
 }
 
 type ServiceRequestInput struct {
-	AnalyticName string      `json:"analytic_name"`
-	SessionID    string      `json:"session_id"`
-	Data         RequestData `json:"data"`
+	SessionID string      `json:"session_id"`
+	Data      RequestData `json:"data"`
 }
 
 type ServiceRequestResult struct {
@@ -91,4 +90,12 @@ func IsValidServiceType(serviceType string) (bool, ServiceType) {
 	}
 
 	return false, ""
+}
+
+func GetServiceBySlug(db *gorm.DB, Service *Service, slug string) (err error) {
+	err = db.Where("slug = ?", slug).First(Service).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
