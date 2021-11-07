@@ -34,7 +34,7 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
     const { session_id } = parseCookies()
     if (session_id) {
       try {
-        const res = await registerAccount(session_id, data.phone)
+        const res = await registerAccount(session_id, data.phone, data.full_name, data.have_twin === 'true')
         if (res.ok) {
           onNextStep({
             ...data,

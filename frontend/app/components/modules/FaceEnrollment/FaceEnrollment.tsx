@@ -8,8 +8,9 @@ import styles from "./FaceEnrollment.module.scss"
 import { parseCookies } from "nookies"
 import { registerAccount } from "../../../api/paymentAPI"
 import { SESSION_ID_ERROR } from "../../../constants/message"
+import { ENROLL_SNAPSHOT } from "app/constants/localStorage"
 
-const ENROLL_SNAPSHOT = "enroll_snapshot"
+
 
 type Props = {
   openModal: Function,

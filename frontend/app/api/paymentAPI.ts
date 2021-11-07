@@ -11,8 +11,8 @@ type RegistrationResponse = {
 export const registerAccount = async (
   sessionId: string,
   phoneNum: string,
-  name?: string,
-  haveTwin?: boolean,
+  name: string,
+  haveTwin: boolean,
   photo?: string[] //base64Jpeg
 ): Promise<RegistrationResponse> => {
   try {
