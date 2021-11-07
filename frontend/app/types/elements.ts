@@ -1,5 +1,3 @@
-import { OCRResultResponse } from './responses'
-
 export enum Color {
   Primary = 'primary',
   Secondary = 'secondary',
@@ -40,6 +38,7 @@ export type ShoppingItem = {
   name: string
   image: string
   price: number
+}
 
 export type FaceLiveness = {
   live: boolean
