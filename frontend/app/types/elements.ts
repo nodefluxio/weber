@@ -1,3 +1,5 @@
+import { OCRResultResponse } from './responses'
+
 export enum Color {
   Primary = 'primary',
   Secondary = 'secondary',
@@ -28,6 +30,36 @@ export type RequestDemoFormData = {
 }
 
 export type FeedbackData = {
-  rating: number,
+  rating: number
   comment: string
+}
+
+export type FaceLiveness = {
+  live: boolean
+  liveness: number
+}
+
+export type FaceMatch = {
+  match: boolean
+  similarity: number
+}
+
+export type OCRKTP = {
+  agama: string
+  alamat: string
+  berlaku_hingga: string
+  golongan_darah: string
+  jenis_kelamin: string
+  kabupaten_kota: string
+  kecamatan: string
+  kelurahan_desa: string
+  kewarganegaraan: string
+  nama: string
+  nik: string
+  pekerjaan: string
+  provinsi: string
+  rt_rw: string
+  status_perkawinan: string
+  tanggal_lahir: string
+  tempat_lahir: string
 }
