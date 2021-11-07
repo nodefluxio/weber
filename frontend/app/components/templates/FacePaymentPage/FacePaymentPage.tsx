@@ -13,6 +13,7 @@ import { OrderSummary } from '@/modules/OrderSummary/OrderSummary'
 import { Color, ShoppingItem } from '../../../types/elements'
 import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
+import Feedback from '@/modules/Feedback/Feedback'
 
 type Props = {
   id: number
@@ -33,11 +34,11 @@ export const FacePaymentPage = ({
   const [cart, setCart] = useState<ShoppingItem>()
   const { session_id } = parseCookies()
 
-  const nextStep = (stepper?: boolean) => {
+  const moveStep = (numStep: number, moveStepStepper?: boolean) => {
     if (session_id) {
-      setCurrentStep(currentStep + 1)
-      if (stepper) {
-        setCurrentStepStepper(currentStepStepper + 1)
+      setCurrentStep(currentStep + numStep)
+      if (moveStepStepper) {
+        setCurrentStepStepper(currentStepStepper + numStep)
       }
     } else {
       // Cookie does not exist... opening modal
@@ -92,7 +93,7 @@ export const FacePaymentPage = ({
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
-            <Button color={Color.Primary} onClick={() => nextStep(true)}>
+            <Button color={Color.Primary} onClick={() => moveStep(1, true)}>
               Start
             </Button>
           </div>
@@ -105,7 +106,7 @@ export const FacePaymentPage = ({
             }}
             onFinished={() => {
               createVisitorActivities(id, session_id, 2)
-              nextStep(true)
+              moveStep(1, true)
             }}
             openModal={() => setOpenModal(true)}
           />
@@ -116,17 +117,17 @@ export const FacePaymentPage = ({
             onAddToCart={(item) => {
               setCart(item)
               createVisitorActivities(id, session_id, 3)
-              nextStep()
+              moveStep(1)
             }}
           />
         )}
         {currentStep === 4 && cart && (
           <Cart
-            onBack={() => {}}
+            onBack={() => moveStep(-1)}
             onCheckout={(item) => {
               setCart(item)
               createVisitorActivities(id, session_id, 4)
-              nextStep()
+              moveStep(1)
             }}
             item={cart}
           />
@@ -136,9 +137,19 @@ export const FacePaymentPage = ({
             cart={cart}
             onNext={(total) => {
               createVisitorActivities(id, session_id, 5)
-              nextStep()
+              moveStep(1)
             }}
-            onBack={() => {}}
+            onBack={() => moveStep(-1)}
+          />
+        )}
+        {currentStep === 6 && (
+          <Feedback
+            id={id}
+            onTryAgain={() => {
+              setCurrentStep(1)
+              setCurrentStepStepper(1)
+              setCart(undefined)
+            }}
           />
         )}
       </div>
