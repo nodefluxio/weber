@@ -39,6 +39,11 @@ func SetupRouter() *gin.Engine {
 		{
 			feedbacks.POST("/:service_id", controllers.CreateFeedback)
 		}
+		
+		ekyc := apis.Group("/ekyc")
+		{
+			ekyc.POST("", controllers.CreateEKYCRequest)
+		}
 
 		facePayments := apis.Group("/face-payment")
 		{
