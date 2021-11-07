@@ -1,7 +1,7 @@
 @import '../../../styles/abstracts/variables';
 
 .btn {
-  padding: 0.5rem 1.5rem;
+  padding: 0.9rem 1.5rem;
   border: none;
   border-radius: 50px;
   background-color: $white-bg;
@@ -9,6 +9,7 @@
   font-family: inherit;
   font-weight: 800;
   cursor: pointer;
+
   &:hover,
   &:focus {
     background-color: darken($white-bg, 10%);
@@ -44,6 +45,10 @@
       background-color: lighten($secondary-color, 30%);
       cursor: not-allowed;
     }
+  }
+
+  &.rect {
+    border-radius: 10px;
   }
 
   &.rounded {

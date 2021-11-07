@@ -1,5 +1,3 @@
-import { OCRResultResponse } from './responses'
-
 export enum Color {
   Primary = 'primary',
   Secondary = 'secondary',
@@ -32,6 +30,14 @@ export type RequestDemoFormData = {
 export type FeedbackData = {
   rating: number
   comment: string
+}
+
+export type ShoppingItem = {
+  id: string
+  quantity: number
+  name: string
+  image: string
+  price: number
 }
 
 export type FaceLiveness = {

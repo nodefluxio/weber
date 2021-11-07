@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios'
+import { SESSION_ID_ERROR } from '../constants/message'
 import {
   AnalyticsError,
   AnalyticsResponse,
@@ -6,7 +7,6 @@ import {
 } from '../types/responses'
 
 const ERROR_MESSAGE = 'Something wrong has happened'
-export const SESSION_ID_ERROR = 'Please fill out the form'
 
 export const getServiceBySlug = async (slug: string) => {
   try {

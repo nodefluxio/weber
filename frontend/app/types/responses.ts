@@ -1,5 +1,10 @@
 import { FaceLiveness, FaceMatch, OCRKTP, Service } from './elements'
 
+type StandardResponse = {
+  message: string,
+  ok: boolean
+}
+
 export type ServicesGetResponse = {
   data: Service[]
   message: string
@@ -17,15 +22,8 @@ export type VisitorsPostResponse = {
   ok: boolean
 }
 
-export type VisitorsPostErrorResponse = {
-  message: string
-  ok: boolean
-}
-
-export type ActivitiesPostResponse = {
-  message: string
-  ok: boolean
-}
+export type VisitorsPostErrorResponse = StandardResponse
+export type ActivitiesPostResponse = StandardResponse
 
 export type ServiceBySlugResponse = {
   data: {
@@ -54,10 +52,7 @@ export type ServiceBySlugResponseData = {
   updated_at: string
 }
 
-export type ServiceByIdErrorResponse = {
-  message: string
-  ok: boolean
-}
+export type ServiceByIdErrorResponse = StandardResponse
 
 export type NodefluxCloudResponse<AnalyticsResultResponse> = {
   job: {
@@ -85,15 +80,16 @@ export type AnalyticsResponse<AnalyticsResultResponse> = {
   }
 }
 
-export type AnalyticsError = {
-  message: string
-  ok: boolean
+export type AnalyticsError = StandardResponse
+
+export type FaceLiveness = {
+  face_liveness: {
+    live: boolean
+    liveness: number
+  }
 }
 
-export type ReviewResponse = {
-  message: string
-  ok: boolean
-}
+export type ReviewResponse = StandardResponse
 
 export type OCRResultResponse = {
   agama: string
@@ -152,3 +148,5 @@ export type AnyResultResponse =
   | FMEResultResponse
   | OCRResultResponse
   | LPRResultResponse
+
+export type PhoneNumberResponse = StandardResponse
