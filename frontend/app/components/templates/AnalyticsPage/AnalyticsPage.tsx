@@ -1,9 +1,9 @@
 import {
-  postServicePhoto,
-  SESSION_ID_ERROR
+  postServicePhoto
 } from '../../../../app/api/analyticsAPI'
 import { ReactNode, useState } from 'react'
 import { parseCookies } from 'nookies'
+import { SESSION_ID_ERROR } from 'app/constants/message'
 import { AnalyticsContainer } from '../../../components/modules/AnalyticsContainer/AnalyticsContainer'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
