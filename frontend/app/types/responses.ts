@@ -82,13 +82,6 @@ export type AnalyticsResponse<AnalyticsResultResponse> = {
 
 export type AnalyticsError = StandardResponse
 
-export type FaceLiveness = {
-  face_liveness: {
-    live: boolean
-    liveness: number
-  }
-}
-
 export type ReviewResponse = StandardResponse
 
 export type OCRResultResponse = {
