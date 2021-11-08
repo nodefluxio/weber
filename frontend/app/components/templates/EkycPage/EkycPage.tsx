@@ -90,7 +90,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       }
 
       setCurrentStep(page)
-      createVisitorActivities(5, session_id, page - 1)
+      createVisitorActivities(serviceId, session_id, page - 1)
     } else {
       setOpenModal(true)
     }
@@ -231,7 +231,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               id={serviceId}
               onTryAgain={() => setCurrentStep(1)}
               afterSubmit={() => {
-                createVisitorActivities(5, session_id, 5)
+                createVisitorActivities(serviceId, session_id, 5)
                 setResult(undefined)
                 setLoading(true)
                 localStorage.removeItem(FL_LOCAL_STORAGE)
