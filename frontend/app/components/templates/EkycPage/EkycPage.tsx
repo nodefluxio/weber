@@ -90,7 +90,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       }
 
       setCurrentStep(page)
-      createVisitorActivities(serviceId, session_id, page - 1)
     } else {
       setOpenModal(true)
     }
@@ -121,7 +120,12 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
-            <Button color={Color.Primary} onClick={() => nextStep()}>
+            <Button
+              color={Color.Primary}
+              onClick={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 20)
+              }}>
               Start
             </Button>
           </div>
@@ -130,7 +134,13 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
         {currentStep === 2 && (
           <div>
             <h3 className={styles.title}>Take A Selfie Photo</h3>
-            <Cam localkey={FL_LOCAL_STORAGE} nextStep={() => nextStep()} />
+            <Cam
+              localkey={FL_LOCAL_STORAGE}
+              nextStep={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 40)
+              }}
+            />
           </div>
         )}
 
@@ -139,7 +149,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <h3 className={styles.title}>KTP Photo</h3>
             <Cam
               localkey={KTP_LOCAL_STORAGE}
-              nextStep={() => nextStep()}
+              nextStep={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 60)
+              }}
               videoConstraints={{ facingMode: { ideal: 'environment' } }}
             />
           </div>
@@ -215,7 +228,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
 
             <Button
               color={Color.Primary}
-              onClick={() => nextStep()}
+              onClick={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 80)
+              }}
               disabled={loading}>
               Next
             </Button>
@@ -231,7 +247,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               id={serviceId}
               onTryAgain={() => setCurrentStep(1)}
               afterSubmit={() => {
-                createVisitorActivities(serviceId, session_id, 5)
+                createVisitorActivities(serviceId, session_id, 100)
                 setResult(undefined)
                 setLoading(true)
                 localStorage.removeItem(FL_LOCAL_STORAGE)
