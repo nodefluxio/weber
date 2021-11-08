@@ -25,9 +25,6 @@ func GetDataAnalytic(service models.Service, requestData models.RequestData) dat
 	if service.Slug == "face-match-enrollment" {
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
 			os.Getenv("FACE_ID"), strings.Join(requestData.Images, `", "`)))
-	} else if service.Slug == "create-face-enrollment"{
-		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
-			requestData.AdditionalParams["face_id"], strings.Join(requestData.Images, `", "`)))
 	} else {
 		additionalParams, _ := json.Marshal(requestData.AdditionalParams)
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
@@ -155,6 +152,17 @@ func GetResultFaceEnrollment(service models.Service, input models.RequestData) (
 
 	if err != nil {
 		fmt.Println("Error during fetching API face enrollment: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
+func GetResultFaceMatchEnrollment(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-match-enrollment")
+	if err != nil {
+		fmt.Println("Error during fetching API face match with enrollment: ", err)
 		return result, err
 	}
 	return result, nil
