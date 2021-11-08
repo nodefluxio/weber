@@ -17,6 +17,7 @@ export type Service = {
   short_description: string
   long_description: string
   slug: string
+  type: string
 }
 
 export type RequestDemoFormData = {
