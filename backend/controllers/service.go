@@ -17,7 +17,7 @@ func (ctrl *Controller) GetServices(ctx *gin.Context) {
 
 	// check if there is a query URL "type"
 	// and it has an invalid value
-	isValid, serviceType := models.IsValidServiceType(serviceTypeQuery)
+	isValid, serviceType := ctrl.Model.IsValidServiceType(serviceTypeQuery)
 	if isAnyQueryType && !isValid {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
@@ -42,7 +42,7 @@ func (ctrl *Controller) getAllServices(ctx *gin.Context) {
 	service := &models.Service{}
 	analyticsService := &[]models.APIService{}
 
-	if err := ctrl.dbConn.Model(service).Find(analyticsService).Error; err != nil {
+	if err := ctrl.DBConn.Model(service).Find(analyticsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -57,7 +57,7 @@ func (ctrl *Controller) getServiceAnalytic(ctx *gin.Context) {
 	service := &models.Service{}
 	analyticsService := &[]models.APIService{}
 
-	if err := ctrl.dbConn.Model(service).Where("type = ?", "analytic").Find(analyticsService).Error; err != nil {
+	if err := ctrl.DBConn.Model(service).Where("type = ?", "analytic").Find(analyticsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -72,7 +72,7 @@ func (ctrl *Controller) getServiceSolution(ctx *gin.Context) {
 	service := &models.Service{}
 	solutionsService := &[]models.APIService{}
 
-	if err := ctrl.dbConn.Model(service).Where("type = ?", "solution").Find(solutionsService).Error; err != nil {
+	if err := ctrl.DBConn.Model(service).Where("type = ?", "solution").Find(solutionsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -87,7 +87,7 @@ func (ctrl *Controller) getServiceInnovation(ctx *gin.Context) {
 	service := &models.Service{}
 	innovationsService := &[]models.APIService{}
 
-	if err := ctrl.dbConn.Model(service).Where("type = ?", "innovation").Find(innovationsService).Error; err != nil {
+	if err := ctrl.DBConn.Model(service).Where("type = ?", "innovation").Find(innovationsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -103,7 +103,7 @@ func (ctrl *Controller) GetServiceBySlug(ctx *gin.Context) {
 	apiService := &models.APIService{}
 	slug := ctx.Param("slug")
 
-	if err := ctrl.dbConn.Model(service).First(&apiService, "slug = ?", slug).Error; err != nil {
+	if err := ctrl.DBConn.Model(service).First(&apiService, "slug = ?", slug).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"ok":      false,
@@ -157,7 +157,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 
 	// Get service data from database
 	var service models.Service
-	if err = ctrl.dbConn.First(&service, serviceId).Error; err != nil {
+	if err = ctrl.DBConn.First(&service, serviceId).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -167,7 +167,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 
 	if service.Type == "analytic" {
 		visitorActivity := &models.VisitorActivity{SessionID: inputData.SessionID, ServiceID: service.ID, Completeness: 100}
-		if err = models.CreateVisitorActivity(ctrl.dbConn, visitorActivity); err != nil {
+		if err = ctrl.Model.CreateVisitorActivity(visitorActivity); err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"ok":      false,
 				"message": err.Error(),

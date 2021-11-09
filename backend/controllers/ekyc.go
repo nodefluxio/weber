@@ -52,7 +52,7 @@ func (ctrl *Controller) CreateEKYCRequest(ctx *gin.Context) {
 	}
 
 	var service models.Service
-	models.GetServiceBySlug(ctrl.dbConn, &service, "ekyc")
+	ctrl.Model.GetServiceBySlug(&service, "ekyc")
 
 	ImplementEKYCSolution(ctx, service, inputData)
 }

@@ -11,7 +11,7 @@ import (
 func (ctrl *Controller) IsSessionExist(sessionId string) bool {
 	var visitor models.Visitor
 
-	if err := models.GetVisitor(ctrl.dbConn, &visitor, sessionId); err != nil {
+	if err := ctrl.Model.GetVisitor(&visitor, sessionId); err != nil {
 		return false
 	}
 
@@ -25,7 +25,7 @@ func (ctrl *Controller) IsSessionExpired(sessionId string) bool {
 	}
 
 	var visitor models.Visitor
-	if err := models.GetVisitor(ctrl.dbConn, &visitor, sessionId); err != nil {
+	if err := ctrl.Model.GetVisitor(&visitor, sessionId); err != nil {
 		return false
 	}
 

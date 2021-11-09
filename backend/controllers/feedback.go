@@ -48,7 +48,7 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 	}
 
 	var lastActivity models.VisitorActivity
-	if err := models.GetCurrentVisitorActivity(ctrl.dbConn, &lastActivity, feedbackInput.SessionID, serviceId); err != nil {
+	if err := ctrl.Model.GetCurrentVisitorActivity(&lastActivity, feedbackInput.SessionID, serviceId); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -61,7 +61,7 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 	feedback.Comment = feedbackInput.Comment
 	feedback.Rating = feedbackInput.Rating
 
-	if err := models.CreateFeedbackDb(ctrl.dbConn, &feedback); err != nil {
+	if err := ctrl.Model.CreateFeedbackDb(&feedback); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),

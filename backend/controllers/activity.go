@@ -30,7 +30,7 @@ func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
 	}
 
 	// Insert new record into db
-	if err := models.CreateVisitorActivity(ctrl.dbConn, &visitorActivity); err != nil {
+	if err := ctrl.Model.CreateVisitorActivity(&visitorActivity); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),

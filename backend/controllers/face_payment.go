@@ -78,7 +78,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	}
 
 	var service models.Service
-	models.GetServiceBySlug(ctrl.dbConn, &service, "face-payment")
+	ctrl.Model.GetServiceBySlug(&service, "face-payment")
 
 	// Make a request to analytic Face Liveness
 	// with inputted image
@@ -123,7 +123,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	newAccount.CreatedAt = time.Now()
 	newAccount.UpdatedAt = newAccount.CreatedAt
 
-	err = models.CreateAccount(ctrl.dbConn, &newAccount)
+	err = ctrl.Model.CreateAccount(&newAccount)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -141,7 +141,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 func (ctrl *Controller) isPhoneAlreadyExists(phone string) bool {
 	var account models.FacePaymentAccount
 
-	if isExist := ctrl.dbConn.Where("phone = ?", phone).First(&account).RowsAffected; isExist > 0 {
+	if isExist := ctrl.DBConn.Where("phone = ?", phone).First(&account).RowsAffected; isExist > 0 {
 		return true
 	}
 
@@ -202,7 +202,7 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 	newAccount.MinimumPayment = accountActivationData.MinimumPayment
 	newAccount.UpdatedAt = time.Now()
 
-	err = models.ActivateAccount(ctrl.dbConn, &newAccount)
+	err = ctrl.Model.ActivateAccount(&newAccount)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -213,7 +213,7 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 
 	// Creating the new account's wallet
 	var newAccountWallet models.FacePaymentWallet
-	err = models.CreateAccountWallet(ctrl.dbConn, sessionId, &newAccount, &newAccountWallet)
+	err = ctrl.Model.CreateAccountWallet(sessionId, &newAccount, &newAccountWallet)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,

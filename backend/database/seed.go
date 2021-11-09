@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func seedVisitor(db *gorm.DB) []string {
+func seedVisitor(model *models.Model) []string {
 	var visitors = []models.Visitor{
 		{
 			SessionID: "",
@@ -50,24 +50,24 @@ func seedVisitor(db *gorm.DB) []string {
 		sessionId := uuid.New()
 		sessionIds = append(sessionIds, sessionId.String())
 		visitor.SessionID = sessionId.String()
-		models.CreateVisitor(db, &visitor)
+		model.CreateVisitor(&visitor)
 	}
 
 	return sessionIds
 }
 
-func seedVisitorActivity(db *gorm.DB, sessionIds []string) {
+func seedVisitorActivity(model *models.Model, sessionIds []string) {
 	for _, sessionId := range sessionIds {
 		var visitorActivity = &models.VisitorActivity{
 			SessionID:    sessionId,
 			ServiceID:    1,
 			Completeness: 100,
 		}
-		models.CreateVisitorActivity(db, visitorActivity)
+		model.CreateVisitorActivity(visitorActivity)
 	}
 }
 
-func seedService(db *gorm.DB) {
+func seedService(model *models.Model) {
 	// all tokens and access keys provided here are just a random example
 	var services = []models.Service{
 		{
@@ -158,12 +158,13 @@ func seedService(db *gorm.DB) {
 	}
 
 	for _, service := range services {
-		models.CreateService(db, &service)
+		model.CreateService(&service)
 	}
 }
 
 func Seed(db *gorm.DB) {
-	sessionIds := seedVisitor(db)
-	seedService(db)
-	seedVisitorActivity(db, sessionIds)
+	model := models.New(db)
+	sessionIds := seedVisitor(model)
+	seedService(model)
+	seedVisitorActivity(model, sessionIds)
 }

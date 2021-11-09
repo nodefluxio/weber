@@ -1,13 +1,21 @@
 package controllers
 
-import "gorm.io/gorm"
+import (
+	"backend/models"
+
+	"gorm.io/gorm"
+)
 
 type Controller struct {
-	dbConn *gorm.DB
+	// We define two attributes here because our model still inconsistent
+	// there is direct query using GORM interface and custom abstraction
+	Model  *models.Model
+	DBConn *gorm.DB
 }
 
-func New(dbConn *gorm.DB) *Controller {
+func New(model *models.Model) *Controller {
 	return &Controller{
-		dbConn: dbConn,
+		Model:  model,
+		DBConn: model.DBConn,
 	}
 }

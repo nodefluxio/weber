@@ -5,18 +5,15 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func SetupRouter(db *gorm.DB) *gin.Engine {
+func SetupRouter(ctrl *controllers.Controller) *gin.Engine {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
 	r.GET("ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "pong")
 	})
-
-	ctrl := controllers.New(db)
 
 	apis := r.Group("/api/v1")
 	{
