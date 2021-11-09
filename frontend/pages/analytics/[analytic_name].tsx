@@ -6,7 +6,6 @@ import { ServiceBySlugResponseData } from '../../app/types/responses'
 import { GetServerSideProps } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { AnalyticsResult } from '../../app/components/modules/AnalyticsResult/AnalyticsResult'
-import { ServiceTitle } from '@/elements/ServiceTitle/ServiceTitle'
 
 const Analytics = ({
   name,
@@ -20,7 +19,7 @@ const Analytics = ({
   return (
     <>
       <Head>
-        <ServiceTitle type="Analytic" name={name} />
+        <title>{`Solution | ${name} - Demo`}</title>
       </Head>
       <AnalyticsPage
         analyticsName={name}
