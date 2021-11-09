@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Feedback struct {
@@ -21,8 +19,8 @@ type FeedbackInput struct {
 	Comment   string `json:"comment" validate:"max=255"`
 }
 
-func CreateFeedbackDb(db *gorm.DB, Feedback *Feedback) (err error) {
-	err = db.Create(Feedback).Error
+func (m *Model) CreateFeedbackDb(Feedback *Feedback) (err error) {
+	err = m.DBConn.Create(Feedback).Error
 	if err != nil {
 		return err
 	}

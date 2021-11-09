@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Visitor struct {
@@ -17,36 +15,36 @@ type Visitor struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func CreateVisitor(db *gorm.DB, Visitor *Visitor) (err error) {
-	err = db.Create(Visitor).Error
+func (m *Model) CreateVisitor(Visitor *Visitor) (err error) {
+	err = m.DBConn.Create(Visitor).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func GetVisitors(db *gorm.DB, Visitor *[]Visitor) (err error) {
-	err = db.Find(Visitor).Error
+func (m *Model) GetVisitors(Visitor *[]Visitor) (err error) {
+	err = m.DBConn.Find(Visitor).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func GetVisitor(db *gorm.DB, Visitor *Visitor, id string) (err error) {
-	err = db.Where("session_id = ?", id).First(Visitor).Error
+func (m *Model) GetVisitor(Visitor *Visitor, id string) (err error) {
+	err = m.DBConn.Where("session_id = ?", id).First(Visitor).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func UpdateVisitor(db *gorm.DB, Visitor *Visitor) (err error) {
-	db.Save(Visitor)
+func (m *Model) UpdateVisitor(Visitor *Visitor) (err error) {
+	m.DBConn.Save(Visitor)
 	return nil
 }
 
-func DeleteVisitor(db *gorm.DB, Visitor *Visitor, id string) (err error) {
-	db.Where("session_id = ?", id).Delete(Visitor)
+func (m *Model) DeleteVisitor(Visitor *Visitor, id string) (err error) {
+	m.DBConn.Where("session_id = ?", id).Delete(Visitor)
 	return nil
 }

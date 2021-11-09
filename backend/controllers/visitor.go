@@ -46,7 +46,7 @@ func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 	}
 	expirationLimitSecond := expirationLimitInt * 24 * 60 * 60
 
-	err = models.CreateVisitor(ctrl.dbConn, &visitor)
+	err = ctrl.Model.CreateVisitor(&visitor)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err, "ok": false})
 		return
