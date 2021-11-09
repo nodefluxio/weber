@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Face Payment Store Catalog
 
 ### Changed
+- [BACKEND] Move the env loader file on `init()` method
 
 ### Removed
 
