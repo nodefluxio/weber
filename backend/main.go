@@ -4,7 +4,13 @@ import (
 	"backend/database"
 	"backend/utils"
 	"os"
+
+	"github.com/subosito/gotenv"
 )
+
+func init() {
+	gotenv.Load()
+}
 
 func main() {
 	db := database.InitDB()
