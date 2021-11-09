@@ -8,7 +8,9 @@ import (
 
 type Controller struct {
 	// We define two attributes here because our model still inconsistent
-	// there is direct query using GORM interface and custom abstraction
+	// there are 2 methods found when accessing data layer:
+	// 1. Using direct query using GORM interface
+	// 2. Using custom abstraction
 	Model  *models.Model
 	DBConn *gorm.DB
 }
