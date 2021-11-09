@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type ServiceType string
@@ -73,15 +71,15 @@ type ResponseResultData struct {
 	Ok      bool           `json:"ok"`
 }
 
-func CreateService(db *gorm.DB, Service *Service) (err error) {
-	err = db.Create(Service).Error
+func (m *Model) CreateService(Service *Service) (err error) {
+	err = m.DBConn.Create(Service).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func IsValidServiceType(serviceType string) (bool, ServiceType) {
+func (m *Model) IsValidServiceType(serviceType string) (bool, ServiceType) {
 	serviceTypes := [...]ServiceType{AnalyticServiceType, SolutionServiceType, InnovationServiceType}
 	for _, st := range serviceTypes {
 		if string(st) == serviceType {
@@ -92,8 +90,8 @@ func IsValidServiceType(serviceType string) (bool, ServiceType) {
 	return false, ""
 }
 
-func GetServiceBySlug(db *gorm.DB, Service *Service, slug string) (err error) {
-	err = db.Where("slug = ?", slug).First(Service).Error
+func (m *Model) GetServiceBySlug(Service *Service, slug string) (err error) {
+	err = m.DBConn.Where("slug = ?", slug).First(Service).Error
 	if err != nil {
 		return err
 	}
