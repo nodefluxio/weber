@@ -1,4 +1,9 @@
-import { Service } from './elements'
+import { FaceLiveness, FaceMatch, OCRKTP, Service } from './elements'
+
+type StandardResponse = {
+  message: string,
+  ok: boolean
+}
 
 export type ServicesGetResponse = {
   data: Service[]
@@ -17,15 +22,8 @@ export type VisitorsPostResponse = {
   ok: boolean
 }
 
-export type VisitorsPostErrorResponse = {
-  message: string
-  ok: boolean
-}
-
-export type ActivitiesPostResponse = {
-  message: string
-  ok: boolean
-}
+export type VisitorsPostErrorResponse = StandardResponse
+export type ActivitiesPostResponse = StandardResponse
 
 export type ServiceBySlugResponse = {
   data: {
@@ -54,7 +52,16 @@ export type ServiceBySlugResponseData = {
   updated_at: string
 }
 
-export type ServiceByIdErrorResponse = {
+export type ServiceByIdErrorResponse = StandardResponse
+
+export type NodefluxCloudResponse<AnalyticsResultResponse> = {
+  job: {
+    result: {
+      analytic_type: string
+      result: [AnalyticsResultResponse]
+      status: string
+    }
+  }
   message: string
   ok: boolean
 }
@@ -73,22 +80,9 @@ export type AnalyticsResponse<AnalyticsResultResponse> = {
   }
 }
 
-export type AnalyticsError = {
-  message: string
-  ok: boolean
-}
+export type AnalyticsError = StandardResponse
 
-export type FaceLiveness = {
-  face_liveness: {
-    live: boolean
-    liveness: number
-  }
-}
-
-export type ReviewResponse = {
-  message: string
-  ok: boolean
-}
+export type ReviewResponse = StandardResponse
 
 export type OCRResultResponse = {
   agama: string
@@ -133,7 +127,19 @@ export type FMEResultResponse = {
   }
 }
 
+export type EKYCResultResponse = {
+  message: string
+  ok: boolean
+  service_data: {
+    face_liveness: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>
+    ocr_ktp: NodefluxCloudResponse<OCRKTP>
+    face_match: NodefluxCloudResponse<{ face_match: FaceMatch }>
+  }
+}
+
 export type AnyResultResponse =
   | FMEResultResponse
   | OCRResultResponse
   | LPRResultResponse
+
+export type PhoneNumberResponse = StandardResponse

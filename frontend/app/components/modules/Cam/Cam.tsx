@@ -14,9 +14,10 @@ import { Color } from '../../../types/elements'
 type Props = {
   localkey: string
   nextStep: MouseEventHandler<HTMLButtonElement>
+  videoConstraints?: Object
 }
 
-export const Cam = ({ localkey, nextStep }: Props) => {
+export const Cam = ({ localkey, nextStep, videoConstraints }: Props) => {
   const webcamRef = useRef<Webcam>(null)
 
   const [disabled, setDisabled] = useState(true)
@@ -24,10 +25,12 @@ export const Cam = ({ localkey, nextStep }: Props) => {
   const [photo, setPhoto] = useState('')
 
   useEffect(() => {
-    if (localStorage.getItem(localkey)) {
+    const storedPhoto =  localStorage.getItem(localkey)
+    if (storedPhoto) {
+      setPhoto(storedPhoto)
       setDisabled(false)
     }
-  }, [])
+  }, [localkey])
 
   const capture = useCallback(() => {
     if (webcamRef.current !== null) {
@@ -58,9 +61,10 @@ export const Cam = ({ localkey, nextStep }: Props) => {
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             width={640}
+            videoConstraints={videoConstraints}
           />
         ) : (
-          photo && <Image src={photo} height={360} width={486} />
+          photo && <Image src={photo} height={360} width={486} alt='captured photos' />
         )}
       </div>
 

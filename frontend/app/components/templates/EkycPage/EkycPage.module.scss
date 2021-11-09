@@ -9,11 +9,83 @@
 
 .title {
   margin: 0;
-  padding-bottom: .5rem;
-  font-size: 3rem;
+  padding-bottom: 0.5rem;
+  font-size: 2rem;
 }
 
 .desc {
   font-size: 1.25rem;
   padding: 0;
+}
+
+.imgContainer {
+  position: relative;
+
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+  .imgItem {
+    position: relative;
+    width: 300px;
+    height: 225px;
+  }
+
+  .caption {
+    display: block;
+  }
+}
+
+.btnGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.result {
+  display: grid;
+  width: 80vw;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
+  column-gap: 5rem;
+  row-gap: 1rem;
+  padding: 2rem;
+
+  p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .percentage {
+    margin: 0;
+    font-weight: 700;
+
+    span {
+      display: block;
+      font-size: 5rem;
+      font-weight: 100;
+    }
+
+    & p.passed {
+      color: #45e5b7;
+    }
+
+    & p.notPassed {
+      color: #ff6961;
+    }
+  }
+
+  .ocrKtp {
+    grid-column-end: span 2;
+  }
+
+  button {
+    justify-self: center;
+    grid-column-end: span 2;
+  }
+}
+
+.review {
+  width: 100vw;
 }
