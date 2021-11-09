@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Thumbnails data from cropping original image data
 
 ### Changed
+- [BACKEND] Move the env loader file on `init()` method
 
 ### Removed
 
