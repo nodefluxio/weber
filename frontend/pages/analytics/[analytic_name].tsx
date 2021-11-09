@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { AnalyticsPage } from '../../app/components/templates/AnalyticsPage/AnalyticsPage'
 import { useState } from 'react'
 import { getServiceBySlug } from '../../app/api/analyticsAPI'
@@ -5,6 +6,7 @@ import { ServiceBySlugResponseData } from '../../app/types/responses'
 import { GetServerSideProps } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { AnalyticsResult } from '../../app/components/modules/AnalyticsResult/AnalyticsResult'
+import { ServiceTitle } from '@/elements/ServiceTitle/ServiceTitle'
 
 const Analytics = ({
   name,
@@ -16,19 +18,24 @@ const Analytics = ({
   const [result, setResult] = useState<any>()
 
   return (
-    <AnalyticsPage
-      analyticsName={name}
-      shortDescription={short_description}
-      longDescription={long_description}
-      examples={[
-        `/assets/images/analytics/${slug}/example1.jpg`,
-        `/assets/images/analytics/${slug}/example2.jpg`,
-        `/assets/images/analytics/${slug}/example3.jpg`
-      ]}
-      serviceID={id}
-      handleResult={(res) => setResult(res)}>
-      <AnalyticsResult result={result} slug={slug} />
-    </AnalyticsPage>
+    <>
+      <Head>
+        <ServiceTitle type="Analytic" name={name} />
+      </Head>
+      <AnalyticsPage
+        analyticsName={name}
+        shortDescription={short_description}
+        longDescription={long_description}
+        examples={[
+          `/assets/images/analytics/${slug}/example1.jpg`,
+          `/assets/images/analytics/${slug}/example2.jpg`,
+          `/assets/images/analytics/${slug}/example3.jpg`
+        ]}
+        serviceID={id}
+        handleResult={(res) => setResult(res)}>
+        <AnalyticsResult result={result} slug={slug} />
+      </AnalyticsPage>
+    </>
   )
 }
 
