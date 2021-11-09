@@ -10,8 +10,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
-
 func InitDB() *gorm.DB {
 	dbHost := os.Getenv("DB_HOST")
 	dbUsername := os.Getenv("DB_USERNAME")
@@ -35,15 +33,5 @@ func InitDB() *gorm.DB {
 
 	log.Println("Database connection successfully established!")
 
-	return DB
-}
-
-func GetDB() *gorm.DB {
-	sqlDB, _ := DB.DB()
-
-	if sqlDB.Ping() != nil {
-		fmt.Println(sqlDB.Ping()) // sql: database is closed
-		InitDB()
-	}
 	return DB
 }

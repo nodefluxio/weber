@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"backend/database"
 	"backend/models"
-	"backend/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -30,13 +28,13 @@ type ekycServiceData struct {
 	FaceMatch    models.ServiceRequestResultData `json:"face_match"`
 }
 
-func CreateEKYCRequest(ctx *gin.Context) {
+func (ctrl *Controller) CreateEKYCRequest(ctx *gin.Context) {
 	var inputData ekycRequestInput
 	ctx.BindJSON(&inputData)
 	sessionId := inputData.SessionID
 
 	// Check if session is not exist in our record
-	if !utils.IsSessionExist(sessionId) {
+	if !ctrl.IsSessionExist(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID is not valid",
@@ -45,7 +43,7 @@ func CreateEKYCRequest(ctx *gin.Context) {
 	}
 
 	// Check if session has expired
-	if utils.IsSessionExpired(sessionId) {
+	if ctrl.IsSessionExpired(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID has expired",
@@ -54,8 +52,7 @@ func CreateEKYCRequest(ctx *gin.Context) {
 	}
 
 	var service models.Service
-	db := database.GetDB()
-	models.GetServiceBySlug(db, &service, "ekyc")
+	models.GetServiceBySlug(ctrl.dbConn, &service, "ekyc")
 
 	ImplementEKYCSolution(ctx, service, inputData)
 }

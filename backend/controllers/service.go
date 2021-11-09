@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"backend/database"
 	"backend/models"
-	"backend/utils"
 	"errors"
 	"fmt"
 	"log"
@@ -14,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetServices(ctx *gin.Context) {
+func (ctrl *Controller) GetServices(ctx *gin.Context) {
 	serviceTypeQuery, isAnyQueryType := ctx.GetQuery("type")
 
 	// check if there is a query URL "type"
@@ -30,23 +28,21 @@ func GetServices(ctx *gin.Context) {
 
 	switch serviceType {
 	case models.AnalyticServiceType:
-		getServiceAnalytic(ctx)
+		ctrl.getServiceAnalytic(ctx)
 	case models.SolutionServiceType:
-		getServiceSolution(ctx)
+		ctrl.getServiceSolution(ctx)
 	case models.InnovationServiceType:
-		getServiceInnovation(ctx)
+		ctrl.getServiceInnovation(ctx)
 	default:
-		getAllServices(ctx)
+		ctrl.getAllServices(ctx)
 	}
 }
 
-func getAllServices(ctx *gin.Context) {
-	db := database.GetDB()
-
+func (ctrl *Controller) getAllServices(ctx *gin.Context) {
 	service := &models.Service{}
 	analyticsService := &[]models.APIService{}
 
-	if err := db.Model(service).Find(analyticsService).Error; err != nil {
+	if err := ctrl.dbConn.Model(service).Find(analyticsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -57,13 +53,11 @@ func getAllServices(ctx *gin.Context) {
 	})
 }
 
-func getServiceAnalytic(ctx *gin.Context) {
-	db := database.GetDB()
-
+func (ctrl *Controller) getServiceAnalytic(ctx *gin.Context) {
 	service := &models.Service{}
 	analyticsService := &[]models.APIService{}
 
-	if err := db.Model(service).Where("type = ?", "analytic").Find(analyticsService).Error; err != nil {
+	if err := ctrl.dbConn.Model(service).Where("type = ?", "analytic").Find(analyticsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -74,13 +68,11 @@ func getServiceAnalytic(ctx *gin.Context) {
 	})
 }
 
-func getServiceSolution(ctx *gin.Context) {
-	db := database.GetDB()
-
+func (ctrl *Controller) getServiceSolution(ctx *gin.Context) {
 	service := &models.Service{}
 	solutionsService := &[]models.APIService{}
 
-	if err := db.Model(service).Where("type = ?", "solution").Find(solutionsService).Error; err != nil {
+	if err := ctrl.dbConn.Model(service).Where("type = ?", "solution").Find(solutionsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -91,13 +83,11 @@ func getServiceSolution(ctx *gin.Context) {
 	})
 }
 
-func getServiceInnovation(ctx *gin.Context) {
-	db := database.GetDB()
-
+func (ctrl *Controller) getServiceInnovation(ctx *gin.Context) {
 	service := &models.Service{}
 	innovationsService := &[]models.APIService{}
 
-	if err := db.Model(service).Where("type = ?", "innovation").Find(innovationsService).Error; err != nil {
+	if err := ctrl.dbConn.Model(service).Where("type = ?", "innovation").Find(innovationsService).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -108,13 +98,12 @@ func getServiceInnovation(ctx *gin.Context) {
 	})
 }
 
-func GetServiceBySlug(ctx *gin.Context) {
-	db := database.GetDB()
+func (ctrl *Controller) GetServiceBySlug(ctx *gin.Context) {
 	service := &models.Service{}
 	apiService := &models.APIService{}
 	slug := ctx.Param("slug")
 
-	if err := db.Model(service).First(&apiService, "slug = ?", slug).Error; err != nil {
+	if err := ctrl.dbConn.Model(service).First(&apiService, "slug = ?", slug).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"ok":      false,
@@ -132,13 +121,13 @@ func GetServiceBySlug(ctx *gin.Context) {
 	})
 }
 
-func CreateServiceRequest(ctx *gin.Context) {
+func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 	var inputData models.ServiceRequestInput
 	ctx.BindJSON(&inputData)
 	sessionId := inputData.SessionID
 
 	// Check if session is not exist in our record
-	if !utils.IsSessionExist(sessionId) {
+	if !ctrl.IsSessionExist(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID is not valid",
@@ -147,7 +136,7 @@ func CreateServiceRequest(ctx *gin.Context) {
 	}
 
 	// Check if session has expired
-	if utils.IsSessionExpired(sessionId) {
+	if ctrl.IsSessionExpired(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID has expired",
@@ -168,8 +157,7 @@ func CreateServiceRequest(ctx *gin.Context) {
 
 	// Get service data from database
 	var service models.Service
-	db := database.GetDB()
-	if err = db.First(&service, serviceId).Error; err != nil {
+	if err = ctrl.dbConn.First(&service, serviceId).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -179,7 +167,7 @@ func CreateServiceRequest(ctx *gin.Context) {
 
 	if service.Type == "analytic" {
 		visitorActivity := &models.VisitorActivity{SessionID: inputData.SessionID, ServiceID: service.ID, Completeness: 100}
-		if err = models.CreateVisitorActivity(db, visitorActivity); err != nil {
+		if err = models.CreateVisitorActivity(ctrl.dbConn, visitorActivity); err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"ok":      false,
 				"message": err.Error(),
