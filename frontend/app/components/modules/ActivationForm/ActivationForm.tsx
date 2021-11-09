@@ -1,13 +1,13 @@
 import { PinInput } from '@/elements/PinInput/PinInput'
 import { Modal } from '@/elements/Modal/Modal'
+import { Spinner } from '@/elements/Spinner/Spinner'
 import { Button } from '../../elements/Button/Button'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styles from './ActivationForm.module.scss'
 import { Color } from '@/types/elements'
 import { PaymentSetup } from '../PaymentSetup/PaymentSetup'
 import { parseCookies } from 'nookies'
 import { activateAccount } from '@/api/paymentAPI'
-import { Spinner } from '@/elements/Spinner/Spinner'
 
 type Props = {
   nextStep: Function
@@ -35,20 +35,22 @@ export const ActivationForm = ({ nextStep }: Props) => {
     }
   }
 
-  useEffect(() => {
-    console.log(minPayment)
-  }, [minPayment])
-
   return (
     <>
       <Modal show={isModalShowed} onClose={() => setIsModalShowed(false)}>
-        <PaymentSetup
-          onChange={setMinPayment}
-          onSuccess={() => {
-            setIsLoading(true)
-            activate()
-          }}
-        />
+        {isLoading ? <Spinner/> : <PaymentSetup onChange={setMinPayment} />}
+        <div className={styles.buttonWrapper}>
+          <Button
+            type="button"
+            color={Color.Primary}
+            disabled={isLoading}
+            onClick={() => {
+              setIsLoading(true)
+              activate()
+            }}>
+            Next
+          </Button>
+        </div>
       </Modal>
       <div className={styles.pinInputWrapper}>
         <div>

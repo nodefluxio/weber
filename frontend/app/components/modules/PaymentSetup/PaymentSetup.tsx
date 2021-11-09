@@ -1,6 +1,4 @@
 import { BaseSyntheticEvent, useEffect, useState } from 'react'
-import { Button } from '@/elements/Button/Button'
-import { Color } from '@/types/elements'
 import styles from './PaymentSetup.module.scss'
 
 const MIN_PAYMENT = 100000
@@ -10,10 +8,9 @@ const TICK_INTERVAL = 100000
 
 type Props = {
   onChange: Function
-  onSuccess: Function
 }
 
-export const PaymentSetup = ({ onChange, onSuccess }: Props) => {
+export const PaymentSetup = ({ onChange}: Props) => {
   const [value, setValue] = useState(MIN_PAYMENT)
   const [typedInput, setTypedInput] = useState('')
 
@@ -76,9 +73,6 @@ export const PaymentSetup = ({ onChange, onSuccess }: Props) => {
         onChange={handleInputChange}
         className={styles.inputNominal}
       />
-      <Button type="button" color={Color.Primary} onClick={() => onSuccess()}>
-        Next
-      </Button>
     </div>
   )
 }
