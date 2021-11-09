@@ -18,10 +18,9 @@ import (
 )
 
 var (
-	uni      			*ut.UniversalTranslator
-	Validate 			*validator.Validate
-	trans    			ut.Translator
-	visitorCreatedAt	time.Time
+	uni      *ut.UniversalTranslator
+	Validate *validator.Validate
+	trans    ut.Translator
 )
 
 func InitTranslation() {
@@ -53,12 +52,12 @@ func TranslateError(err error) (errs []error) {
 
 func IsSessionExist(sessionId string) bool {
 	db := database.GetDB()
-	var visitor	models.Visitor
-	
+	var visitor models.Visitor
+
 	if err := models.GetVisitor(db, &visitor, sessionId); err != nil {
 		return false
 	}
-	
+
 	visitorCreatedAt = visitor.CreatedAt
 	return true
 }
@@ -68,7 +67,7 @@ func IsSessionExpired(sessionId string) bool {
 	if err != nil {
 		log.Fatal("environment variable 'SESSION_EXPIRATION' is not set")
 	}
-	
+
 	dateExpiration := visitorCreatedAt.AddDate(0, 0, expirationLimit)
 	dateNow := time.Now()
 

@@ -21,7 +21,7 @@ func main() {
 	// Init Translation for Validator
 	utils.InitTranslation()
 
-	r := SetupRouter()
+	r := SetupRouter(db)
 
 	host := os.Getenv("APP_HOST")
 	port := os.Getenv("APP_PORT")

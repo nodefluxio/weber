@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"backend/database"
 	"backend/models"
 	"backend/utils"
 	"net/http"
@@ -10,14 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateFeedback(ctx *gin.Context) {
-
+func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 	serviceId, _ := strconv.Atoi(ctx.Param("service_id"))
 	var feedbackInput models.FeedbackInput
 	ctx.BindJSON(&feedbackInput)
 
 	// Check if session is not exist in our record
-	if !utils.IsSessionExist(feedbackInput.SessionID) {
+	if !ctrl.IsSessionExist(feedbackInput.SessionID) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID is not valid",
@@ -26,7 +24,7 @@ func CreateFeedback(ctx *gin.Context) {
 	}
 
 	// Check if session has expired
-	if utils.IsSessionExpired(feedbackInput.SessionID) {
+	if ctrl.IsSessionExpired(feedbackInput.SessionID) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID has expired",
@@ -49,10 +47,8 @@ func CreateFeedback(ctx *gin.Context) {
 		return
 	}
 
-	db := database.GetDB()
-
 	var lastActivity models.VisitorActivity
-	if err := models.GetCurrentVisitorActivity(db, &lastActivity, feedbackInput.SessionID, serviceId); err != nil {
+	if err := models.GetCurrentVisitorActivity(ctrl.dbConn, &lastActivity, feedbackInput.SessionID, serviceId); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -65,7 +61,7 @@ func CreateFeedback(ctx *gin.Context) {
 	feedback.Comment = feedbackInput.Comment
 	feedback.Rating = feedbackInput.Rating
 
-	if err := models.CreateFeedbackDb(db, &feedback); err != nil {
+	if err := models.CreateFeedbackDb(ctrl.dbConn, &feedback); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
