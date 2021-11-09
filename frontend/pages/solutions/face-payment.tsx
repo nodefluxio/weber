@@ -13,7 +13,7 @@ const FacePayment: React.FC<Props> = (props) => {
   return (
     <>
       <Head>
-        <title>{`Solution | ${name} - Demo`}</title>
+        <title>{`Solution | ${props.name} - Demo`}</title>
       </Head>
       <FacePaymentPage {...props} />
     </>
