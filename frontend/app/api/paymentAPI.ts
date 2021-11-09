@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { SESSION_ID_ERROR } from '../constants/message'
-import { PhoneNumberResponse } from '../types/responses'
+import { ActivationResponse, PhoneNumberResponse } from '../types/responses'
 
 type PaymentResponse = {
   ok: boolean
@@ -50,9 +50,39 @@ export const registerAccount = async (
   }
 }
 
-export const activateAccount = async (): Promise<PaymentResponse> => {
-  return {
-    ok: true,
-    message: "activated"
+export const activateAccount = async (
+  sessionId: string,
+  pin: string,
+  minPayment: number
+): Promise<PaymentResponse> => {
+  try {
+    const res = await axios.patch<ActivationResponse>(`/face-payment/account`, {
+      session_id: sessionId,
+      pin: pin,
+      minimum_payment: minPayment
+    })
+    if (res.data.ok) {
+      return {
+        ...res.data
+      }
+    } else {
+      throw new Error(res.data.message)
+    }
+  } catch (e) {
+    const axiosError = e as AxiosError<ActivationResponse>
+    console.log(axiosError.message)
+    if (axiosError.response?.status === 401) {
+      // Unauthorized
+      return {
+        ok: false,
+        error: 401,
+        message: SESSION_ID_ERROR
+      }
+    }
+    return {
+      ok: false,
+      error: axiosError.response?.status || 500,
+      message: axiosError.response?.data.message || 'Server error'
+    }
   }
 }
