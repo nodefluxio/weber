@@ -1,7 +1,7 @@
 import { BaseSyntheticEvent, useEffect, useState } from 'react'
 import styles from './PaymentSetup.module.scss'
 
-const MIN_PAYMENT = 100000
+const MIN_PAYMENT = 50000
 const MAX_PAYMENT = 1000000
 const STEP_PAYMENT = 50000
 const TICK_INTERVAL = 100000
@@ -10,13 +10,13 @@ type Props = {
   onChange: Function
 }
 
-export const PaymentSetup = ({ onChange}: Props) => {
+export const PaymentSetup = ({ onChange }: Props) => {
   const [value, setValue] = useState(MIN_PAYMENT)
   const [typedInput, setTypedInput] = useState('')
 
   const ticks = Array.from(
     { length: Math.floor((MAX_PAYMENT - MIN_PAYMENT) / TICK_INTERVAL) + 1 },
-    (_, i: number) => MIN_PAYMENT + i * TICK_INTERVAL
+    (_, i: number) => TICK_INTERVAL * (i + 1)
   )
 
   const handleInputChange = (e: BaseSyntheticEvent) => {
