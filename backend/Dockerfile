@@ -13,7 +13,8 @@ WORKDIR /app
 
 COPY --from=build /go/bin/backend /usr/bin/
 COPY docker-entrypoint.sh .
-RUN chmod +x docker-entrypoint.sh
+RUN apk add dos2unix --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community/ --allow-untrusted
+RUN dos2unix docker-entrypoint.sh && chmod +x docker-entrypoint.sh
 
 EXPOSE 8080
 ENV GIN_MODE=release
