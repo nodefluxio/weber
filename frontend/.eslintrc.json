@@ -6,6 +6,8 @@
     "plugin:import/typescript"
   ],
   "rules": {
-    "@next/next/no-document-import-in-page": "off"
+    "@next/next/no-document-import-in-page": "off",
+    "no-unused-vars": "error",
+    "indent": ["error", 2]
   }
 }

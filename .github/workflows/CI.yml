@@ -25,5 +25,5 @@ jobs:
         run: cp .env.example .env
         working-directory: ./frontend
       - name: "Frontend build"
-        run: npm install && npm run lint && npm run build
+        run: mkdir -p .git && npm install && npm run prepare && npm run lint && npm run build
         working-directory: ./frontend
