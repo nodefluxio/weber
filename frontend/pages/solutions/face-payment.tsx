@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { getServiceBySlug } from "../../app/api/analyticsAPI"
 import { FacePaymentPage } from "../../app/components/templates/FacePaymentPage/FacePaymentPage"
 
@@ -11,7 +12,10 @@ interface Props {
 const FacePayment: React.FC<Props> = (props) => {
   return (
     <>
-      <FacePaymentPage {...props}/>
+      <Head>
+        <title>{`Solution | ${props.name} - Demo`}</title>
+      </Head>
+      <FacePaymentPage {...props} />
     </>
   )
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter() *gin.Engine {
+func SetupRouter(ctrl *controllers.Controller) *gin.Engine {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
@@ -19,37 +19,37 @@ func SetupRouter() *gin.Engine {
 	{
 		services := apis.Group("/services")
 		{
-			services.GET("", controllers.GetServices)
-			services.GET("/:slug", controllers.GetServiceBySlug)
+			services.GET("", ctrl.GetServices)
+			services.GET("/:slug", ctrl.GetServiceBySlug)
 
-			services.POST("/:id", controllers.CreateServiceRequest)
+			services.POST("/:id", ctrl.CreateServiceRequest)
 		}
 
 		visitors := apis.Group("/visitors")
 		{
-			visitors.POST("", controllers.CreateVisitor)
+			visitors.POST("", ctrl.CreateVisitor)
 		}
 
 		activities := apis.Group("/activities")
 		{
-			activities.POST("", controllers.CreateActivity)
+			activities.POST("", ctrl.CreateActivity)
 		}
 
 		feedbacks := apis.Group("/feedback")
 		{
-			feedbacks.POST("/:service_id", controllers.CreateFeedback)
+			feedbacks.POST("/:service_id", ctrl.CreateFeedback)
 		}
-		
+
 		ekyc := apis.Group("/ekyc")
 		{
-			ekyc.POST("", controllers.CreateEKYCRequest)
+			ekyc.POST("", ctrl.CreateEKYCRequest)
 		}
 
 		facePayments := apis.Group("/face-payment")
 		{
-			facePayments.POST("/account", controllers.CreateFacePaymentAccount)
+			facePayments.POST("/account", ctrl.CreateFacePaymentAccount)
 
-			facePayments.PATCH("/account", controllers.UpdateFacePaymentAccount)
+			facePayments.PATCH("/account", ctrl.UpdateFacePaymentAccount)
 		}
 	}
 

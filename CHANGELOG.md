@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+
 - [FRONTEND] Face Payment Registration Form
 - [FRONTEND] Face Payment Webcam Photo Uploader
 - [FRONTEND] Face Payment Store Catalog
@@ -12,11 +13,17 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-### Removed
+- [BACKEND] Move the env loader file on `init()` method
+
+### Fixed
+
+- [BACKEND] Database connection always re-initialized
 
 
 ## [0.2.0 - 29/10/2021]
+
 ### Added
+
 - [FRONTEND] Feedback form
 - [FRONTEND] Agnostic analytic page
 - [FRONTEND] Analytic result for Face Match w/ Enrollment and LPR
@@ -24,12 +31,17 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] e-KYC analytic face liveness
 - [BACKEND] Completeness tracker
 - [BACKEND] Feedback recorder
+
 ### Changed
+
 - [FRONTEND] Fixing Industry as dropdown input
 - [FRONTEND] More proper styling on landing page
 - Feedback validation (1-3 stars requires comment before submit, 0 will unable to submit)
+
 ### Removed
+
 [FRONTEND] Try again button on analytics page
+
 ## [0.1.0 - 19/10/2021]
 
 ### Added

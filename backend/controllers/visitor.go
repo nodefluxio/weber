@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"backend/database"
 	"backend/models"
 	"backend/utils"
 	"fmt"
@@ -15,8 +14,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func CreateVisitor(ctx *gin.Context) {
-	db := database.GetDB()
+func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 	emailBlacklist := [1]string{"@yopmail.com"}
 	var visitor models.Visitor
 	ctx.BindJSON(&visitor)
@@ -48,7 +46,7 @@ func CreateVisitor(ctx *gin.Context) {
 	}
 	expirationLimitSecond := expirationLimitInt * 24 * 60 * 60
 
-	err = models.CreateVisitor(db, &visitor)
+	err = ctrl.Model.CreateVisitor(&visitor)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err, "ok": false})
 		return

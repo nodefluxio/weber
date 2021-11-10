@@ -23,7 +23,7 @@ type dataAnalytic struct {
 	postBody           []byte
 	authorization      string
 	xNodefluxTimestamp string
-}
+}.
 
 func GetDataAnalytic(service models.Service, requestData models.RequestData) dataAnalytic {
 	var dataAnalytic dataAnalytic

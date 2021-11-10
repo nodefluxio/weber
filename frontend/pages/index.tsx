@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Head from 'next/head'
 import type { GetServerSideProps } from 'next'
 import type { Service } from '../app/types/elements'
 import type { ServicesGetResponse } from '../app/types/responses'
@@ -12,11 +13,16 @@ type Props = {
 
 const Home = ({ analytics, solutions, innovations }: Props) => {
   return (
-    <HomePage
-      analytics={analytics}
-      solutions={solutions}
-      innovations={innovations}
-    />
+    <>
+      <Head>
+        <title>Nodeflux Demo App</title>
+      </Head>
+      <HomePage
+        analytics={analytics}
+        solutions={solutions}
+        innovations={innovations}
+      />
+    </>
   )
 }
 
