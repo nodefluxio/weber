@@ -13,7 +13,7 @@ import (
 )
 
 func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
-	var newAccountData models.NewAccountData
+	// var newAccountData models.NewAccountData
 	ctx.BindJSON(&newAccountData)
 
 	sessionId := newAccountData.SessionID
