@@ -1,5 +1,10 @@
 {
-  "extends": ["next/core-web-vitals","next"],
+  "extends": [
+    "next/core-web-vitals",
+    "next",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ],
   "rules": {
     "@next/next/no-document-import-in-page": "off",
     "no-unused-vars": "error",

@@ -1,0 +1,29 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: "1.17"
+      - name: "Copy env back-end"
+        run: cp .env.example .env
+        working-directory: ./backend
+      - name: "Backend build"
+        run: go build .
+        working-directory: ./backend
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: "Copy env front-end"
+        run: cp .env.example .env
+        working-directory: ./frontend
+      - name: "Frontend build"
+        run: npm install && npm run lint && npm run build
+        working-directory: ./frontend

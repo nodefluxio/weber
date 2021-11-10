@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { ServiceTitle } from '@/elements/ServiceTitle/ServiceTitle'
 import { getServiceBySlug } from '../../app/api/analyticsAPI'
 import { EkycPage } from '../../app/components/templates/EkycPage/EkycPage'
 
