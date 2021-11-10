@@ -1,4 +1,3 @@
-import { route } from 'next/dist/server/router'
 import Document, {
   Html,
   Head,
@@ -6,7 +5,6 @@ import Document, {
   NextScript,
   DocumentContext
 } from 'next/document'
-import { useRouter } from 'next/router'
 
 class MainDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
