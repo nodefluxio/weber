@@ -1,37 +1,39 @@
-import { MouseEvent, useCallback, useEffect, useState } from "react"
-import { useDropzone } from "react-dropzone"
-import Image from "next/image"
-import styles from "./DropzoneOptions.module.scss"
+import { MouseEvent, useCallback, useEffect, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+import Image from 'next/image'
+import styles from './DropzoneOptions.module.scss'
 
 type Props = {
-  images: string[],
-  onPhotoDrop: Function,
+  images: string[]
+  onPhotoDrop: Function
   // onPhotoSrc: Function
 }
 
 export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
-
   const [photos, setPhotos] = useState<any[]>([])
-  const [errorMsg, setErrorMsg] = useState<string>("")
+  const [errorMsg, setErrorMsg] = useState<string>('')
 
   const MAX_IMAGE_SIZE = 800000 // 800kB
-  const ERROR_FILE_SIZE = "Image too large. Please upload another image lower than 800kB"
-  const ERROR_FILE_FORMAT = "Wrong file format. Please upload jpeg file only!"
+  const ERROR_FILE_SIZE =
+    'Image too large. Please upload another image lower than 800kB'
+  const ERROR_FILE_FORMAT = 'Wrong file format. Please upload jpeg file only!'
 
-  const onDrop = useCallback(uploadedPhoto => {
+  const onDrop = useCallback((uploadedPhoto) => {
     // Setup file reader
     const reader = new FileReader()
     try {
       reader.readAsDataURL(uploadedPhoto[0])
       if (uploadedPhoto[0].size < MAX_IMAGE_SIZE) {
-        setErrorMsg("")
+        setErrorMsg('')
         reader.onload = (event) => {
           onPhotoDrop(event.target?.result)
-          setPhotos(uploadedPhoto.map((photo: any) =>
-            Object.assign(photo, {
-              preview: URL.createObjectURL(photo)
-            })
-          ))
+          setPhotos(
+            uploadedPhoto.map((photo: any) =>
+              Object.assign(photo, {
+                preview: URL.createObjectURL(photo)
+              })
+            )
+          )
         }
       } else {
         throw new Error(ERROR_FILE_SIZE)
@@ -50,24 +52,22 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
     const option = await (await fetch(src)).blob()
     const reader = new FileReader()
     reader.readAsDataURL(option)
-    setErrorMsg("")
+    setErrorMsg('')
     reader.onload = (e) => {
       if (option.size < MAX_IMAGE_SIZE) {
         onPhotoDrop(e.target?.result)
-        setPhotos([{
-          preview: URL.createObjectURL(option),
-          name: "sample.jpg"
-        }])
+        setPhotos([
+          {
+            preview: URL.createObjectURL(option),
+            name: 'sample.jpg'
+          }
+        ])
       }
     }
   }, [])
 
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive
-  } = useDropzone({
-    accept: "image/jpeg",
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: 'image/jpeg',
     onDrop,
     multiple: false
   })
@@ -87,39 +87,36 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
   }, [photos])
 
   return (
-    <>
+    <div className={styles.dropzoneOptions}>
       <p>{errorMsg}</p>
-      <div className={styles.doubleColumn}>
+      <div className={styles.previewNOptions}>
         <div {...getRootProps()} className={styles.dropzoneContainer}>
           <input {...getInputProps()} />
-          {
-            photos.length === 0 ?
-              <aside className={styles.instruction}>
-                <p>Drag and drop your image here, or click to select image</p>
-              </aside>
-              :
-              <aside className={styles.imagePreview}>
-                {preview}
-              </aside>
-          }
+          {photos.length === 0 ? (
+            <aside className={styles.instruction}>
+              <p>Drag and drop your image here, or click to select image</p>
+            </aside>
+          ) : (
+            <aside className={styles.imagePreview}>{preview}</aside>
+          )}
         </div>
         <div className={styles.imageOptions}>
-          {
-            images.map((imageName: string, i: number) => (
-              <div className={styles.items} key={i}>
-                <Image
-                  onClick={(e: MouseEvent<HTMLImageElement>) => {
-                    const img = e.target as HTMLImageElement;
-                    onChoose(img.src)
-                  }}
-                  src={imageName}
-                  layout="fill"
-                  objectFit="cover" />
-              </div>
-            ))
-          }
+          <p>or use the examples</p>
+          {images.map((imageName: string, i: number) => (
+            <div className={styles.items} key={i}>
+              <Image
+                onClick={(e: MouseEvent<HTMLImageElement>) => {
+                  const img = e.target as HTMLImageElement
+                  onChoose(img.src)
+                }}
+                src={imageName}
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
