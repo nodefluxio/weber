@@ -14,7 +14,12 @@ type Props = {
   isDisabled: boolean
 }
 
-export const PinInput = ({ message, digits, onPinChange, isDisabled }: Props) => {
+export const PinInput = ({
+  message,
+  digits,
+  onPinChange,
+  isDisabled
+}: Props) => {
   const [pinCode, setPinCode] = useState(
     Array.from({ length: digits }, (_) => '')
   )
@@ -44,7 +49,19 @@ export const PinInput = ({ message, digits, onPinChange, isDisabled }: Props) =>
     } else if (event.key === 'ArrowRight' && i < digits - 1) {
       refs.current[i + 1].focus()
     } else if (event.key === 'Backspace') {
-      setPinCode([...pinCode.slice(0, i), '', ...pinCode.slice(i + 1, digits)])
+      if (pinCode[i] === '') {
+        setPinCode([
+          ...pinCode.slice(0, i - 1),
+          '',
+          ...pinCode.slice(i, digits)
+        ])
+      } else {
+        setPinCode([
+          ...pinCode.slice(0, i),
+          '',
+          ...pinCode.slice(i + 1, digits)
+        ])
+      }
       if (i > 0) refs.current[i - 1].focus()
     } else if (event.key <= '0' && event.key >= '9') {
       setPinCode([...pinCode.slice(0, i), '', ...pinCode.slice(i + 1, digits)])
