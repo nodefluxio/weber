@@ -1,26 +1,28 @@
-import styles from "./Banner.module.scss"
-import Image from "next/image"
+import styles from './Banner.module.scss'
 
 type Props = {
-  analyticsName: string,
-  shortDescription: string,
+  analyticsName: string
+  shortDescription: string
   longDescription: string
+  slug: string
 }
 
-export const Banner = ({ analyticsName, shortDescription, longDescription }: Props) => {
+export const Banner = ({
+  analyticsName,
+  shortDescription,
+  longDescription,
+  slug
+}: Props) => {
   return (
-    <div className={styles.intro}>
-      <div className={styles.title}>
+    <div
+      className={styles.intro}
+      style={{
+        backgroundImage: `url("/assets/images/banner/${slug}.jpg")`
+      }}>
+      <div className={styles.texts}>
         <h1>{analyticsName}</h1>
         <p>{shortDescription}</p>
         <p>{longDescription}</p>
-      </div>
-      <div className={styles.imageIntro}>
-        <Image
-          src={'/assets/images/placeholder.jpg'}
-          layout="fill"
-          objectFit="cover"
-        />
       </div>
     </div>
   )
