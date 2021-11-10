@@ -15,9 +15,15 @@ type Props = {
   localkey: string
   nextStep: MouseEventHandler<HTMLButtonElement>
   videoConstraints?: Object
+  overlayShape: 'rect' | 'circle'
 }
 
-export const Cam = ({ localkey, nextStep, videoConstraints }: Props) => {
+export const Cam = ({
+  localkey,
+  nextStep,
+  videoConstraints,
+  overlayShape
+}: Props) => {
   const webcamRef = useRef<Webcam>(null)
 
   const [disabled, setDisabled] = useState(true)
@@ -25,7 +31,7 @@ export const Cam = ({ localkey, nextStep, videoConstraints }: Props) => {
   const [photo, setPhoto] = useState('')
 
   useEffect(() => {
-    const storedPhoto =  localStorage.getItem(localkey)
+    const storedPhoto = localStorage.getItem(localkey)
     if (storedPhoto) {
       setPhoto(storedPhoto)
       setDisabled(false)
@@ -53,18 +59,32 @@ export const Cam = ({ localkey, nextStep, videoConstraints }: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={`${styles.cam} ${flash ? styles.flash : ''}`}>
+      <div className={`${styles.content} ${flash ? styles.flash : ''}`}>
         {!photo ? (
-          <Webcam
-            audio={false}
-            height={360}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            width={640}
-            videoConstraints={videoConstraints}
-          />
+          <div className={styles.webcamContainer}>
+            <Webcam
+              className={styles.webcam}
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              videoConstraints={videoConstraints}
+            />
+            <Image
+              className={styles.overlayImg}
+              src={`/assets/images/face-cam-overlay-${overlayShape}.png`}
+              layout="fill"
+            />
+          </div>
         ) : (
-          photo && <Image src={photo} height={360} width={486} alt='captured photos' />
+          photo && (
+            <Image
+              className={styles.capturedPhoto}
+              src={photo}
+              height={360}
+              width={486}
+              alt="captured photos"
+            />
+          )
         )}
       </div>
 
