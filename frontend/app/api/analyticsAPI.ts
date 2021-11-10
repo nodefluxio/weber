@@ -10,7 +10,7 @@ const ERROR_MESSAGE = 'Something wrong has happened'
 
 export const getServiceBySlug = async (slug: string) => {
   try {
-    // const res = await axios.get<ServiceBySlugResponse>(`/services/${slug}`)
+    const res = await axios.get<ServiceBySlugResponse>(`/services/${slug}`)
     if (res.data.ok) {
       return res.data
     }
