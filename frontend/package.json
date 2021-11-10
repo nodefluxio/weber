@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install",
+    "pre-commit": "next lint --fix && git add -A ."
+
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.0",
@@ -26,6 +29,8 @@
     "@types/react-dom": "^17.0.9",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
+    "husky": "^7.0.4",
+    "eslint-plugin-import": "^2.25.3",
     "typescript": "4.4.3"
   }
 }
