@@ -5,6 +5,7 @@ import { Button } from '../../elements/Button/Button'
 import { useState } from 'react'
 import styles from './ActivationForm.module.scss'
 import { Color } from '@/types/elements'
+import { PIN_DIGIT_LENGTH } from 'app/constants/amounts'
 import { PaymentSetup } from '../PaymentSetup/PaymentSetup'
 import { parseCookies } from 'nookies'
 import { activateAccount } from '@/api/paymentAPI'
@@ -12,7 +13,6 @@ import { activateAccount } from '@/api/paymentAPI'
 type Props = {
   nextStep: Function
 }
-const PIN_DIGIT_LENGTH = 6
 
 export const ActivationForm = ({ nextStep }: Props) => {
   const [pinCode, setPinCode] = useState('')

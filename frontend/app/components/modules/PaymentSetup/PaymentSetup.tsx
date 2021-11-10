@@ -1,10 +1,6 @@
 import { BaseSyntheticEvent, useEffect, useState } from 'react'
 import styles from './PaymentSetup.module.scss'
-
-const MIN_PAYMENT = 50000
-const MAX_PAYMENT = 1000000
-const STEP_PAYMENT = 50000
-const TICK_INTERVAL = 100000
+import { MIN_PAYMENT, MAX_PAYMENT, TICK_INTERVAL, STEP_PAYMENT } from 'app/constants/amounts'
 
 type Props = {
   onChange: Function

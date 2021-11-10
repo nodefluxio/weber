@@ -144,3 +144,8 @@ export type AnyResultResponse =
 
 export type PhoneNumberResponse = StandardResponse
 export type ActivationResponse = StandardResponse
+export type PaymentResponse = {
+  ok: boolean
+  error?: number
+  message: string
+}

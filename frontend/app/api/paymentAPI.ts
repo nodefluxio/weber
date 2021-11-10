@@ -1,12 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { SESSION_ID_ERROR } from '../constants/message'
-import { ActivationResponse, PhoneNumberResponse } from '../types/responses'
-
-type PaymentResponse = {
-  ok: boolean
-  error?: number
-  message: string
-}
+import { ActivationResponse, PhoneNumberResponse, PaymentResponse } from '../types/responses'
 
 export const registerAccount = async (
   sessionId: string,
