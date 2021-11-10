@@ -10,6 +10,13 @@ import (
 	"os"
 	"strings"
 	"time"
+	"io"
+	"encoding/base64"
+	"image"
+	"image/png"
+	_ "image/jpeg"
+
+	"github.com/oliamb/cutter"
 )
 
 type dataAnalytic struct {
@@ -25,9 +32,6 @@ func GetDataAnalytic(service models.Service, requestData models.RequestData) dat
 	if service.Slug == "face-match-enrollment" {
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
 			os.Getenv("FACE_ID"), strings.Join(requestData.Images, `", "`)))
-	} else if service.Slug == "create-face-enrollment"{
-		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
-			requestData.AdditionalParams["face_id"], strings.Join(requestData.Images, `", "`)))
 	} else {
 		additionalParams, _ := json.Marshal(requestData.AdditionalParams)
 		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
@@ -158,4 +162,77 @@ func GetResultFaceEnrollment(service models.Service, input models.RequestData) (
 		return result, err
 	}
 	return result, nil
+}
+
+func GetResultFaceMatchEnrollment(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-match-enrollment")
+	if err != nil {
+		fmt.Println("Error during fetching API face match with enrollment: ", err)
+		return result, err
+	}
+	return result, nil
+}
+
+func DecodeBase64Image(base64Img string) (image.Image, image.Config, error) {
+	imgData := strings.Split(base64Img, ",")[1]
+	reader := base64.NewDecoder(base64.StdEncoding, strings.NewReader(imgData))
+	var buf bytes.Buffer
+    tee := io.TeeReader(reader, &buf)
+
+	img, _, err := image.Decode(tee)
+	if err != nil {
+		return nil, image.Config{}, err
+	}
+
+	cfg, _, err := image.DecodeConfig(&buf)
+	if err != nil {
+		return nil, image.Config{}, err
+	}
+	
+	return img, cfg, err
+}
+
+func CropImage(img image.Image, cfg image.Config, bbox models.BoundingBox) (string, string, error) {
+	var Left int = int(bbox.Left * float64(cfg.Width))
+	var Top int = int(bbox.Top * float64(cfg.Height))
+	var Width int = int(bbox.Width * float64(cfg.Width))
+	var Height int = int(bbox.Height * float64(cfg.Height))
+	
+	var Pad int
+	var Size int
+	var Fill int
+	if Width > Height {
+		Pad = int(0.001 * float64(cfg.Width))
+		Size = Width + (2 * Pad)
+		Fill = (Size - Height) / 2
+		Left = Left - Pad
+		Top = Top - Fill
+	} else {
+		Pad = int(0.001 * float64(cfg.Height))
+		Size = Height + (2 * Pad)
+		Fill = (Size - Width) / 2
+		Left = Left - Fill
+		Top = Top - Pad
+	}
+	
+	croppedImg, err := cutter.Crop(img, cutter.Config{
+		Width:  Size,
+		Height: Size,
+		Anchor: image.Point{Left, Top},
+		Mode:   cutter.TopLeft,
+	})
+
+	var buf bytes.Buffer
+	err = png.Encode(&buf, croppedImg); 
+	if err != nil {
+		log.Println("Failed to encode to PNG, err=", err)
+		return "", "",  err
+	}
+	
+	id := fmt.Sprintf("%v", bbox)
+	b64str := "data:image/png;base64," + base64.StdEncoding.EncodeToString(buf.Bytes())
+	
+	return b64str, id, err
 }

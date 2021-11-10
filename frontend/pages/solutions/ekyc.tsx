@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { getServiceBySlug } from '../../app/api/analyticsAPI'
 import { EkycPage } from '../../app/components/templates/EkycPage/EkycPage'
 
@@ -16,6 +17,9 @@ const Ekyc: React.FC<Props> = ({
 }) => {
   return (
     <>
+      <Head>
+        <title>{`Solution | ${name} - Demo`}</title>
+      </Head>
       <EkycPage
         serviceId={id}
         name={name}

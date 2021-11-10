@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type VisitorActivity struct {
@@ -16,16 +14,16 @@ type VisitorActivity struct {
 	CreatedAt    time.Time
 }
 
-func CreateVisitorActivity(db *gorm.DB, VisitorActivity *VisitorActivity) (err error) {
-	err = db.Create(VisitorActivity).Error
+func (m *Model) CreateVisitorActivity(VisitorActivity *VisitorActivity) (err error) {
+	err = m.DBConn.Create(VisitorActivity).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func GetCurrentVisitorActivity(db *gorm.DB, VisitorActivity *VisitorActivity, session_id string, service_id int) (err error) {
-	err = db.Where("session_id = ? AND service_id = ?", session_id, service_id).Last(VisitorActivity).Error
+func (m *Model) GetCurrentVisitorActivity(VisitorActivity *VisitorActivity, session_id string, service_id int) (err error) {
+	err = m.DBConn.Where("session_id = ? AND service_id = ?", session_id, service_id).Last(VisitorActivity).Error
 	if err != nil {
 		return err
 	}
