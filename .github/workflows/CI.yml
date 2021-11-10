@@ -1,0 +1,21 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        working-directory: ./backend
+        with:
+          go-version: "1.17"
+      - name: "Backend build"
+        run: go build .
+        working-directory: ./backend
+      - uses: actions/setup-node@v2
+        working-directory: ./frontend
+        with:
+          node-version: "16"
+      - name: "Frontend build"
+        run: npm install && npm run build
+        working-directory: ./frontend
