@@ -200,9 +200,6 @@ func CropImage(img image.Image, cfg image.Config, bbox models.BoundingBox) (stri
 	var Width int = int(bbox.Width * float64(cfg.Width))
 	var Height int = int(bbox.Height * float64(cfg.Height))
 	
-	fmt.Println("Width:", cfg.Width, "Height:", cfg.Height)
-	fmt.Println("Left:", Left, "Top:", Top, "Width:", Width, "Height:", Height)
-	
 	var Pad int
 	var Size int
 	var Fill int
