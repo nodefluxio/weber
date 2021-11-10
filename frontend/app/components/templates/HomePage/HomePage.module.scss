@@ -186,9 +186,9 @@
           color: $primary-color;
           font-size: 3rem;
           font-weight: 800;
-          font-family: $secondary-font;
+          font-family: $primary-font;
           &:nth-child(2) {
-            font-weight: 600;
+            font-weight: 400;
             font-family: $secondary-font;
             color: $white-text;
           }
