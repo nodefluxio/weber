@@ -43,39 +43,43 @@ export const Navbar = () => {
           <>
             <li>
               <Link href="/#solutions">
-                <a>SOLUTIONS</a>
+                <span>SOLUTIONS</span>
               </Link>
             </li>
             <li>
               <Link href="/#analytics">
-                <a>ANALYTICS</a>
+                <span>ANALYTICS</span>
               </Link>
             </li>
             <li>
               <Link href="/#new-innovations">
-                <a>NEW INNOVATIONS</a>
+                <span>NEW INNOVATIONS</span>
               </Link>
             </li>
           </>
         ) : (
           <>
             <li>
-              <a href="#solutions">SOLUTIONS</a>
+              <Link href="#solutions">
+                <span>SOLUTIONS</span>
+              </Link>
             </li>
             <li>
-              <a href="#analytics">ANALYTICS</a>
+              <Link href="#analytics">
+                <span>ANALYTICS</span>
+              </Link>
             </li>
             <li>
-              <a href="#new-innovations">NEW INNOVATIONS</a>
+              <Link href="#new-innovations">
+                <span>NEW INNOVATIONS</span>
+              </Link>
             </li>
           </>
         )}
         <li className={styles.contactUs}>
-          <Link href="/contact" passHref>
-            <Button className={styles.btn} color={Color.Secondary}>
-              Contact Us
-            </Button>
-          </Link>
+          <Button className={styles.btn} color={Color.Secondary}>
+            Contact Us
+          </Button>
         </li>
       </ul>
     </nav>
