@@ -17,12 +17,20 @@
     display: block;
     margin: 1rem auto;
     padding: 1rem 1rem;
-    font-size: 1.25rem;
     outline: none;
     border: 1px solid $grey-text;
     &:focus {
       border: 1.5px solid $primary-color;
     }
+  }
+  .warningMsg {
+    font-size: 1rem;
+    color: #bf1650;
+    min-height: 1rem;
+  }
+  .buttonWrapper {
+    text-align: center;
+    margin-top: 1rem;
   }
 }
 
