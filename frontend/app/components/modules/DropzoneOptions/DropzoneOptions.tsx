@@ -101,7 +101,6 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
           )}
         </div>
         <div className={styles.imageOptions}>
-          <p>or use the examples</p>
           {images.map((imageName: string, i: number) => (
             <div className={styles.items} key={i}>
               <Image

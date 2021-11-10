@@ -57,15 +57,7 @@
         flex-direction: row;
         width: 100%;
       }
-      p {
-        margin: 0 0 10px;
-        @include tablet {
-          margin: auto 0;
-          width: 80px;
-        }
-        @include phone {
-        }
-      }
+
       .items {
         width: 60px;
         height: 60px;
