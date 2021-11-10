@@ -233,7 +233,7 @@ func CropImage(img image.Image, cfg image.Config, bbox models.BoundingBox) (stri
 		log.Println("Failed to encode to PNG, err=", err)
 		return "", "",  err
 	}
-
+	
 	id := fmt.Sprintf("%v", bbox)
 	b64str := "data:image/png;base64," + base64.StdEncoding.EncodeToString(buf.Bytes())
 	
