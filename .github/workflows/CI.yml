@@ -1,13 +1,19 @@
 name: CI
 on: [push, pull_request]
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
           go-version: "1.17"
+      - name: "Copy env back-end"
+        run: cp .env.example .env
+        working-directory: ./backend
+      - name: "Copy env front-end"
+        run: cp .env.example .env
+        working-directory: ./frontend
       - name: "Backend build"
         run: go build .
         working-directory: ./backend
