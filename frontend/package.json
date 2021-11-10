@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "pre-commit": "next lint"
+    "pre-commit": "next lint --fix && git add -A ."
+
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.0",
