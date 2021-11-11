@@ -28,7 +28,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
           alt="people from cct view"
           priority
         />
-        <h1>Welcome to Nodeflux Demo</h1>
+        <h1>Experiencing nodeflux's analytics and solutions through web browser</h1>
       </div>
       <section className={`${styles.productsSection} ${styles.sectionPadding}`}>
         <h1 className={styles.titleLine}>Our Product</h1>
@@ -104,19 +104,19 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
         </div>
         <div className={styles.cards}>
           <CardFull
-            img="/assets/images/solutions/ekyc.png"
+            img="/assets/images/solutions.png"
             title="Solutions"
             desc="Through Intelligence Video Analytics (IVA) we developed wide range of analytic to help solve our client’s most challenging issues."
             href="#solutions"
           />
           <CardFull
-            img="/assets/images/solutions/ekyc.png"
+            img="/assets/images/analytics.png"
             title="Analytics"
             desc="Through Intelligence Video Analytics (IVA) we developed wide range of analytic to help solve our client’s most challenging issues."
             href="#analytics"
           />
           <CardFull
-            img="/assets/images/solutions/ekyc.png"
+            img="/assets/images/innovations.png"
             title="New Innovations"
             desc="Through Intelligence Video Analytics (IVA) we developed wide range of analytic to help solve our client’s most challenging issues."
             href="#new-innovations"
