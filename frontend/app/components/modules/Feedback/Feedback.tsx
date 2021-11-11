@@ -1,15 +1,15 @@
-import { parseCookies } from "nookies"
-import React, { useEffect, useState } from "react"
-import Image from "next/image"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { postFeedback } from "../../../api/feedbackAPI"
-import { Button } from "../../elements/Button/Button"
-import { Label } from "../../elements/Label/Label"
-import { Star } from "../../elements/Star/Star"
-import { Color } from "../../../types/elements"
-import { FeedbackData } from "../../../types/elements"
-import styles from "./Feedback.module.scss"
-import Link from "next/link"
+import { parseCookies } from 'nookies'
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { postFeedback } from '../../../api/feedbackAPI'
+import { Button } from '../../elements/Button/Button'
+import { Label } from '../../elements/Label/Label'
+import { Star } from '../../elements/Star/Star'
+import { Color } from '../../../types/elements'
+import { FeedbackData } from '../../../types/elements'
+import styles from './Feedback.module.scss'
+import Link from 'next/link'
 
 interface ReviewProp {
   id: number
@@ -18,11 +18,10 @@ interface ReviewProp {
 }
 
 const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
-
   const [rating, setRating] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-  const [message, setMessage] = useState("Thank you!")
+  const [message, setMessage] = useState('Thank you!')
   const [isDisabled, setIsDisabled] = useState(true)
 
   const {
@@ -33,7 +32,7 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
     formState: { errors }
   } = useForm<FeedbackData>()
 
-  const [watchComment, watchRating] = watch(["comment", "rating"])
+  const [watchComment, watchRating] = watch(['comment', 'rating'])
   useEffect(() => {
     if (watchRating >= 4) {
       setIsDisabled(false)
@@ -43,7 +42,6 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
       setIsDisabled(true)
     }
   }, [watchComment, watchRating])
-
 
   const onSubmit: SubmitHandler<FeedbackData> = async (data) => {
     try {
@@ -57,64 +55,74 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
           afterSubmit()
         }
       } else {
-        throw new Error("Empty response")
+        throw new Error('Empty response')
       }
     } catch (err) {
-      setMessage("Please try submit again")
+      setMessage('Please try submit again')
       setIsSuccess(false)
     } finally {
       setIsSubmitted(true)
     }
   }
 
-  return (
-    isSubmitted && isSuccess ?
-      <div className={styles.thankYou}>
-        <Image src={"/assets/icons/thankyou.svg"} width={90} height={90} />
-        <h3>{message}</h3>
-        <Button type="button" color={Color.Primary} onClick={onTryAgain}>Try again with another photo</Button>
+  return isSubmitted && isSuccess ? (
+    <div className={styles.thankYou}>
+      <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} />
+      <h3>{message}</h3>
+      <div className={styles.buttons}>
+        <Button type="button" color={Color.Primary} onClick={onTryAgain}>
+          Try again with another photo
+        </Button>
         <Link passHref href="/">
-          <Button type="link" color={Color.Secondary}>Explore More</Button>
+          <Button type="link" color={Color.Secondary}>
+            Explore More
+          </Button>
         </Link>
       </div>
-      :
-      <form
-        className={styles.review}
-        method="post"
-        onSubmit={handleSubmit(onSubmit)}>
-        <h3>How was your experience?</h3>
-        {isSubmitted && <span>{message}</span>}
-        <div className={styles.starFlex}>
-          {
-            [...Array(5)].map((_, i) =>
-              <Star
-                key={i}
-                onClick={() => {
-                  setValue("rating", i + 1)
-                  setRating(i + 1)
-                }}
-                className={`${styles.star} ${i + 1 <= rating ? styles.colored : styles.idle}`}
-              />
-            )
-          }
-        </div>
+    </div>
+  ) : (
+    <form
+      className={styles.review}
+      method="post"
+      onSubmit={handleSubmit(onSubmit)}>
+      <h3>How was your experience?</h3>
+      {isSubmitted && <span>{message}</span>}
+      <div className={styles.starFlex}>
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            onClick={() => {
+              setValue('rating', i + 1)
+              setRating(i + 1)
+            }}
+            className={`${styles.star} ${
+              i + 1 <= rating ? styles.colored : styles.idle
+            }`}
+          />
+        ))}
+      </div>
+      <div className={styles.commentLabel}>
         <Label
-          id={"comment"}
+          id={'comment'}
           errors={errors}
-          label={watchRating < 4 ? "Leave a comment (min. 20 characters)" : "Comment"} />
-        <textarea
-          id="comment"
-          className={styles.comment}
-          placeholder="Tell us your experience"
-          {...register("comment")} />
-        <div className={styles.buttonWrapper}>
-          <Button
-            type="submit"
-            color={Color.Secondary}
-            disabled={isDisabled}>Submit</Button>
-        </div>
-      </form>
+          label={
+            watchRating < 4 ? 'Leave a comment (min. 20 characters)' : 'Comment'
+          }
+        />
+      </div>
+      <textarea
+        id="comment"
+        className={styles.comment}
+        placeholder="Tell us your experience"
+        {...register('comment')}
+      />
+      <div className={styles.buttonWrapper}>
+        <Button type="submit" color={Color.Secondary} disabled={isDisabled}>
+          Submit
+        </Button>
+      </div>
+    </form>
   )
 }
 
-export default Feedback;
+export default Feedback

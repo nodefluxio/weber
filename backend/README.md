@@ -426,7 +426,8 @@ Create a service request by id and create a new visitor_activites record.
     },
     "message": "Face Recognition Success", // message from service response
     "ok": true // ok from service response
-  }
+  },
+  "thumbnails": [] // created when bounding_box data is exist
 }
 ```
 
@@ -436,7 +437,8 @@ Create a service request by id and create a new visitor_activites record.
 {
     "message": string,
     "ok": boolean,
-    "service_data": object // json data from service response
+    "service_data": object, // json data from service response
+    "thumbnails": string array, // png in base64 data with data uri scheme
 }
 ```
 

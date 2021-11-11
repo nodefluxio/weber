@@ -8,7 +8,7 @@ export const RequestDemoFormPopup = () => {
       {isSubmitSuccess ? (
         <div className={styles.successContainer}>
           <img
-            src="/assets/check-circle.svg"
+            src="/assets/icons/thankyou.svg"
             alt="checklist circle"
             width={117}
             height={117}

@@ -1,30 +1,27 @@
-import { useState } from "react"
-import Image from "next/image"
-import { Color } from "../../../types/elements"
-import { Cam } from "../Cam/Cam"
-import { Button } from "../../elements/Button/Button"
-import { Spinner } from "@/elements/Spinner/Spinner"
-import styles from "./FaceEnrollment.module.scss"
-import { parseCookies } from "nookies"
-import { registerAccount } from "../../../api/paymentAPI"
-import { SESSION_ID_ERROR } from "../../../constants/message"
-import { ENROLL_SNAPSHOT } from "app/constants/localStorage"
-
-
+import { useState } from 'react'
+import Image from 'next/image'
+import { Color } from '../../../types/elements'
+import { Cam } from '../Cam/Cam'
+import { Button } from '../../elements/Button/Button'
+import { Spinner } from '@/elements/Spinner/Spinner'
+import styles from './FaceEnrollment.module.scss'
+import { parseCookies } from 'nookies'
+import { registerAccount } from '../../../api/paymentAPI'
+import { SESSION_ID_ERROR } from '../../../constants/message'
+import { ENROLL_SNAPSHOT } from 'app/constants/localStorage'
 
 type Props = {
-  openModal: Function,
-  nextStep: Function,
+  openModal: Function
+  nextStep: Function
   payload: {
-    session_id: string,
-    full_name: string,
-    phone: string,
+    session_id: string
+    full_name: string
+    phone: string
     have_twin: boolean
   }
 }
 
 export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
-
   const [isPhotoTaken, setIsPhotoTaken] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -32,16 +29,18 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
   const { session_id } = parseCookies()
   const messages = [
     {
-      title: "Registration Failed",
-      imgPath: "/assets/icons/warning.svg",
-      description: "Your selfie is not verified. Try to get clear image and accordance with guideline.",
-      button: "Try Again"
+      title: 'Registration Failed',
+      imgPath: '/assets/icons/warning.svg',
+      description:
+        'Your selfie is not verified. Try to get clear image and accordance with guideline.',
+      button: 'Try Again'
     },
     {
-      title: "Successfully Registered!",
-      imgPath: "/assets/icons/thankyou.svg",
-      description: "Congratulations, your account has been successfully created.",
-      button: "Next"
+      title: 'Successfully Registered!',
+      imgPath: '/assets/icons/thankyou.svg',
+      description:
+        'Congratulations, your account has been successfully created.',
+      button: 'Next'
     }
   ]
 
@@ -60,7 +59,13 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
     if (payload) {
       const { session_id } = parseCookies()
       try {
-        const res = await registerAccount(session_id, payload.phone, payload.full_name, payload.have_twin, [photo])
+        const res = await registerAccount(
+          session_id,
+          payload.phone,
+          payload.full_name,
+          payload.have_twin,
+          [photo]
+        )
         if (res.ok) {
           setIsSuccess(true)
         } else {
@@ -69,7 +74,7 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
           }
         }
       } catch (e) {
-        console.log((e as Error).message)
+        console.error((e as Error).message)
         setIsSuccess(false)
       } finally {
         setIsLoading(false)
@@ -88,34 +93,36 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
 
   return (
     <div className={styles.enrollWrapper}>
-      {
-        isPhotoTaken ?
-          isLoading ?
+      {isPhotoTaken ? (
+        isLoading ? (
           <div className={styles.subtitle}>
             <h2>Registering your account...</h2>
-            <Spinner/>
+            <Spinner />
             <p>Please wait for a few moment...</p>
           </div>
-          :
+        ) : (
           <div className={styles.subtitle}>
             <h2>{messages[+isSuccess].title}</h2>
             <Image src={messages[+isSuccess].imgPath} width={80} height={80} />
             <p>{messages[+isSuccess].description}</p>
-            <Button
-              type="button"
-              color={Color.Primary}
-              onClick={handleClick}
-            >{messages[+isSuccess].button}</Button>
+            <Button type="button" color={Color.Primary} onClick={handleClick}>
+              {messages[+isSuccess].button}
+            </Button>
           </div>
-          :
-          <>
-            <div className={styles.subtitle}>
-              <h2>Say Cheese!</h2>
-              <p>Take a selfie to register your payment account</p>
-            </div>
-            <Cam localkey={ENROLL_SNAPSHOT} nextStep={() => getPhoto()} />
-          </>
-      }
+        )
+      ) : (
+        <>
+          <div className={styles.subtitle}>
+            <h2>Say Cheese!</h2>
+            <p>Take a selfie to register your payment account</p>
+          </div>
+          <Cam
+            localkey={ENROLL_SNAPSHOT}
+            nextStep={() => getPhoto()}
+            overlayShape="circle"
+          />
+        </>
+      )}
     </div>
   )
 }

@@ -6,20 +6,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
-
 func InitDB() *gorm.DB {
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	dbHost := os.Getenv("DB_HOST")
 	dbUsername := os.Getenv("DB_USERNAME")
 	dbPassword := os.Getenv("DB_PASSWORD")
@@ -30,9 +21,9 @@ func InitDB() *gorm.DB {
 		"port=%s sslmode=disable TimeZone=Asia/Jakarta",
 		dbHost, dbUsername, dbPassword, dbName, dbPort)
 
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	DB, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Panic("Error connecting to database: error = %v", err)
+		log.Panic(fmt.Printf("Error connecting to database: error = %v", err))
 	}
 
 	sqlDB, _ := DB.DB()
@@ -40,16 +31,7 @@ func InitDB() *gorm.DB {
 	sqlDB.SetMaxIdleConns(25)
 	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
-	fmt.Println("Database connection successfully established!")
-	return DB
-}
+	log.Println("Database connection successfully established!")
 
-func GetDB() *gorm.DB {
-	sqlDB, _ := DB.DB()
-
-	if sqlDB.Ping() != nil {
-		fmt.Println(sqlDB.Ping()) // sql: database is closed
-		InitDB()
-	}
 	return DB
 }

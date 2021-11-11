@@ -1,25 +1,19 @@
 @import '../../../styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
 
 .intro {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  background: #DAE3EA;
-  padding: 2rem 4rem;
+  background: $primary-color;
+  padding: 2rem 8rem;
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
   align-items: center;
   justify-content: space-evenly;
-
-  .title {
-    padding-bottom: 2rem;
+  color: $white-text;
+  @include tablet {
+    padding: 2rem 3rem;
   }
-}
-
-.imageIntro {
-  position: relative;
-  min-width: 480px;
-  min-height: 320px;
-
-  @include phone {
-    display: none;
+  .texts {
+    padding-bottom: 1rem;
   }
 }

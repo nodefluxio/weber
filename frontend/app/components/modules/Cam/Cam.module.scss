@@ -1,37 +1,36 @@
+@import '../../../styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
+
 .container {
-  width: fit-content;
-}
+  width: 100%;
+  .content {
+    position: relative;
+    .webcamContainer {
+      border: 2px solid $primary-color;
+      border-radius: 25px;
+      position: relative;
+      .webcam {
+        max-height: 400px;
+        border-radius: 20px;
+      }
+      .overlayImg {
+        opacity: 0.5;
+        border-radius: 20px;
+      }
+    }
+    .capturedPhoto {
+      border-radius: 20px;
+      max-height: 400px;
+    }
+    &.flash {
+      animation: blinker 1s linear 0s;
+    }
 
-.cam {
-  position: relative;
-  width: 500px;
-  padding: 0.5rem;
-
-  &.flash {
-    animation: blinker 1s linear 0s;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
-    clip-path: polygon(
-      0% 0%,
-      0% 100%,
-      25% 100%,
-      25% 25%,
-      75% 25%,
-      75% 75%,
-      25% 75%,
-      25% 100%,
-      100% 100%,
-      100% 0%
-    );
-    border-radius: 5px;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
   }
 
   & video {
@@ -40,18 +39,12 @@
   }
 }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-
 .btnGroup {
   display: flex;
   justify-content: space-around;
-  padding-top: 1rem;
+  padding-top: 2rem;
 }
 
 .btn {
-  width: 16rem;
+  width: 40%;
 }
