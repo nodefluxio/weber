@@ -104,19 +104,19 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
         </div>
         <div className={styles.cards}>
           <CardFull
-            img="/assets/images/solutions.png"
+            img="/assets/images/smartcity.png"
             title="Solutions"
             desc="Through Intelligence Video Analytics (IVA) we developed wide range of analytic to help solve our client’s most challenging issues."
             href="#solutions"
           />
           <CardFull
-            img="/assets/images/analytics.png"
+            img="/assets/images/smartcity.png"
             title="Analytics"
             desc="Through Intelligence Video Analytics (IVA) we developed wide range of analytic to help solve our client’s most challenging issues."
             href="#analytics"
           />
           <CardFull
-            img="/assets/images/innovations.png"
+            img="/assets/images/smartcity.png"
             title="New Innovations"
             desc="Through Intelligence Video Analytics (IVA) we developed wide range of analytic to help solve our client’s most challenging issues."
             href="#new-innovations"
