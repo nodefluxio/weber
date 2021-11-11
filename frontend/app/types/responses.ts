@@ -1,7 +1,7 @@
 import { FaceLiveness, FaceMatch, OCRKTP, Service } from './elements'
 
 type StandardResponse = {
-  message: string,
+  message: string
   ok: boolean
 }
 
@@ -143,3 +143,9 @@ export type AnyResultResponse =
   | LPRResultResponse
 
 export type PhoneNumberResponse = StandardResponse
+export type ActivationResponse = StandardResponse
+export type PaymentResponse = {
+  ok: boolean
+  error?: number
+  message: string
+}

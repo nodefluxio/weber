@@ -1,0 +1,37 @@
+@import '../../../styles/abstracts/variables.scss';
+
+.modalPayment {
+  text-align: center;
+  padding: 1.5rem 1.5rem;
+  h2,
+  p {
+    width: 85%;
+    margin: 0.5rem auto;
+  }
+  .value {
+    font-size: 3rem;
+    font-weight: 800;
+    color: $primary-color;
+  }
+  .inputNominal {
+    display: block;
+    margin: 1rem auto;
+    padding: 1rem 1rem;
+    outline: none;
+    border: 1px solid $grey-text;
+    &:focus {
+      border: 1.5px solid $primary-color;
+    }
+  }
+}
+
+.sliderWrapper {
+  margin-bottom: 1.5rem;
+
+  .slider {
+    width: 90%;
+    &:focus {
+      outline: none;
+    }
+  }
+}

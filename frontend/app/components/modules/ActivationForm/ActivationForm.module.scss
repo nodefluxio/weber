@@ -1,0 +1,25 @@
+@import '../../../styles/abstracts/variables.scss';
+@import '../../../styles/abstracts/mixins.scss';
+
+.pinInputWrapper {
+  margin: 2rem auto;
+  text-align: center;
+  width: 55%;
+  max-width: 800px;
+  @include tablet {
+    width: 70%;
+  }
+  @include phone {
+    width: 90%;
+  }
+}
+
+.warningMsg {
+  font-size: 1rem;
+  color: #bf1650;
+  min-height: 1rem;
+}
+.buttonWrapper {
+  text-align: center;
+  margin-top: 1rem;
+}
