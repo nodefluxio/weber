@@ -103,7 +103,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       </Modal>
 
       <Banner
-        slug="ekyc"
+        bannerUrl="/assets/images/solutions/ekyc/banner.jpg"
         analyticsName={name}
         shortDescription={shortDesc}
         longDescription={longDesc}

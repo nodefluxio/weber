@@ -4,20 +4,20 @@ type Props = {
   analyticsName: string
   shortDescription: string
   longDescription: string
-  slug: string
+  bannerUrl: string
 }
 
 export const Banner = ({
   analyticsName,
   shortDescription,
   longDescription,
-  slug
+  bannerUrl
 }: Props) => {
   return (
     <div
       className={styles.intro}
       style={{
-        backgroundImage: `url("/assets/images/banner/${slug}.jpg")`
+        backgroundImage: `url("${bannerUrl}")`
       }}>
       <div className={styles.texts}>
         <h1>{analyticsName}</h1>
