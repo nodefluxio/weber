@@ -4,7 +4,7 @@ type Props = {
   analyticsName: string
   shortDescription: string
   longDescription: string
-  bannerUrl: string
+  bannerUrl?: string
 }
 
 export const Banner = ({
