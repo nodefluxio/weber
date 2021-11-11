@@ -31,6 +31,7 @@ const Analytics = ({
           `/assets/images/analytics/${slug}/example3.jpg`
         ]}
         serviceID={id}
+        slug={slug}
         handleResult={(res) => setResult(res)}>
         <AnalyticsResult result={result} slug={slug} />
       </AnalyticsPage>

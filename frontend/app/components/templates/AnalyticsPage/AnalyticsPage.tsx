@@ -1,6 +1,4 @@
-import {
-  postServicePhoto
-} from '../../../../app/api/analyticsAPI'
+import { postServicePhoto } from '../../../../app/api/analyticsAPI'
 import { ReactNode, useState } from 'react'
 import { parseCookies } from 'nookies'
 import { SESSION_ID_ERROR } from 'app/constants/message'
@@ -20,6 +18,7 @@ type Props = {
   children: ReactNode
   examples: string[]
   serviceID: number
+  slug: string
   handleResult: (res: any) => void
   addionalStepOneNode?: ReactNode
 }
@@ -31,6 +30,7 @@ export const AnalyticsPage: React.FC<Props> = ({
   children,
   examples,
   serviceID,
+  slug,
   handleResult,
   addionalStepOneNode
 }) => {
@@ -81,10 +81,11 @@ export const AnalyticsPage: React.FC<Props> = ({
       longDescription={longDescription}
       currentStep={currentStep}
       openModal={openModal}
+      slug={slug}
       onModalClose={() => setOpenModal(false)}>
       <div className={styles.container}>
         {currentStep === 1 && (
-          <div className={styles.dropzoneColumns}>
+          <div className={styles.dropzoneNButton}>
             {addionalStepOneNode}
             <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
             {photo && (
@@ -98,18 +99,20 @@ export const AnalyticsPage: React.FC<Props> = ({
         )}
         {currentStep === 2 && (
           <>
-          <AnalyticsResultWrapper
-            imageBase64={photo}
-            handleTryAgain={() => refreshState()}>
-            {isResult ? (
-              children
-            ) : errorMsg ? (
-              <div>{errorMsg}</div>
-            ) : (
-              <div>Loading your results... Please wait</div>
+            <AnalyticsResultWrapper
+              imageBase64={photo}
+              handleTryAgain={() => refreshState()}>
+              {isResult ? (
+                children
+              ) : errorMsg ? (
+                <div>{errorMsg}</div>
+              ) : (
+                <div>Loading your results... Please wait</div>
+              )}
+            </AnalyticsResultWrapper>
+            {isResult && (
+              <Feedback id={serviceID} onTryAgain={() => refreshState()} />
             )}
-          </AnalyticsResultWrapper>
-          { isResult && <Feedback id={serviceID} onTryAgain={() => refreshState()}/> }
           </>
         )}
       </div>

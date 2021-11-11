@@ -69,6 +69,7 @@ export const FacePaymentPage = ({
       </Modal>
 
       <Banner
+        bannerUrl="/assets/images/solutions/face-payment/banner.jpg"
         analyticsName={name}
         shortDescription={short_description}
         longDescription={long_description}
