@@ -26,7 +26,7 @@
     "starting_key": "license_plate_recognitions",
     "fields": [
       {
-        "label": "License plate recognition",
+        "label": "Plate number",
         "key": "license_plate_number",
         "hasThumbnail": true
       }
