@@ -21,7 +21,7 @@ export const AnalyticsResultWrapper = ({
         <div className={styles.resultFlex}>
           <div className={styles.resultImage}>
             {imageBase64 && (
-              <Image src={imageBase64} layout="fill" objectFit="contain" />
+              <Image src={imageBase64} layout="fill" objectFit="cover" />
             )}
           </div>
           <div className={styles.resultInfo}>
