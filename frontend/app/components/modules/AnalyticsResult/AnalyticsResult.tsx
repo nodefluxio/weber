@@ -40,20 +40,13 @@ export const AnalyticsResult = ({ result, slug }: Props) => {
   )
 
   const generateFieldList = (
-    i: number,
-    j: number,
     fields: any,
     fieldList: any[],
     mappedResultResponse: any,
     currentThumbnail?: string
   ) => {
-    for (i; i < fields.length; i++) {
-      if (fields[i].new_column) {
-        j++
-        i++
-      }
-      if (!fieldList[j]) fieldList[j] = []
-      fieldList[j].push(
+    for (let i = 0; i < fields.length; i++) {
+      fieldList.push(
         createDisplayResultEl(mappedResultResponse, fields, i, currentThumbnail)
       )
     }
@@ -70,43 +63,37 @@ export const AnalyticsResult = ({ result, slug }: Props) => {
           mappedResultResponse =
             mappedResultResponse[analyticSlugResultMap.starting_key]
         }
-        let i = 0
-        let j = 0
-        let fieldListColumns: any[] = []
+        let fieldList: [] = []
         let fields = analyticSlugResultMap.fields
         if (analyticSlugResultMap.type === 'array') {
-          for (let k = 0; k < mappedResultResponse.length; k++) {
-            if (k > 5) break
-            let currentMappedResultResponse = mappedResultResponse[k]
-            let currentThumbnail = result.thumbnails[k]
+          for (let i = 0; i < mappedResultResponse.length; i++) {
+            if (i > 5) break
+            let currentMappedResultResponse = mappedResultResponse[i]
+            let currentThumbnail = result.thumbnails[i]
             generateFieldList(
-              i,
-              j,
               fields,
-              fieldListColumns,
+              fieldList,
               currentMappedResultResponse,
               currentThumbnail
             )
           }
         } else {
           generateFieldList(
-            i,
-            j,
             fields,
-            fieldListColumns,
-            mappedResultResponse
+            fieldList,
+            mappedResultResponse,
+            result.thumbnails
           )
         }
 
-        return fieldListColumns.map((column, i) => (
-          <div key={i} className={styles.col}>
-            {column}
-          </div>
-        ))
+        return fieldList
       }
     }
   }
   return (
-    <div className={styles.resultsContainer}>{result && displayResult()}</div>
+    <div className={styles.resultsContainer}>
+      {result &&
+        displayResult()?.map((item, idx) => <div key={idx}>{item}</div>)}
+    </div>
   )
 }

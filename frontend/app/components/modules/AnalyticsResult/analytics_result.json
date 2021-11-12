@@ -10,7 +10,6 @@
       { "label": "Kecamatan", "key": "kecamatan" },
       { "label": "Kelurahan desa", "key": "kelurahan_desa" },
       { "label": "Kewarganegaraan", "key": "kewarganegaraan" },
-      { "new_column": true },
       { "label": "Nama", "key": "nama" },
       { "label": "NIK", "key": "nik" },
       { "label": "Pekerjaan", "key": "pekerjaan" },
