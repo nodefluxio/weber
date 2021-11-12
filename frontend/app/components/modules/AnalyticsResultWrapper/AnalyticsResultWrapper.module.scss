@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     @include tablet {
       width: 90%;
       flex-direction: column;
@@ -21,20 +22,23 @@
     .resultImage {
       position: relative;
       min-height: 360px;
-      min-width: 480px;
+      max-width: 550px;
       width: 50%;
       margin-right: 4rem;
+      margin-left: 2rem;
       @include tablet {
-        width: 90%;
-        min-width: 80vw;
-        min-height: 200px;
+        width: 89%;
         margin-right: unset;
         margin: auto;
         margin-bottom: 2rem;
       }
+      @include phone {
+        min-height: 200px;
+      }
     }
     .resultInfo {
       width: 50%;
+      align-self: flex-start;
       @include tablet {
         width: 90%;
         margin: auto;
