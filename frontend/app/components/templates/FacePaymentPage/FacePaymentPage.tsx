@@ -15,6 +15,7 @@ import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
 import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
+import { MenuButton } from '@/elements/MenuButton/MenuButton'
 
 type Props = {
   id: number
@@ -29,7 +30,7 @@ export const FacePaymentPage = ({
   short_description,
   long_description
 }: Props) => {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(0)
   const [currentStepStepper, setCurrentStepStepper] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [cart, setCart] = useState<ShoppingItem>()
@@ -88,6 +89,8 @@ export const FacePaymentPage = ({
       />
 
       <div className={styles.container}>
+        {currentStep === 0 && <MenuButton title={"Registration Account"}/>}
+
         {currentStep === 1 && (
           <div className={styles.welcome}>
             <h2>Welcome to {name} Demo</h2>
