@@ -1,4 +1,5 @@
 @import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
 
 .btn {
   padding: 0.9rem 1.5rem;
@@ -7,9 +8,9 @@
   background-color: $white-bg;
   font-size: inherit;
   font-family: inherit;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
-
+  font-family: $primary-font;
   &:hover,
   &:focus {
     background-color: darken($white-bg, 10%);

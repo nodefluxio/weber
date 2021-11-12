@@ -7,11 +7,14 @@
   width: 80%;
   justify-content: center;
   padding: 5rem 0 0 0;
+  overflow: hidden;
+  @include tablet {
+    width: 100%;
+  }
   .stepperItem {
     display: flex;
     flex-direction: column;
     text-align: center;
-
     @include tablet {
       display: none;
 
@@ -21,30 +24,16 @@
 
       &.next {
         display: flex;
-        &:not(:last-child) {
-          &:after {
-            --circle-size: clamp(1.5rem, 5vw, 2rem);
-            --spacing: clamp(0.5rem, 2vw, 0.5rem);
-            content: '';
-            position: relative;
-            top: calc(var(--circle-size) / 2);
-            width: calc(50% - var(--circle-size) - calc(var(--spacing) * 2));
-            left: calc(50% + calc(var(--circle-size) / 2 + var(--spacing)));
-            height: 2px;
-            background-color: lighten($primary-color, 55%);
-            order: -1;
-          }
-        }
       }
     }
 
     p {
-      font-weight: 600;
+      font-weight: 500;
     }
 
     &:not(:last-child) {
       &:after {
-        --circle-size: clamp(1.5rem, 5vw, 2rem);
+        --circle-size: clamp(2rem, 5vw, 2.2rem);
         --spacing: clamp(0.5rem, 2vw, 0.5rem);
         content: '';
         position: relative;
@@ -60,7 +49,10 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      margin: 0 8rem;
+      margin: 0 7vw;
+      @include tablet {
+        margin: 0 8rem;
+      }
     }
 
     .active {
@@ -68,14 +60,6 @@
     }
     .inactive {
       background: lighten($primary-color, 55%);
-    }
-
-    .stepperLine {
-      display: inline-block;
-      height: 1px;
-      margin-top: 1rem;
-      min-width: 120px;
-      max-width: 240px;
     }
   }
 }

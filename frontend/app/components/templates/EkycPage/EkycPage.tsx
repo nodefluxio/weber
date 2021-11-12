@@ -47,7 +47,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       if ((err as Error).message === SESSION_ID_ERROR) {
         setOpenModal(true)
       } else {
-        console.log((err as Error).message)
+        console.error((err as Error).message)
       }
     }
   }
@@ -102,6 +102,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       </Modal>
 
       <Banner
+        bannerUrl="/assets/images/solutions/ekyc/banner.jpg"
         analyticsName={name}
         shortDescription={shortDesc}
         longDescription={longDesc}
@@ -140,6 +141,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 nextStep()
                 createVisitorActivities(serviceId, session_id, 40)
               }}
+              overlayShape="circle"
             />
           </div>
         )}
@@ -154,79 +156,84 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 createVisitorActivities(serviceId, session_id, 60)
               }}
               videoConstraints={{ facingMode: { ideal: 'environment' } }}
+              overlayShape="rect"
             />
           </div>
         )}
 
         {currentStep === 4 && (
           <div className={styles.result}>
-            <div className={styles.percentage}>
-              <h3 className={styles.title}>Liveness result</h3>
-              {!loading ? (
-                result?.service_data.face_liveness.job.result.result.length ===
-                1 ? (
-                  <>
-                    <span>{`${Math.trunc(
-                      result.service_data.face_liveness.job.result.result[0]
-                        .face_liveness.liveness * 100
-                    )}%`}</span>
-                    <p>
-                      {result.service_data.face_liveness.job.result.result[0]
-                        .face_liveness.live
-                        ? 'Verified'
-                        : 'Not Verified'}
-                    </p>
-                  </>
+            <div className={styles.percentagesContainer}>
+              <div className={styles.percentage}>
+                <h3 className={styles.title}>Liveness result</h3>
+                {!loading ? (
+                  result?.service_data.face_liveness.job.result.result
+                    .length === 1 ? (
+                      <>
+                        <span>{`${Math.trunc(
+                          result.service_data.face_liveness.job.result.result[0]
+                            .face_liveness.liveness * 100
+                        )}%`}</span>
+                        <p>
+                          {result.service_data.face_liveness.job.result.result[0]
+                            .face_liveness.live
+                            ? 'Verified'
+                            : 'Not Verified'}
+                        </p>
+                      </>
+                    ) : (
+                      <p>{result?.service_data.face_liveness.message}</p>
+                    )
                 ) : (
-                  <p>{result?.service_data.face_liveness.message}</p>
-                )
-              ) : (
-                <Spinner />
-              )}
-            </div>
+                  <Spinner />
+                )}
+              </div>
 
-            <div className={styles.percentage}>
-              <h3 className={styles.title}>Face Match Result</h3>
-              {!loading ? (
-                result?.service_data.face_match.job.result.result.length ===
-                1 ? (
-                  <>
-                    <span>{`${Math.trunc(
-                      result.service_data.face_match.job.result.result[0]
-                        .face_match.similarity * 100
-                    )}%`}</span>
-                    <p>
-                      {result.service_data.face_match.job.result.result[0]
-                        .face_match.match
-                        ? 'Verified'
-                        : 'Not Verified'}
-                    </p>
-                  </>
+              <div className={styles.percentage}>
+                <h3 className={styles.title}>Face Match Result</h3>
+                {!loading ? (
+                  result?.service_data.face_match.job.result.result.length ===
+                  1 ? (
+                      <>
+                        <span>{`${Math.trunc(
+                          result.service_data.face_match.job.result.result[0]
+                            .face_match.similarity * 100
+                        )}%`}</span>
+                        <p>
+                          {result.service_data.face_match.job.result.result[0]
+                            .face_match.match
+                            ? 'Verified'
+                            : 'Not Verified'}
+                        </p>
+                      </>
+                    ) : (
+                      <p>{result?.service_data.face_match.message}</p>
+                    )
                 ) : (
-                  <p>{result?.service_data.face_match.message}</p>
-                )
-              ) : (
-                <Spinner />
-              )}
+                  <Spinner />
+                )}
+              </div>
             </div>
-
             <div className={styles.ocrKtp}>
               <h3 className={styles.title}>OCR KTP Result</h3>
-              {!loading ? (
-                result?.service_data.ocr_ktp.job.result.result.length === 1 ? (
-                  <AnalyticsResult
-                    result={result.service_data.ocr_ktp.job.result.result[0]}
-                    slug={'ocr-ktp'}
-                  />
+              <div className={styles.ocrKtpResult}>
+                {!loading ? (
+                  result?.service_data.ocr_ktp.job.result.result.length ===
+                  1 ? (
+                      <AnalyticsResult
+                        result={result.service_data.ocr_ktp.job.result.result[0]}
+                        slug={'ocr-ktp'}
+                      />
+                    ) : (
+                      <p>{result?.service_data.ocr_ktp.message}</p>
+                    )
                 ) : (
-                  <p>{result?.service_data.ocr_ktp.message}</p>
-                )
-              ) : (
-                <Spinner />
-              )}
+                  <Spinner />
+                )}
+              </div>
             </div>
-
             <Button
+              className={styles.btn}
               color={Color.Primary}
               onClick={() => {
                 nextStep()

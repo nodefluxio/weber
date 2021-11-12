@@ -10,6 +10,7 @@ type Props = {
   longDescription: string
   currentStep: number
   openModal: boolean
+  slug: string
   children: ReactNode
   onModalClose: () => void
 }
@@ -20,6 +21,7 @@ export const AnalyticsContainer = ({
   longDescription,
   currentStep,
   openModal,
+  slug,
   onModalClose,
   children
 }: Props) => {
@@ -29,6 +31,7 @@ export const AnalyticsContainer = ({
         <RequestDemoFormPopup />
       </Modal>
       <Banner
+        bannerUrl={`/assets/images/analytics/${slug}/banner.jpg`}
         analyticsName={analyticsName}
         shortDescription={shortDescription}
         longDescription={longDescription}

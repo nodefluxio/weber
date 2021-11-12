@@ -11,6 +11,7 @@
   background-color: $white-bg;
   z-index: 300;
   text-transform: uppercase;
+  font-family: $secondary-font;
   width: 100%;
   @include tablet {
     padding: 1.5rem 2rem;
@@ -75,7 +76,7 @@
     display: flex;
     list-style: none;
     color: $primary-color;
-    font-weight: 800;
+    font-weight: 700;
     @include tablet {
       z-index: 300;
 
@@ -106,7 +107,7 @@
           color: unset;
         }
       }
-      a {
+      span {
         padding: 1rem 0;
         @include tablet {
           padding: unset;
@@ -121,6 +122,7 @@
         transition: 0.3s ease;
         text-transform: uppercase;
         padding: 12px 20px;
+        font-weight: 700;
       }
     }
   }

@@ -14,6 +14,7 @@ import { Color, ShoppingItem } from '../../../types/elements'
 import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
+import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
 
 type Props = {
   id: number
@@ -69,6 +70,7 @@ export const FacePaymentPage = ({
       </Modal>
 
       <Banner
+        bannerUrl="/assets/images/solutions/face-payment/banner.jpg"
         analyticsName={name}
         shortDescription={short_description}
         longDescription={long_description}
@@ -113,36 +115,46 @@ export const FacePaymentPage = ({
         )}
 
         {currentStep === 3 && (
+          <ActivationForm
+            nextStep={() => {
+              createVisitorActivities(id, session_id, 3)
+              moveStep(1, true)
+            }}
+          />
+        )}
+
+        {currentStep === 4 && (
           <Catalog
             onAddToCart={(item) => {
               setCart(item)
-              createVisitorActivities(id, session_id, 3)
+              createVisitorActivities(id, session_id, 4)
               moveStep(1)
             }}
           />
         )}
-        {currentStep === 4 && cart && (
+
+        {currentStep === 5 && cart && (
           <Cart
             onBack={() => moveStep(-1)}
             onCheckout={(item) => {
               setCart(item)
-              createVisitorActivities(id, session_id, 4)
+              createVisitorActivities(id, session_id, 5)
               moveStep(1)
             }}
             item={cart}
           />
         )}
-        {currentStep === 5 && cart && (
+        {currentStep === 6 && cart && (
           <OrderSummary
             cart={cart}
             onNext={(total) => {
-              createVisitorActivities(id, session_id, 5)
+              createVisitorActivities(id, session_id, 6)
               moveStep(1)
             }}
             onBack={() => moveStep(-1)}
           />
         )}
-        {currentStep === 6 && (
+        {currentStep === 7 && (
           <Feedback
             id={id}
             onTryAgain={() => {
