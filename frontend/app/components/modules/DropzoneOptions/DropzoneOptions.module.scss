@@ -36,7 +36,7 @@
       width: 80%;
     }
     .dropzoneContainer {
-      width: 100%;
+      width: 600px;
       height: 360px;
       position: relative;
       outline: 2px solid silver;
@@ -46,6 +46,7 @@
       }
       @include tablet {
         margin-left: unset;
+        width: 100%;
       }
     }
     .imageOptions {
