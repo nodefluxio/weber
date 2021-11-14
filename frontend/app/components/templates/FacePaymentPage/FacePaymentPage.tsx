@@ -15,7 +15,7 @@ import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
 import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
-import { MenuButton } from '@/elements/MenuButton/MenuButton'
+import { PaymentMenu } from '@/modules/PaymentMenu/PaymentMenu'
 
 type Props = {
   id: number
@@ -64,6 +64,22 @@ export const FacePaymentPage = ({
     }
   }
 
+  const menuButtons = [
+    {
+      title: 'Account Registration',
+      onClick: () => {
+        setCurrentStep(2)
+        setCurrentStepStepper(2)
+      }
+    },
+    {
+      title: 'Face Payment',
+      onClick: () => {
+        setCurrentStep(5)
+      }
+    }
+  ]
+
   return (
     <>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
@@ -90,23 +106,20 @@ export const FacePaymentPage = ({
 
       <div className={styles.container}>
         {currentStep === 0 && (
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <MenuButton title={'Account Registration'} disabled={false} />
-            <MenuButton title={'Face Payment'} disabled={true} />
-          </div>
-        )}
-
-        {currentStep === 1 && (
           <div className={styles.welcome}>
             <h2>Welcome to {name} Demo</h2>
             <p style={{ width: '65%', margin: '2rem auto' }}>
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
-            <Button color={Color.Primary} onClick={() => moveStep(1, true)}>
+            <Button color={Color.Primary} onClick={() => moveStep(1, false)}>
               Start
             </Button>
           </div>
+        )}
+
+        {currentStep === 1 && (
+          <PaymentMenu buttons={menuButtons} disabledList={[1]} />
         )}
 
         {currentStep === 2 && (
@@ -132,6 +145,10 @@ export const FacePaymentPage = ({
         )}
 
         {currentStep === 4 && (
+          <PaymentMenu buttons={menuButtons} disabledList={[]} />
+        )}
+
+        {currentStep === 5 && (
           <Catalog
             onAddToCart={(item) => {
               setCart(item)
@@ -141,7 +158,7 @@ export const FacePaymentPage = ({
           />
         )}
 
-        {currentStep === 5 && cart && (
+        {currentStep === 6 && cart && (
           <Cart
             onBack={() => moveStep(-1)}
             onCheckout={(item) => {
@@ -152,7 +169,8 @@ export const FacePaymentPage = ({
             item={cart}
           />
         )}
-        {currentStep === 6 && cart && (
+
+        {currentStep === 7 && cart && (
           <OrderSummary
             cart={cart}
             onNext={(total) => {
@@ -162,7 +180,7 @@ export const FacePaymentPage = ({
             onBack={() => moveStep(-1)}
           />
         )}
-        {currentStep === 7 && (
+        {currentStep === 8 && (
           <Feedback
             id={id}
             onTryAgain={() => {
