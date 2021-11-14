@@ -34,6 +34,7 @@ export const FacePaymentPage = ({
   const [currentStepStepper, setCurrentStepStepper] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [cart, setCart] = useState<ShoppingItem>()
+  const [total, setTotal] = useState(0)
   const { session_id } = parseCookies()
 
   const moveStep = (numStep: number, moveStepStepper?: boolean) => {
@@ -150,13 +151,14 @@ export const FacePaymentPage = ({
             cart={cart}
             onNext={(total) => {
               createVisitorActivities(id, session_id, 6)
+              setTotal(total)
               moveStep(1)
             }}
             onBack={() => moveStep(-1)}
           />
         )}
         {currentStep === 7 && (
-          <PaymentPay />
+          <PaymentPay sessionId={session_id} amount={total} />
         )}
         {currentStep === 8 && (
           <Feedback
