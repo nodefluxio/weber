@@ -10,7 +10,6 @@
       { "label": "Kecamatan", "key": "kecamatan" },
       { "label": "Kelurahan desa", "key": "kelurahan_desa" },
       { "label": "Kewarganegaraan", "key": "kewarganegaraan" },
-      { "new_column": true },
       { "label": "Nama", "key": "nama" },
       { "label": "NIK", "key": "nik" },
       { "label": "Pekerjaan", "key": "pekerjaan" },
@@ -26,19 +25,10 @@
     "starting_key": "license_plate_recognitions",
     "fields": [
       {
-        "label": "Bounding box",
-        "key": "bounding_box",
-        "fields": [
-          { "label": "Width", "key": "width" },
-          { "label": "Height", "key": "height" },
-          { "label": "Left", "key": "left" },
-          { "label": "Top", "key": "top" }
-        ]
-      },
-      { "new_column": true },
-      { "label": "Confidence", "key": "confidence" },
-      { "label": "Detected", "key": "detected" },
-      { "label": "License plate number", "key": "license_plate_number" }
+        "label": "Plate number",
+        "key": "license_plate_number",
+        "hasThumbnail": true
+      }
     ]
   },
   "face-match-enrollment": {

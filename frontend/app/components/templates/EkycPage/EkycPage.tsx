@@ -90,7 +90,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       }
 
       setCurrentStep(page)
-      createVisitorActivities(serviceId, session_id, page - 1)
     } else {
       setOpenModal(true)
     }
@@ -122,7 +121,12 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
-            <Button color={Color.Primary} onClick={() => nextStep()}>
+            <Button
+              color={Color.Primary}
+              onClick={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 20)
+              }}>
               Start
             </Button>
           </div>
@@ -133,7 +137,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <h3 className={styles.title}>Take A Selfie Photo</h3>
             <Cam
               localkey={FL_LOCAL_STORAGE}
-              nextStep={() => nextStep()}
+              nextStep={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 40)
+              }}
               overlayShape="circle"
             />
           </div>
@@ -144,7 +151,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <h3 className={styles.title}>KTP Photo</h3>
             <Cam
               localkey={KTP_LOCAL_STORAGE}
-              nextStep={() => nextStep()}
+              nextStep={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 60)
+              }}
               videoConstraints={{ facingMode: { ideal: 'environment' } }}
               overlayShape="rect"
             />
@@ -159,21 +169,21 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 {!loading ? (
                   result?.service_data.face_liveness.job.result.result
                     .length === 1 ? (
-                    <>
-                      <span>{`${Math.trunc(
-                        result.service_data.face_liveness.job.result.result[0]
-                          .face_liveness.liveness * 100
-                      )}%`}</span>
-                      <p>
-                        {result.service_data.face_liveness.job.result.result[0]
-                          .face_liveness.live
-                          ? 'Verified'
-                          : 'Not Verified'}
-                      </p>
-                    </>
-                  ) : (
-                    <p>{result?.service_data.face_liveness.message}</p>
-                  )
+                      <>
+                        <span>{`${Math.trunc(
+                          result.service_data.face_liveness.job.result.result[0]
+                            .face_liveness.liveness * 100
+                        )}%`}</span>
+                        <p>
+                          {result.service_data.face_liveness.job.result.result[0]
+                            .face_liveness.live
+                            ? 'Verified'
+                            : 'Not Verified'}
+                        </p>
+                      </>
+                    ) : (
+                      <p>{result?.service_data.face_liveness.message}</p>
+                    )
                 ) : (
                   <Spinner />
                 )}
@@ -184,21 +194,21 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 {!loading ? (
                   result?.service_data.face_match.job.result.result.length ===
                   1 ? (
-                    <>
-                      <span>{`${Math.trunc(
-                        result.service_data.face_match.job.result.result[0]
-                          .face_match.similarity * 100
-                      )}%`}</span>
-                      <p>
-                        {result.service_data.face_match.job.result.result[0]
-                          .face_match.match
-                          ? 'Verified'
-                          : 'Not Verified'}
-                      </p>
-                    </>
-                  ) : (
-                    <p>{result?.service_data.face_match.message}</p>
-                  )
+                      <>
+                        <span>{`${Math.trunc(
+                          result.service_data.face_match.job.result.result[0]
+                            .face_match.similarity * 100
+                        )}%`}</span>
+                        <p>
+                          {result.service_data.face_match.job.result.result[0]
+                            .face_match.match
+                            ? 'Verified'
+                            : 'Not Verified'}
+                        </p>
+                      </>
+                    ) : (
+                      <p>{result?.service_data.face_match.message}</p>
+                    )
                 ) : (
                   <Spinner />
                 )}
@@ -210,13 +220,13 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 {!loading ? (
                   result?.service_data.ocr_ktp.job.result.result.length ===
                   1 ? (
-                    <AnalyticsResult
-                      result={result.service_data.ocr_ktp.job.result.result[0]}
-                      slug={'ocr-ktp'}
-                    />
-                  ) : (
-                    <p>{result?.service_data.ocr_ktp.message}</p>
-                  )
+                      <AnalyticsResult
+                        result={result.service_data.ocr_ktp.job.result.result[0]}
+                        slug={'ocr-ktp'}
+                      />
+                    ) : (
+                      <p>{result?.service_data.ocr_ktp.message}</p>
+                    )
                 ) : (
                   <Spinner />
                 )}
@@ -225,7 +235,10 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
             <Button
               className={styles.btn}
               color={Color.Primary}
-              onClick={() => nextStep()}
+              onClick={() => {
+                nextStep()
+                createVisitorActivities(serviceId, session_id, 80)
+              }}
               disabled={loading}>
               Next
             </Button>
@@ -241,7 +254,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               id={serviceId}
               onTryAgain={() => setCurrentStep(1)}
               afterSubmit={() => {
-                createVisitorActivities(serviceId, session_id, 5)
+                createVisitorActivities(serviceId, session_id, 100)
                 setResult(undefined)
                 setLoading(true)
                 localStorage.removeItem(FL_LOCAL_STORAGE)

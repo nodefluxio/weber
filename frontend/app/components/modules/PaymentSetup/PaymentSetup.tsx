@@ -13,7 +13,6 @@ type Props = {
 
 export const PaymentSetup = ({ onChange }: Props) => {
   const [value, setValue] = useState(MIN_PAYMENT) // value in float
-  const [warningMsg, setWarningMsg] = useState('')
   const [fieldInput, setFieldInput] = useState('') // value displayed in text field
 
   const ticks = Array.from(
@@ -75,7 +74,6 @@ export const PaymentSetup = ({ onChange }: Props) => {
         onChange={handleInputChange}
         className={styles.inputNominal}
       />
-      <span className={styles.warningMsg}>{warningMsg}</span>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
-import { Color } from '../../../types/elements'
-import { Button } from '../../elements/Button/Button'
+
 import styles from './AnalyticsResultWrapper.module.scss'
 
 type Props = {
@@ -10,18 +9,14 @@ type Props = {
   handleTryAgain: () => void
 }
 
-export const AnalyticsResultWrapper = ({
-  imageBase64,
-  children,
-  handleTryAgain
-}: Props) => {
+export const AnalyticsResultWrapper = ({ imageBase64, children }: Props) => {
   return (
     <>
       <div className={styles.result}>
         <div className={styles.resultFlex}>
           <div className={styles.resultImage}>
             {imageBase64 && (
-              <Image src={imageBase64} layout="fill" objectFit="contain" />
+              <Image src={imageBase64} layout="fill" objectFit="cover" />
             )}
           </div>
           <div className={styles.resultInfo}>
