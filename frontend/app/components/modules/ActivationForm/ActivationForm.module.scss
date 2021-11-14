@@ -14,12 +14,27 @@
   }
 }
 
+.buttonWrapper {
+  text-align: center;
+}
+
 .warningMsg {
   font-size: 1rem;
   color: #bf1650;
-  min-height: 1rem;
-}
-.buttonWrapper {
   text-align: center;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.activationSuccess {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  row-gap: 0.5rem;
+
+  .initBalance {
+    font-weight: 800;
+    font-size: 2rem;
+    color: $primary-color;
+  }
 }

@@ -2,6 +2,7 @@ import { PinInput } from '@/elements/PinInput/PinInput'
 import { Modal } from '@/elements/Modal/Modal'
 import { Button } from '../../elements/Button/Button'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import styles from './ActivationForm.module.scss'
 import { Color } from '@/types/elements'
 import {
@@ -25,6 +26,7 @@ export const ActivationForm = ({ nextStep }: Props) => {
   const [isPinCreated, setIsPinCreated] = useState(false)
   const [isModalShowed, setIsModalShowed] = useState(false)
   const [isModalLoading, setIsModalLoading] = useState(false)
+  const [isModalSuccess, setIsModalSuccess] = useState(false)
 
   useEffect(() => {
     if (payment < MIN_PAYMENT || payment > MAX_PAYMENT) {
@@ -42,19 +44,45 @@ export const ActivationForm = ({ nextStep }: Props) => {
     try {
       const res = await activateAccount(session_id, pinCode, payment)
       if (res.ok) {
-        setIsModalShowed(false)
-        nextStep()
+        setIsModalSuccess(true)
       }
     } catch (e) {
       console.error(e)
     }
   }
 
+  const handleModalButtonOnClick = () => {
+    if (isModalSuccess) {
+      setIsModalShowed(false)
+      nextStep()
+    } else {
+      activate()
+      setIsModalLoading(false)
+    }
+  }
+
   return (
     <>
       <Modal show={isModalShowed} onClose={() => setIsModalShowed(false)}>
-        {isModalLoading ? <Spinner /> : <PaymentSetup onChange={setPayment} />}
-        <span className={styles.warningMsg}>{warningMsg}</span>
+        {isModalLoading ? (
+          <Spinner />
+        ) : isModalSuccess ? (
+          <div className={styles.activationSuccess}>
+            <h2>Activation Success</h2>
+            <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} />
+            <div>
+              <p>Congratulations, your account has been activated!</p>
+              <div>Your balance</div>
+              <div className={styles.initBalance}>
+                {/* Mungkin butuh penyesuaian, kalo mau nilainya dipassing dari backend */}
+                {`IDR ${MAX_PAYMENT.toLocaleString()}`}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <PaymentSetup onChange={setPayment} />
+        )}
+        <div className={styles.warningMsg}>{warningMsg}</div>
         <div className={styles.buttonWrapper}>
           <Button
             type="button"
@@ -62,11 +90,8 @@ export const ActivationForm = ({ nextStep }: Props) => {
             disabled={
               isModalLoading || payment < MIN_PAYMENT || payment > MAX_PAYMENT
             }
-            onClick={() => {
-              activate()
-              setIsModalLoading(false)
-            }}>
-            Next
+            onClick={handleModalButtonOnClick}>
+            {isModalSuccess ? 'Go to Store' : 'Next'}
           </Button>
         </div>
       </Modal>
