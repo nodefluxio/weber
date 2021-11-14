@@ -7,14 +7,36 @@ import { PIN_DIGIT_LENGTH } from 'app/constants/amounts'
 import { useState } from 'react'
 import { Cam } from '../Cam/Cam'
 import styles from './PaymentPay.module.scss'
+import { checkLimit } from '@/api/paymentAPI'
 
-type Props = {}
+type Props = { sessionId: string; amount: number }
 
-export const PaymentPay = ({}: Props) => {
+export const PaymentPay = ({ sessionId, amount }: Props) => {
   const [step, setStep] = useState(1)
   const [pinCode, setPinCode] = useState('')
   const [isPinCreated, setIsPinCreated] = useState(false)
   const [phone, setPhone] = useState('')
+  const [isPinRequired, setIsPinRequired] = useState(true)
+  const [user, setUser] = useState('User')
+  const [balance, setBalance] = useState(0)
+
+  const resolveCheckLimit = async (
+    session_id: string,
+    phone: string,
+    amount: number
+  ) => {
+    try {
+      const res = await checkLimit(session_id, phone, amount)
+
+      if (res?.ok) {
+        setIsPinRequired(!res.data[0].is_limit)
+        setUser(res.data[0].full_name)
+        setBalance(res.data[0].balance)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <>
@@ -27,13 +49,18 @@ export const PaymentPay = ({}: Props) => {
             onChange={setPhone}
           />
           <div className={styles.buttonWrapper}>
-            <Button color={Color.Primary} onClick={() => setStep(2)}>
+            <Button
+              color={Color.Primary}
+              onClick={() => {
+                setStep(2)
+                resolveCheckLimit(sessionId, phone, amount)
+              }}>
               Next Step
             </Button>
           </div>
         </div>
       )}
-      {step === 2 && (
+      {step === 2 && isPinRequired && (
         <div>
           <Cam
             localkey="face_match_&_liveness"
@@ -66,7 +93,7 @@ export const PaymentPay = ({}: Props) => {
       )}
       {step === 4 && (
         <div className={styles.resultWrapper}>
-          <h2>Hello, {'User'}</h2>
+          <h2>Hello, {user}</h2>
           <Image
             src={'/assets/icons/thankyou.svg'}
             width={80}
@@ -74,13 +101,13 @@ export const PaymentPay = ({}: Props) => {
             alt="thank you"
           />
           <p className={styles.balance}>
-            You have to pay <strong>{'100.000'}</strong>
+            You have to pay <strong>{amount}</strong>
           </p>
           <p className={styles.balance}>
-            Current Balance <strong>{'60.000'}</strong>
+            Current Balance <strong>{balance}</strong>
           </p>
           <p className={styles.balance}>
-            Final Balance <strong>{'40.000'}</strong>
+            Final Balance <strong>{balance - amount}</strong>
           </p>
 
           <Button

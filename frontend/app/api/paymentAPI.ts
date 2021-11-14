@@ -1,6 +1,11 @@
 import axios, { AxiosError } from 'axios'
 import { SESSION_ID_ERROR } from '../constants/message'
-import { ActivationResponse, PhoneNumberResponse, PaymentResponse } from '../types/responses'
+import {
+  ActivationResponse,
+  PhoneNumberResponse,
+  PaymentResponse,
+  CheckLimitResponse
+} from '../types/responses'
 
 export const registerAccount = async (
   sessionId: string,
@@ -77,6 +82,39 @@ export const activateAccount = async (
       ok: false,
       error: axiosError.response?.status || 500,
       message: axiosError.response?.data.message || 'Server error'
+    }
+  }
+}
+
+export const checkLimit = async (
+  sessionId: string,
+  phone: string,
+  amount: number
+): Promise<CheckLimitResponse | undefined> => {
+  try {
+    const res = await axios.patch<CheckLimitResponse>(
+      `/face-payment/check-limit`,
+      {
+        session_id: sessionId,
+        phone: phone,
+        amount: amount
+      }
+    )
+    if (res.data.ok) {
+      return {
+        ...res.data
+      }
+    } else {
+      throw new Error(res.data.message)
+    }
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const error = e as AxiosError<CheckLimitResponse>
+      if (error && error.response) {
+        throw new Error(SESSION_ID_ERROR)
+      }
+    } else {
+      throw new Error((e as Error).message)
     }
   }
 }
