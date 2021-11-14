@@ -7,7 +7,8 @@ import { PIN_DIGIT_LENGTH } from 'app/constants/amounts'
 import { useState } from 'react'
 import { Cam } from '../Cam/Cam'
 import styles from './PaymentPay.module.scss'
-import { checkLimit } from '@/api/paymentAPI'
+import { checkLimit, pay } from '@/api/paymentAPI'
+import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 
 type Props = { sessionId: string; amount: number }
 
@@ -19,6 +20,8 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
   const [isPinRequired, setIsPinRequired] = useState(true)
   const [user, setUser] = useState('User')
   const [balance, setBalance] = useState(0)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [message, setMessage] = useState('')
 
   const resolveCheckLimit = async (
     session_id: string,
@@ -32,6 +35,25 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
         setIsPinRequired(!res.data[0].is_limit)
         setUser(res.data[0].full_name)
         setBalance(res.data[0].balance)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const resolvePay = async (
+    session_id: string,
+    phone: string,
+    pin: string,
+    amount: number,
+    image: string
+  ) => {
+    try {
+      const res = await pay(session_id, phone, pin, amount, image)
+
+      if (res) {
+        setIsSuccess(res?.ok)
+        setMessage(res?.message)
       }
     } catch (err) {
       console.log(err)
@@ -85,6 +107,15 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
               onClick={() => {
                 setStep(4)
                 setIsPinCreated(true)
+                resolvePay(
+                  sessionId,
+                  phone,
+                  pinCode,
+                  amount,
+                  getImageFromLocalStorage('face_match_&_liveness', () =>
+                    setStep(2)
+                  )
+                )
               }}>
               Next
             </Button>
@@ -93,28 +124,34 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
       )}
       {step === 4 && (
         <div className={styles.resultWrapper}>
-          <h2>Hello, {user}</h2>
+          <h2>{isSuccess && `Hello, ${user}`}</h2>
           <Image
-            src={'/assets/icons/thankyou.svg'}
+            src={`/assets/icons/${isSuccess ? 'thankyou.svg' : 'warning.svg'}`}
             width={80}
             height={80}
-            alt="thank you"
+            alt={isSuccess ? 'thank you' : 'warning'}
           />
-          <p className={styles.balance}>
-            You have to pay <strong>{amount}</strong>
-          </p>
-          <p className={styles.balance}>
-            Current Balance <strong>{balance}</strong>
-          </p>
-          <p className={styles.balance}>
-            Final Balance <strong>{balance - amount}</strong>
-          </p>
+          {isSuccess ? (
+            <>
+              <p className={styles.balance}>
+                You have to pay <strong>{amount}</strong>
+              </p>
+              <p className={styles.balance}>
+                Current Balance <strong>{balance}</strong>
+              </p>
+              <p className={styles.balance}>
+                Final Balance <strong>{balance - amount}</strong>
+              </p>
+            </>
+          ) : (
+            <p>{message}</p>
+          )}
 
           <Button
             type="button"
             color={Color.Primary}
-            onClick={() => setStep(5)}>
-            Confirm
+            onClick={() => setStep(isSuccess ? 5 : 2)}>
+            {isSuccess ? 'Confirm' : 'Try Again'}
           </Button>
         </div>
       )}

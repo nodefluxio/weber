@@ -4,7 +4,8 @@ import {
   ActivationResponse,
   PhoneNumberResponse,
   PaymentResponse,
-  CheckLimitResponse
+  CheckLimitResponse,
+  StandardResponse
 } from '../types/responses'
 
 export const registerAccount = async (
@@ -107,6 +108,36 @@ export const checkLimit = async (
     } else {
       throw new Error(res.data.message)
     }
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const error = e as AxiosError<CheckLimitResponse>
+      if (error && error.response) {
+        throw new Error(SESSION_ID_ERROR)
+      }
+    } else {
+      throw new Error((e as Error).message)
+    }
+  }
+}
+
+export const pay = async (
+  sessionId: string,
+  phone: string,
+  pin: string,
+  amount: number,
+  image: string
+): Promise<StandardResponse | undefined> => {
+  try {
+    const res = await axios.post<StandardResponse>(`/face-payment/pay`, {
+      session_id: sessionId,
+      phone: phone,
+      pin: pin,
+      amount: amount,
+      data: {
+        image: [image]
+      }
+    })
+    return res.data
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const error = e as AxiosError<CheckLimitResponse>
