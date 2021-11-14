@@ -1,0 +1,21 @@
+@import '../../../styles/abstracts/variables.scss';
+@import '../../../styles/abstracts/mixins.scss';
+
+.bigInput {
+  input {
+    display: inherit;
+    font-size: 5rem;
+    border: none;
+    background-color: darken($color: $white-bg, $amount: 10);
+  }
+
+  .labelContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    label {
+      font-size: 3rem;
+    }
+  }
+}
