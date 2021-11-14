@@ -6,7 +6,7 @@ type Props = {
   width?: number
   height?: number
   layout?: 'fixed' | 'fill' | 'intrinsic' | 'responsive' | undefined
-  objectFit?: 'cover' | undefined
+  objectFit?: 'cover' | 'contain' | undefined
   className?: string
 }
 
