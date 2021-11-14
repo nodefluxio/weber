@@ -37,9 +37,9 @@ export const postServicePhoto = async <AnalyticsResultResponse>(
       }
     )
     if (res.data.ok) {
-      const { service_data } = res.data
+      const { service_data, thumbnails } = res.data
       if (service_data.job.result.status === 'success') {
-        return service_data.job.result.result[0]
+        return { result: service_data.job.result.result[0], thumbnails }
       } else {
         throw new Error(service_data.job.result.status)
       }

@@ -78,6 +78,7 @@ export type AnalyticsResponse<AnalyticsResultResponse> = {
       }
     }
   }
+  thumbnails: Array<string>
 }
 
 export type AnalyticsError = StandardResponse

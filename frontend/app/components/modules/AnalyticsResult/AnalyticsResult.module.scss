@@ -1,22 +1,33 @@
+@import '../../../styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
 .resultsContainer {
-  display: flex;
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-  padding: 1rem;
-  .col {
-    width: 50%;
-    .field {
-      padding: 4px;
-      margin-right: 12px;
-      .label {
-        font-weight: 600;
-        margin: 0 0 8px 0;
-        font-size: 0.9rem;
-      }
-      .result {
-        margin: 0;
-        font-size: 1.1rem;
-      }
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, auto));
+
+  .field {
+    width: 100%;
+    padding: 4px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    .boundingBoxContainer {
+      width: 40px;
+      height: 40px;
+      position: relative;
+      margin-right: 1rem;
     }
+    .label {
+      font-weight: 600;
+      margin: 0 0 4px 0;
+      font-size: 0.8rem;
+      font-family: $primary-font;
+    }
+    .result {
+      margin: 0;
+      font-size: 1.2rem;
+      font-family: $secondary-font;
+    }
+    margin-bottom: 8px;
   }
 }
