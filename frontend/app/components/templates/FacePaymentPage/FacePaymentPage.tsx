@@ -15,6 +15,7 @@ import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
 import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
+import { PaymentPay } from '@/modules/PaymentPay/PaymentPay'
 
 type Props = {
   id: number
@@ -155,6 +156,9 @@ export const FacePaymentPage = ({
           />
         )}
         {currentStep === 7 && (
+          <PaymentPay />
+        )}
+        {currentStep === 8 && (
           <Feedback
             id={id}
             onTryAgain={() => {
