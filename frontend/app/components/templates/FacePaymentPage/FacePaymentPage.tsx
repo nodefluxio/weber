@@ -89,7 +89,12 @@ export const FacePaymentPage = ({
       />
 
       <div className={styles.container}>
-        {currentStep === 0 && <MenuButton title={"Registration Account"}/>}
+        {currentStep === 0 && (
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <MenuButton title={'Account Registration'} disabled={false} />
+            <MenuButton title={'Face Payment'} disabled={true} />
+          </div>
+        )}
 
         {currentStep === 1 && (
           <div className={styles.welcome}>
