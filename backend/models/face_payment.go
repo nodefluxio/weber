@@ -21,7 +21,7 @@ type FacePaymentAccount struct {
 type NewAccountData struct {
 	SessionID string      `json:"session_id"`
 	FullName  string      `json:"full_name" validate:"required,min=2,max=255"`
-	Phone     string      `json:"phone" validate:"required,numeric"`
+	Phone     string      `json:"phone" validate:"required,numeric",min=5,max=15`
 	HaveTwin  *bool       `json:"have_twin" validate:"required"`
 	Data      RequestData `json:"data"`
 	CreatedAt time.Time   `json:"created_at"`
