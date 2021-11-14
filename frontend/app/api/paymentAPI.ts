@@ -93,7 +93,7 @@ export const checkLimit = async (
   amount: number
 ): Promise<CheckLimitResponse | undefined> => {
   try {
-    const res = await axios.patch<CheckLimitResponse>(
+    const res = await axios.post<CheckLimitResponse>(
       `/face-payment/check-limit`,
       {
         session_id: sessionId,
