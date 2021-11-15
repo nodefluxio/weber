@@ -34,3 +34,16 @@ func (ctrl *Controller) IsSessionExpired(sessionId string) bool {
 
 	return dateNow.After(dateExpiration)
 }
+
+func (ctrl *Controller) GetExpirationDate(sessionId string) string {
+	expirationLimit, err := strconv.Atoi(os.Getenv("SESSION_EXPIRATION"))
+	if err != nil {
+		log.Fatal("environment variable 'SESSION_EXPIRATION' is not set")
+	}
+
+	var visitor models.Visitor
+	ctrl.Model.GetVisitor(&visitor, sessionId)
+	dateExpiration := visitor.CreatedAt.AddDate(0, 0, expirationLimit)
+
+	return dateExpiration.Format("02-01-2006 15:04:05")
+}

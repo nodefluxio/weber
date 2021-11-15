@@ -5,6 +5,7 @@ import (
 	"backend/utils"
 	"encoding/json"
 	"net/http"
+	"regexp"
 	"strconv"
 	"time"
 
@@ -37,6 +38,9 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 		})
 		return
 	}
+
+	phone = ctrl.reformatPhone(phone, sessionId)
+	newAccountData.Phone = phone
 
 	// Condition to validate new account data and phone input
 	// on first hit from frontend
@@ -146,6 +150,26 @@ func (ctrl *Controller) isPhoneAlreadyExists(phone string) bool {
 	}
 
 	return false
+}
+
+func (ctrl *Controller) reformatPhone(phone string, sessionId string) string {
+	// Output should be: DD{MM+YY}Phone
+
+	// Replace first character with 62 if the first character is 0
+	re := regexp.MustCompile(`(?m)^0`)
+	phone = re.ReplaceAllString(phone, "62")
+
+	// Add the DD{MM+YY} of the expired var
+	expirationDate := ctrl.GetExpirationDate(sessionId)
+	re = regexp.MustCompile(`(?m)(\d\d)-(\d\d)-\d\d(\d\d)`)
+	matchingGroups := re.FindStringSubmatch(expirationDate)
+	day := matchingGroups[1]
+	monthInt, _ := strconv.Atoi(matchingGroups[2])
+	yearInt, _ := strconv.Atoi(matchingGroups[3])
+	sum := strconv.Itoa(monthInt + yearInt)
+	phone = day + sum + phone
+
+	return phone
 }
 
 func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
