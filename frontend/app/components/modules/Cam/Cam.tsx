@@ -73,17 +73,20 @@ export const Cam = ({
               className={styles.overlayImg}
               src={`/assets/images/face-cam-overlay-${overlayShape}.png`}
               layout="fill"
+              objectFit="cover"
             />
           </div>
         ) : (
           photo && (
-            <Image
-              className={styles.capturedPhoto}
-              src={photo}
-              height={360}
-              width={486}
-              alt="captured photos"
-            />
+            <div className={styles.capturedPhotoContainer}>
+              <Image
+                className={styles.capturedPhoto}
+                src={photo}
+                layout="fill"
+                objectFit="cover"
+                alt="captured photos"
+              />
+            </div>
           )
         )}
       </div>
