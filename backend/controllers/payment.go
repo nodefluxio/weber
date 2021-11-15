@@ -3,10 +3,12 @@ package controllers
 import (
 	"backend/models"
 	"backend/utils"
+	"errors"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
@@ -159,4 +161,33 @@ func (ctrl *Controller) Payment(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "Payment transaction success", "ok": true})
+}
+
+func (ctrl *Controller) CheckSessionId(ctx *gin.Context) {
+	var facePayments models.FacePaymentAccount
+	var CheckSessionResult models.CheckSessionResult
+	sessionId := ctx.Param("session_id")
+
+	if err := ctrl.DBConn.Model(facePayments).First(&facePayments, "session_id = ?", sessionId).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			ctx.JSON(http.StatusNotFound, gin.H{
+				"ok":      false,
+				"message": "Session Id not found",
+			})
+			return
+		}
+	}
+
+	CheckSessionResult.IsActive = facePayments.IsActive
+	if facePayments.ID != 0 {
+		CheckSessionResult.IsRegistered = true
+	} else {
+		CheckSessionResult.IsRegistered = false
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"data":    &CheckSessionResult,
+		"message": "Session ID Checked",
+		"ok":      false,
+	})
 }
