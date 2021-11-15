@@ -1140,3 +1140,160 @@ OR
 }
 ```
 </details>
+
+<details>
+<summary><b>Create Transaction Face Payment </b></summary>
+
+- **URL**
+
+  `/api/v1/face-payment/pay`
+
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+```json
+{
+    "session_id": "9443ea43-52e5-41a7-91dd-bc940001b628",
+    "full_name": "BagasT1",
+    "phone": "0811112222",
+    "have_twin": false,
+    "data": {
+       "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+   }
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+   "session_id": string,
+   "full_name": string,
+   "phone": string,
+   "have_twin": boolean,
+   "data": object {
+       "images": string array
+   }
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+   "message": "Payment transaction success",
+   "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+   "message": string,
+   "ok": boolean
+}
+```
+- **Sample Error Response**
+
+  **Code**: 400 Bad Request
+```json
+{
+   "message": "Wrong Pin!",
+   "ok": false
+}
+```
+OR
+```json
+{
+   "message": "Phone number not found!",
+   "ok": false
+}
+```
+OR
+```json
+{
+   "message": "Your balance is Not Enough!",
+   "ok": false
+}
+```
+</details>
+
+<details>
+<summary><b>Create Endpoint to Check Limit</b></summary>
+
+- **URL**
+
+  `/api/v1/face-payment/check-limit`
+
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+```json
+{
+    "session_id": "9443ea43-52e5-41a7-91dd-bc940001b628",
+    "phone": "082189891233",
+    "amount": 75000
+   }
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+   "session_id": string,
+   "phone": string,
+   "amount": integer
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "data": {
+        "full_name": "BagasT1",
+        "balance": 47000,
+        "is_limit": true
+    },
+    "message": "Check Limit Minimum Payment Success",
+    "ok": false
+}
+```
+OR
+```json
+{
+    "data": {
+        "full_name": "BagasT1",
+        "balance": 70000,
+        "is_limit": false
+    },
+    "message": "Check Limit Minimum Payment Success",
+    "ok": false
+}
+```
+
+
+- **Data Type Attributes**
+
+```json
+{
+   "data": {
+        "full_name": string,
+        "balance": integer,
+        "is_limit": boolean
+    },
+    "message": string,
+    "ok": boolean
+}
+```
+</details>
