@@ -71,6 +71,11 @@ type CheckLimitResult struct {
 	IsLimit  bool   `json:"is_limit"`
 }
 
+type CheckSessionResult struct {
+	IsActive     bool `json:"is_active"`
+	IsRegistered bool `json:"is_registered"`
+}
+
 func (m *Model) CreateAccount(newAccount *FacePaymentAccount) (err error) {
 	err = m.DBConn.Select("SessionID", "FullName", "Phone", "HaveTwin", "CreatedAt", "UpdatedAt").Create(newAccount).Error
 	if err != nil {
