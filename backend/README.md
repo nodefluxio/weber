@@ -1297,3 +1297,66 @@ OR
 }
 ```
 </details>
+
+<details>
+<summary><b>Create Endpoint to Check Session Id Face Payment</b></summary>
+
+- **URL**
+
+  `/api/v1/face-payment/account/:session_id`
+
+- **Method**
+
+  `GET`
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "data": {
+        "is_active": true,
+        "is_registered": true
+    },
+    "message": "Session ID Checked",
+    "ok": false
+}
+```
+OR
+```json
+{
+    "data": {
+        "is_active": true,
+        "is_registered": false
+    },
+    "message": "Session ID Checked",
+    "ok": false
+}
+```
+OR
+```json
+{
+    "data": {
+        "is_active": false,
+        "is_registered": false
+    },
+    "message": "Session ID Checked",
+    "ok": false
+}
+```
+
+
+- **Data Type Attributes**
+
+```json
+{
+   "data": {
+        "is_active": boolean,
+        "is_registered": boolean,
+    },
+    "message": string,
+    "ok": boolean
+}
+```
+</details>
