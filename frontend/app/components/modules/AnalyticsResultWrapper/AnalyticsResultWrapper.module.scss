@@ -47,6 +47,7 @@
         margin-top: 0;
         @include tablet {
           text-align: center;
+          margin-left: -2rem;
         }
       }
     }

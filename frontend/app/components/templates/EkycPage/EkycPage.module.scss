@@ -94,6 +94,12 @@
     .ocrKtp {
       .ocrKtpResult {
         text-align: start;
+        .analyticResultOcrKtp {
+          margin-left: 50px;
+          @include phone {
+            margin-left: 12px;
+          }
+        }
       }
     }
     .btn {
