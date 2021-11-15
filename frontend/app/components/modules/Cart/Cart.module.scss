@@ -1,3 +1,4 @@
+@import '../../../styles/abstracts/mixins';
 .cart {
   max-width: 400px;
   margin: auto;
@@ -10,7 +11,12 @@
       position: relative;
       width: 200px;
       height: 200px;
+      align-self: center;
       margin-right: 1rem;
+      @include phone {
+        width: 150px;
+        height: 100px;
+      }
     }
     .details {
       margin-right: 1rem;
