@@ -15,7 +15,16 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
     currentThumbnail?: string
   ) => (
     <div key={fields[i].key}>
-      {fields[i].hasThumbnail && currentThumbnail ? (
+      {fields[i].fields ? (
+        fields[i].fields.map((_: any, j: number) =>
+          createDisplayResultEl(
+            mappedResultResponse[fields[i].key],
+            fields[i].fields,
+            j,
+            currentThumbnail
+          )
+        )
+      ) : fields[i].hasThumbnail && currentThumbnail ? (
         <div className={styles.field}>
           <div className={styles.boundingBoxContainer}>
             <Image src={currentThumbnail} layout="fill" />
@@ -75,7 +84,7 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
         let fields = analyticSlugResultMap.fields
         if (analyticSlugResultMap.type === 'array') {
           for (let i = 0; i < mappedResultResponse.length; i++) {
-            if (i > 5) break
+            if (i >= analyticSlugResultMap.max_result || i >= 20) break
             let currentMappedResultResponse = mappedResultResponse[i]
             let currentThumbnail = result.thumbnails[i]
             generateFieldList(
