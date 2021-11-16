@@ -3,6 +3,9 @@
 
 .dropzoneOptions {
   width: 100%;
+  .errorMsg {
+    text-align: center;
+  }
   .imagePreview {
     width: inherit;
     height: inherit;
