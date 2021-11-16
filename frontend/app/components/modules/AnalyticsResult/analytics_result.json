@@ -22,7 +22,7 @@
   },
   "license-plate-recognition": {
     "type": "array",
-    "starting_key": "license_plate_recognitions",
+    "starting_key": ["license_plate_recognitions"],
     "fields": [
       {
         "label": "Plate number",
@@ -32,10 +32,47 @@
     ]
   },
   "face-match-enrollment": {
-    "starting_key": "face_match",
+    "starting_key": ["face_match"],
     "fields": [
       { "label": "Match?", "key": "match" },
       { "label": "Similarity", "key": "similarity" }
+    ]
+  },
+  "face-mask": {
+    "type": "array",
+    "starting_key": ["face_mask"],
+    "fields": [
+      {
+        "label": "Status",
+        "key": "status",
+        "hasThumbnail": true
+      }
+    ]
+  },
+  "face-demography": {
+    "type": "array",
+    "starting_key": ["face-demography"],
+    "fields": [
+      {
+        "key": "age",
+        "fields": [
+          {
+            "label": "prediction",
+            "key": "prediction"
+          }
+        ]
+      }
+    ]
+  },
+  "people-density": {
+    "type": "array",
+    "starting_key": ["people_density", "attribute"],
+    "fields": [
+      {
+        "label": "Object",
+        "key": "label",
+        "hasThumbnail": true
+      }
     ]
   }
 }
