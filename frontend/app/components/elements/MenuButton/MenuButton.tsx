@@ -12,7 +12,9 @@ export const MenuButton = ({ title, disabled, onClick }: Props) => {
       className={`${styles.menuButtonWrapper} ${
         disabled ? styles.disabled : styles.active
       }`}
-      onClick={() => onClick()}>
+      onClick={() => {
+        if (!disabled) onClick()
+      }}>
       <span>{title}</span>
     </div>
   )

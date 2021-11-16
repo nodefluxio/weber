@@ -1,5 +1,13 @@
 .menuWrapper {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
   width: 50%;
+  text-align: center;
+
+  .buttonWrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
 }

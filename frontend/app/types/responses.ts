@@ -150,3 +150,11 @@ export type PaymentResponse = {
   error?: number
   message: string
 }
+export type CheckAccountResponse = {
+  data: [{
+    is_registered: boolean,
+    is_activated: boolean
+  }],
+  message: string,
+  ok: boolean
+}

@@ -1,5 +1,5 @@
 import { FaceRegistration } from '../../modules/FaceRegistration/FaceRegistration'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
@@ -16,6 +16,7 @@ import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
 import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
 import { PaymentMenu } from '@/modules/PaymentMenu/PaymentMenu'
+import { checkAccount } from '@/api/paymentAPI'
 
 type Props = {
   id: number
@@ -24,16 +25,22 @@ type Props = {
   long_description: string
 }
 
+const mainMenuInfo = [
+  'Before we start our payment, create your account first',
+  'Do your transactions using face payment'
+]
+
 export const FacePaymentPage = ({
   id,
   name,
   short_description,
   long_description
 }: Props) => {
-  const [currentStep, setCurrentStep] = useState(0)
+  const [currentStep, setCurrentStep] = useState(1)
   const [currentStepStepper, setCurrentStepStepper] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [cart, setCart] = useState<ShoppingItem>()
+  const [isAccountMade, setIsAccountMade] = useState(false)
   const { session_id } = parseCookies()
 
   const moveStep = (numStep: number, moveStepStepper?: boolean) => {
@@ -64,11 +71,31 @@ export const FacePaymentPage = ({
     }
   }
 
+  const checkStatus = async () => {
+    if (session_id) {
+      try {
+        const res = await checkAccount(session_id)
+        if (res)
+          setIsAccountMade(
+            res?.data[0].is_registered && res.data[0].is_activated
+          )
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      setOpenModal(true)
+    }
+  }
+
+  useEffect(() => {
+    checkStatus()
+  }, [])
+
   const menuButtons = [
     {
       title: 'Account Registration',
       onClick: () => {
-        setCurrentStep(2)
+        setCurrentStep(3)
         setCurrentStepStepper(2)
       }
     },
@@ -76,6 +103,7 @@ export const FacePaymentPage = ({
       title: 'Face Payment',
       onClick: () => {
         setCurrentStep(5)
+        setCurrentStepStepper(4)
       }
     }
   ]
@@ -105,7 +133,7 @@ export const FacePaymentPage = ({
       />
 
       <div className={styles.container}>
-        {currentStep === 0 && (
+        {currentStep === 1 && (
           <div className={styles.welcome}>
             <h2>Welcome to {name} Demo</h2>
             <p style={{ width: '65%', margin: '2rem auto' }}>
@@ -118,11 +146,15 @@ export const FacePaymentPage = ({
           </div>
         )}
 
-        {currentStep === 1 && (
-          <PaymentMenu buttons={menuButtons} disabledList={[1]} />
+        {currentStep === 2 && (
+          <PaymentMenu
+            buttons={menuButtons}
+            disabledList={[+(!isAccountMade)]}
+            title={mainMenuInfo[+isAccountMade]}
+          />
         )}
 
-        {currentStep === 2 && (
+        {currentStep === 3 && (
           <FaceRegistration
             onChecking={() => {
               createVisitorActivities(id, session_id, 1)
@@ -135,17 +167,13 @@ export const FacePaymentPage = ({
           />
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 4 && (
           <ActivationForm
             nextStep={() => {
               createVisitorActivities(id, session_id, 3)
-              moveStep(1, true)
+              setCurrentStep(2)
             }}
           />
-        )}
-
-        {currentStep === 4 && (
-          <PaymentMenu buttons={menuButtons} disabledList={[]} />
         )}
 
         {currentStep === 5 && (
@@ -180,6 +208,7 @@ export const FacePaymentPage = ({
             onBack={() => moveStep(-1)}
           />
         )}
+
         {currentStep === 8 && (
           <Feedback
             id={id}
