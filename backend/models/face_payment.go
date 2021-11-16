@@ -51,6 +51,31 @@ type FacePaymentTransaction struct {
 	CreatedAt          time.Time
 }
 
+type Payment struct {
+	SessionID string `json:"session_id"`
+	Phone     string `json:"phone" validate:"required,numeric"`
+	Pin       string `json:"pin" validate:"required,numeric,min=6,max=6"`
+	Amount    int
+	Data      RequestData `json:"data"`
+}
+
+type CheckLimitInput struct {
+	SessionID string `json:"session_id"`
+	Phone     string `json:"phone" validate:"required,numeric"`
+	Amount    int    `json:"amount"`
+}
+
+type CheckLimitResult struct {
+	FullName string `json:"full_name"`
+	Balance  int    `json:"balance"`
+	IsLimit  bool   `json:"is_limit"`
+}
+
+type CheckSessionResult struct {
+	IsActive     bool `json:"is_active"`
+	IsRegistered bool `json:"is_registered"`
+}
+
 func (m *Model) CreateAccount(newAccount *FacePaymentAccount) (err error) {
 	err = m.DBConn.Select("SessionID", "FullName", "Phone", "HaveTwin", "CreatedAt", "UpdatedAt").Create(newAccount).Error
 	if err != nil {
@@ -86,6 +111,44 @@ func (m *Model) CreateAccountWallet(sessionId string, newAccount *FacePaymentAcc
 
 	newAccountWallet.AccountID = newAccount.ID
 	err = m.DBConn.Create(newAccountWallet).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Model) GetAccount(FacePaymentAccount *FacePaymentAccount, id string) (err error) {
+	err = m.DBConn.Where("session_id = ?", id).First(FacePaymentAccount).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *Model) CreateTransactionDb(sessionId string, fpAccount *FacePaymentAccount, FacePaymentTransaction *FacePaymentTransaction) (err error) {
+	err = m.DBConn.Select("id").Find(fpAccount).Where("session_id = ?", sessionId).Error
+	if err != nil {
+		return err
+	}
+
+	FacePaymentTransaction.AccountID = fpAccount.ID
+	err = m.DBConn.Create(FacePaymentTransaction).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *Model) UpdateBalance(newAccount *FacePaymentAccount) (err error) {
+	err = m.DBConn.Model(newAccount).Select("MinimumPayment", "UpdatedAt").
+		Where("session_id = ?", newAccount.SessionID).
+		Updates(FacePaymentAccount{
+			MinimumPayment: newAccount.MinimumPayment,
+			UpdatedAt:      newAccount.UpdatedAt,
+		},
+		).Error
+
 	if err != nil {
 		return err
 	}
