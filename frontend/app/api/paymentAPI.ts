@@ -90,22 +90,22 @@ export const checkAccount = async (
   sessionId: string
 ): Promise<CheckAccountResponse | undefined> => {
   try {
-    // const res = await axios.post<CheckAccountResponse>(
-    //   `/face-payment/${sessionId}`
-    // )
-    const res: CheckAccountResponse = {
-      ok: true,
-      message: 'Success',
-      data: [
-        {
-          is_registered: true,
-          is_activated: true
-        }
-      ]
-    }
+    const res = await axios.post<CheckAccountResponse>(
+      `/face-payment/${sessionId}`
+    )
+    // const res: CheckAccountResponse = {
+    //   ok: true,
+    //   message: 'Success',
+    //   data: [
+    //     {
+    //       is_registered: false,
+    //       is_activated: true
+    //     }
+    //   ]
+    // }
     return {
-      ...res
-      // ...res.data
+      // ...res
+      ...res.data
     }
   } catch (e) {
     throw new Error((e as AxiosError<CheckAccountResponse>).message)

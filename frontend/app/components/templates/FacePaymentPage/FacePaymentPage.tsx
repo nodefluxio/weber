@@ -1,5 +1,5 @@
 import { FaceRegistration } from '../../modules/FaceRegistration/FaceRegistration'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
@@ -76,6 +76,7 @@ export const FacePaymentPage = ({
       try {
         const res = await checkAccount(session_id)
         if (res)
+          // Current userflow, not activated is considered same as not registered
           setIsAccountMade(
             res?.data[0].is_registered && res.data[0].is_activated
           )
@@ -86,10 +87,6 @@ export const FacePaymentPage = ({
       setOpenModal(true)
     }
   }
-
-  useEffect(() => {
-    checkStatus()
-  }, [])
 
   const menuButtons = [
     {
@@ -140,7 +137,12 @@ export const FacePaymentPage = ({
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
-            <Button color={Color.Primary} onClick={() => moveStep(1, false)}>
+            <Button
+              color={Color.Primary}
+              onClick={() => {
+                moveStep(1, false)
+                checkStatus()
+              }}>
               Start
             </Button>
           </div>
@@ -149,7 +151,7 @@ export const FacePaymentPage = ({
         {currentStep === 2 && (
           <PaymentMenu
             buttons={menuButtons}
-            disabledList={[+(!isAccountMade)]}
+            disabledList={[+!isAccountMade]}
             title={mainMenuInfo[+isAccountMade]}
           />
         )}
@@ -171,6 +173,7 @@ export const FacePaymentPage = ({
           <ActivationForm
             nextStep={() => {
               createVisitorActivities(id, session_id, 3)
+              checkStatus()
               setCurrentStep(2)
             }}
           />
