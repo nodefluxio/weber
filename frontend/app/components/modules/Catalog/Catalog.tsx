@@ -4,34 +4,35 @@ import { CardImage } from '../CardImage/CardImage'
 import { Card } from '../Card/Card'
 import { CardContent } from '../CardContent/CardContent'
 import { Color, ShoppingItem } from '@/types/elements'
+import { formatMoney } from '@/utils/utils'
 
 const ITEM_LIST: ShoppingItem[] = [
   {
     id: '1',
-    name: 'Teh botol sosro',
-    image: 'teh-botol.png',
-    price: 45000,
+    name: 'Glitter Silver High Heels',
+    image: 'glitter-silver-high-heels.png',
+    price: 760000,
     quantity: 1
   },
   {
     id: '2',
-    name: 'Teh botol sosro',
-    image: 'teh-botol.png',
-    price: 45000,
+    name: 'Polka-dot Vintage Dress Red',
+    image: 'polka-dot-vintage-dress-red.png',
+    price: 360000,
     quantity: 1
   },
   {
     id: '3',
-    name: 'Teh botol sosro',
-    image: 'teh-botol.png',
-    price: 45000,
+    name: 'Football Soccer Ball - Size 5',
+    image: 'football-soccer-ball.png',
+    price: 280000,
     quantity: 1
   },
   {
     id: '4',
-    name: 'Teh botol sosro',
-    image: 'teh-botol.png',
-    price: 45000,
+    name: '2pcs Badminton Rackets',
+    image: '2pc-badminton-rackets.png',
+    price: 320000,
     quantity: 1
   }
 ]
@@ -47,11 +48,12 @@ export const Catalog = ({ onAddToCart }: Props) => {
             className={styles.cardImage}
             img={`/assets/images/solutions/face-payment/${item.image}`}
             layout="fill"
+            objectFit="contain"
           />
           <CardContent className={styles.cardContent}>
             <h3>{item.name}</h3>
             <div className={styles.row}>
-              <p>{`Rp${item.price}`}</p>
+              <p>IDR {formatMoney(item.price)}</p>
               <Button
                 className={styles.btn}
                 color={Color.Primary}
