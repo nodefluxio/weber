@@ -1184,6 +1184,97 @@ OR
 </details>
 
 <details>
+<summary><b>Check Limit Minimum Payment</b></summary>
+
+- **URL**
+
+  `/api/v1/face-payment/check-limit`
+
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+```json
+{
+    "session_id": "9443ea43-52e5-41a7-91dd-bc940001b628",
+    "phone": "082189891233",
+    "amount": 75000
+   }
+}
+```
+
+- **Request Payload Data Type Attributes**
+```json
+{
+   "session_id": string,
+   "phone": string,
+   "amount": integer
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+```json
+{
+   "data": [
+       {
+           "balance": 1000000,
+           "full_name": "Natasha Romanoff",
+           "have_twin": true,
+           "is_limit": false
+       }
+   ],
+   "message": "Check limit minimum payment success",
+   "ok": true
+}
+```
+
+- **Data Type Attributes**
+```json
+{
+   "data": [
+       {
+           "balance": integer,
+           "full_name": string,
+           "have_twin": boolean,
+           "is_limit": boolean
+       }
+   ],
+   "message": string,
+   "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+   "message": "Your phone number is wrong",
+   "ok": false
+}
+```
+
+**Code**: 400 Bad Request
+```json
+{
+   "message": "phone is a required field",
+   "ok": false
+}
+```
+OR
+```json
+{  
+   "message": "amount is a required field",
+   "ok": false
+}
+```
+</details>
+
+<details>
 <summary><b>Create Transaction Face Payment </b></summary>
 
 - **URL**
@@ -1252,90 +1343,8 @@ OR
 OR
 ```json
 {
-   "message": "Phone number not found!",
-   "ok": false
-}
-```
-OR
-```json
-{
    "message": "Your balance is Not Enough!",
    "ok": false
-}
-```
-</details>
-
-<details>
-<summary><b>Create Endpoint to Check Limit</b></summary>
-
-- **URL**
-
-  `/api/v1/face-payment/check-limit`
-
-- **Method**
-
-  `POST`
-
-- **Request Payload**
-```json
-{
-    "session_id": "9443ea43-52e5-41a7-91dd-bc940001b628",
-    "phone": "082189891233",
-    "amount": 75000
-   }
-}
-```
-
-- **Request Payload Data Type Attributes**
-
-```json
-{
-   "session_id": string,
-   "phone": string,
-   "amount": integer
-}
-```
-
-- **Sample Success Response**
-
-  **Code**: 200 OK
-
-```json
-{
-    "data": {
-        "full_name": "BagasT1",
-        "balance": 47000,
-        "is_limit": true
-    },
-    "message": "Check Limit Minimum Payment Success",
-    "ok": false
-}
-```
-OR
-```json
-{
-    "data": {
-        "full_name": "BagasT1",
-        "balance": 70000,
-        "is_limit": false
-    },
-    "message": "Check Limit Minimum Payment Success",
-    "ok": false
-}
-```
-
-
-- **Data Type Attributes**
-
-```json
-{
-   "data": {
-        "full_name": string,
-        "balance": integer,
-        "is_limit": boolean
-    },
-    "message": string,
-    "ok": boolean
 }
 ```
 </details>
