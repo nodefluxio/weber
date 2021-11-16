@@ -23,7 +23,6 @@ export const ActivationForm = ({ nextStep }: Props) => {
   const [pinCode, setPinCode] = useState('')
   const [payment, setPayment] = useState(MIN_PAYMENT)
   const [warningMsg, setWarningMsg] = useState('')
-  const [isPinCreated, setIsPinCreated] = useState(false)
   const [isModalShowed, setIsModalShowed] = useState(false)
   const [isModalLoading, setIsModalLoading] = useState(false)
   const [isModalSuccess, setIsModalSuccess] = useState(false)
@@ -106,14 +105,12 @@ export const ActivationForm = ({ nextStep }: Props) => {
           message={'Please remember the code and don’t tell anyone your code'}
           digits={PIN_DIGIT_LENGTH}
           onPinChange={setPinCode}
-          isDisabled={isPinCreated}
         />
         <Button
           type="button"
           color={Color.Primary}
           disabled={pinCode.length < PIN_DIGIT_LENGTH}
           onClick={() => {
-            setIsPinCreated(true)
             setIsModalShowed(true)
           }}>
           Next

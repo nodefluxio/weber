@@ -11,14 +11,12 @@ type Props = {
   message: string
   digits: number
   onPinChange: Function
-  isDisabled: boolean
 }
 
 export const PinInput = ({
   message,
   digits,
-  onPinChange,
-  isDisabled
+  onPinChange
 }: Props) => {
   const [pinCode, setPinCode] = useState(
     Array.from({ length: digits }, (_) => '')
@@ -83,7 +81,6 @@ export const PinInput = ({
             className={styles.pinInput}
             onChange={(event) => handleChange(event, i)}
             onKeyDown={(event) => handleKeyDown(event, i)}
-            disabled={isDisabled}
           />
         ))}
       </div>
