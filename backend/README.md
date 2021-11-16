@@ -892,6 +892,48 @@ OR
 </details>
 
 <details>
+<summary><b>Check Active Account by Session ID</b></summary>
+
+- **URL**
+
+  `/api/v1/face-payment/account/:session_id`
+
+- **Method**
+
+  `GET`
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+   "have_active_account": false,
+   "message": "This session id does not have an active face payment account",
+   "ok": true
+}
+```
+OR
+```json
+{
+   "have_active_account": true,
+   "message": "This session id has an active face payment account",
+   "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+   "have_active_account": boolean,
+   "message": string,
+   "ok": boolean
+}
+```
+</details>
+
+<details>
 <summary><b>Create New Face Payment Account</b></summary>
 Create a new account for Face Payment solution demonstration.
 
@@ -1291,69 +1333,6 @@ OR
         "full_name": string,
         "balance": integer,
         "is_limit": boolean
-    },
-    "message": string,
-    "ok": boolean
-}
-```
-</details>
-
-<details>
-<summary><b>Create Endpoint to Check Session Id Face Payment</b></summary>
-
-- **URL**
-
-  `/api/v1/face-payment/account/:session_id`
-
-- **Method**
-
-  `GET`
-
-- **Sample Success Response**
-
-  **Code**: 200 OK
-
-```json
-{
-    "data": {
-        "is_active": true,
-        "is_registered": true
-    },
-    "message": "Session ID Checked",
-    "ok": false
-}
-```
-OR
-```json
-{
-    "data": {
-        "is_active": true,
-        "is_registered": false
-    },
-    "message": "Session ID Checked",
-    "ok": false
-}
-```
-OR
-```json
-{
-    "data": {
-        "is_active": false,
-        "is_registered": false
-    },
-    "message": "Session ID Checked",
-    "ok": false
-}
-```
-
-
-- **Data Type Attributes**
-
-```json
-{
-   "data": {
-        "is_active": boolean,
-        "is_registered": boolean,
     },
     "message": string,
     "ok": boolean
