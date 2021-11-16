@@ -1,7 +1,8 @@
 import { Button } from '@/elements/Button/Button'
 import Image from 'next/image'
 import { Color, ShoppingItem } from '@/types/elements'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { formatMoney } from '@/utils/utils'
 import styles from './Cart.module.scss'
 
 type Props = {
@@ -11,6 +12,12 @@ type Props = {
 }
 export const Cart = ({ item, onBack, onCheckout }: Props) => {
   const [quantity, setQuantity] = useState<number>(1)
+  const [total, setTotal] = useState(formatMoney(item.price * item.quantity))
+
+  useEffect(() => {
+    const formatedTotal = formatMoney(item.price * quantity)
+    setTotal(formatedTotal)
+  }, [quantity])
 
   return (
     <div className={styles.cart}>
@@ -25,11 +32,12 @@ export const Cart = ({ item, onBack, onCheckout }: Props) => {
           <Image
             src={`/assets/images/solutions/face-payment/${item.image}`}
             layout="fill"
+            objectFit="contain"
           />
         </div>
         <div className={styles.details}>
           <h4 className={styles.name}>{item.name}</h4>
-          <p className={styles.price}>IDR {item.price}</p>
+          <p className={styles.price}>IDR {formatMoney(item.price)}</p>
           <p className={styles.quantityText}>Quantity</p>
           <div className={styles.quantityControl}>
             <span
@@ -49,7 +57,7 @@ export const Cart = ({ item, onBack, onCheckout }: Props) => {
           <div className={styles.total}>
             <p>Total</p>
             <p>
-              <strong>{item.price * quantity}</strong>
+              <strong>IDR {total}</strong>
             </p>
           </div>
         </div>
@@ -59,7 +67,7 @@ export const Cart = ({ item, onBack, onCheckout }: Props) => {
       <div className={styles.grandTotal}>
         <p className={styles.grandTotalText}>Grand Total</p>
         <p className={styles.totalCalc}>
-          <strong>IDR {item.price * quantity}</strong>
+          <strong>IDR {total}</strong>
         </p>
       </div>
       <Button

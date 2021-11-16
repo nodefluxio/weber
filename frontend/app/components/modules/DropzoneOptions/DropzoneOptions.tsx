@@ -88,7 +88,7 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
 
   return (
     <div className={styles.dropzoneOptions}>
-      <p>{errorMsg}</p>
+      <p className={styles.errorMsg}>{errorMsg}</p>
       <div className={styles.previewNOptions}>
         <div {...getRootProps()} className={styles.dropzoneContainer}>
           <input {...getInputProps()} />

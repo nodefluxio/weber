@@ -1,5 +1,6 @@
 import { Button } from '@/elements/Button/Button'
 import { Color, ShoppingItem } from '@/types/elements'
+import { formatMoney } from '@/utils/utils'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from './OrderSummary.module.scss'
@@ -17,7 +18,7 @@ export const OrderSummary = ({ cart, onBack, onNext }: Props) => {
   )
 
   useEffect(() => {
-    const total = cart.quantity * cart.price - SHIPPING_FEE
+    const total = cart.quantity * cart.price + SHIPPING_FEE
     setTotalPay(total)
   }, [cart])
 
@@ -38,12 +39,13 @@ export const OrderSummary = ({ cart, onBack, onNext }: Props) => {
             <Image
               src={`/assets/images/solutions/face-payment/${cart.image}`}
               layout="fill"
+              objectFit="contain"
             />
           </div>
           <p>{cart.name}</p>
           <div className={styles.qAndTotal}>
             <p>{`x${cart.quantity}`}</p>
-            <p>{`IDR ${cart.quantity * cart.price}`}</p>
+            <p>{`IDR ${formatMoney(cart.price)}`}</p>
           </div>
         </div>
       </div>
@@ -51,11 +53,11 @@ export const OrderSummary = ({ cart, onBack, onNext }: Props) => {
       <div className={styles.container}>
         <div className={styles.flex}>
           <p>Sub Total</p>
-          <h4>{`IDR ${cart.quantity * cart.price}`}</h4>
+          <h4>{`IDR ${formatMoney(cart.quantity * cart.price)}`}</h4>
         </div>
         <div className={styles.flex}>
           <p>Shipping Fee</p>
-          <h4>{`IDR ${SHIPPING_FEE}`}</h4>
+          <h4>{`IDR ${formatMoney(SHIPPING_FEE)}`}</h4>
         </div>
       </div>
       <hr />
@@ -67,7 +69,7 @@ export const OrderSummary = ({ cart, onBack, onNext }: Props) => {
         <div className={`${styles.flex} ${styles.total}`}>
           <p>Total</p>
           <p>
-            <strong>{`IDR ${totalPay}`}</strong>
+            <strong>{`IDR ${formatMoney(totalPay)}`}</strong>
           </p>
         </div>
       </div>
