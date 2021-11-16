@@ -455,8 +455,9 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 
-	// If amount in the cart >= minimum payment, require a PIN checking
-	if amount >= fpAccount.MinimumPayment {
+	// If amount in the cart > minimum payment or the user have twin, 
+	// then require a PIN checking
+	if amount >= fpAccount.MinimumPayment || fpAccount.HaveTwin {
 		// Check pin
 		if pin != fpAccount.Pin {
 			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Wrong pin!", "ok": false})
