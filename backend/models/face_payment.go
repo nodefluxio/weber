@@ -65,12 +65,6 @@ type CheckLimitInput struct {
 	Amount    int    `json:"amount" validate:"required"`
 }
 
-type CheckLimitResult struct {
-	FullName string `json:"full_name"`
-	Balance  int    `json:"balance"`
-	IsLimit  bool   `json:"is_limit"`
-}
-
 func (m *Model) CreateAccount(newAccount *FacePaymentAccount) (err error) {
 	err = m.DBConn.Select("SessionID", "FullName", "Phone", "HaveTwin", "CreatedAt", "UpdatedAt").Create(newAccount).Error
 	if err != nil {
