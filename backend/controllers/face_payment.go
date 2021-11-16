@@ -494,13 +494,21 @@ func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      true,
-			"message": "Active face payment account not found",
+			"message": "This session id does not have an active face payment account",
+		})
+		return
+	}
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": err.Error(),
 		})
 		return
 	}
 
 	ctx.JSON(http.StatusFound, gin.H{
 		"ok":      true,
-		"message": "An active face payment account found",
+		"message": "This session id has an active face payment account",
 	})
 }
