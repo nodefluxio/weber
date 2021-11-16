@@ -60,9 +60,12 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
         // @ts-ignore
         let analyticSlugResultMap = resultMap[slug]
         let mappedResultResponse = result
-        if (result.result) {
-          mappedResultResponse = result.result
+        if ('result' in result) {
+          if (result.result) {
+            mappedResultResponse = result.result
+          } else return
         }
+
         if (analyticSlugResultMap.starting_key) {
           mappedResultResponse =
             mappedResultResponse[analyticSlugResultMap.starting_key]
