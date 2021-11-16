@@ -147,7 +147,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 func (ctrl *Controller) isPhoneAlreadyExists(phone string) bool {
 	var account models.FacePaymentAccount
 
-	if isExist := ctrl.DBConn.Where("phone = ?", phone).First(&account).RowsAffected; isExist > 0 {
+	if isExist := ctrl.DBConn.Where("phone = ? AND is_active = ?", phone, "true").First(&account).RowsAffected; isExist > 0 {
 		return true
 	}
 
@@ -300,7 +300,7 @@ func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
 		return
 	}
 
-	ctrl.Model.GetAccount(&FacePaymentAccount, SessionID)
+	ctrl.Model.GetActiveAccount(&FacePaymentAccount, SessionID)
 
 	CheckRes.FullName = FacePaymentAccount.FullName
 	CheckRes.Balance = FacePaymentAccount.MinimumPayment
@@ -414,27 +414,40 @@ func (ctrl *Controller) Payment(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": "Payment transaction success", "ok": true})
 }
 
-func (ctrl *Controller) CheckFacePaymentAccount(ctx *gin.Context) {
-	var facePayments models.FacePaymentAccount
-	var CheckSessionResult models.CheckSessionResult
+func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
 	sessionId := ctx.Param("session_id")
-
-	if err := ctrl.DBConn.Model(facePayments).First(&facePayments, "session_id = ?", sessionId).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			ctx.JSON(http.StatusNotFound, gin.H{
-				"ok":      false,
-				"message": "face payment account is not found",
-			})
-			return
-		}
+	
+	// Check if session is not exist in our record
+	if !ctrl.IsSessionExist(sessionId) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"ok":      false,
+			"message": "Session ID is not valid",
+		})
+		return
 	}
 
-	CheckSessionResult.IsActive = facePayments.IsActive
-	CheckSessionResult.IsRegistered = true
+	// Check if session has expired
+	if ctrl.IsSessionExpired(sessionId) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"ok": false,
+			"message": "Session ID has expired",
+		})
+		return
+	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"data":    &CheckSessionResult,
-		"message": "Session ID Checked",
-		"ok":      false,
+	var account models.FacePaymentAccount
+
+	err := ctrl.Model.GetActiveAccount(&account, sessionId)
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"ok": true,
+			"message": "Active face payment account not found",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusFound, gin.H{
+		"ok": true,
+		"message": "An active face payment account found",
 	})
 }
