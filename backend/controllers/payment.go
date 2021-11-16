@@ -163,7 +163,7 @@ func (ctrl *Controller) Payment(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": "Payment transaction success", "ok": true})
 }
 
-func (ctrl *Controller) CheckSessionId(ctx *gin.Context) {
+func (ctrl *Controller) CheckFacePaymentAccount(ctx *gin.Context) {
 	var facePayments models.FacePaymentAccount
 	var CheckSessionResult models.CheckSessionResult
 	sessionId := ctx.Param("session_id")
@@ -172,18 +172,14 @@ func (ctrl *Controller) CheckSessionId(ctx *gin.Context) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"ok":      false,
-				"message": "Session Id not found",
+				"message": "face payment account is not found",
 			})
 			return
 		}
 	}
 
 	CheckSessionResult.IsActive = facePayments.IsActive
-	if facePayments.ID != 0 {
-		CheckSessionResult.IsRegistered = true
-	} else {
-		CheckSessionResult.IsRegistered = false
-	}
+	CheckSessionResult.IsRegistered = true
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"data":    &CheckSessionResult,
