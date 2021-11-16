@@ -106,10 +106,14 @@ export const ActivationForm = ({ nextStep }: Props) => {
           digits={PIN_DIGIT_LENGTH}
           onPinChange={setPinCode}
         />
+        <div className={styles.warningMsg}>
+          {pinCode === '000000' &&
+            'All zeros pin is not allowed. Please use other combination'}
+        </div>
         <Button
           type="button"
           color={Color.Primary}
-          disabled={pinCode.length < PIN_DIGIT_LENGTH}
+          disabled={pinCode.length < PIN_DIGIT_LENGTH || pinCode === '000000'}
           onClick={() => {
             setIsModalShowed(true)
           }}>
