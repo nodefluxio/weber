@@ -21,7 +21,7 @@ type FacePaymentAccount struct {
 type NewAccountData struct {
 	SessionID string      `json:"session_id"`
 	FullName  string      `json:"full_name" validate:"required,min=2,max=255"`
-	Phone     string      `json:"phone" validate:"required,numeric,min=12,max=15"`
+	Phone     string      `json:"phone" validate:"required,numeric,min=10,max=12"`
 	HaveTwin  *bool       `json:"have_twin" validate:"required"`
 	Data      RequestData `json:"data"`
 	CreatedAt time.Time   `json:"created_at"`
@@ -62,18 +62,13 @@ type PayInput struct {
 type CheckLimitInput struct {
 	SessionID string `json:"session_id"`
 	Phone     string `json:"phone" validate:"required,numeric"`
-	Amount    int    `json:"amount"`
+	Amount    int    `json:"amount" validate:"required"`
 }
 
 type CheckLimitResult struct {
 	FullName string `json:"full_name"`
 	Balance  int    `json:"balance"`
 	IsLimit  bool   `json:"is_limit"`
-}
-
-type CheckSessionResult struct {
-	IsActive     bool `json:"is_active"`
-	IsRegistered bool `json:"is_registered"`
 }
 
 func (m *Model) CreateAccount(newAccount *FacePaymentAccount) (err error) {
@@ -107,12 +102,14 @@ func (m *Model) ActivateAccount(newAccount *FacePaymentAccount) (err error) {
 	return nil
 }
 
-func (m *Model) CreateAccountWallet(sessionId string, newAccount *FacePaymentAccount, newAccountWallet *FacePaymentWallet) (err error) {
-	err = m.DBConn.Select("id").Find(newAccount).Where("session_id = ?", sessionId).Error
+func (m *Model) CreateAccountWallet(sessionId string, newAccountWallet *FacePaymentWallet) (err error) {
+	var newAccount *FacePaymentAccount
+
+	err = m.DBConn.Where("session_id = ? AND is_active = ?", sessionId, "true").Last(&newAccount).Error
 	if err != nil {
 		return err
 	}
-
+	
 	newAccountWallet.AccountID = newAccount.ID
 	err = m.DBConn.Create(newAccountWallet).Error
 	if err != nil {
@@ -131,8 +128,8 @@ func (m *Model) GetActiveAccount(Account *FacePaymentAccount, sessionId string) 
 	return nil
 }
 
-func (m *Model) GetAccountWallet(FacePaymentWallet *FacePaymentWallet, id uint) (err error) {
-	err = m.DBConn.Where("account_id = ?", id).First(FacePaymentWallet).Error
+func (m *Model) GetAccountWallet(FacePaymentWallet *FacePaymentWallet, accountId uint) (err error) {
+	err = m.DBConn.Where("account_id = ?", accountId).First(FacePaymentWallet).Error
 	if err != nil {
 		return err
 	}

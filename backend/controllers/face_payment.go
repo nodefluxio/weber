@@ -15,12 +15,61 @@ import (
 	"gorm.io/gorm"
 )
 
+func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
+	sessionId := ctx.Param("session_id")
+
+	// Check if session is not exist in our record
+	if !ctrl.IsSessionExist(sessionId) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"ok":      false,
+			"message": "Session ID is not valid",
+		})
+		return
+	}
+
+	// Check if session has expired
+	if ctrl.IsSessionExpired(sessionId) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"ok":      false,
+			"message": "Session ID has expired",
+		})
+		return
+	}
+
+	var account models.FacePaymentAccount
+
+	err := ctrl.Model.GetActiveAccount(&account, sessionId)
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"ok":      true,
+			"message": "This session id does not have an active face payment account",
+			"have_active_account": false,
+		})
+		return
+	}
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok":      true,
+		"message": "This session id has an active face payment account",
+		"have_active_account": true,
+	})
+}
+
 func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	var newAccountData models.NewAccountData
 	ctx.BindJSON(&newAccountData)
 
 	sessionId := newAccountData.SessionID
 	phone := newAccountData.Phone
+	phoneFormatted := ctrl.reformatPhone(phone, sessionId)
 	inputDataToAnalytic := newAccountData.Data
 
 	// Check if session is not exist in our record
@@ -41,9 +90,6 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 		return
 	}
 
-	phone = ctrl.reformatPhone(phone, sessionId)
-	newAccountData.Phone = phone
-
 	// Condition to validate new account data and phone input
 	// on first hit from frontend
 	if len(inputDataToAnalytic.Images) < 1 {
@@ -59,7 +105,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 		}
 
 		// Validate the phone input must be a positive number
-		if isPositive := isPositiveNumber(phone); !isPositive {
+		if isPositive := isPositiveNumber(phoneFormatted); !isPositive {
 			ctx.JSON(http.StatusBadRequest, gin.H{
 				"ok":      false,
 				"message": "phone must be a valid positive numeric value",
@@ -68,7 +114,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 		}
 
 		// Validate that the phone number does not exist in the db
-		if phoneExist := ctrl.isPhoneAlreadyExists(phone); phoneExist {
+		if phoneExist := ctrl.isPhoneAlreadyExists(phoneFormatted); phoneExist {
 			ctx.JSON(http.StatusBadRequest, gin.H{
 				"ok":      false,
 				"message": "phone number already exist, try to use another number",
@@ -124,7 +170,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	var newAccount models.FacePaymentAccount
 	newAccount.SessionID = sessionId
 	newAccount.FullName = newAccountData.FullName
-	newAccount.Phone = newAccountData.Phone
+	newAccount.Phone = phoneFormatted
 	newAccount.HaveTwin = *newAccountData.HaveTwin
 	newAccount.CreatedAt = time.Now()
 	newAccount.UpdatedAt = newAccount.CreatedAt
@@ -142,36 +188,6 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 		"ok":      true,
 		"message": "Face payment account registration has been successful",
 	})
-}
-
-func (ctrl *Controller) isPhoneAlreadyExists(phone string) bool {
-	var account models.FacePaymentAccount
-
-	if isExist := ctrl.DBConn.Where("phone = ? AND is_active = ?", phone, "true").First(&account).RowsAffected; isExist > 0 {
-		return true
-	}
-
-	return false
-}
-
-func (ctrl *Controller) reformatPhone(phone string, sessionId string) string {
-	// Output should be: DD{MM+YY}Phone
-
-	// Replace first character with 62 if the first character is 0
-	re := regexp.MustCompile(`(?m)^0`)
-	phone = re.ReplaceAllString(phone, "62")
-
-	// Add the DD{MM+YY} of the expired var
-	expirationDate := ctrl.GetExpirationDate(sessionId)
-	re = regexp.MustCompile(`(?m)(\d\d)-(\d\d)-\d\d(\d\d)`)
-	matchingGroups := re.FindStringSubmatch(expirationDate)
-	day := matchingGroups[1]
-	monthInt, _ := strconv.Atoi(matchingGroups[2])
-	yearInt, _ := strconv.Atoi(matchingGroups[3])
-	sum := strconv.Itoa(monthInt + yearInt)
-	phone = day + sum + phone
-
-	return phone
 }
 
 func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
@@ -239,7 +255,7 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 
 	// Creating the new account's wallet
 	var newAccountWallet models.FacePaymentWallet
-	err = ctrl.Model.CreateAccountWallet(sessionId, &newAccount, &newAccountWallet)
+	err = ctrl.Model.CreateAccountWallet(sessionId, &newAccountWallet)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -254,26 +270,14 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 	})
 }
 
-func isPositiveNumber(number string) bool {
-	if num, _ := strconv.Atoi(number); num <= 0 {
-		return false
-	}
+func (ctrl *Controller) CheckLimitMinimumPayment(ctx *gin.Context) {
+	var accountToCheck models.CheckLimitInput
+	ctx.BindJSON(&accountToCheck)
 
-	return true
-}
-
-func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
-	var CheckLimit models.CheckLimitInput
-	var FacePaymentAccount models.FacePaymentAccount
-	var CheckRes models.CheckLimitResult
-
-	ctx.BindJSON(&CheckLimit)
-
-	SessionID := CheckLimit.SessionID
-	Amount := CheckLimit.Amount
+	sessionId := accountToCheck.SessionID
 
 	// Check if session is not exist in our record
-	if !ctrl.IsSessionExist(SessionID) {
+	if !ctrl.IsSessionExist(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID is not valid",
@@ -281,8 +285,8 @@ func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
 		return
 	}
 
-	// Check if session has expired
-	if ctrl.IsSessionExpired(SessionID) {
+	// // Check if session has expired
+	if ctrl.IsSessionExpired(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"ok":      false,
 			"message": "Session ID has expired",
@@ -290,7 +294,8 @@ func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
 		return
 	}
 
-	err := utils.Validate.Struct(CheckLimit)
+	// Validate the inputs
+	err := utils.Validate.Struct(accountToCheck)
 	errs := utils.TranslateError(err)
 	if len(errs) > 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -300,21 +305,58 @@ func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
 		return
 	}
 
-	ctrl.Model.GetActiveAccount(&FacePaymentAccount, SessionID)
+	// Get the face payment account
+	var account models.FacePaymentAccount
+	err = ctrl.Model.GetActiveAccount(&account, sessionId)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
+		return
+	}
+	
+	phoneFormatted := ctrl.reformatPhone(accountToCheck.Phone, sessionId)
 
-	CheckRes.FullName = FacePaymentAccount.FullName
-	CheckRes.Balance = FacePaymentAccount.MinimumPayment
-
-	if Amount <= CheckRes.Balance {
-		CheckRes.IsLimit = false
-	} else {
-		CheckRes.IsLimit = true
+	// Check phone number
+	if phoneFormatted != account.Phone {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"ok": false,
+			"message": "Your phone number is wrong", 
+		})
+		return
 	}
 
+	var accountWallet models.FacePaymentWallet
+	err = ctrl.Model.GetAccountWallet(&accountWallet, account.ID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	// Check if total amount > minimum_payment
+	isLimit := false
+	if accountToCheck.Amount > account.MinimumPayment {
+		isLimit = true
+	}
+
+	var checkLimitResult []map[string]interface{}
+	data := map[string]interface{}{
+		"full_name": account.FullName,
+		"have_twin": account.HaveTwin,
+		"balance": accountWallet.Balance,
+		"is_limit": isLimit,
+
+	}
+	checkLimitResult = append(checkLimitResult, data)
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data":    &CheckRes,
-		"message": "Check Limit Minimum Payment Success",
-		"ok":      false,
+		"ok":      true,
+		"message": "Check limit minimum payment success",
+		"data": &checkLimitResult,
 	})
 }
 
@@ -357,8 +399,6 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 
-	phone = ctrl.reformatPhone(phone, sessionId)
-
 	// Get the face payment account
 	err = ctrl.Model.GetActiveAccount(&fpAccount, sessionId)
 	if err != nil {
@@ -366,12 +406,6 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 			"ok":      false,
 			"message": err.Error(),
 		})
-		return
-	}
-
-	// Check phone number
-	if phone != fpAccount.Phone {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Phone is not found", "ok": false})
 		return
 	}
 
@@ -390,6 +424,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		})
 		return
 	}
+
 	resultFaceLivenessJson, _ := json.Marshal(resultFaceLiveness)
 	isLive := gjson.Get(string(resultFaceLivenessJson), "job.result.result.0.face_liveness.live").Bool()
 	if !isLive {
@@ -467,48 +502,40 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": "Payment transaction success", "ok": true})
 }
 
-func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
-	sessionId := ctx.Param("session_id")
+func (ctrl *Controller) reformatPhone(phone string, sessionId string) string {
+	// Output should be: DD{MM+YY}Phone
 
-	// Check if session is not exist in our record
-	if !ctrl.IsSessionExist(sessionId) {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Session ID is not valid",
-		})
-		return
-	}
+	// Replace first character with 62 if the first character is 0
+	re := regexp.MustCompile(`(?m)^0`)
+	phone = re.ReplaceAllString(phone, "62")
 
-	// Check if session has expired
-	if ctrl.IsSessionExpired(sessionId) {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Session ID has expired",
-		})
-		return
-	}
+	// Add the DD{MM+YY} of the expired var
+	expirationDate := ctrl.GetExpirationDate(sessionId)
+	re = regexp.MustCompile(`(?m)(\d\d)-(\d\d)-\d\d(\d\d)`)
+	matchingGroups := re.FindStringSubmatch(expirationDate)
+	day := matchingGroups[1]
+	monthInt, _ := strconv.Atoi(matchingGroups[2])
+	yearInt, _ := strconv.Atoi(matchingGroups[3])
+	sum := strconv.Itoa(monthInt + yearInt)
+	phone = day + sum + phone
 
+	return phone
+}
+
+func (ctrl *Controller) isPhoneAlreadyExists(phone string) bool {
 	var account models.FacePaymentAccount
 
-	err := ctrl.Model.GetActiveAccount(&account, sessionId)
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"ok":      true,
-			"message": "This session id does not have an active face payment account",
-		})
-		return
+	if isExist := ctrl.DBConn.Where("phone = ? AND is_active = ?", phone, "true").First(&account).RowsAffected; isExist > 0 {
+		return true
 	}
 
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"ok":      false,
-			"message": err.Error(),
-		})
-		return
+	return false
+}
+
+func isPositiveNumber(number string) bool {
+	if num, _ := strconv.Atoi(number); num <= 0 {
+		return false
 	}
 
-	ctx.JSON(http.StatusFound, gin.H{
-		"ok":      true,
-		"message": "This session id has an active face payment account",
-	})
+	return true
 }
