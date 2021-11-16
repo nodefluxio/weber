@@ -375,12 +375,33 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 
-	// Check face match with enrollment
+	// Create vars for analytic's purposes
 	var service models.Service
 	var inputDataToAnalytic models.RequestData
 	inputDataToAnalytic.Images = payInput.Data.Images
-	inputDataToAnalytic.AdditionalParams = map[string]interface{}{"face_id": phone}
 	ctrl.Model.GetServiceBySlug(&service, "face-payment")
+
+	// Check face liveness
+	resultFaceLiveness, err := GetResultFaceLiveness(service, inputDataToAnalytic)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
+		return
+	}
+	resultFaceLivenessJson, _ := json.Marshal(resultFaceLiveness)
+	isLive := gjson.Get(string(resultFaceLivenessJson), "job.result.result.0.face_liveness.live").Bool()
+	if !isLive {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": "Fake face detected. You're not authorized to use this account",
+		})
+		return
+	}
+
+	// Check face match with enrollment
+	inputDataToAnalytic.AdditionalParams = map[string]interface{}{"face_id": phone}
 	resultFaceMatch, err := GetResultFaceMatchEnrollment(service, inputDataToAnalytic)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -390,8 +411,8 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 	resultFaceMatchJson, _ := json.Marshal(resultFaceMatch)
-	isLive := gjson.Get(string(resultFaceMatchJson), "job.result.result.0.face_match.match").Bool()
-	if !isLive {
+	isMatch := gjson.Get(string(resultFaceMatchJson), "job.result.result.0.face_match.match").Bool()
+	if !isMatch {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
 			"message": "Wrong face detected. You're not authorized to use this account",
@@ -448,7 +469,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 
 func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
 	sessionId := ctx.Param("session_id")
-	
+
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
@@ -461,7 +482,7 @@ func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
 	// Check if session has expired
 	if ctrl.IsSessionExpired(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"ok": false,
+			"ok":      false,
 			"message": "Session ID has expired",
 		})
 		return
@@ -472,14 +493,14 @@ func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
 	err := ctrl.Model.GetActiveAccount(&account, sessionId)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		ctx.JSON(http.StatusNotFound, gin.H{
-			"ok": true,
+			"ok":      true,
 			"message": "Active face payment account not found",
 		})
 		return
 	}
 
 	ctx.JSON(http.StatusFound, gin.H{
-		"ok": true,
+		"ok":      true,
 		"message": "An active face payment account found",
 	})
 }
