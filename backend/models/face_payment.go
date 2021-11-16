@@ -5,15 +5,15 @@ import (
 )
 
 type FacePaymentAccount struct {
-	ID             uint `gorm:"primaryKey; autoIncrement" json:"id"`
+	ID             uint 	`gorm:"primaryKey; autoIncrement" json:"id"`
 	SessionID      string
-	Visitor        Visitor `gorm:"foreignKey:SessionID"`
+	Visitor        Visitor	`gorm:"foreignKey:SessionID"`
 	FullName       string
-	Phone          string `gorm:"uniqueIndex"`
+	Phone          string
 	Pin            string
-	MinimumPayment int  `gorm:"default:50000"`
-	HaveTwin       bool `gorm:"default:false"`
-	IsActive       bool `gorm:"default:false"`
+	MinimumPayment int  	`gorm:"default:50000"`
+	HaveTwin       bool 	`gorm:"default:false"`
+	IsActive       bool 	`gorm:"default:false"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 }
@@ -118,11 +118,12 @@ func (m *Model) CreateAccountWallet(sessionId string, newAccount *FacePaymentAcc
 	return nil
 }
 
-func (m *Model) GetAccount(FacePaymentAccount *FacePaymentAccount, id string) (err error) {
-	err = m.DBConn.Where("session_id = ?", id).First(FacePaymentAccount).Error
+func (m *Model) GetActiveAccount(Account *FacePaymentAccount, sessionId string) (err error) {
+	err = m.DBConn.Where("session_id = ? AND is_active = ?", sessionId, "true").First(Account).Error
 	if err != nil {
 		return err
 	}
+	
 	return nil
 }
 
