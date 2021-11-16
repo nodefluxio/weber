@@ -86,9 +86,13 @@ func (m *Model) CreateAccount(newAccount *FacePaymentAccount) (err error) {
 }
 
 func (m *Model) ActivateAccount(newAccount *FacePaymentAccount) (err error) {
-	err = m.DBConn.Model(newAccount).Select("Pin", "MinimumPayment", "IsActive", "UpdatedAt").
-		Where("session_id = ?", newAccount.SessionID).
-		Updates(FacePaymentAccount{
+	var account *FacePaymentAccount
+
+	// Get the last record of registered account with same session_id
+	m.DBConn.Where("session_id = ? ", newAccount.SessionID).Last(&account)
+
+	// Update the last registered account's data and activate it
+	err = m.DBConn.Model(&account).Updates(FacePaymentAccount{
 			Pin:            newAccount.Pin,
 			MinimumPayment: newAccount.MinimumPayment,
 			IsActive:       true,
