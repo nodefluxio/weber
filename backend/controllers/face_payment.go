@@ -300,7 +300,7 @@ func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
 		return
 	}
 
-	ctrl.Model.GetAccount(&FacePaymentAccount, SessionID)
+	ctrl.Model.GetActiveAccount(&FacePaymentAccount, SessionID)
 
 	CheckRes.FullName = FacePaymentAccount.FullName
 	CheckRes.Balance = FacePaymentAccount.MinimumPayment
@@ -318,16 +318,15 @@ func (ctrl *Controller) CheckLimit(ctx *gin.Context) {
 	})
 }
 
-func (ctrl *Controller) Payment(ctx *gin.Context) {
-	var payment models.Payment
-	var fpaccount models.FacePaymentAccount
-	ctx.BindJSON(&payment)
+func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
+	var payInput models.PayInput
+	var fpAccount models.FacePaymentAccount
+	ctx.BindJSON(&payInput)
 
-	sessionId := payment.SessionID
-	pin := payment.Pin
-	phone := payment.Phone
-	amount := payment.Amount
-	var newBalance int
+	sessionId := payInput.SessionID
+	pin := payInput.Pin
+	phone := payInput.Phone
+	amount := payInput.Amount
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
@@ -347,7 +346,8 @@ func (ctrl *Controller) Payment(ctx *gin.Context) {
 		return
 	}
 
-	err := utils.Validate.Struct(payment)
+	// Validate the input
+	err := utils.Validate.Struct(payInput)
 	errs := utils.TranslateError(err)
 	if len(errs) > 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -357,38 +357,71 @@ func (ctrl *Controller) Payment(ctx *gin.Context) {
 		return
 	}
 
-	//Check Pin
-	if err := ctrl.DBConn.Where("pin = ?", pin).First(&fpaccount).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Wrong Pin!", "ok": false})
-		return
-	}
-
 	phone = ctrl.reformatPhone(phone, sessionId)
 
-	//Check phone number
-	if phone != fpaccount.Phone {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Phone not found", "ok": false})
+	// Get the face payment account
+	err = ctrl.Model.GetActiveAccount(&fpAccount, sessionId)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
 		return
 	}
-	//Check Amount
-	if amount > fpaccount.MinimumPayment {
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"message": "Your balance is Not Enough!",
+
+	// Check phone number
+	if phone != fpAccount.Phone {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Phone is not found", "ok": false})
+		return
+	}
+
+	// Check face match with enrollment
+	var service models.Service
+	var inputDataToAnalytic models.RequestData
+	inputDataToAnalytic.Images = payInput.Data.Images
+	inputDataToAnalytic.AdditionalParams = map[string]interface{}{"face_id": phone}
+	ctrl.Model.GetServiceBySlug(&service, "face-payment")
+	resultFaceMatch, err := GetResultFaceMatchEnrollment(service, inputDataToAnalytic)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
+		return
+	}
+	resultFaceMatchJson, _ := json.Marshal(resultFaceMatch)
+	isLive := gjson.Get(string(resultFaceMatchJson), "job.result.result.0.face_match.match").Bool()
+	if !isLive {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": "Wrong face detected. You're not authorized to use this account",
+		})
+		return
+	}
+
+	// If amount in the cart >= minimum payment, require a PIN checking
+	if amount >= fpAccount.MinimumPayment {
+		// Check pin
+		if pin != fpAccount.Pin {
+			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Wrong pin!", "ok": false})
+			return
+		}
+	}
+
+	// Check balance
+	var fpwallet models.FacePaymentWallet
+	ctrl.Model.GetAccountWallet(&fpwallet, fpAccount.ID)
+	if amount > fpwallet.Balance {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "Your balance is not enough to make this transaction",
 			"ok":      false,
 		})
 		return
-	} else {
-		newBalance = fpaccount.MinimumPayment - payment.Amount
 	}
 
-	//update balance
-	var updateAccount models.FacePaymentAccount
-
-	updateAccount.SessionID = sessionId
-	updateAccount.MinimumPayment = newBalance
-	updateAccount.UpdatedAt = time.Now()
-
-	err = ctrl.Model.UpdateBalance(&updateAccount)
+	// Reduce the balance
+	fpwallet.Balance = fpwallet.Balance - payInput.Amount
+	err = ctrl.Model.UpdateBalance(&fpwallet)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -397,12 +430,11 @@ func (ctrl *Controller) Payment(ctx *gin.Context) {
 		return
 	}
 
-	//Create Transaction
+	// Create a transaction in database
 	var newTransaction models.FacePaymentTransaction
 	newTransaction.Amount = amount
 	newTransaction.CreatedAt = time.Now()
-
-	err = ctrl.Model.CreateTransactionDb(sessionId, &updateAccount, &newTransaction)
+	err = ctrl.Model.CreateTransactionDb(sessionId, &fpAccount, &newTransaction)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,

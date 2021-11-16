@@ -51,10 +51,10 @@ type FacePaymentTransaction struct {
 	CreatedAt          time.Time
 }
 
-type Payment struct {
+type PayInput struct {
 	SessionID string `json:"session_id"`
 	Phone     string `json:"phone" validate:"required,numeric"`
-	Pin       string `json:"pin" validate:"required,numeric,min=6,max=6"`
+	Pin       string `json:"pin" validate:"max=6"`
 	Amount    int
 	Data      RequestData `json:"data"`
 }
@@ -118,8 +118,16 @@ func (m *Model) CreateAccountWallet(sessionId string, newAccount *FacePaymentAcc
 	return nil
 }
 
-func (m *Model) GetAccount(FacePaymentAccount *FacePaymentAccount, id string) (err error) {
+func (m *Model) GetActiveAccount(FacePaymentAccount *FacePaymentAccount, id string) (err error) {
 	err = m.DBConn.Where("session_id = ?", id).First(FacePaymentAccount).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *Model) GetAccountWallet(FacePaymentWallet *FacePaymentWallet, id uint) (err error) {
+	err = m.DBConn.Where("account_id = ?", id).First(FacePaymentWallet).Error
 	if err != nil {
 		return err
 	}
@@ -140,12 +148,11 @@ func (m *Model) CreateTransactionDb(sessionId string, fpAccount *FacePaymentAcco
 	return nil
 }
 
-func (m *Model) UpdateBalance(newAccount *FacePaymentAccount) (err error) {
-	err = m.DBConn.Model(newAccount).Select("MinimumPayment", "UpdatedAt").
-		Where("session_id = ?", newAccount.SessionID).
-		Updates(FacePaymentAccount{
-			MinimumPayment: newAccount.MinimumPayment,
-			UpdatedAt:      newAccount.UpdatedAt,
+func (m *Model) UpdateBalance(fpWallet *FacePaymentWallet) (err error) {
+	err = m.DBConn.Model(fpWallet).Select("balance", "updated_at").
+		Where("id = ?", fpWallet.ID).
+		Updates(FacePaymentWallet{
+			Balance: fpWallet.Balance,
 		},
 		).Error
 
