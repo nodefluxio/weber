@@ -15,7 +15,6 @@ type Props = { sessionId: string; amount: number }
 export const PaymentPay = ({ sessionId, amount }: Props) => {
   const [step, setStep] = useState(1)
   const [pinCode, setPinCode] = useState('')
-  const [isPinCreated, setIsPinCreated] = useState(false)
   const [phone, setPhone] = useState('')
   const [isPinRequired, setIsPinRequired] = useState(true)
   const [user, setUser] = useState('User')
@@ -97,7 +96,6 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
             message={'You’ve reach your minimum payment, please input your pin'}
             digits={PIN_DIGIT_LENGTH}
             onPinChange={setPinCode}
-            isDisabled={isPinCreated}
           />
           <div className={styles.buttonWrapper}>
             <Button
@@ -106,7 +104,6 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
               disabled={pinCode.length < PIN_DIGIT_LENGTH}
               onClick={() => {
                 setStep(4)
-                setIsPinCreated(true)
                 resolvePay(
                   sessionId,
                   phone,
