@@ -159,6 +159,7 @@ export type CheckLimitResponse = {
       full_name: string
       balance: number
       is_limit: boolean
+      have_twin: boolean
     }
   ]
 }
