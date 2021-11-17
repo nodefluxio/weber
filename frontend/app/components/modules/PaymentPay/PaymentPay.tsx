@@ -12,7 +12,7 @@ import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
 
-type Props = { sessionId: string; amount: number, afterPay: ()=>void }
+type Props = { sessionId: string; amount: number; afterPay: () => void }
 
 export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
   const [step, setStep] = useState(1)
@@ -25,6 +25,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
   const [message, setMessage] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false)
 
   const resolveCheckLimit = async (
     session_id: string,
@@ -65,11 +66,14 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       if (res) {
         setIsSuccess(res?.ok)
         setMessage(res?.message)
+        if (res.error) {
+          setIsPaymentSuccess(res.error !== 402)
+        }
       }
     } catch (err) {
       setIsSuccess(false)
       setIsLoading(false)
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -102,20 +106,9 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
             localkey={FACE_MATCH_LIVENESS_SNAPSHOT}
             overlayShape="circle"
             nextStep={() => {
-              console.log(isPinRequired)
-
               if (isPinRequired) {
                 setStep(3)
               } else {
-                resolvePay(
-                  sessionId,
-                  phone,
-                  pinCode,
-                  amount,
-                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
-                    setStep(2)
-                  )
-                )
                 setStep(4)
               }
             }}
@@ -135,15 +128,6 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
               color={Color.Primary}
               disabled={pinCode.length < PIN_DIGIT_LENGTH}
               onClick={() => {
-                resolvePay(
-                  sessionId,
-                  phone,
-                  pinCode,
-                  amount,
-                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
-                    setStep(2)
-                  )
-                )
                 setStep(4)
               }}>
               Next
@@ -191,16 +175,23 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
         ))}
       {step === 5 && (
         <div className={styles.resultWrapper}>
-          <h2>Payment Successful!</h2>
+          <h2>
+            {isPaymentSuccess
+              ? 'Payment Successful!'
+              : 'Payment Unsuccessfull!'}
+          </h2>
           <Image
-            src="/assets/icons/thankyou.svg"
+            src={`/assets/icons/${
+              isPaymentSuccess ? 'thankyou.svg' : 'warning.svg'
+            }`}
             width={80}
             height={80}
             alt="thank you"
           />
           <p>
-            Thank you! your data will be deleted at the end of the day, You have
-            to re-register if you want to try again on the next day.
+            {isPaymentSuccess
+              ? 'Thank you! your data will be deleted at the end of the day, You have to re-register if you want to try again on the next day.'
+              : message}
           </p>
           <Button
             type="button"

@@ -125,9 +125,9 @@ export const pay = async (
   pin: string,
   amount: number,
   image: string
-): Promise<StandardResponse | undefined> => {
+): Promise<PaymentResponse | undefined> => {
   try {
-    const res = await axios.post<StandardResponse>(`/face-payment/pay`, {
+    const res = await axios.post<PaymentResponse>(`/face-payment/pay`, {
       session_id: sessionId,
       phone: phone,
       pin: pin,
@@ -139,9 +139,13 @@ export const pay = async (
     return res.data
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      const error = e as AxiosError<StandardResponse>
+      const error = e as AxiosError<PaymentResponse>
       if (error && error.response) {
-        return error.response.data
+        return {
+          ok: error.response.data.ok,
+          message: error.response.data.message,
+          error: error.response.status
+        }
       }
     } else {
       throw new Error((e as Error).message)
