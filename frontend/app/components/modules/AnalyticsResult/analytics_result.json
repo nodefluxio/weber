@@ -51,13 +51,24 @@
   },
   "face-demography": {
     "type": "array",
-    "starting_key": ["face-demography"],
+    "starting_key": ["face_demography"],
+    "max_result": 10,
     "fields": [
+      {
+        "key": "gender",
+        "fields": [
+          {
+            "label": "Gender",
+            "key": "prediction",
+            "hasThumbnail": true
+          }
+        ]
+      },
       {
         "key": "age",
         "fields": [
           {
-            "label": "prediction",
+            "label": "Age",
             "key": "prediction"
           }
         ]
