@@ -214,11 +214,12 @@ export const FacePaymentPage = ({
             onBack={() => moveStep(-1)}
           />
         )}
-        {currentStep === 7 && (
+
+        {currentStep === 8 && (
           <PaymentPay sessionId={session_id} amount={total} />
         )}
 
-        {currentStep === 8 && (
+        {currentStep === 9 && (
           <Feedback
             id={id}
             onTryAgain={() => {
