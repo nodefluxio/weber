@@ -64,7 +64,9 @@ go run .
 ---
 
 ## API Endpoint Documentation
+
 ### Visitors & Feedback
+
 <details>
 <summary><b>Create Visitor</b></summary>
 Create a visitor and generate the session id.
@@ -348,9 +350,10 @@ This error will appear if visitor give feedback rating more than 5.
 
 </details>
 
-- - -
+---
 
 ### Services
+
 <details>
 <summary><b>Create A Service Request By ID</b></summary>
 Create a service request by id and create a new visitor_activites record.
@@ -719,9 +722,10 @@ Return json data about a Service by slug.
 
 </details>
 
-- - -
+---
 
 ### Solution Services (In Particular)
+
 <details>
 <summary><b>Create A Service Request for E-KYC</b></summary>
 Create a service request for E-KYC solution.
@@ -908,17 +912,19 @@ OR
 
 ```json
 {
-   "have_active_account": false,
-   "message": "This session id does not have an active face payment account",
-   "ok": true
+  "have_active_account": false,
+  "message": "This session id does not have an active face payment account",
+  "ok": true
 }
 ```
+
 OR
+
 ```json
 {
-   "have_active_account": true,
-   "message": "This session id has an active face payment account",
-   "ok": true
+  "have_active_account": true,
+  "message": "This session id has an active face payment account",
+  "ok": true
 }
 ```
 
@@ -931,6 +937,7 @@ OR
    "ok": boolean
 }
 ```
+
 </details>
 
 <details>
@@ -946,15 +953,16 @@ Create a new account for Face Payment solution demonstration.
   `POST`
 
 - **Request Payload**
+
 ```json
 {
-   "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
-   "full_name": "Bruce Wayne",
-   "phone": "1337",
-   "have_twin": true,
-   "data": {
-       "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
-   }
+  "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+  "full_name": "Bruce Wayne",
+  "phone": "1337",
+  "have_twin": true,
+  "data": {
+    "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+  }
 }
 ```
 
@@ -978,8 +986,8 @@ Create a new account for Face Payment solution demonstration.
 
 ```json
 {
-   "message": "Face payment account registration has been successful",
-   "ok": true
+  "message": "Face payment account registration has been successful",
+  "ok": true
 }
 ```
 
@@ -995,12 +1003,14 @@ Create a new account for Face Payment solution demonstration.
 - **Sample Error Response**
 
   **Code**: 400 Bad Request
+
 ```json
 {
   "message": "Liveness result for the inputted image is false",
   "ok": false
 }
 ```
+
 </details>
 
 <details>
@@ -1016,16 +1026,18 @@ Validate the inputted data: full name, phone number (it must be unique), and hav
   `POST`
 
 - **Request Payload**
+
 ```json
 {
-    "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
-    "full_name": "Bruce Wayne",
-    "phone": "1337",
-    "have_twin": true
+  "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+  "full_name": "Bruce Wayne",
+  "phone": "1337",
+  "have_twin": true
 }
 ```
 
 - **Request Payload Data Type Attributes**
+
 ```json
 {
     "session_id": string,
@@ -1041,8 +1053,8 @@ Validate the inputted data: full name, phone number (it must be unique), and hav
 
 ```json
 {
-   "message": "Phone number is valid",
-   "ok": true
+  "message": "Phone number is valid",
+  "ok": true
 }
 ```
 
@@ -1058,40 +1070,50 @@ Validate the inputted data: full name, phone number (it must be unique), and hav
 - **Sample Error Response**
 
   **Code**: 400 Bad Request
+
 ```json
 {
-   "message": "full_name must be at least 2 characters in length",
-   "ok": false
+  "message": "full_name must be at least 2 characters in length",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-   "message": "full_name must be a maximum of 255 characters in length",
-   "ok": false
+  "message": "full_name must be a maximum of 255 characters in length",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-   "message": "phone must be a valid numeric value",
-   "ok": false
+  "message": "phone must be a valid numeric value",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-   "message": "phone must be a valid positive numeric value",
-   "ok": false
+  "message": "phone must be a valid positive numeric value",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-   "message": "phone number already exist, try to use another number",
-   "ok": false
+  "message": "phone number already exist, try to use another number",
+  "ok": false
 }
 ```
+
 </details>
 
 <details>
@@ -1107,15 +1129,17 @@ Activate a new account by adding a pin, updating the minimum payment, and create
   `PATCH`
 
 - **Request Payload**
+
 ```json
 {
-    "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
-    "pin": "133007",
-    "minimum_payment": 987654
+  "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+  "pin": "133007",
+  "minimum_payment": 987654
 }
 ```
 
 - **Request Payload Data Type Attributes**
+
 ```json
 {
     "session_id": string,
@@ -1130,8 +1154,8 @@ Activate a new account by adding a pin, updating the minimum payment, and create
 
 ```json
 {
-    "message": "Account activation and wallet creation has been successful",
-    "ok": true
+  "message": "Account activation and wallet creation has been successful",
+  "ok": true
 }
 ```
 
@@ -1147,40 +1171,50 @@ Activate a new account by adding a pin, updating the minimum payment, and create
 - **Sample Error Response**
 
   **Code**: 400 Bad Request
+
 ```json
 {
-   "message": "pin must be a valid numeric value",
-   "ok": false
+  "message": "pin must be a valid numeric value",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-   "message": "pin must be a valid positive numeric value",
-   "ok": false
+  "message": "pin must be a valid positive numeric value",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-   "message": "pin must be a maximum of 6 characters in length",
-   "ok": false
+  "message": "pin must be a maximum of 6 characters in length",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-    "message": "minimum_payment must be 50,000 or greater",
-    "ok": false
+  "message": "minimum_payment must be 50,000 or greater",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-    "message": "minimum_payment must be 1,000,000 or less",
-    "ok": false
+  "message": "minimum_payment must be 1,000,000 or less",
+  "ok": false
 }
 ```
+
 </details>
 
 <details>
@@ -1195,6 +1229,7 @@ OR
   `POST`
 
 - **Request Payload**
+
 ```json
 {
     "session_id": "9443ea43-52e5-41a7-91dd-bc940001b628",
@@ -1205,6 +1240,7 @@ OR
 ```
 
 - **Request Payload Data Type Attributes**
+
 ```json
 {
    "session_id": string,
@@ -1216,22 +1252,24 @@ OR
 - **Sample Success Response**
 
   **Code**: 200 OK
+
 ```json
 {
-   "data": [
-       {
-           "balance": 1000000,
-           "full_name": "Natasha Romanoff",
-           "have_twin": true,
-           "is_limit": false
-       }
-   ],
-   "message": "Check limit minimum payment success",
-   "ok": true
+  "data": [
+    {
+      "balance": 1000000,
+      "full_name": "Natasha Romanoff",
+      "have_twin": true,
+      "is_limit": false
+    }
+  ],
+  "message": "Check limit minimum payment success",
+  "ok": true
 }
 ```
 
 - **Data Type Attributes**
+
 ```json
 {
    "data": [
@@ -1253,25 +1291,29 @@ OR
 
 ```json
 {
-   "message": "Your phone number is wrong",
-   "ok": false
+  "message": "Your phone number is wrong",
+  "ok": false
 }
 ```
 
 **Code**: 400 Bad Request
+
 ```json
 {
-   "message": "phone is a required field",
-   "ok": false
+  "message": "phone is a required field",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
-{  
-   "message": "amount is a required field",
-   "ok": false
+{
+  "message": "amount is a required field",
+  "ok": false
 }
 ```
+
 </details>
 
 <details>
@@ -1286,15 +1328,16 @@ OR
   `POST`
 
 - **Request Payload**
+
 ```json
 {
-    "session_id": "9443ea43-52e5-41a7-91dd-bc940001b628",
-    "full_name": "BagasT1",
-    "phone": "0811112222",
-    "have_twin": false,
-    "data": {
-       "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
-   }
+  "session_id": "9443ea43-52e5-41a7-91dd-bc940001b628",
+  "phone": "0811112222",
+  "pin": "1337",
+  "amount": 75000,
+  "data": {
+    "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+  }
 }
 ```
 
@@ -1303,9 +1346,9 @@ OR
 ```json
 {
    "session_id": string,
-   "full_name": string,
    "phone": string,
-   "have_twin": boolean,
+   "pin": string,
+   "amount": integer,
    "data": object {
        "images": string array
    }
@@ -1318,8 +1361,8 @@ OR
 
 ```json
 {
-   "message": "Payment transaction success",
-   "ok": true
+  "message": "Payment transaction success",
+  "ok": true
 }
 ```
 
@@ -1331,20 +1374,43 @@ OR
    "ok": boolean
 }
 ```
+
 - **Sample Error Response**
 
   **Code**: 400 Bad Request
+
 ```json
 {
-   "message": "Wrong Pin!",
-   "ok": false
+  "message": "Wrong pin!",
+  "ok": false
 }
 ```
+
 OR
+
 ```json
 {
-   "message": "Your balance is Not Enough!",
-   "ok": false
+  "message": "Your balance is not enough to make this transaction",
+  "ok": false
 }
 ```
+
+OR
+
+```json
+{
+  "message": "Wrong face detected. You're not authorized to use this account",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Fake face detected. You're not authorized to use this account",
+  "ok": false
+}
+```
+
 </details>
