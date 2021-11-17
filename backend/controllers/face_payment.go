@@ -430,7 +430,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	if !isLive {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
-			"message": "Fake face detected. You're not authorized to use this account",
+			"message": "Face payment has failed, try to get clear image and accordance with guideline.",
 		})
 		return
 	}
@@ -450,7 +450,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	if !isMatch {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
-			"message": "Wrong face detected. You're not authorized to use this account",
+			"message": "Face payment has failed, face does not match the registered face.",
 		})
 		return
 	}
