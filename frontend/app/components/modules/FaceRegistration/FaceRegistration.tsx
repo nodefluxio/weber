@@ -10,18 +10,16 @@ type RegistPayload = {
 }
 
 type Props = {
-  onChecking: Function,
   openModal: Function,
   onFinished: Function
 }
 
-export const FaceRegistration = ({ onChecking, openModal, onFinished }: Props) => {
+export const FaceRegistration = ({ openModal, onFinished }: Props) => {
 
   const [isFormFilled, setIsFormFilled] = useState(false)
   const [payload, setPayload] = useState<RegistPayload>()
 
   const onFormFilled = (data: any) => {
-    onChecking()
     setPayload({ ...data })
     setIsFormFilled(true)
   }
@@ -36,14 +34,14 @@ export const FaceRegistration = ({ onChecking, openModal, onFinished }: Props) =
               openModal={openModal}
               payload={payload}
               nextStep={onFinished}
-              />
+            />
           )
           :
           (
-          <PaymentForm
-            onNextStep={onFormFilled}
-            onInvalidSession={openModal}
-          />
+            <PaymentForm
+              onNextStep={onFormFilled}
+              onInvalidSession={openModal}
+            />
           )
       }
     </>

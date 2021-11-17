@@ -159,11 +159,8 @@ export const FacePaymentPage = ({
 
         {currentStep === 3 && (
           <FaceRegistration
-            onChecking={() => {
-              createVisitorActivities(id, session_id, 1)
-            }}
             onFinished={() => {
-              createVisitorActivities(id, session_id, 2)
+              createVisitorActivities(id, session_id, 25)
               moveStep(1, true)
             }}
             openModal={() => setOpenModal(true)}
@@ -173,7 +170,7 @@ export const FacePaymentPage = ({
         {currentStep === 4 && (
           <ActivationForm
             nextStep={() => {
-              createVisitorActivities(id, session_id, 3)
+              createVisitorActivities(id, session_id, 50)
               checkStatus()
               setCurrentStep(2)
             }}
@@ -184,7 +181,6 @@ export const FacePaymentPage = ({
           <Catalog
             onAddToCart={(item) => {
               setCart(item)
-              createVisitorActivities(id, session_id, 4)
               moveStep(1)
             }}
           />
@@ -195,7 +191,6 @@ export const FacePaymentPage = ({
             onBack={() => moveStep(-1)}
             onCheckout={(item) => {
               setCart(item)
-              createVisitorActivities(id, session_id, 5)
               moveStep(1)
             }}
             item={cart}
@@ -206,7 +201,6 @@ export const FacePaymentPage = ({
           <OrderSummary
             cart={cart}
             onNext={(total) => {
-              createVisitorActivities(id, session_id, 6)
               setTotal(total)
               moveStep(1)
             }}
@@ -221,6 +215,7 @@ export const FacePaymentPage = ({
             afterPay={() => {
               moveStep(1)
               setCurrentStepStepper(1)
+              createVisitorActivities(id, session_id, 90)
             }}
           />
         )}
@@ -228,6 +223,7 @@ export const FacePaymentPage = ({
         {currentStep === 9 && (
           <Feedback
             id={id}
+            afterSubmit={() => createVisitorActivities(id, session_id, 100)}
             onTryAgain={() => {
               setCurrentStep(1)
               setCurrentStepStepper(1)
