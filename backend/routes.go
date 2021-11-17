@@ -47,8 +47,12 @@ func SetupRouter(ctrl *controllers.Controller) *gin.Engine {
 
 		facePayments := apis.Group("/face-payment")
 		{
-			facePayments.POST("/account", ctrl.CreateFacePaymentAccount)
+			facePayments.GET("/account/:session_id", ctrl.CheckActiveAccountBySession)
 
+			facePayments.POST("/account", ctrl.CreateFacePaymentAccount)
+			facePayments.POST("/check-limit", ctrl.CheckLimitMinimumPayment)
+			facePayments.POST("/pay", ctrl.CreateTransaction)
+			
 			facePayments.PATCH("/account", ctrl.UpdateFacePaymentAccount)
 		}
 	}
