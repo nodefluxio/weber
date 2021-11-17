@@ -11,9 +11,9 @@ import { checkLimit, pay } from '@/api/paymentAPI'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
 
-type Props = { sessionId: string; amount: number }
+type Props = { sessionId: string; amount: number, afterPay: ()=>void }
 
-export const PaymentPay = ({ sessionId, amount }: Props) => {
+export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
   const [step, setStep] = useState(1)
   const [pinCode, setPinCode] = useState('')
   const [phone, setPhone] = useState('')
@@ -204,7 +204,7 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
           <Button
             type="button"
             color={Color.Primary}
-            onClick={() => setStep(5)}>
+            onClick={() => afterPay()}>
             Next
           </Button>
         </div>

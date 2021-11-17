@@ -215,7 +215,14 @@ export const FacePaymentPage = ({
         )}
 
         {currentStep === 8 && (
-          <PaymentPay sessionId={session_id} amount={total} />
+          <PaymentPay
+            sessionId={session_id}
+            amount={total}
+            afterPay={() => {
+              moveStep(1)
+              setCurrentStepStepper(1)
+            }}
+          />
         )}
 
         {currentStep === 9 && (
