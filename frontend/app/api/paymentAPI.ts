@@ -140,9 +140,9 @@ export const pay = async (
     return res.data
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      const error = e as AxiosError<CheckLimitResponse>
+      const error = e as AxiosError<StandardResponse>
       if (error && error.response) {
-        throw new Error(SESSION_ID_ERROR)
+        return error.response.data
       }
     } else {
       throw new Error((e as Error).message)
