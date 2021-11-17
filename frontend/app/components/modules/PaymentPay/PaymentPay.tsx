@@ -10,6 +10,7 @@ import styles from './PaymentPay.module.scss'
 import { checkLimit, pay } from '@/api/paymentAPI'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
+import { FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
 
 type Props = { sessionId: string; amount: number, afterPay: ()=>void }
 
@@ -98,7 +99,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       {step === 2 && (
         <div>
           <Cam
-            localkey="face_match_&_liveness"
+            localkey={FACE_MATCH_LIVENESS_SNAPSHOT}
             overlayShape="circle"
             nextStep={() => {
               console.log(isPinRequired)
@@ -111,7 +112,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
                   phone,
                   pinCode,
                   amount,
-                  getImageFromLocalStorage('face_match_&_liveness', () =>
+                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
                     setStep(2)
                   )
                 )
@@ -139,7 +140,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
                   phone,
                   pinCode,
                   amount,
-                  getImageFromLocalStorage('face_match_&_liveness', () =>
+                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
                     setStep(2)
                   )
                 )

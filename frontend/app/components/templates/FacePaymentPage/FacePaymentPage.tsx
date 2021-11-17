@@ -18,6 +18,7 @@ import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
 import { PaymentPay } from '@/modules/PaymentPay/PaymentPay'
 import { PaymentMenu } from '@/modules/PaymentMenu/PaymentMenu'
 import { checkAccount } from '@/api/paymentAPI'
+import { ENROLL_SNAPSHOT, FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
 
 type Props = {
   id: number
@@ -223,7 +224,11 @@ export const FacePaymentPage = ({
         {currentStep === 9 && (
           <Feedback
             id={id}
-            afterSubmit={() => createVisitorActivities(id, session_id, 100)}
+            afterSubmit={() => {
+              createVisitorActivities(id, session_id, 100)
+              localStorage.removeItem(ENROLL_SNAPSHOT)
+              localStorage.removeItem(FACE_MATCH_LIVENESS_SNAPSHOT)
+            }}
             onTryAgain={() => {
               setCurrentStep(1)
               setCurrentStepStepper(1)
