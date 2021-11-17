@@ -1,0 +1,19 @@
+@import '../../../styles/abstracts/mixins';
+.menuWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50%;
+  text-align: center;
+  align-items: center;
+
+  .buttonWrapper {
+    display: flex;
+    gap: 2.5rem;
+    flex-direction: row;
+    @include phone {
+      flex-direction: column;
+      gap: 1.5rem
+    }
+  }
+}

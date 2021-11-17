@@ -15,6 +15,8 @@ import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
 import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
+import { PaymentMenu } from '@/modules/PaymentMenu/PaymentMenu'
+import { checkAccount } from '@/api/paymentAPI'
 
 type Props = {
   id: number
@@ -22,6 +24,11 @@ type Props = {
   short_description: string
   long_description: string
 }
+
+const mainMenuInfo = [
+  'Before we start our payment, create your account first',
+  'Do your transactions using face payment'
+]
 
 export const FacePaymentPage = ({
   id,
@@ -33,6 +40,7 @@ export const FacePaymentPage = ({
   const [currentStepStepper, setCurrentStepStepper] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [cart, setCart] = useState<ShoppingItem>()
+  const [isAccountMade, setIsAccountMade] = useState(false)
   const { session_id } = parseCookies()
 
   const moveStep = (numStep: number, moveStepStepper?: boolean) => {
@@ -62,6 +70,40 @@ export const FacePaymentPage = ({
       }
     }
   }
+
+  const checkStatus = async () => {
+    if (session_id) {
+      try {
+        const res = await checkAccount(session_id)
+        if (res) {
+          // Current userflow, not activated is considered same as not registered
+          console.log(res)
+          setIsAccountMade(res?.have_active_account)
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      setOpenModal(true)
+    }
+  }
+
+  const menuButtons = [
+    {
+      title: 'Account Registration',
+      onClick: () => {
+        setCurrentStep(3)
+        setCurrentStepStepper(2)
+      }
+    },
+    {
+      title: 'Face Payment',
+      onClick: () => {
+        setCurrentStep(5)
+        setCurrentStepStepper(4)
+      }
+    }
+  ]
 
   return (
     <>
@@ -95,13 +137,26 @@ export const FacePaymentPage = ({
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>
-            <Button color={Color.Primary} onClick={() => moveStep(1, true)}>
+            <Button
+              color={Color.Primary}
+              onClick={() => {
+                moveStep(1, false)
+                checkStatus()
+              }}>
               Start
             </Button>
           </div>
         )}
 
         {currentStep === 2 && (
+          <PaymentMenu
+            buttons={menuButtons}
+            disabledList={[+!isAccountMade]}
+            title={mainMenuInfo[+isAccountMade]}
+          />
+        )}
+
+        {currentStep === 3 && (
           <FaceRegistration
             onChecking={() => {
               createVisitorActivities(id, session_id, 1)
@@ -114,16 +169,17 @@ export const FacePaymentPage = ({
           />
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 4 && (
           <ActivationForm
             nextStep={() => {
               createVisitorActivities(id, session_id, 3)
-              moveStep(1, true)
+              checkStatus()
+              setCurrentStep(2)
             }}
           />
         )}
 
-        {currentStep === 4 && (
+        {currentStep === 5 && (
           <Catalog
             onAddToCart={(item) => {
               setCart(item)
@@ -133,7 +189,7 @@ export const FacePaymentPage = ({
           />
         )}
 
-        {currentStep === 5 && cart && (
+        {currentStep === 6 && cart && (
           <Cart
             onBack={() => moveStep(-1)}
             onCheckout={(item) => {
@@ -144,7 +200,8 @@ export const FacePaymentPage = ({
             item={cart}
           />
         )}
-        {currentStep === 6 && cart && (
+
+        {currentStep === 7 && cart && (
           <OrderSummary
             cart={cart}
             onNext={(total) => {
@@ -154,7 +211,8 @@ export const FacePaymentPage = ({
             onBack={() => moveStep(-1)}
           />
         )}
-        {currentStep === 7 && (
+
+        {currentStep === 8 && (
           <Feedback
             id={id}
             onTryAgain={() => {

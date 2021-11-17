@@ -1,6 +1,11 @@
 import axios, { AxiosError } from 'axios'
 import { SESSION_ID_ERROR } from '../constants/message'
-import { ActivationResponse, PhoneNumberResponse, PaymentResponse } from '../types/responses'
+import {
+  ActivationResponse,
+  PhoneNumberResponse,
+  PaymentResponse,
+  CheckAccountResponse
+} from '../types/responses'
 
 export const registerAccount = async (
   sessionId: string,
@@ -78,5 +83,23 @@ export const activateAccount = async (
       error: axiosError.response?.status || 500,
       message: axiosError.response?.data.message || 'Server error'
     }
+  }
+}
+
+export const checkAccount = async (
+  sessionId: string
+): Promise<CheckAccountResponse | undefined> => {
+  try {
+    const res = await axios.get<CheckAccountResponse>(
+      `/face-payment/account/${sessionId}`
+    )
+    return {
+      ...res.data
+    }
+  } catch (e) {
+    throw new Error(
+      (e as AxiosError<CheckAccountResponse>).response?.data.message ||
+        'Server error'
+    )
   }
 }

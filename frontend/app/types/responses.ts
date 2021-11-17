@@ -150,3 +150,8 @@ export type PaymentResponse = {
   error?: number
   message: string
 }
+export type CheckAccountResponse = {
+  have_active_account: boolean,
+  message: string,
+  ok: boolean
+}
