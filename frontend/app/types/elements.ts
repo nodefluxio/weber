@@ -70,3 +70,8 @@ export type OCRKTP = {
   tanggal_lahir: string
   tempat_lahir: string
 }
+
+export type MenuInfo = {
+  title: string
+  onClick: Function
+}

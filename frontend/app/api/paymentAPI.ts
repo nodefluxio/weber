@@ -5,7 +5,8 @@ import {
   PhoneNumberResponse,
   PaymentResponse,
   CheckLimitResponse,
-  StandardResponse
+  StandardResponse,
+  CheckAccountResponse
 } from '../types/responses'
 
 export const registerAccount = async (
@@ -147,5 +148,23 @@ export const pay = async (
     } else {
       throw new Error((e as Error).message)
     }
+  }
+}
+
+export const checkAccount = async (
+  sessionId: string
+): Promise<CheckAccountResponse | undefined> => {
+  try {
+    const res = await axios.get<CheckAccountResponse>(
+      `/face-payment/account/${sessionId}`
+    )
+    return {
+      ...res.data
+    }
+  } catch (e) {
+    throw new Error(
+      (e as AxiosError<CheckAccountResponse>).response?.data.message ||
+        'Server error'
+    )
   }
 }

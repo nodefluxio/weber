@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Face Payment Registration Form
 - [FRONTEND] Face Payment Webcam Photo Uploader
 - [FRONTEND] Face Payment Store Catalog
+- [FRONTEND] Face Payment Main Menu
 - [BACKEND] Thumbnails data from cropping original image data
 
 ### Changed
