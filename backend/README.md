@@ -1381,7 +1381,7 @@ OR
 
 ```json
 {
-  "message": "Wrong face detected. You're not authorized to use this account",
+  "message": "Face payment has failed, try to get clear image and accordance with guideline.",
   "ok": false
 }
 ```
@@ -1390,7 +1390,7 @@ OR
 
 ```json
 {
-  "message": "Fake face detected. You're not authorized to use this account",
+  "message": "Face payment has failed, face does not match the registered face.",
   "ok": false
 }
 ```
