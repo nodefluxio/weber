@@ -109,6 +109,15 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
               if (isPinRequired) {
                 setStep(3)
               } else {
+                resolvePay(
+                  sessionId,
+                  phone,
+                  pinCode,
+                  amount,
+                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
+                    setStep(2)
+                  )
+                )
                 setStep(4)
               }
             }}
@@ -128,6 +137,15 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
               color={Color.Primary}
               disabled={pinCode.length < PIN_DIGIT_LENGTH}
               onClick={() => {
+                resolvePay(
+                  sessionId,
+                  phone,
+                  pinCode,
+                  amount,
+                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
+                    setStep(2)
+                  )
+                )
                 setStep(4)
               }}>
               Next
