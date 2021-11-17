@@ -21,7 +21,7 @@ type FacePaymentAccount struct {
 type NewAccountData struct {
 	SessionID string      `json:"session_id"`
 	FullName  string      `json:"full_name" validate:"required,min=2,max=255"`
-	Phone     string      `json:"phone" validate:"required,numeric,min=10,max=12"`
+	Phone     string      `json:"phone" validate:"required,numeric,min=5,max=15"`
 	HaveTwin  *bool       `json:"have_twin" validate:"required"`
 	Data      RequestData `json:"data"`
 	CreatedAt time.Time   `json:"created_at"`
@@ -82,12 +82,12 @@ func (m *Model) ActivateAccount(newAccount *FacePaymentAccount) (err error) {
 
 	// Update the last registered account's data and activate it
 	err = m.DBConn.Model(&account).Updates(FacePaymentAccount{
-			Pin:            newAccount.Pin,
-			MinimumPayment: newAccount.MinimumPayment,
-			IsActive:       true,
-			UpdatedAt:      newAccount.UpdatedAt,
-		},
-		).Error
+		Pin:            newAccount.Pin,
+		MinimumPayment: newAccount.MinimumPayment,
+		IsActive:       true,
+		UpdatedAt:      newAccount.UpdatedAt,
+	},
+	).Error
 
 	if err != nil {
 		return err
@@ -103,7 +103,7 @@ func (m *Model) CreateAccountWallet(sessionId string, newAccountWallet *FacePaym
 	if err != nil {
 		return err
 	}
-	
+
 	newAccountWallet.AccountID = newAccount.ID
 	err = m.DBConn.Create(newAccountWallet).Error
 	if err != nil {
