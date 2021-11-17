@@ -1377,25 +1377,7 @@ OR
 
 - **Sample Error Response**
 
-  **Code**: 400 Bad Request
-
-```json
-{
-  "message": "Wrong pin!",
-  "ok": false
-}
-```
-
-OR
-
-```json
-{
-  "message": "Your balance is not enough to make this transaction",
-  "ok": false
-}
-```
-
-OR
+**Code**: 400 Bad Request
 
 ```json
 {
@@ -1413,4 +1395,21 @@ OR
 }
 ```
 
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Wrong pin!",
+  "ok": false
+}
+```
+
+  **Code**: 402 Payment Required
+
+```json
+{
+  "message": "Your balance is not enough to make this transaction",
+  "ok": false
+}
+```
 </details>
