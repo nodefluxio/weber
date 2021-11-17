@@ -75,11 +75,11 @@ export const FacePaymentPage = ({
     if (session_id) {
       try {
         const res = await checkAccount(session_id)
-        if (res)
+        if (res) {
           // Current userflow, not activated is considered same as not registered
-          setIsAccountMade(
-            res?.data[0].is_registered && res.data[0].is_activated
-          )
+          console.log(res)
+          setIsAccountMade(res?.have_active_account)
+        }
       } catch (e) {
         console.error(e)
       }
