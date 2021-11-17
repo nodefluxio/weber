@@ -98,8 +98,8 @@ export const checkLimit = async (
       `/face-payment/check-limit`,
       {
         session_id: sessionId,
-        phone: phone,
-        amount: amount
+        phone,
+        amount
       }
     )
     if (res.data.ok) {
