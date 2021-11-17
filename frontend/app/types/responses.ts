@@ -1,6 +1,6 @@
 import { FaceLiveness, FaceMatch, OCRKTP, Service } from './elements'
 
-type StandardResponse = {
+export type StandardResponse = {
   message: string
   ok: boolean
 }
@@ -149,6 +149,19 @@ export type PaymentResponse = {
   ok: boolean
   error?: number
   message: string
+}
+
+export type CheckLimitResponse = {
+  ok: boolean
+  message: string
+  data: [
+    {
+      full_name: string
+      balance: number
+      is_limit: boolean
+      have_twin: boolean
+    }
+  ]
 }
 export type CheckAccountResponse = {
   have_active_account: boolean,

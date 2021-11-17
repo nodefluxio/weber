@@ -4,6 +4,8 @@ import {
   ActivationResponse,
   PhoneNumberResponse,
   PaymentResponse,
+  CheckLimitResponse,
+  StandardResponse,
   CheckAccountResponse
 } from '../types/responses'
 
@@ -82,6 +84,71 @@ export const activateAccount = async (
       ok: false,
       error: axiosError.response?.status || 500,
       message: axiosError.response?.data.message || 'Server error'
+    }
+  }
+}
+
+export const checkLimit = async (
+  sessionId: string,
+  phone: string,
+  amount: number
+): Promise<CheckLimitResponse | undefined> => {
+  try {
+    const res = await axios.post<CheckLimitResponse>(
+      `/face-payment/check-limit`,
+      {
+        session_id: sessionId,
+        phone,
+        amount
+      }
+    )
+    if (res.data.ok) {
+      return {
+        ...res.data
+      }
+    }
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const error = e as AxiosError<CheckLimitResponse>
+      if (error && error.response) {
+        return error.response.data
+      }
+    } else {
+      throw new Error((e as Error).message)
+    }
+  }
+}
+
+export const pay = async (
+  sessionId: string,
+  phone: string,
+  pin: string,
+  amount: number,
+  image: string
+): Promise<PaymentResponse | undefined> => {
+  try {
+    const res = await axios.post<PaymentResponse>(`/face-payment/pay`, {
+      session_id: sessionId,
+      phone: phone,
+      pin: pin,
+      amount: amount,
+      data: {
+        images: [image]
+      }
+    })
+    return res.data
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const error = e as AxiosError<PaymentResponse>
+      if (error && error.response) {
+        return {
+          ok: error.response.data.ok,
+          message: error.response.data.message,
+          error: error.response.status
+        }
+      }
+    } else {
+      throw new Error((e as Error).message)
     }
   }
 }

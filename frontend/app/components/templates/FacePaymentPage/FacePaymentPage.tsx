@@ -15,8 +15,10 @@ import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
 import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
+import { PaymentPay } from '@/modules/PaymentPay/PaymentPay'
 import { PaymentMenu } from '@/modules/PaymentMenu/PaymentMenu'
 import { checkAccount } from '@/api/paymentAPI'
+import { ENROLL_SNAPSHOT, FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
 
 type Props = {
   id: number
@@ -40,6 +42,7 @@ export const FacePaymentPage = ({
   const [currentStepStepper, setCurrentStepStepper] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [cart, setCart] = useState<ShoppingItem>()
+  const [total, setTotal] = useState(0)
   const [isAccountMade, setIsAccountMade] = useState(false)
   const { session_id } = parseCookies()
 
@@ -77,7 +80,6 @@ export const FacePaymentPage = ({
         const res = await checkAccount(session_id)
         if (res) {
           // Current userflow, not activated is considered same as not registered
-          console.log(res)
           setIsAccountMade(res?.have_active_account)
         }
       } catch (e) {
@@ -158,11 +160,8 @@ export const FacePaymentPage = ({
 
         {currentStep === 3 && (
           <FaceRegistration
-            onChecking={() => {
-              createVisitorActivities(id, session_id, 1)
-            }}
             onFinished={() => {
-              createVisitorActivities(id, session_id, 2)
+              createVisitorActivities(id, session_id, 25)
               moveStep(1, true)
             }}
             openModal={() => setOpenModal(true)}
@@ -172,7 +171,7 @@ export const FacePaymentPage = ({
         {currentStep === 4 && (
           <ActivationForm
             nextStep={() => {
-              createVisitorActivities(id, session_id, 3)
+              createVisitorActivities(id, session_id, 50)
               checkStatus()
               setCurrentStep(2)
             }}
@@ -183,7 +182,6 @@ export const FacePaymentPage = ({
           <Catalog
             onAddToCart={(item) => {
               setCart(item)
-              createVisitorActivities(id, session_id, 4)
               moveStep(1)
             }}
           />
@@ -194,7 +192,6 @@ export const FacePaymentPage = ({
             onBack={() => moveStep(-1)}
             onCheckout={(item) => {
               setCart(item)
-              createVisitorActivities(id, session_id, 5)
               moveStep(1)
             }}
             item={cart}
@@ -205,7 +202,7 @@ export const FacePaymentPage = ({
           <OrderSummary
             cart={cart}
             onNext={(total) => {
-              createVisitorActivities(id, session_id, 6)
+              setTotal(total)
               moveStep(1)
             }}
             onBack={() => moveStep(-1)}
@@ -213,8 +210,25 @@ export const FacePaymentPage = ({
         )}
 
         {currentStep === 8 && (
+          <PaymentPay
+            sessionId={session_id}
+            amount={total}
+            afterPay={() => {
+              moveStep(1)
+              setCurrentStepStepper(5)
+              createVisitorActivities(id, session_id, 90)
+            }}
+          />
+        )}
+
+        {currentStep === 9 && (
           <Feedback
             id={id}
+            afterSubmit={() => {
+              createVisitorActivities(id, session_id, 100)
+              localStorage.removeItem(ENROLL_SNAPSHOT)
+              localStorage.removeItem(FACE_MATCH_LIVENESS_SNAPSHOT)
+            }}
             onTryAgain={() => {
               setCurrentStep(1)
               setCurrentStepStepper(1)
