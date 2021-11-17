@@ -215,7 +215,7 @@ export const FacePaymentPage = ({
             amount={total}
             afterPay={() => {
               moveStep(1)
-              setCurrentStepStepper(1)
+              setCurrentStepStepper(5)
               createVisitorActivities(id, session_id, 90)
             }}
           />
