@@ -1377,7 +1377,25 @@ OR
 
 - **Sample Error Response**
 
-  **Code**: 400 Bad Request
+**Code**: 400 Bad Request
+
+```json
+{
+  "message": "Face payment has failed, try to get clear image and accordance with guideline.",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Face payment has failed, face does not match the registered face.",
+  "ok": false
+}
+```
+
+  **Code**: 401 Unauthorized
 
 ```json
 {
@@ -1386,7 +1404,7 @@ OR
 }
 ```
 
-OR
+  **Code**: 402 Payment Required
 
 ```json
 {
@@ -1394,23 +1412,4 @@ OR
   "ok": false
 }
 ```
-
-OR
-
-```json
-{
-  "message": "Wrong face detected. You're not authorized to use this account",
-  "ok": false
-}
-```
-
-OR
-
-```json
-{
-  "message": "Fake face detected. You're not authorized to use this account",
-  "ok": false
-}
-```
-
 </details>

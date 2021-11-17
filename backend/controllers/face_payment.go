@@ -309,7 +309,7 @@ func (ctrl *Controller) CheckLimitMinimumPayment(ctx *gin.Context) {
 	var account models.FacePaymentAccount
 	err = ctrl.Model.GetActiveAccount(&account, sessionId)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
+		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
 			"message": err.Error(),
 		})
@@ -402,7 +402,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	// Get the face payment account
 	err = ctrl.Model.GetActiveAccount(&fpAccount, sessionId)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
+		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
 			"message": err.Error(),
 		})
@@ -460,7 +460,10 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	if amount >= fpAccount.MinimumPayment || fpAccount.HaveTwin {
 		// Check pin
 		if pin != fpAccount.Pin {
-			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Wrong pin!", "ok": false})
+			ctx.JSON(http.StatusUnauthorized, gin.H{
+				"ok": false,
+				"message": "Wrong pin!", 
+			})
 			return
 		}
 	}
@@ -469,7 +472,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	var fpwallet models.FacePaymentWallet
 	ctrl.Model.GetAccountWallet(&fpwallet, fpAccount.ID)
 	if amount > fpwallet.Balance {
-		ctx.JSON(http.StatusBadRequest, gin.H{
+		ctx.JSON(http.StatusPaymentRequired, gin.H{
 			"message": "Your balance is not enough to make this transaction",
 			"ok":      false,
 		})
@@ -500,7 +503,10 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "Payment transaction success", "ok": true})
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok": true,
+		"message": "Payment transaction success", 
+	})
 }
 
 func (ctrl *Controller) reformatPhone(phone string, sessionId string) string {
