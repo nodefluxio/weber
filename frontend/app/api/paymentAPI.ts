@@ -106,14 +106,12 @@ export const checkLimit = async (
       return {
         ...res.data
       }
-    } else {
-      throw new Error(res.data.message)
     }
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const error = e as AxiosError<CheckLimitResponse>
       if (error && error.response) {
-        throw new Error(SESSION_ID_ERROR)
+        return error.response.data
       }
     } else {
       throw new Error((e as Error).message)
@@ -135,7 +133,7 @@ export const pay = async (
       pin: pin,
       amount: amount,
       data: {
-        image: [image]
+        images: [image]
       }
     })
     return res.data

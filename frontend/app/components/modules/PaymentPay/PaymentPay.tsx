@@ -9,6 +9,7 @@ import { Cam } from '../Cam/Cam'
 import styles from './PaymentPay.module.scss'
 import { checkLimit, pay } from '@/api/paymentAPI'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
+import { Spinner } from '@/elements/Spinner/Spinner'
 
 type Props = { sessionId: string; amount: number }
 
@@ -21,6 +22,8 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
   const [balance, setBalance] = useState(0)
   const [isSuccess, setIsSuccess] = useState(false)
   const [message, setMessage] = useState('')
+  const [phoneError, setPhoneError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const resolveCheckLimit = async (
     session_id: string,
@@ -31,12 +34,18 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
       const res = await checkLimit(session_id, phone, amount)
 
       if (res?.ok) {
-        setIsPinRequired(!res.data[0].is_limit)
+        setIsPinRequired(res.data[0].is_limit)
         setUser(res.data[0].full_name)
         setBalance(res.data[0].balance)
+        setPhoneError('')
+      } else {
+        if (res?.message) {
+          setPhoneError(res?.message)
+          setStep(1)
+        }
       }
     } catch (err) {
-      console.log(err)
+      console.log(err, 'error')
     }
   }
 
@@ -48,13 +57,17 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
     image: string
   ) => {
     try {
+      setIsLoading(true)
       const res = await pay(session_id, phone, pin, amount, image)
+      setIsLoading(false)
 
       if (res) {
         setIsSuccess(res?.ok)
         setMessage(res?.message)
       }
     } catch (err) {
+      setIsSuccess(false)
+      setIsLoading(false)
       console.log(err)
     }
   }
@@ -69,6 +82,7 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
             label="Please enter your phone number:"
             onChange={setPhone}
           />
+          <span className={styles.danger}>{phoneError}</span>
           <div className={styles.buttonWrapper}>
             <Button
               color={Color.Primary}
@@ -81,12 +95,29 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
           </div>
         </div>
       )}
-      {step === 2 && isPinRequired && (
+      {step === 2 && (
         <div>
           <Cam
             localkey="face_match_&_liveness"
             overlayShape="circle"
-            nextStep={() => setStep(3)}
+            nextStep={() => {
+              console.log(isPinRequired)
+
+              if (isPinRequired) {
+                setStep(3)
+              } else {
+                resolvePay(
+                  sessionId,
+                  phone,
+                  pinCode,
+                  amount,
+                  getImageFromLocalStorage('face_match_&_liveness', () =>
+                    setStep(2)
+                  )
+                )
+                setStep(4)
+              }
+            }}
           />
         </div>
       )}
@@ -103,7 +134,6 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
               color={Color.Primary}
               disabled={pinCode.length < PIN_DIGIT_LENGTH}
               onClick={() => {
-                setStep(4)
                 resolvePay(
                   sessionId,
                   phone,
@@ -113,45 +143,51 @@ export const PaymentPay = ({ sessionId, amount }: Props) => {
                     setStep(2)
                   )
                 )
+                setStep(4)
               }}>
               Next
             </Button>
           </div>
         </div>
       )}
-      {step === 4 && (
-        <div className={styles.resultWrapper}>
-          <h2>{isSuccess && `Hello, ${user}`}</h2>
-          <Image
-            src={`/assets/icons/${isSuccess ? 'thankyou.svg' : 'warning.svg'}`}
-            width={80}
-            height={80}
-            alt={isSuccess ? 'thank you' : 'warning'}
-          />
-          {isSuccess ? (
-            <>
-              <p className={styles.balance}>
-                You have to pay <strong>{amount}</strong>
-              </p>
-              <p className={styles.balance}>
-                Current Balance <strong>{balance}</strong>
-              </p>
-              <p className={styles.balance}>
-                Final Balance <strong>{balance - amount}</strong>
-              </p>
-            </>
-          ) : (
-            <p>{message}</p>
-          )}
+      {step === 4 &&
+        (isLoading ? (
+          <Spinner />
+        ) : (
+          <div className={styles.resultWrapper}>
+            <h2>{isSuccess ? `Hello, ${user}` : 'Payment Failed'}</h2>
+            <Image
+              src={`/assets/icons/${
+                isSuccess ? 'thankyou.svg' : 'warning.svg'
+              }`}
+              width={80}
+              height={80}
+              alt={isSuccess ? 'thank you' : 'warning'}
+            />
+            {isSuccess ? (
+              <>
+                <p className={styles.balance}>
+                  You have to pay <strong>{amount}</strong>
+                </p>
+                <p className={styles.balance}>
+                  Current Balance <strong>{balance}</strong>
+                </p>
+                <p className={styles.balance}>
+                  Final Balance <strong>{balance - amount}</strong>
+                </p>
+              </>
+            ) : (
+              <p>{message}</p>
+            )}
 
-          <Button
-            type="button"
-            color={Color.Primary}
-            onClick={() => setStep(isSuccess ? 5 : 2)}>
-            {isSuccess ? 'Confirm' : 'Try Again'}
-          </Button>
-        </div>
-      )}
+            <Button
+              type="button"
+              color={Color.Primary}
+              onClick={() => setStep(isSuccess ? 5 : 2)}>
+              {isSuccess ? 'Confirm' : 'Try Again'}
+            </Button>
+          </div>
+        ))}
       {step === 5 && (
         <div className={styles.resultWrapper}>
           <h2>Payment Successful!</h2>
