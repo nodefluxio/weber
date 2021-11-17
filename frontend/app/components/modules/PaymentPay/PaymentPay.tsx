@@ -25,7 +25,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
   const [message, setMessage] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false)
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState(true)
 
   const resolveCheckLimit = async (
     session_id: string,
@@ -67,7 +67,10 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
         setIsSuccess(res?.ok)
         setMessage(res?.message)
         if (res.error) {
-          setIsPaymentSuccess(res.error !== 402)
+          if (res.error === 402){
+            setIsSuccess(true)
+            setIsPaymentSuccess(false)
+          }
         }
       }
     } catch (err) {
