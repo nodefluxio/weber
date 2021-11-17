@@ -3,18 +3,18 @@ package controllers
 import (
 	"backend/models"
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"image"
+	_ "image/jpeg"
+	"image/png"
+	"io"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
-	"io"
-	"encoding/base64"
-	"image"
-	"image/png"
-	_ "image/jpeg"
 
 	"github.com/oliamb/cutter"
 )
@@ -29,15 +29,9 @@ func GetDataAnalytic(service models.Service, requestData models.RequestData) dat
 	var dataAnalytic dataAnalytic
 	dataAnalytic.xNodefluxTimestamp = service.Timestamp
 
-	if service.Slug == "face-match-enrollment" {
-		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": {"face_id": "%v"}, "images":  [ "%v" ]}`,
-			os.Getenv("FACE_ID"), strings.Join(requestData.Images, `", "`)))
-	} else {
-		additionalParams, _ := json.Marshal(requestData.AdditionalParams)
-		dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
-			string(additionalParams), strings.Join(requestData.Images, `", "`)))
-	}
-
+	additionalParams, _ := json.Marshal(requestData.AdditionalParams)
+	dataAnalytic.postBody = []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
+		string(additionalParams), strings.Join(requestData.Images, `", "`)))
 	accessKey := service.AccessKey
 	token := service.Token
 	date := dataAnalytic.xNodefluxTimestamp[:8]
@@ -179,7 +173,7 @@ func DecodeBase64Image(base64Img string) (image.Image, image.Config, error) {
 	imgData := strings.Split(base64Img, ",")[1]
 	reader := base64.NewDecoder(base64.StdEncoding, strings.NewReader(imgData))
 	var buf bytes.Buffer
-    tee := io.TeeReader(reader, &buf)
+	tee := io.TeeReader(reader, &buf)
 
 	img, _, err := image.Decode(tee)
 	if err != nil {
@@ -190,7 +184,7 @@ func DecodeBase64Image(base64Img string) (image.Image, image.Config, error) {
 	if err != nil {
 		return nil, image.Config{}, err
 	}
-	
+
 	return img, cfg, err
 }
 
@@ -199,7 +193,7 @@ func CropImage(img image.Image, cfg image.Config, bbox models.BoundingBox) (stri
 	var Top int = int(bbox.Top * float64(cfg.Height))
 	var Width int = int(bbox.Width * float64(cfg.Width))
 	var Height int = int(bbox.Height * float64(cfg.Height))
-	
+
 	var Pad int
 	var Size int
 	var Fill int
@@ -216,7 +210,7 @@ func CropImage(img image.Image, cfg image.Config, bbox models.BoundingBox) (stri
 		Left = Left - Fill
 		Top = Top - Pad
 	}
-	
+
 	croppedImg, err := cutter.Crop(img, cutter.Config{
 		Width:  Size,
 		Height: Size,
@@ -225,14 +219,14 @@ func CropImage(img image.Image, cfg image.Config, bbox models.BoundingBox) (stri
 	})
 
 	var buf bytes.Buffer
-	err = png.Encode(&buf, croppedImg); 
+	err = png.Encode(&buf, croppedImg)
 	if err != nil {
 		log.Println("Failed to encode to PNG, err=", err)
-		return "", "",  err
+		return "", "", err
 	}
-	
+
 	id := fmt.Sprintf("%v", bbox)
 	b64str := "data:image/png;base64," + base64.StdEncoding.EncodeToString(buf.Bytes())
-	
+
 	return b64str, id, err
 }
