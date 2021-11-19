@@ -25,6 +25,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
   const [message, setMessage] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [httpCode, setHttpCode] = useState(500)
 
   const resolveCheckLimit = async (
     session_id: string,
@@ -65,6 +66,10 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       if (res) {
         setIsSuccess(res?.ok)
         setMessage(res?.message)
+
+        if (res.error) {
+          setHttpCode(res.error)
+        }
       }
     } catch (err) {
       setIsSuccess(false)
@@ -181,9 +186,9 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
               type="button"
               color={Color.Primary}
               onClick={() => {
-                isSuccess ? afterPay() : setStep(2)
+                isSuccess || httpCode === 402 ? afterPay() : setStep(2)
               }}>
-              {isSuccess ? 'Next' : 'Try Again'}
+              {isSuccess || httpCode === 402 ? 'Next' : 'Try Again'}
             </Button>
           </div>
         ))}
