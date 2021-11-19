@@ -25,7 +25,6 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
   const [message, setMessage] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isPaymentSuccess, setIsPaymentSuccess] = useState(true)
 
   const resolveCheckLimit = async (
     session_id: string,
@@ -66,12 +65,6 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       if (res) {
         setIsSuccess(res?.ok)
         setMessage(res?.message)
-        if (res.error) {
-          if (res.error === 402){
-            setIsSuccess(true)
-            setIsPaymentSuccess(false)
-          }
-        }
       }
     } catch (err) {
       setIsSuccess(false)
@@ -108,22 +101,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
           <Cam
             localkey={FACE_MATCH_LIVENESS_SNAPSHOT}
             overlayShape="circle"
-            nextStep={() => {
-              if (isPinRequired) {
-                setStep(3)
-              } else {
-                resolvePay(
-                  sessionId,
-                  phone,
-                  pinCode,
-                  amount,
-                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
-                    setStep(2)
-                  )
-                )
-                setStep(4)
-              }
-            }}
+            nextStep={() => setStep(isPinRequired ? 3 : 4)}
           />
         </div>
       )}
@@ -139,89 +117,80 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
               type="button"
               color={Color.Primary}
               disabled={pinCode.length < PIN_DIGIT_LENGTH}
-              onClick={() => {
-                resolvePay(
-                  sessionId,
-                  phone,
-                  pinCode,
-                  amount,
-                  getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
-                    setStep(2)
-                  )
-                )
-                setStep(4)
-              }}>
+              onClick={() => setStep(4)}>
               Next
             </Button>
           </div>
         </div>
       )}
-      {step === 4 &&
+      {step === 4 && (
+        <div className={styles.resultWrapper}>
+          <h2>{`Hello, ${user}`}</h2>
+          <Image
+            src="/assets/icons/thankyou.svg"
+            width={80}
+            height={80}
+            alt="thank you"
+          />
+
+          <p className={styles.balance}>
+            You have to pay <strong>{amount}</strong>
+          </p>
+          <p className={styles.balance}>
+            Current Balance <strong>{balance}</strong>
+          </p>
+          <p className={styles.balance}>
+            Final Balance <strong>{balance - amount}</strong>
+          </p>
+
+          <Button
+            type="button"
+            color={Color.Primary}
+            onClick={() => {
+              setStep(5)
+              resolvePay(
+                sessionId,
+                phone,
+                pinCode,
+                amount,
+                getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
+                  setStep(2)
+                )
+              )
+            }}>
+            Confirm
+          </Button>
+        </div>
+      )}
+      {step === 5 &&
         (isLoading ? (
           <Spinner />
         ) : (
           <div className={styles.resultWrapper}>
-            <h2>{isSuccess ? `Hello, ${user}` : 'Payment Failed'}</h2>
+            <h2>
+              {isSuccess ? 'Payment Successful!' : 'Payment Unsuccessfull!'}
+            </h2>
             <Image
               src={`/assets/icons/${
                 isSuccess ? 'thankyou.svg' : 'warning.svg'
               }`}
               width={80}
               height={80}
-              alt={isSuccess ? 'thank you' : 'warning'}
+              alt="thank you"
             />
-            {isSuccess ? (
-              <>
-                <p className={styles.balance}>
-                  You have to pay <strong>{amount}</strong>
-                </p>
-                <p className={styles.balance}>
-                  Current Balance <strong>{balance}</strong>
-                </p>
-                <p className={styles.balance}>
-                  Final Balance <strong>{balance - amount}</strong>
-                </p>
-              </>
-            ) : (
-              <p>{message}</p>
-            )}
-
+            <p>
+              {isSuccess
+                ? 'Thank you! your data will be deleted at the end of the day, You have to re-register if you want to try again on the next day.'
+                : message}
+            </p>
             <Button
               type="button"
               color={Color.Primary}
-              onClick={() => setStep(isSuccess ? 5 : 2)}>
-              {isSuccess ? 'Confirm' : 'Try Again'}
+              onClick={() => afterPay()}>
+              Next
             </Button>
           </div>
         ))}
-      {step === 5 && (
-        <div className={styles.resultWrapper}>
-          <h2>
-            {isPaymentSuccess
-              ? 'Payment Successful!'
-              : 'Payment Unsuccessfull!'}
-          </h2>
-          <Image
-            src={`/assets/icons/${
-              isPaymentSuccess ? 'thankyou.svg' : 'warning.svg'
-            }`}
-            width={80}
-            height={80}
-            alt="thank you"
-          />
-          <p>
-            {isPaymentSuccess
-              ? 'Thank you! your data will be deleted at the end of the day, You have to re-register if you want to try again on the next day.'
-              : message}
-          </p>
-          <Button
-            type="button"
-            color={Color.Primary}
-            onClick={() => afterPay()}>
-            Next
-          </Button>
-        </div>
-      )}
     </>
   )
 }
