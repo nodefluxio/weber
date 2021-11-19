@@ -126,12 +126,6 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       {step === 4 && (
         <div className={styles.resultWrapper}>
           <h2>{`Hello, ${user}`}</h2>
-          <Image
-            src="/assets/icons/thankyou.svg"
-            width={80}
-            height={80}
-            alt="thank you"
-          />
 
           <p className={styles.balance}>
             You have to pay <strong>{amount}</strong>
@@ -140,7 +134,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
             Current Balance <strong>{balance}</strong>
           </p>
           <p className={styles.balance}>
-            Final Balance <strong>{balance - amount}</strong>
+            Remaining Balance <strong>{balance - amount}</strong>
           </p>
 
           <Button
