@@ -6,20 +6,34 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [FRONTEND] Face Payment Registration Form
-- [FRONTEND] Face Payment Webcam Photo Uploader
-- [FRONTEND] Face Payment Store Catalog
-- [FRONTEND] Face Payment Main Menu
-- [BACKEND] Thumbnails data from cropping original image data
-
 ### Changed
-
-- [BACKEND] Move the env loader file on `init()` method
 
 ### Fixed
 
-- [BACKEND] Database connection always re-initialized
 
+
+## [0.3.0 - 17/11/2021]
+
+### Added
+
+- [FRONTEND] Add loading animation 
+- [FRONTEND] Face Payment Main Menu
+- [FRONTEND] Face Payment Registration Form
+- [FRONTEND] Face Payment Activation Pin Form
+- [FRONTEND] Face Payment Store Catalog
+- [FRONTEND] Face Payment Webcam Photo Uploader
+- [FRONTEND] Face Payment Confirmation & Pay Transaction
+- [FRONTEND] Add thumbnails data from cropping original image data
+- [FRONTEND] Add new analytic People Density, Face Demography, & Face Mask
+- [BACKEND] Thumbnails data from cropping original image data
+- [BACKEND] Add new seeds for analytic People Density, Face Demography, & Face Mask
+
+### Changed
+
+- [FRONTEND] Refactor E-KYC User Flow
+- [FRONTEND] UI Responsiveness
+- [BACKEND] Move the env loader file on `init()` method
+- [BACKEND] Fix database connection that always re-initialized
 
 ## [0.2.0 - 29/10/2021]
 
