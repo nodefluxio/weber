@@ -180,8 +180,10 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
             <Button
               type="button"
               color={Color.Primary}
-              onClick={() => afterPay()}>
-              Next
+              onClick={() => {
+                isSuccess ? afterPay() : setStep(2)
+              }}>
+              {isSuccess ? 'Next' : 'Try Again'}
             </Button>
           </div>
         ))}
