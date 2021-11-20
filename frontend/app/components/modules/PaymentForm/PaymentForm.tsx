@@ -6,8 +6,8 @@ import { Label } from '../../elements/Label/Label'
 import styles from './PaymentForm.module.scss'
 import { parseCookies } from 'nookies'
 import { registerAccount } from '../../../api/paymentAPI'
-import { SESSION_ID_ERROR } from '../../../constants/message'
 import { useState } from 'react'
+import { CustomError } from 'app/errors/CustomError'
 
 type PaymentFormData = {
   full_name: string
@@ -34,26 +34,34 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
     const { session_id } = parseCookies()
     if (session_id) {
       try {
-        const res = await registerAccount(session_id, data.phone, data.full_name, data.have_twin === 'true')
-        if (res.ok) {
+        const res = await registerAccount(
+          session_id,
+          data.phone,
+          data.full_name,
+          data.have_twin === 'true'
+        )
+        if (res?.ok) {
           onNextStep({
             ...data,
             have_twin: data.have_twin === 'true'
           })
-        } else {
-          if (res.error === 401) { // Unauthorized
-            onInvalidSession()
-          } else if (res.error === 400) { // Not unique phone
-            setError('phone', {
-              type: 'server',
-              message: res.message
-            })
-          } else {
-            throw new Error(res.message)
-          }
         }
       } catch (e) {
-        setErrorMsg((e as Error).message)
+        if (e instanceof CustomError) {
+          switch (e.statusCode) {
+            case 400:
+              setError('phone', {
+                type: 'server',
+                message: e.message
+              })
+              break
+            case 401:
+              onInvalidSession()
+              break
+          }
+        } else {
+          setErrorMsg((e as Error).message)
+        }
       }
     } else {
       onInvalidSession()

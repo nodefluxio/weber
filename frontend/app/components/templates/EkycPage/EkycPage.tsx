@@ -1,7 +1,6 @@
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
-import { SESSION_ID_ERROR } from '../../../constants/message'
 import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
 import { Modal } from '../../elements/Modal/Modal'
@@ -10,7 +9,7 @@ import { Banner } from '../../modules/Banner/Banner'
 import { Cam } from '../../modules/Cam/Cam'
 import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
-import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
+import { AnalyticsResult } from '../../modules/Analytics/AnalyticsResult/AnalyticsResult'
 import { postEKYC } from '../../../api/solutionsAPI'
 import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
 import styles from './EkycPage.module.scss'
@@ -20,6 +19,8 @@ import {
   KTP_LOCAL_STORAGE
 } from '../../../constants/localStorage'
 import { EKYCResultResponse } from '../../../types/responses'
+import { CustomError } from 'app/errors/CustomError'
+import Analytics from './../../../../pages/analytics/[analytic_name]'
 
 type Props = {
   serviceId: number
@@ -43,11 +44,11 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
   ) => {
     try {
       await postActivities(serviceId, sessionId, completeness)
-    } catch (err) {
-      if ((err as Error).message === SESSION_ID_ERROR) {
+    } catch (e) {
+      if (e instanceof CustomError && e.statusCode === 401) {
         setOpenModal(true)
       } else {
-        console.error((err as Error).message)
+        console.error(e)
       }
     }
   }
@@ -72,11 +73,11 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       if (res) {
         setResult(res)
       }
-    } catch (err) {
-      if ((err as Error).message === SESSION_ID_ERROR) {
+    } catch (e) {
+      if (e instanceof CustomError && e.statusCode === 401) {
         setOpenModal(true)
       } else {
-        console.log(err)
+        console.error(e)
       }
     }
   }

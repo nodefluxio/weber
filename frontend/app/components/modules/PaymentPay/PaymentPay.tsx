@@ -11,6 +11,7 @@ import { checkLimit, pay } from '@/api/paymentAPI'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
+import { CustomError } from 'app/errors/CustomError'
 
 type Props = { sessionId: string; amount: number; afterPay: () => void }
 
@@ -40,14 +41,23 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
         setUser(res.data[0].full_name)
         setBalance(res.data[0].balance)
         setPhoneError('')
-      } else {
-        if (res?.message) {
-          setPhoneError(res?.message)
-          setStep(1)
-        }
       }
-    } catch (err) {
-      console.log(err, 'error')
+    } catch (e) {
+      if (e instanceof CustomError) {
+        switch (e.statusCode) {
+          case 400:
+            setPhoneError(e.message)
+            setStep(1)
+            break
+          case 401:
+            // TODO ADD OPEN MODAL
+            break
+          default:
+            break
+        }
+      } else {
+        console.error(e)
+      }
     }
   }
 
@@ -66,15 +76,26 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       if (res) {
         setIsSuccess(res?.ok)
         setMessage(res?.message)
-
-        if (res.error) {
-          setHttpCode(res.error)
-        }
       }
-    } catch (err) {
-      setIsSuccess(false)
-      setIsLoading(false)
-      console.error(err)
+    } catch (e) {
+      if (e instanceof CustomError) {
+        setHttpCode(e.statusCode)
+        switch (e.statusCode) {
+          case 400:
+          case 402:
+            setIsSuccess(false)
+            setMessage(e.message)
+            break
+          case 401:
+            // TODO ADD OPEN MODAL
+            break
+          default:
+            console.error(e)
+        }
+      } else {
+        setIsSuccess(false)
+        console.error(e)
+      }
     }
   }
 
