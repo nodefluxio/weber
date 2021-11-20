@@ -1,7 +1,7 @@
 import { postServicePhoto } from '../../../../app/api/analyticsAPI'
 import { ReactNode, useState } from 'react'
 import { parseCookies } from 'nookies'
-import { AnalyticsContainer } from '../../modules/Analytics/AnalyticsContainer/AnalyticsContainer'
+import { AnalyticsContainer } from '../../modules/AnalyticsContainer/AnalyticsContainer'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
 import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
