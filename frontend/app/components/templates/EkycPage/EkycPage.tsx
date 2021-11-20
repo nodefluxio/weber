@@ -9,7 +9,7 @@ import { Banner } from '../../modules/Banner/Banner'
 import { Cam } from '../../modules/Cam/Cam'
 import Feedback from '../../modules/Feedback/Feedback'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
-import { AnalyticsResult } from '../../modules/Analytics/AnalyticsResult/AnalyticsResult'
+import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
 import { postEKYC } from '../../../api/solutionsAPI'
 import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
 import styles from './EkycPage.module.scss'
@@ -20,7 +20,6 @@ import {
 } from '../../../constants/localStorage'
 import { EKYCResultResponse } from '../../../types/responses'
 import { CustomError } from 'app/errors/CustomError'
-import Analytics from './../../../../pages/analytics/[analytic_name]'
 
 type Props = {
   serviceId: number
