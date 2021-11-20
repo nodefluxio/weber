@@ -45,15 +45,15 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
     } catch (e) {
       if (e instanceof CustomError) {
         switch (e.statusCode) {
-          case 400:
-            setPhoneError(e.message)
-            setStep(1)
-            break
-          case 401:
-            // TODO ADD OPEN MODAL
-            break
-          default:
-            break
+        case 400:
+          setPhoneError(e.message)
+          setStep(1)
+          break
+        case 401:
+          // TODO ADD OPEN MODAL
+          break
+        default:
+          break
         }
       } else {
         console.error(e)
@@ -81,21 +81,22 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       if (e instanceof CustomError) {
         setHttpCode(e.statusCode)
         switch (e.statusCode) {
-          case 400:
-          case 402:
-            setIsSuccess(false)
-            setMessage(e.message)
-            break
-          case 401:
-            // TODO ADD OPEN MODAL
-            break
-          default:
-            console.error(e)
+        case 400:
+        case 402:
+          setIsSuccess(false)
+          setMessage(e.message)
+          break
+        case 401:
+          // TODO ADD OPEN MODAL
+          break
+        default:
+          console.error(e)
         }
       } else {
         setIsSuccess(false)
         console.error(e)
       }
+      setIsLoading(false)
     }
   }
 
