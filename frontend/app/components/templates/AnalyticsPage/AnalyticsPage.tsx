@@ -4,12 +4,11 @@ import { parseCookies } from 'nookies'
 import { AnalyticsContainer } from '../../modules/Analytics/AnalyticsContainer/AnalyticsContainer'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
-import { AnalyticsResultWrapper } from '../../modules/Analytics/AnalyticsResultWrapper/AnayticsResultWrapper'
+import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
 import Feedback from '../../modules/Feedback/Feedback'
 import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
 import { CustomError } from 'app/errors/CustomError'
-import Analytics from './../../../../pages/analytics/[analytic_name]'
 
 type Props = {
   analyticsName: string
