@@ -28,7 +28,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
           alt="people from cct view"
           priority
         />
-        <h1>Experiencing nodeflux's analytics and solutions through web browser</h1>
+        <h1>Experiencing nodeflux&apos;s analytics and solutions through web browser</h1>
       </div>
       <section className={`${styles.productsSection} ${styles.sectionPadding}`}>
         <h1 className={styles.titleLine}>Our Product</h1>

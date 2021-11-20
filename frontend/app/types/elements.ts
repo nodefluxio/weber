@@ -73,5 +73,5 @@ export type OCRKTP = {
 
 export type MenuInfo = {
   title: string
-  onClick: Function
+  onClick: () => void
 }
