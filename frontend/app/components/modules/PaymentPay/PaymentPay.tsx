@@ -35,7 +35,6 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
   ) => {
     try {
       const res = await checkLimit(session_id, phone, amount)
-
       if (res?.ok) {
         setIsPinRequired(res.data[0].is_limit || res.data[0].have_twin)
         setUser(res.data[0].full_name)

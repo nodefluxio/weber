@@ -2,7 +2,6 @@ import { errorHandler } from '@/utils/errorHandler'
 import axios from 'axios'
 
 import {
-  PaymentResponse,
   CheckLimitResponse,
   StandardResponse,
   CheckAccountResponse
@@ -86,9 +85,9 @@ export const pay = async (
   pin: string,
   amount: number,
   image: string
-): Promise<PaymentResponse | undefined> => {
+): Promise<StandardResponse | undefined> => {
   try {
-    const res = await axios.post<PaymentResponse>(`/face-payment/pay`, {
+    const res = await axios.post<StandardResponse>(`/face-payment/pay`, {
       session_id: sessionId,
       phone: phone,
       pin: pin,

@@ -115,10 +115,6 @@ export type AnyResultResponse =
   | OCRResultResponse
   | LPRResultResponse
 
-export interface PaymentResponse extends StandardResponse {
-  error?: number
-}
-
 export interface CheckLimitResponse extends StandardResponse {
   data: [
     {
