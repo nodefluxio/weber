@@ -10,13 +10,17 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+## [0.3.1 - 21/11/2021]
 
+- [FRONTEND] Revamp landing page
+
+### Changed
 
 ## [0.3.0 - 17/11/2021]
 
 ### Added
 
-- [FRONTEND] Add loading animation 
+- [FRONTEND] Add loading animation
 - [FRONTEND] Face Payment Main Menu
 - [FRONTEND] Face Payment Registration Form
 - [FRONTEND] Face Payment Activation Pin Form
