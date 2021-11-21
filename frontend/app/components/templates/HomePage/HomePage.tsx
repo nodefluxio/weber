@@ -28,7 +28,10 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
           alt="people from cct view"
           priority
         />
-        <h1>Experiencing nodeflux&apos;s analytics and solutions through web browser</h1>
+        <h1>
+          Experiencing nodeflux&apos;s analytics and solutions through web
+          browser
+        </h1>
       </div>
       <section className={`${styles.productsSection} ${styles.sectionPadding}`}>
         <h1 className={styles.titleLine}>Our Product</h1>
@@ -73,22 +76,39 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
       <section className={styles.awardsSection}>
         <h1 className={styles.title}>Awards and Recognition</h1>
         <div className={`${styles.whiteContainer} ${styles.awardsContainer}`}>
-          <Image src="/assets/images/nvidia-logo.png" width={277} height={50} />
+          <Image
+            src="/assets/images/nvidia-logo.png"
+            width={277}
+            height={50}
+            alt={'nvidia-logo'}
+          />
           <Image
             src="/assets/images/satu-indonesia-logo.png"
             width={190}
             height={93}
+            alt={'satu-indonesia-logo'}
           />
-          <Image src="/assets/images/bia-logo.png" width={149} height={76} />
+          <Image
+            src="/assets/images/bia-logo.png"
+            width={149}
+            height={76}
+            alt={'bia-logo'}
+          />
           <Image
             src="/assets/images/identik-logo.png"
             width={147}
             height={74}
+            alt={'identik-logo'}
           />
         </div>
         <div
           className={`${styles.whiteContainer} ${styles.recognitionsContainer}`}>
-          <Image src="/assets/images/nist-logo.png" width={169} height={44} />
+          <Image
+            src="/assets/images/nist-logo.png"
+            width={169}
+            height={44}
+            alt={'nist-logo'}
+          />
           <h4>INDUSTRY TEST SCORE</h4>
           <h3>Ranked Top 30th Percentile in NIST Leader Board</h3>
           <p>
@@ -130,6 +150,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/solutions-01.png"
               width={672}
               height={522}
+              alt={'solution-01'}
             />
           </div>
           <div className={styles.texts}>
@@ -141,6 +162,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt={'logo'}
             />
           </div>
         </div>
@@ -168,6 +190,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/products-01.png"
               width={490}
               height={490}
+              alt={'product-01'}
             />
           </div>
           <div className={styles.texts}>
@@ -179,6 +202,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt={'logo'}
             />
           </div>
         </div>

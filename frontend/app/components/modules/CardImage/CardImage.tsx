@@ -26,6 +26,7 @@ export const CardImage = ({
         height={height}
         layout={layout}
         objectFit={objectFit}
+        alt={'card-image'}
       />
     </div>
   )

@@ -5,7 +5,6 @@ import {
   PhoneNumberResponse,
   PaymentResponse,
   CheckLimitResponse,
-  StandardResponse,
   CheckAccountResponse
 } from '../types/responses'
 

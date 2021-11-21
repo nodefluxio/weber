@@ -14,7 +14,7 @@ import { Color } from '../../../types/elements'
 type Props = {
   localkey: string
   nextStep: MouseEventHandler<HTMLButtonElement>
-  videoConstraints?: Object
+  videoConstraints?: MediaTrackConstraints
   overlayShape: 'rect' | 'circle'
 }
 
@@ -74,6 +74,7 @@ export const Cam = ({
               src={`/assets/images/face-cam-overlay-${overlayShape}.png`}
               layout="fill"
               objectFit="cover"
+              alt={'face-cam'}
             />
           </div>
         ) : (
