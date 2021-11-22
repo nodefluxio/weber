@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- [FRONTEND] Revamp landing page
+
 ## [0.3.0 - 17/11/2021]
 
 ### Added
