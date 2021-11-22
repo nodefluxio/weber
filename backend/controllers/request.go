@@ -2,10 +2,13 @@ package controllers
 
 import (
 	"backend/models"
+	"encoding/json"
+	"fmt"
 	"image"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mitchellh/mapstructure"
@@ -33,7 +36,7 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 	}
 
 	thumbnails := make(Thumbnails, 0)
-	img, cfg, err := DecodeBase64Image(inputData.Data.Images[0])
+	img, cfg, _ := DecodeBase64Image(inputData.Data.Images[0])
 	parseMap(serviceData.Job.Result, img, cfg, &thumbnails)
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -41,6 +44,31 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 		"message":      "Service demo request success",
 		"service_data": &serviceData,
 		"thumbnails":   &thumbnails,
+	})
+}
+
+func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputData models.ServiceRequestInput) {
+	var err error
+
+	requestData := inputData.Data
+	additionalParams, _ := json.Marshal(requestData.AdditionalParams)
+	postBody := []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
+		string(additionalParams), strings.Join(requestData.Images, `", "`)))
+
+	serviceData, err := RequestToInnovationSync(postBody, service.Slug)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok":           true,
+		"message":      "Service demo request success",
+		"service_data": &serviceData,
 	})
 }
 

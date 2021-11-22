@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
+
 ### Changed
 - [FRONTEND] Revamp landing page
 - [BACKEND] Refactor API Get Activate Account on Face Payment
