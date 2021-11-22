@@ -16,7 +16,7 @@ type Props = {
   localkey: string
   nextStep: MouseEventHandler<HTMLButtonElement>
   overlayShape: 'rect' | 'circle'
-  videoConstraints?: Object
+  videoConstraints?: MediaTrackConstraints
   mirrored?: boolean
   facingMode?: 'user' | 'environment'
 }
