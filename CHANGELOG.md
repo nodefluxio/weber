@@ -7,17 +7,17 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 ### Changed
+- [FRONTEND] Revamp landing page
 
 ### Fixed
 - [FRONTEND] Eslint configuration on `/app` modules
-
 
 
 ## [0.3.0 - 17/11/2021]
 
 ### Added
 
-- [FRONTEND] Add loading animation 
+- [FRONTEND] Add loading animation
 - [FRONTEND] Face Payment Main Menu
 - [FRONTEND] Face Payment Registration Form
 - [FRONTEND] Face Payment Activation Pin Form
