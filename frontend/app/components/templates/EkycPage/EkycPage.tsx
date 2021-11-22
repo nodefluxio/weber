@@ -157,6 +157,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
               }}
               videoConstraints={{ facingMode: { ideal: 'environment' } }}
               overlayShape="rect"
+              mirrored={false}
             />
           </div>
         )}
