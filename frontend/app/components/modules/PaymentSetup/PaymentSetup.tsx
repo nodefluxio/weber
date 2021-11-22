@@ -8,7 +8,7 @@ import {
 } from 'app/constants/amounts'
 
 type Props = {
-  onChange: Function
+  onChange: (arg: number) => void
 }
 
 export const PaymentSetup = ({ onChange }: Props) => {

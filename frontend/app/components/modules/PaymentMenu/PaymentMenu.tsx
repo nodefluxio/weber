@@ -14,7 +14,7 @@ export const PaymentMenu = ({ buttons, disabledList, title }: Props) => {
       <h3>{title}</h3>
       <div className={styles.buttonWrapper}>
         {buttons.map((btn, i) => (
-          <MenuButton {...btn} disabled={disabledList.includes(i)} />
+          <MenuButton {...btn} disabled={disabledList.includes(i)} key={i} />
         ))}
       </div>
     </div>
