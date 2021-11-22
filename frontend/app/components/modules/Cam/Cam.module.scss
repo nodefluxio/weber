@@ -13,9 +13,9 @@
       width: 445px;
       height: 335px;
       @include phone {
-        max-width: 90vw;
+        max-width: 95vw;
         width: 400px;
-        height: 300px;
+        height: 65vh;
       }
       .webcam {
         border-radius: 20px;
@@ -32,9 +32,9 @@
       width: 445px;
       height: 335px;
       @include phone {
-        max-width: 90vw;
+        max-width: 95vw;
         width: 400px;
-        height: 300px;
+        height: 65vh;
       }
       .capturedPhoto {
         border-radius: 20px;
