@@ -14,15 +14,17 @@ import { Color } from '../../../types/elements'
 type Props = {
   localkey: string
   nextStep: MouseEventHandler<HTMLButtonElement>
-  videoConstraints?: Object
   overlayShape: 'rect' | 'circle'
+  videoConstraints?: Object
+  mirrored?: boolean
 }
 
 export const Cam = ({
   localkey,
   nextStep,
   videoConstraints,
-  overlayShape
+  overlayShape,
+  mirrored = true
 }: Props) => {
   const webcamRef = useRef<Webcam>(null)
 
@@ -67,7 +69,12 @@ export const Cam = ({
               audio={false}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
+              screenshotQuality={1}
               videoConstraints={videoConstraints}
+              imageSmoothing={false}
+              minScreenshotWidth={401}
+              minScreenshotHeight={301}
+              mirrored={mirrored}
             />
             <Image
               className={styles.overlayImg}
@@ -83,7 +90,7 @@ export const Cam = ({
                 className={styles.capturedPhoto}
                 src={photo}
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
                 alt="captured photos"
               />
             </div>
