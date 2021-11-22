@@ -40,6 +40,7 @@ export const OrderSummary = ({ cart, onBack, onNext }: Props) => {
               src={`/assets/images/solutions/face-payment/${cart.image}`}
               layout="fill"
               objectFit="contain"
+              alt={'cart-item'}
             />
           </div>
           <p>{cart.name}</p>

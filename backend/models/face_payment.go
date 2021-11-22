@@ -18,14 +18,6 @@ type FacePaymentAccount struct {
 	UpdatedAt      time.Time
 }
 
-type AccountResultData struct {
-	FullName       string `json:"full_name"`
-	Phone          string `json:"phone"`
-	MinimumPayment int    `json:"minimum_payment"`
-	HaveTwin       bool   `json:"have_twin"`
-	Balance        int    `json:"balance"`
-}
-
 type NewAccountData struct {
 	SessionID string      `json:"session_id"`
 	FullName  string      `json:"full_name" validate:"required,min=2,max=255"`
@@ -65,6 +57,12 @@ type PayInput struct {
 	Pin       string `json:"pin" validate:"max=6"`
 	Amount    int
 	Data      RequestData `json:"data"`
+}
+
+type CheckLimitInput struct {
+	SessionID string `json:"session_id"`
+	Phone     string `json:"phone" validate:"required,numeric"`
+	Amount    int    `json:"amount" validate:"required"`
 }
 
 func (m *Model) CreateAccount(newAccount *FacePaymentAccount) (err error) {

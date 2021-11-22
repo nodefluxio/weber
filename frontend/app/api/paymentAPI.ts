@@ -5,7 +5,6 @@ import {
   PhoneNumberResponse,
   PaymentResponse,
   CheckLimitResponse,
-  StandardResponse,
   CheckAccountResponse
 } from '../types/responses'
 
@@ -71,7 +70,7 @@ export const activateAccount = async (
     }
   } catch (e) {
     const axiosError = e as AxiosError<ActivationResponse>
-    console.log(axiosError.message)
+    console.error(axiosError)
     if (axiosError.response?.status === 401) {
       // Unauthorized
       return {

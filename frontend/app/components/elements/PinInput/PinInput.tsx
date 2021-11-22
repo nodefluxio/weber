@@ -10,7 +10,7 @@ import styles from './PinInput.module.scss'
 type Props = {
   message: string
   digits: number
-  onPinChange: Function
+  onPinChange: (arg0: string) => void
 }
 
 export const PinInput = ({
@@ -18,8 +18,8 @@ export const PinInput = ({
   digits,
   onPinChange
 }: Props) => {
-  const [pinCode, setPinCode] = useState(
-    Array.from({ length: digits }, (_) => '')
+  const [pinCode, setPinCode] = useState<string[]>(
+    Array.from({ length: digits }, () => '')
   )
 
   useEffect(() => {

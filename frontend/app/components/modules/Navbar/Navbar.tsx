@@ -27,7 +27,7 @@ export const Navbar = () => {
         router.pathname === '/' ? styles.fixedNav : ''
       }`}>
       <div className={styles.container}>
-        <Link href="/">
+        <Link passHref href="/">
           <div className={styles.imageContainer}>
             <Image
               src={'/assets/images/nodeflux-logo.png'}
@@ -45,17 +45,17 @@ export const Navbar = () => {
         </button>
         <ul ref={drawerRef} className={`${openDrawer && styles.openDrawer}`}>
           <li>
-            <Link href="/#solutions">
+            <Link passHref href="/#solutions">
               <span>SOLUTIONS</span>
             </Link>
           </li>
           <li>
-            <Link href="/#analytics">
+            <Link passHref href="/#analytics">
               <span>ANALYTICS</span>
             </Link>
           </li>
           <li>
-            <Link href="/#new-innovations">
+            <Link passHref href="/#new-innovations">
               <span>NEW INNOVATIONS</span>
             </Link>
           </li>

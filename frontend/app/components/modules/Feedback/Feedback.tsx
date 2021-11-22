@@ -6,8 +6,8 @@ import { postFeedback } from '../../../api/feedbackAPI'
 import { Button } from '../../elements/Button/Button'
 import { Label } from '../../elements/Label/Label'
 import { Star } from '../../elements/Star/Star'
-import { Color } from '../../../types/elements'
-import { FeedbackData } from '../../../types/elements'
+import { Color , FeedbackData } from '../../../types/elements'
+
 import styles from './Feedback.module.scss'
 import Link from 'next/link'
 
@@ -67,7 +67,7 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
 
   return isSubmitted && isSuccess ? (
     <div className={styles.thankYou}>
-      <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} />
+      <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} alt={''}/>
       <h3>{message}</h3>
       <div className={styles.buttons}>
         <Button type="button" color={Color.Primary} onClick={onTryAgain}>

@@ -102,6 +102,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/solutions-01.png"
               width={672}
               height={522}
+              alt={'solution-01'}
             />
           </div>
           <div className={styles.texts}>
@@ -113,6 +114,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt={'logo'}
             />
           </div>
         </div>
@@ -140,6 +142,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/products-01.png"
               width={490}
               height={490}
+              alt={'product-01'}
             />
           </div>
           <div className={styles.texts}>
@@ -151,6 +154,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt={'logo'}
             />
           </div>
         </div>

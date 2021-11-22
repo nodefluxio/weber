@@ -7,13 +7,12 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 ### Changed
-
+- [FRONTEND] Revamp landing page
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Delete API Check Limit on Face Payment
 
 ### Fixed
-
-- [FRONTEND] Revamp landing page
+- [FRONTEND] Eslint configuration on `/app` modules
 
 ## [0.3.0 - 17/11/2021]
 
