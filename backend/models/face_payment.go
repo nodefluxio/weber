@@ -115,14 +115,6 @@ func (m *Model) CreateAccountWallet(sessionId string, newAccountWallet *FacePaym
 	return nil
 }
 
-func (m *Model) GetAccount(Account *FacePaymentAccount, sessionId string) (err error) {
-	err = m.DBConn.Where("session_id = ?", sessionId).First(Account).Error
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 func (m *Model) GetActiveAccount(Account *FacePaymentAccount, sessionId string) (err error) {
 	err = m.DBConn.Where("session_id = ? AND is_active = ?", sessionId, "true").First(Account).Error
 	if err != nil {

@@ -4,6 +4,7 @@ import (
 	"backend/models"
 	"backend/utils"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -11,9 +12,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/tidwall/gjson"
+	"gorm.io/gorm"
 )
 
-func (ctrl *Controller) GetActiveAccountBySession(ctx *gin.Context) {
+func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 	sessionId := ctx.Param("session_id")
 
 	// Check if session is not exist in our record
@@ -35,7 +37,15 @@ func (ctrl *Controller) GetActiveAccountBySession(ctx *gin.Context) {
 	}
 
 	var account models.FacePaymentAccount
-	err := ctrl.Model.GetAccount(&account, sessionId)
+	err := ctrl.Model.GetActiveAccount(&account, sessionId)
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"ok":      false,
+			"message": "This session id does not have an active face payment account",
+		})
+		return
+	}
+
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -47,7 +57,6 @@ func (ctrl *Controller) GetActiveAccountBySession(ctx *gin.Context) {
 	var accountWallet models.FacePaymentWallet
 	ctrl.Model.GetAccountWallet(&accountWallet, account.ID)
 
-	var data []models.AccountResultData
 	var accountResultData models.AccountResultData
 	accountResultData.HaveTwin = account.HaveTwin
 	accountResultData.FullName = account.FullName
@@ -59,23 +68,11 @@ func (ctrl *Controller) GetActiveAccountBySession(ctx *gin.Context) {
 	re := regexp.MustCompile(`(?m)^` + prefixPhone + `(\S+)`)
 	matchingGroups := re.FindStringSubmatch(account.Phone)
 	accountResultData.Phone = matchingGroups[1]
-	data = append(data, accountResultData)
-
-	if !account.IsActive {
-		ctx.JSON(http.StatusOK, gin.H{
-			"data":                data,
-			"ok":                  true,
-			"message":             "This session id does not have an active face payment account",
-			"have_active_account": false,
-		})
-		return
-	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"data":                data,
-		"ok":                  true,
-		"message":             "This session id has an active face payment account",
-		"have_active_account": true,
+		"data":    accountResultData,
+		"ok":      true,
+		"message": "This session id has an active face payment account",
 	})
 }
 
