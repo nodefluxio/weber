@@ -76,7 +76,7 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       if ((err as Error).message === SESSION_ID_ERROR) {
         setOpenModal(true)
       } else {
-        console.log(err)
+        console.error(err)
       }
     }
   }
