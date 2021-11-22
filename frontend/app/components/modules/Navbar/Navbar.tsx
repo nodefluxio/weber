@@ -22,66 +22,50 @@ export const Navbar = () => {
   }, [])
 
   return (
-    <nav className={styles.navbar}>
-      <Link href="/">
-        <div className={styles.imageContainer}>
-          <Image
-            src={'/assets/images/nodeflux-logo.png'}
-            width={130}
-            height={40}
-            quality={100}
-          />
-        </div>
-      </Link>
-      <button
-        className={styles.hamburgerButton}
-        onClick={() => setOpenDrawer(true)}>
-        <div className={styles.lines}></div>
-      </button>
-      <ul ref={drawerRef} className={`${openDrawer && styles.openDrawer}`}>
-        {router.pathname !== '/' ? (
-          <>
-            <li>
-              <Link href="/#solutions">
-                <span>SOLUTIONS</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/#analytics">
-                <span>ANALYTICS</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/#new-innovations">
-                <span>NEW INNOVATIONS</span>
-              </Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link href="#solutions">
-                <span>SOLUTIONS</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="#analytics">
-                <span>ANALYTICS</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="#new-innovations">
-                <span>NEW INNOVATIONS</span>
-              </Link>
-            </li>
-          </>
-        )}
-        <li className={styles.contactUs}>
-          <Button className={styles.btn} color={Color.Secondary}>
-            Contact Us
-          </Button>
-        </li>
-      </ul>
+    <nav
+      className={`${styles.navbar} ${
+        router.pathname === '/' ? styles.fixedNav : ''
+      }`}>
+      <div className={styles.container}>
+        <Link href="/">
+          <div className={styles.imageContainer}>
+            <Image
+              src={'/assets/images/nodeflux-logo.png'}
+              layout="fill"
+              objectFit="contain"
+              quality={100}
+              priority
+            />
+          </div>
+        </Link>
+        <button
+          className={styles.hamburgerButton}
+          onClick={() => setOpenDrawer(true)}>
+          <div className={styles.lines}></div>
+        </button>
+        <ul ref={drawerRef} className={`${openDrawer && styles.openDrawer}`}>
+          <li>
+            <Link href="/#solutions">
+              <span>SOLUTIONS</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/#analytics">
+              <span>ANALYTICS</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/#new-innovations">
+              <span>NEW INNOVATIONS</span>
+            </Link>
+          </li>
+          <li className={styles.contactUs}>
+            <Button className={styles.btn} color={Color.Secondary}>
+              Contact Us
+            </Button>
+          </li>
+        </ul>
+      </div>
     </nav>
   )
 }

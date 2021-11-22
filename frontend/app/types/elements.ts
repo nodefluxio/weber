@@ -1,7 +1,8 @@
 export enum Color {
   Primary = 'primary',
   Secondary = 'secondary',
-  Tertiary = 'tertiary'
+  Tertiary = 'tertiary',
+  Quaternary = 'quaternary'
 }
 
 export enum AnalyticsSlug {

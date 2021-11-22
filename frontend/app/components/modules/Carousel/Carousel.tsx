@@ -1,14 +1,32 @@
-import { useState, ReactElement } from 'react'
+import { useState, ReactElement, useEffect } from 'react'
 import { Button } from '../../elements/Button/Button'
 import { Color } from '../../../types/elements'
 import styles from './Carousel.module.scss'
 
 type Props = {
   children: ReactElement[]
+  withButton?: boolean
+  vertical?: boolean
+  delay?: number
 }
 
-export const Carousel = ({ children }: Props) => {
+export const Carousel = ({
+  children,
+  withButton = true,
+  vertical = false,
+  delay = 3000
+}: Props) => {
   const [slideIndex, setSlideIndex] = useState(1)
+  const [isDotClicked, setIsDotClicked] = useState(false)
+
+  useEffect(() => {
+    if (!isDotClicked) {
+      setTimeout(() => {
+        if (slideIndex === children.length) moveDot(1)
+        else moveDot(slideIndex + 1)
+      }, delay)
+    }
+  }, [slideIndex])
 
   const next = () => {
     if (slideIndex !== children.length) {
@@ -32,7 +50,6 @@ export const Carousel = ({ children }: Props) => {
 
   return (
     <div className={styles.carousel}>
-      <h1>New Innovations</h1>
       {children.map((child, index) => (
         <div
           key={index}
@@ -42,32 +59,45 @@ export const Carousel = ({ children }: Props) => {
           {child}
         </div>
       ))}
-      <div className={styles.dot}>
+      <div className={`${styles.dot} ${vertical && styles.vertical}`}>
         {children.map((_, index) => (
           <div
             key={index}
-            onClick={() => moveDot(index + 1)}
+            onClick={() => {
+              setIsDotClicked(true)
+              moveDot(index + 1)
+            }}
             className={`${styles.dotItem} ${
               slideIndex === index + 1 && styles.dotActive
             }`}></div>
         ))}
       </div>
-      <Button
-        color={Color.Secondary}
-        type={'button'}
-        rounded={true}
-        onClick={() => prev()}
-        className={styles.prev}>
-        ➜
-      </Button>
-      <Button
-        color={Color.Secondary}
-        type={'button'}
-        rounded={true}
-        onClick={() => next()}
-        className={styles.next}>
-        ➜
-      </Button>
+      {withButton && (
+        <>
+          <Button
+            color={Color.Secondary}
+            type={'button'}
+            rounded={true}
+            onClick={() => {
+              setIsDotClicked(true)
+              prev()
+            }}
+            className={styles.prev}>
+            ➜
+          </Button>
+          <Button
+            color={Color.Secondary}
+            type={'button'}
+            rounded={true}
+            onClick={() => {
+              setIsDotClicked(true)
+              next()
+            }}
+            className={styles.next}>
+            ➜
+          </Button>
+        </>
+      )}
     </div>
   )
 }
