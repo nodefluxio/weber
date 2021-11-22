@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Image from 'next/image'
 import { RequestDemoForm } from '../RequestDemoForm/RequestDemoForm'
 import styles from './RequestDemoFormPopup.module.scss'
 export const RequestDemoFormPopup = () => {
@@ -8,7 +7,7 @@ export const RequestDemoFormPopup = () => {
     <div className={styles.container}>
       {isSubmitSuccess ? (
         <div className={styles.successContainer}>
-          <Image
+          <img
             src="/assets/icons/thankyou.svg"
             alt="checklist circle"
             width={117}

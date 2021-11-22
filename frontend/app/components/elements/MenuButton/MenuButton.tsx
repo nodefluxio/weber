@@ -3,7 +3,7 @@ import styles from './MenuButton.module.scss'
 type Props = {
   title: string
   disabled: boolean
-  onClick: () => void
+  onClick: Function
 }
 
 export const MenuButton = ({ title, disabled, onClick }: Props) => {

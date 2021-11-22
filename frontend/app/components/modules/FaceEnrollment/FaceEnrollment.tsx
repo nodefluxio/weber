@@ -11,8 +11,8 @@ import { SESSION_ID_ERROR } from '../../../constants/message'
 import { ENROLL_SNAPSHOT } from 'app/constants/localStorage'
 
 type Props = {
-  openModal: () => void
-  nextStep: () => void
+  openModal: Function
+  nextStep: Function
   payload: {
     session_id: string
     full_name: string
@@ -103,7 +103,7 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
         ) : (
           <div className={styles.subtitle}>
             <h2>{messages[+isSuccess].title}</h2>
-            <Image src={messages[+isSuccess].imgPath} width={80} height={80} alt={''}/>
+            <Image src={messages[+isSuccess].imgPath} width={80} height={80} />
             <p>{messages[+isSuccess].description}</p>
             <Button type="button" color={Color.Primary} onClick={handleClick}>
               {messages[+isSuccess].button}

@@ -2,10 +2,10 @@ export const formatMoney = (money: string | number) => {
   if (money === null) {
     return '0'
   }
-  const number_string = money.toString(),
+  let number_string = money.toString(),
     remainder = number_string.length % 3,
+    rupiah = number_string.substr(0, remainder),
     thousands = number_string.substr(remainder).match(/\d{3}/g)
-  let rupiah = number_string.substr(0, remainder)
 
   if (thousands) {
     const separator = remainder ? '.' : ''
@@ -19,11 +19,11 @@ export const formatMoney = (money: string | number) => {
 
 export const formatMoneyOnChange = (money: string | number) => {
   money = money.toString()
-  const number_string = money.replace(/[^,\d]/g, '').toString(),
+  let number_string = money.replace(/[^,\d]/g, '').toString(),
     split = number_string.split(','),
     remainder = split[0].length % 3,
+    rupiah = split[0].substr(0, remainder),
     thousands = split[0].substr(remainder).match(/\d{3}/gi)
-  let rupiah = split[0].substr(0, remainder)
 
   // tambahkan titik jika yang di input sudah menjadi angka thousands
   if (thousands) {

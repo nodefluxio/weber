@@ -1,8 +1,8 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import styles from './Modal.module.scss'
 type Props = {
-  show: boolean
+  show: Boolean
   onClose: () => void
   children: ReactNode
 }

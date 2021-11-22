@@ -6,6 +6,7 @@ import { Label } from '../../elements/Label/Label'
 import styles from './PaymentForm.module.scss'
 import { parseCookies } from 'nookies'
 import { registerAccount } from '../../../api/paymentAPI'
+import { SESSION_ID_ERROR } from '../../../constants/message'
 import { useState } from 'react'
 
 type PaymentFormData = {
@@ -15,8 +16,8 @@ type PaymentFormData = {
 }
 
 type Props = {
-  onNextStep: (data: any) => void
-  onInvalidSession: () => void
+  onNextStep: Function
+  onInvalidSession: Function
 }
 
 export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {

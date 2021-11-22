@@ -8,7 +8,7 @@ import {
 } from 'app/constants/amounts'
 
 type Props = {
-  onChange: (arg: number) => void
+  onChange: Function
 }
 
 export const PaymentSetup = ({ onChange }: Props) => {
@@ -38,7 +38,7 @@ export const PaymentSetup = ({ onChange }: Props) => {
 
   useEffect(() => {
     onChange(value)
-  }, [value, onChange])
+  }, [value])
 
   return (
     <div className={styles.modalPayment}>

@@ -1,20 +1,13 @@
 {
-  "root": true,
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
   "extends": [
     "next/core-web-vitals",
     "next",
     "plugin:import/recommended",
-    "plugin:import/typescript",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:import/typescript"
   ],
   "rules": {
     "@next/next/no-document-import-in-page": "off",
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "indent": ["error", 2, { "SwitchCase": 1 }],
-    "import/no-unresolved": [2, { "caseSensitive": true }],
-    "no-console": ["error", { "allow": ["error"] }]
+    "no-unused-vars": "error",
+    "indent": ["error", 2]
   }
 }
