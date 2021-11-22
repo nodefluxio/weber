@@ -1428,3 +1428,47 @@ OR
 ```
 
 </details>
+
+<details>
+<summary><b>Reset Balance Face Payment Account</b></summary>
+Reset balance of face payment account to 1000000 (default)
+- **URL**
+
+`/api/v1/face-payment/reset-balance/:session_id`
+
+- **Method**
+
+  `PATCH`
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+  "message": "The balance in this account has been reset successfully",
+  "ok": true
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+   "message": string,
+   "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 404 Not Found
+
+```json
+{
+  "message": "This session id does not have an active face payment account",
+  "ok": false
+}
+```
+
+</details>
