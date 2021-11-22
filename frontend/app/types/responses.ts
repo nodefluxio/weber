@@ -163,8 +163,15 @@ export type CheckLimitResponse = {
     }
   ]
 }
+
 export type CheckAccountResponse = {
   have_active_account: boolean,
   message: string,
   ok: boolean
+}
+
+export type InnovationResponse<T> = {
+  message: string,
+  ok: boolean,
+  service_data: T
 }

@@ -75,3 +75,17 @@ export type MenuInfo = {
   title: string
   onClick: Function
 }
+
+export type ReceiptItem = {
+  qty: number
+  name: string
+  price: number
+  total: number
+}
+
+export type OCRReceiptData = {
+  address: string
+  number: string
+  info: [string]
+  item: [ReceiptItem]
+}
