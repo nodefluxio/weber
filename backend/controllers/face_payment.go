@@ -203,6 +203,48 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	})
 }
 
+func (ctrl *Controller) ResetBalanceFacePaymentAccount(ctx *gin.Context) {
+	sessionId := ctx.Param("session_id")
+
+	// Check if session is not exist in our record
+	if !ctrl.IsSessionExist(sessionId) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"ok":      false,
+			"message": "Session ID is not valid",
+		})
+		return
+	}
+
+	// Check if session has expired
+	if ctrl.IsSessionExpired(sessionId) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"ok":      false,
+			"message": "Session ID has expired",
+		})
+		return
+	}
+
+	var account models.FacePaymentAccount
+	err := ctrl.Model.GetActiveAccount(&account, sessionId)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"ok":      false,
+			"message": "This session id does not have an active face payment account",
+		})
+		return
+	}
+
+	var accountWallet models.FacePaymentWallet
+	ctrl.Model.GetAccountWallet(&accountWallet, account.ID)
+	accountWallet.Balance = 1000000
+	ctrl.Model.UpdateBalance(&accountWallet)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok":      true,
+		"message": "The balance in this account has been reset successfully",
+	})
+}
+
 func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 	var accountActivationData models.AccountActivationData
 	ctx.BindJSON(&accountActivationData)
