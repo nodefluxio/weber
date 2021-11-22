@@ -12,6 +12,9 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- [FRONTEND] Fix Camera on mobile
+- [FRONTEND] Fix compressed photo quality on Camera
+
 ### Changed
 
 ## [0.3.0 - 17/11/2021]
