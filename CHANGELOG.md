@@ -8,15 +8,16 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- [BACKEND] Refactor API Get Activate Account on Face Payment
+- [BACKEND] Delete API Check Limit on Face Payment
+
 ### Fixed
-
-
 
 ## [0.3.0 - 17/11/2021]
 
 ### Added
 
-- [FRONTEND] Add loading animation 
+- [FRONTEND] Add loading animation
 - [FRONTEND] Face Payment Main Menu
 - [FRONTEND] Face Payment Registration Form
 - [FRONTEND] Face Payment Activation Pin Form
