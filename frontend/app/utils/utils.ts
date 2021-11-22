@@ -23,6 +23,7 @@ export const formatMoneyOnChange = (money: string | number) => {
     split = number_string.split(','),
     remainder = split[0].length % 3,
     thousands = split[0].substr(remainder).match(/\d{3}/gi)
+  
   let rupiah = split[0].substr(0, remainder)
 
   // tambahkan titik jika yang di input sudah menjadi angka thousands

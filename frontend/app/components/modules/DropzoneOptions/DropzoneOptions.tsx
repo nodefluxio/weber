@@ -25,8 +25,9 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
       if (uploadedPhoto[0].size < MAX_IMAGE_SIZE) {
         setErrorMsg('')
         reader.onload = (event) => {
-          if (typeof event.target?.result === 'string') {
-            onPhotoDrop(event.target?.result)
+          const imgString = event.target?.result
+          if (typeof imgString === 'string') {
+            onPhotoDrop(imgString)
             setPhotos(
               uploadedPhoto.map((photo: any) =>
                 Object.assign(photo, {

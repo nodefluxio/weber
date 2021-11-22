@@ -74,7 +74,6 @@ export const Cam = ({
               src={`/assets/images/face-cam-overlay-${overlayShape}.png`}
               layout="fill"
               objectFit="cover"
-              alt={'face-cam'}
             />
           </div>
         ) : (

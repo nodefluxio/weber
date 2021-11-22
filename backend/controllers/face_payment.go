@@ -15,7 +15,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
+func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 	sessionId := ctx.Param("session_id")
 
 	// Check if session is not exist in our record
@@ -37,13 +37,11 @@ func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
 	}
 
 	var account models.FacePaymentAccount
-
 	err := ctrl.Model.GetActiveAccount(&account, sessionId)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"ok":      true,
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"ok":      false,
 			"message": "This session id does not have an active face payment account",
-			"have_active_account": false,
 		})
 		return
 	}
@@ -56,10 +54,25 @@ func (ctrl *Controller) CheckActiveAccountBySession(ctx *gin.Context) {
 		return
 	}
 
+	var accountWallet models.FacePaymentWallet
+	ctrl.Model.GetAccountWallet(&accountWallet, account.ID)
+
+	var accountResultData models.AccountResultData
+	accountResultData.HaveTwin = account.HaveTwin
+	accountResultData.FullName = account.FullName
+	accountResultData.MinimumPayment = account.MinimumPayment
+	accountResultData.Balance = accountWallet.Balance
+
+	// Decode the phone number from database using regex
+	prefixPhone := ctrl.getPrefixPhone(sessionId)
+	re := regexp.MustCompile(`(?m)^` + prefixPhone + `(\S+)`)
+	matchingGroups := re.FindStringSubmatch(account.Phone)
+	accountResultData.Phone = matchingGroups[1]
+
 	ctx.JSON(http.StatusOK, gin.H{
+		"data":    accountResultData,
 		"ok":      true,
 		"message": "This session id has an active face payment account",
-		"have_active_account": true,
 	})
 }
 
@@ -270,96 +283,6 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 	})
 }
 
-func (ctrl *Controller) CheckLimitMinimumPayment(ctx *gin.Context) {
-	var accountToCheck models.CheckLimitInput
-	ctx.BindJSON(&accountToCheck)
-
-	sessionId := accountToCheck.SessionID
-
-	// Check if session is not exist in our record
-	if !ctrl.IsSessionExist(sessionId) {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Session ID is not valid",
-		})
-		return
-	}
-
-	// // Check if session has expired
-	if ctrl.IsSessionExpired(sessionId) {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Session ID has expired",
-		})
-		return
-	}
-
-	// Validate the inputs
-	err := utils.Validate.Struct(accountToCheck)
-	errs := utils.TranslateError(err)
-	if len(errs) > 0 {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"ok":      false,
-			"message": errs[0].Error(),
-		})
-		return
-	}
-
-	// Get the face payment account
-	var account models.FacePaymentAccount
-	err = ctrl.Model.GetActiveAccount(&account, sessionId)
-	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"ok":      false,
-			"message": err.Error(),
-		})
-		return
-	}
-	
-	phoneFormatted := ctrl.reformatPhone(accountToCheck.Phone, sessionId)
-
-	// Check phone number
-	if phoneFormatted != account.Phone {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"ok": false,
-			"message": "Your phone number is wrong", 
-		})
-		return
-	}
-
-	var accountWallet models.FacePaymentWallet
-	err = ctrl.Model.GetAccountWallet(&accountWallet, account.ID)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"ok":      false,
-			"message": err.Error(),
-		})
-		return
-	}
-
-	// Check if total amount > minimum_payment
-	isLimit := false
-	if accountToCheck.Amount > account.MinimumPayment {
-		isLimit = true
-	}
-
-	var checkLimitResult []map[string]interface{}
-	data := map[string]interface{}{
-		"full_name": account.FullName,
-		"have_twin": account.HaveTwin,
-		"balance": accountWallet.Balance,
-		"is_limit": isLimit,
-
-	}
-	checkLimitResult = append(checkLimitResult, data)
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"ok":      true,
-		"message": "Check limit minimum payment success",
-		"data": &checkLimitResult,
-	})
-}
-
 func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	var payInput models.PayInput
 	var fpAccount models.FacePaymentAccount
@@ -455,14 +378,14 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 
-	// If amount in the cart > minimum payment or the user have twin, 
+	// If amount in the cart > minimum payment or the user have twin,
 	// then require a PIN checking
 	if amount >= fpAccount.MinimumPayment || fpAccount.HaveTwin {
 		// Check pin
 		if pin != fpAccount.Pin {
 			ctx.JSON(http.StatusUnauthorized, gin.H{
-				"ok": false,
-				"message": "Wrong pin!", 
+				"ok":      false,
+				"message": "Wrong pin!",
 			})
 			return
 		}
@@ -504,28 +427,32 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"ok": true,
-		"message": "Payment transaction success", 
+		"ok":      true,
+		"message": "Payment transaction success",
 	})
 }
 
-func (ctrl *Controller) reformatPhone(phone string, sessionId string) string {
-	// Output should be: DD{MM+YY}Phone
+func (ctrl *Controller) getPrefixPhone(sessionId string) string {
+	// Get the DD{MM+YY} of the expired var
 
-	// Replace first character with 62 if the first character is 0
-	re := regexp.MustCompile(`(?m)^0`)
-	phone = re.ReplaceAllString(phone, "62")
-
-	// Add the DD{MM+YY} of the expired var
 	expirationDate := ctrl.GetExpirationDate(sessionId)
-	re = regexp.MustCompile(`(?m)(\d\d)-(\d\d)-\d\d(\d\d)`)
+	re := regexp.MustCompile(`(?m)(\d\d)-(\d\d)-\d\d(\d\d)`)
 	matchingGroups := re.FindStringSubmatch(expirationDate)
 	day := matchingGroups[1]
 	monthInt, _ := strconv.Atoi(matchingGroups[2])
 	yearInt, _ := strconv.Atoi(matchingGroups[3])
 	sum := strconv.Itoa(monthInt + yearInt)
-	phone = day + sum + phone
+	prefixPhone := day + sum
 
+	return prefixPhone
+}
+
+func (ctrl *Controller) reformatPhone(phone string, sessionId string) string {
+	// Output should be: DD{MM+YY}Phone
+
+	// Add the DD{MM+YY} of the expired var
+	prefixPhone := ctrl.getPrefixPhone(sessionId)
+	phone = prefixPhone + phone
 	return phone
 }
 

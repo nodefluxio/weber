@@ -47,5 +47,4 @@ export const Button = forwardRef(
     return <Component {...attributes}>{children}</Component>
   }
 )
-
 Button.displayName = 'Button'
