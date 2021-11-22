@@ -8,11 +8,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-### Fixed
-
-## [0.3.1 - 21/11/2021]
-
 - [FRONTEND] Revamp landing page
+
+### Fixed
 
 ### Changed
 
