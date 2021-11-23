@@ -155,8 +155,9 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 nextStep()
                 createVisitorActivities(serviceId, session_id, 60)
               }}
-              videoConstraints={{ facingMode: { ideal: 'environment' } }}
+              facingMode="environment"
               overlayShape="rect"
+              mirrored={false}
             />
           </div>
         )}

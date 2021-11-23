@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 
 ### Changed
 
@@ -14,6 +14,11 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Delete API Check Limit on Face Payment
 
 ### Fixed
+
+- [FRONTEND] Fix Camera not full on mobile
+- [FRONTEND] Fix compressed photo quality on Camera
+
+### Changed
 
 - [FRONTEND] Revamp landing page
 
