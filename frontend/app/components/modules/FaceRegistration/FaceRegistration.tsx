@@ -10,7 +10,7 @@ type RegistPayload = {
 }
 
 type Props = {
-  openModal: () => void
+  openModal: () => void,
   onFinished: () => void
 }
 

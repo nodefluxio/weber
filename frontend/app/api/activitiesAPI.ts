@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios'
-import { SESSION_ID_ERROR } from '../constants/message'
-import { ActivitiesPostResponse } from '../types/responses'
+import axios from 'axios'
+import { StandardResponse } from '../types/responses'
+import { errorHandler } from '@/utils/errorHandler'
 
 export const postActivities = async (
   serviceId: number,
@@ -8,22 +8,15 @@ export const postActivities = async (
   completeness: number
 ) => {
   try {
-    const res = await axios.post<ActivitiesPostResponse>('/activities', {
+    const res = await axios.post<StandardResponse>('/activities', {
       service_id: serviceId,
       session_id: sessionId,
       completeness: completeness
     })
     if (res.data.ok) {
-      return res.data.message
+      return res.data
     }
   } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const error = e as AxiosError<ActivitiesPostResponse>
-      if (error && error.response) {
-        throw new Error(SESSION_ID_ERROR)
-      }
-    } else {
-      throw new Error((e as Error).message)
-    }
+    errorHandler(e)
   }
 }

@@ -38,7 +38,7 @@ export const PaymentSetup = ({ onChange }: Props) => {
 
   useEffect(() => {
     onChange(value)
-  }, [value, onChange])
+  }, [value])
 
   return (
     <div className={styles.modalPayment}>

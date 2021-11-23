@@ -1,11 +1,10 @@
-import axios, { AxiosError } from 'axios'
-import { SESSION_ID_ERROR } from '../constants/message'
+import { errorHandler } from '@/utils/errorHandler'
+import axios from 'axios'
+
 import {
-  ActivationResponse,
-  PhoneNumberResponse,
-  PaymentResponse,
   CheckLimitResponse,
-  CheckAccountResponse
+  CheckAccountResponse,
+  StandardResponse
 } from '../types/responses'
 
 export const registerAccount = async (
@@ -14,9 +13,9 @@ export const registerAccount = async (
   name: string,
   haveTwin: boolean,
   photo?: string[] //base64Jpeg
-): Promise<PaymentResponse> => {
+) => {
   try {
-    const res = await axios.post<PhoneNumberResponse>(`/face-payment/account`, {
+    const res = await axios.post<StandardResponse>(`/face-payment/account`, {
       session_id: sessionId,
       phone: phoneNum,
       full_name: name,
@@ -29,24 +28,9 @@ export const registerAccount = async (
       return {
         ...res.data
       }
-    } else {
-      throw new Error(res.data.message)
     }
   } catch (e) {
-    const axiosError = e as AxiosError<PhoneNumberResponse>
-    if (axiosError.response?.status === 401) {
-      // Unauthorized
-      return {
-        ok: false,
-        error: 401,
-        message: SESSION_ID_ERROR
-      }
-    }
-    return {
-      ok: false,
-      error: axiosError.response?.status || 500,
-      message: axiosError.response?.data.message || 'Server error'
-    }
+    errorHandler(e)
   }
 }
 
@@ -54,9 +38,9 @@ export const activateAccount = async (
   sessionId: string,
   pin: string,
   minPayment: number
-): Promise<PaymentResponse> => {
+) => {
   try {
-    const res = await axios.patch<ActivationResponse>(`/face-payment/account`, {
+    const res = await axios.patch<StandardResponse>(`/face-payment/account`, {
       session_id: sessionId,
       pin: pin,
       minimum_payment: minPayment
@@ -65,25 +49,9 @@ export const activateAccount = async (
       return {
         ...res.data
       }
-    } else {
-      throw new Error(res.data.message)
     }
   } catch (e) {
-    const axiosError = e as AxiosError<ActivationResponse>
-    console.error(axiosError)
-    if (axiosError.response?.status === 401) {
-      // Unauthorized
-      return {
-        ok: false,
-        error: 401,
-        message: SESSION_ID_ERROR
-      }
-    }
-    return {
-      ok: false,
-      error: axiosError.response?.status || 500,
-      message: axiosError.response?.data.message || 'Server error'
-    }
+    errorHandler(e)
   }
 }
 
@@ -107,14 +75,7 @@ export const checkLimit = async (
       }
     }
   } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const error = e as AxiosError<CheckLimitResponse>
-      if (error && error.response) {
-        return error.response.data
-      }
-    } else {
-      throw new Error((e as Error).message)
-    }
+    errorHandler(e)
   }
 }
 
@@ -124,9 +85,9 @@ export const pay = async (
   pin: string,
   amount: number,
   image: string
-): Promise<PaymentResponse | undefined> => {
+): Promise<StandardResponse | undefined> => {
   try {
-    const res = await axios.post<PaymentResponse>(`/face-payment/pay`, {
+    const res = await axios.post<StandardResponse>(`/face-payment/pay`, {
       session_id: sessionId,
       phone: phone,
       pin: pin,
@@ -137,18 +98,7 @@ export const pay = async (
     })
     return res.data
   } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const error = e as AxiosError<PaymentResponse>
-      if (error && error.response) {
-        return {
-          ok: error.response.data.ok,
-          message: error.response.data.message,
-          error: error.response.status
-        }
-      }
-    } else {
-      throw new Error((e as Error).message)
-    }
+    errorHandler(e)
   }
 }
 
@@ -163,9 +113,6 @@ export const checkAccount = async (
       ...res.data
     }
   } catch (e) {
-    throw new Error(
-      (e as AxiosError<CheckAccountResponse>).response?.data.message ||
-        'Server error'
-    )
+    errorHandler(e)
   }
 }

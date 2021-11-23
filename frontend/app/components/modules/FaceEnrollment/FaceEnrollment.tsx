@@ -7,8 +7,8 @@ import { Spinner } from '@/elements/Spinner/Spinner'
 import styles from './FaceEnrollment.module.scss'
 import { parseCookies } from 'nookies'
 import { registerAccount } from '../../../api/paymentAPI'
-import { SESSION_ID_ERROR } from '../../../constants/message'
 import { ENROLL_SNAPSHOT } from 'app/constants/localStorage'
+import { CustomError } from 'app/errors/CustomError'
 
 type Props = {
   openModal: () => void
@@ -66,15 +66,23 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
           payload.have_twin,
           [photo]
         )
-        if (res.ok) {
+        if (res?.ok) {
           setIsSuccess(true)
         } else {
-          if (res.message === SESSION_ID_ERROR) {
-            openModal()
-          }
+          throw new Error()
         }
       } catch (e) {
-        console.error((e as Error).message)
+        if (e instanceof CustomError) {
+          switch (e.statusCode) {
+            case 401:
+              openModal()
+              break
+            default:
+              console.error(e)
+          }
+        } else {
+          console.error(e)
+        }
         setIsSuccess(false)
       } finally {
         setIsLoading(false)
@@ -103,7 +111,7 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
         ) : (
           <div className={styles.subtitle}>
             <h2>{messages[+isSuccess].title}</h2>
-            <Image src={messages[+isSuccess].imgPath} width={80} height={80} alt={''}/>
+            <Image src={messages[+isSuccess].imgPath} width={80} height={80} />
             <p>{messages[+isSuccess].description}</p>
             <Button type="button" color={Color.Primary} onClick={handleClick}>
               {messages[+isSuccess].button}
