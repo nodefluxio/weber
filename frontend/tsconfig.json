@@ -5,7 +5,6 @@
       "@/elements/*":["app/components/elements/*"],
       "@/modules/*":["app/components/modules/*"],
       "@/layout/*":["app/components/layout/*"],
-      "@/layout/*":["app/components/layout/*"],
       "@/templates/*":["app/components/templates/*"],
       "@/styles/*":["app/styles/*"],
       "@/types/*":["app/types/*"],

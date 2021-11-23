@@ -47,7 +47,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
         }
       }
     } catch (err) {
-      console.log(err, 'error')
+      console.error(err)
     }
   }
 

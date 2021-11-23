@@ -16,7 +16,7 @@ import { parseCookies } from 'nookies'
 import { Spinner } from '@/elements/Spinner/Spinner'
 
 type Props = {
-  nextStep: Function
+  nextStep: () => void
 }
 
 export const ActivationForm = ({ nextStep }: Props) => {
