@@ -34,7 +34,7 @@ export const Cam = ({
   const [flash, setFlash] = useState(false)
   const [photo, setPhoto] = useState('')
 
-  let isMobile = useMediaQuery('(max-width: 480px)')
+  const isMobile = useMediaQuery('(max-width: 480px)')
 
   useEffect(() => {
     const storedPhoto = localStorage.getItem(localkey)
