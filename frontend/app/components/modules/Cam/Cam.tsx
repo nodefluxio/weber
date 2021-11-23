@@ -84,7 +84,6 @@ export const Cam = ({
                       frameRate: { ideal: 30, max: 30 }
                     }
               }
-              imageSmoothing={false}
               minScreenshotWidth={401}
               minScreenshotHeight={301}
               mirrored={mirrored}
