@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
 
 ### Changed
+- [FRONTEND] Error handling mechanism
 
 - [FRONTEND] Revamp landing page
 - [FRONTEND] Fix Camera not full on mobile

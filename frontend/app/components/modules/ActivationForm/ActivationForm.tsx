@@ -42,10 +42,12 @@ export const ActivationForm = ({ nextStep }: Props) => {
     setIsModalLoading(true)
     try {
       const res = await activateAccount(session_id, pinCode, payment)
-      if (res.ok) {
+      if (res?.ok) {
         setIsModalSuccess(true)
       }
     } catch (e) {
+      // TO DO: give error message
+      setIsModalSuccess(false)
       console.error(e)
     }
   }
