@@ -112,7 +112,7 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
         ) : (
           <div className={styles.subtitle}>
             <h2>{messages[+isSuccess].title}</h2>
-            <Image src={messages[+isSuccess].imgPath} width={80} height={80} />
+            <Image src={messages[+isSuccess].imgPath} width={80} height={80} alt={isSuccess ? 'Success Sign' : 'Warning Sign'} />
             <p>{messages[+isSuccess].description}</p>
             <Button type="button" color={Color.Primary} onClick={handleClick}>
               {messages[+isSuccess].button}
