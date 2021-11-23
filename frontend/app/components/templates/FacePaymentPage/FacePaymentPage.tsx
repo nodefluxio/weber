@@ -189,8 +189,9 @@ export const FacePaymentPage = ({
           />
         )}
 
-        {currentStep === 5 && (
+        {currentStep === 5 && paymentAccountInfo && (
           <Catalog
+            balance={paymentAccountInfo.balance}
             onAddToCart={(item) => {
               setCart(item)
               moveStep(1)
