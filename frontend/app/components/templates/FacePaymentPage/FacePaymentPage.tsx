@@ -226,11 +226,14 @@ export const FacePaymentPage = ({
             paymentAccountInfo={paymentAccountInfo}
             sessionId={session_id}
             amount={total}
+            setPaymentAccountInfo={setPaymentAccountInfo}
             afterPay={() => {
               moveStep(1)
               setCurrentStepStepper(5)
               createVisitorActivities(id, session_id, 90)
             }}
+            backToCatalog={() => setCurrentStep(5)}
+            backToStart={() => setCurrentStep(5)}
           />
         )}
 

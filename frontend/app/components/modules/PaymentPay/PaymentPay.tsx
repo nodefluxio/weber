@@ -4,10 +4,10 @@ import { Button } from '@/elements/Button/Button'
 import { PinInput } from '@/elements/PinInput/PinInput'
 import { Color, PaymentAccountInfo } from '@/types/elements'
 import { PIN_DIGIT_LENGTH } from 'app/constants/amounts'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Cam } from '../Cam/Cam'
 import styles from './PaymentPay.module.scss'
-import { pay } from '@/api/paymentAPI'
+import { checkAccount, pay, resetBalance } from '@/api/paymentAPI'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
@@ -17,14 +17,22 @@ type Props = {
   sessionId: string
   amount: number
   paymentAccountInfo: PaymentAccountInfo
+  setPaymentAccountInfo: Dispatch<
+    SetStateAction<PaymentAccountInfo | undefined>
+  >
   afterPay: () => void
+  backToCatalog: () => void
+  backToStart: () => void
 }
 
 export const PaymentPay = ({
   sessionId,
   amount,
   paymentAccountInfo,
-  afterPay
+  setPaymentAccountInfo,
+  afterPay,
+  backToCatalog,
+  backToStart
 }: Props) => {
   const [step, setStep] = useState(1)
   const [pinCode, setPinCode] = useState('')
@@ -43,7 +51,12 @@ export const PaymentPay = ({
       paymentAccountInfo.minimum_payment < amount ||
         paymentAccountInfo.have_twin
     )
-  }, [])
+  }, [
+    amount,
+    paymentAccountInfo.balance,
+    paymentAccountInfo.have_twin,
+    paymentAccountInfo.minimum_payment
+  ])
 
   const checkPhone = () => {
     if (paymentAccountInfo.phone !== phone) {
@@ -51,6 +64,30 @@ export const PaymentPay = ({
     } else {
       setPhoneError('')
       setStep(2)
+    }
+  }
+
+  const resolveResetBalance = async (sessionId: string) => {
+    try {
+      await resetBalance(sessionId)
+      const res = await checkAccount(sessionId)
+
+      setPaymentAccountInfo(res?.data)
+      backToCatalog()
+    } catch (e) {
+      if (e instanceof CustomError) {
+        setHttpCode(e.statusCode)
+        switch (e.statusCode) {
+          case 404:
+            backToStart()
+            break
+          default:
+            console.error(e)
+            break
+        }
+      } else {
+        console.error(e)
+      }
     }
   }
 
@@ -84,6 +121,7 @@ export const PaymentPay = ({
             break
           default:
             console.error(e)
+            break
         }
       } else {
         setIsSuccess(false)
@@ -153,33 +191,57 @@ export const PaymentPay = ({
             Current Balance <strong>{paymentAccountInfo.balance}</strong>
           </p>
           {isBalanceSufficient ? (
-            <p className={styles.balance}>
-              Remaining Balance{' '}
-              <strong>{paymentAccountInfo.balance - amount}</strong>
-            </p>
-          ) : (
-            <p className={styles.balance}>
-              <strong>Sorry, your balance is not enough</strong>
-            </p>
-          )}
+            <>
+              <p className={styles.balance}>
+                Remaining Balance{' '}
+                <strong>{paymentAccountInfo.balance - amount}</strong>
+              </p>
 
-          <Button
-            type="button"
-            color={Color.Primary}
-            onClick={() => {
-              setStep(5)
-              resolvePay(
-                sessionId,
-                phone,
-                pinCode,
-                amount,
-                getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
-                  setStep(2)
-                )
-              )
-            }}>
-            Confirm
-          </Button>
+              <Button
+                type="button"
+                color={Color.Primary}
+                onClick={() => {
+                  setStep(5)
+                  resolvePay(
+                    sessionId,
+                    phone,
+                    pinCode,
+                    amount,
+                    getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
+                      setStep(2)
+                    )
+                  )
+                }}>
+                Confirm
+              </Button>
+            </>
+          ) : (
+            <>
+              <p className={styles.balance}>
+                <strong>Sorry, your balance is not enough</strong>
+              </p>
+              <Button
+                type="button"
+                color={Color.Primary}
+                onClick={() => backToCatalog()}>
+                Back to Catalog
+              </Button>
+              <Button
+                type="button"
+                color={Color.Primary}
+                onClick={() => resolveResetBalance(sessionId)}>
+                Reset Balance
+              </Button>
+              <Button
+                type="button"
+                color={Color.Primary}
+                onClick={() => {
+                  afterPay()
+                }}>
+                Finish
+              </Button>
+            </>
+          )}
         </div>
       )}
       {step === 5 &&
