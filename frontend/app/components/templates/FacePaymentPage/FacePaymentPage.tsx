@@ -78,12 +78,11 @@ export const FacePaymentPage = ({
     if (session_id) {
       try {
         const res = await checkAccount(session_id)
-        if (res) {
-          // Current userflow, not activated is considered same as not registered
-          setIsAccountMade(res?.have_active_account)
-        }
+        if (res) setIsAccountMade(res.ok)
       } catch (e) {
-        console.error(e)
+        if (e instanceof CustomError && e.statusCode === 400) {
+          setIsAccountMade(false)
+        }
       }
     } else {
       setOpenModal(true)
