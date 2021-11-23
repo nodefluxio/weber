@@ -3,7 +3,8 @@ import axios from 'axios'
 
 import {
   CheckLimitResponse,
-  CheckAccountResponse
+  CheckAccountResponse,
+  StandardResponse
 } from '../types/responses'
 
 export const registerAccount = async (
