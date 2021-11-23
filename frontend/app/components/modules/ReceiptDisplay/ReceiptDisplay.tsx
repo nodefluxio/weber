@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Color, OCRReceiptData, ReceiptItem } from '@/types/elements'
-import { Button } from '@/elements/Button/Button'
+import { OCRReceiptData, ReceiptItem } from '@/types/elements'
 import styles from './ReceiptDisplay.module.scss'
 import { formatMoneyOnChange } from '@/utils/utils'
 
@@ -16,8 +15,8 @@ export const ReceiptDisplay = ({ result }: Props) => {
     result &&
     (mode === 'json' ? (
       <div className={styles.receiptInfoWrapper}>
-        <pre className={styles.receiptJSON}>
-          {JSON.stringify(result, null, 4)}
+        <pre>
+          <code className={styles.receiptJSON}>{JSON.stringify(result, null, 4)}</code>
         </pre>
       </div>
     ) : (

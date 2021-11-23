@@ -1,7 +1,7 @@
 import { getServiceBySlug } from '@/api/analyticsAPI'
 import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
-import { InnovationData } from '@/types/elements'
+import { OCRReceiptData } from '@/types/elements'
 import { ServiceBySlugResponseData } from '@/types/responses'
 import { isOCRReceipt } from '@/utils/utils'
 import { GetServerSideProps } from 'next'
@@ -16,7 +16,7 @@ const Innovations = ({
   id,
   slug
 }: ServiceBySlugResponseData) => {
-  const [res, setRes] = useState<InnovationData>()
+  const [res, setRes] = useState()
   const renderResult = () => {
     if (isOCRReceipt(res)) {
       return <ReceiptDisplay result={res} />
@@ -37,7 +37,7 @@ const Innovations = ({
         examples={[]}
         serviceID={id}
         slug={slug}
-        handleResult={(res: InnovationData) => setRes(res)}
+        handleResult={(res: any) => setRes(res)}
         isInnovation>
         {renderResult()}
       </AnalyticsPage>

@@ -6,7 +6,7 @@ import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
 import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
 import Feedback from '../../modules/Feedback/Feedback'
-import { Color, InnovationData } from '../../../types/elements'
+import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
 import { postInnovation } from '@/api/innovationsAPI'
 import { CustomError } from 'app/errors/CustomError'
@@ -55,9 +55,9 @@ export const AnalyticsPage: React.FC<Props> = ({
   const resolveAnalytics = async (session_id: string) => {
     try {
       const res = isInnovation
-        ? await postInnovation<InnovationData>(serviceID, session_id, photo)
+        ? await postInnovation(serviceID, session_id, photo)
         : await postServicePhoto(serviceID, session_id, photo)
-      handleResult(isInnovation ? (res as InnovationData) : res)
+      handleResult(res)
       setIsResult(true)
     } catch (err) {
       if (err instanceof CustomError && err.statusCode === 401) {

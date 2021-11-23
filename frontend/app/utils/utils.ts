@@ -39,7 +39,7 @@ export const formatMoneyOnChange = (money: string | number) => {
 }
 
 export const isOCRReceipt = (obj: any): obj is OCRReceiptData => {
-  if (typeof obj === 'undefined') { 
+  if (typeof obj === 'undefined') {
     return false
   } else {
     let infoIsStringArray = true
@@ -53,15 +53,6 @@ export const isOCRReceipt = (obj: any): obj is OCRReceiptData => {
       infoIsStringArray = false
     }
 
-    // if (obj.item && Array.isArray(obj.item)) {
-
-    // }
-
-    return (
-      obj &&
-      typeof obj.address === 'string' &&
-      typeof obj.number === 'string' &&
-      infoIsStringArray
-    )
+    return obj && 'address' in obj && 'number' in obj && infoIsStringArray
   }
 }

@@ -77,8 +77,6 @@ export type MenuInfo = {
   onClick: () => void
 }
 
-export interface InnovationData {}
-
 export type ReceiptItem = {
   qty: string
   name: string
@@ -86,7 +84,7 @@ export type ReceiptItem = {
   total: string
 }
 
-export interface OCRReceiptData extends InnovationData {
+export interface OCRReceiptData {
   address: string
   number: string
   info: string[]
