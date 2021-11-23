@@ -78,6 +78,7 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
               openModal()
               break
             default:
+              localStorage.removeItem(ENROLL_SNAPSHOT)
               console.error(e)
           }
         } else {
