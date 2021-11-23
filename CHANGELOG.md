@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
+- [FRONTEND] Add feature to remove local storage if face payment face analytics failed 
 
 ### Changed
 - [FRONTEND] Error handling mechanism
