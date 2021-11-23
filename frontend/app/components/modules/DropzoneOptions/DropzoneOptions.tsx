@@ -5,8 +5,7 @@ import styles from './DropzoneOptions.module.scss'
 
 type Props = {
   images: string[]
-  onPhotoDrop: Function
-  // onPhotoSrc: Function
+  onPhotoDrop: (arg: string) => void
 }
 
 export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
@@ -26,14 +25,17 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
       if (uploadedPhoto[0].size < MAX_IMAGE_SIZE) {
         setErrorMsg('')
         reader.onload = (event) => {
-          onPhotoDrop(event.target?.result)
-          setPhotos(
-            uploadedPhoto.map((photo: any) =>
-              Object.assign(photo, {
-                preview: URL.createObjectURL(photo)
-              })
+          const imgString = event.target?.result
+          if (typeof imgString === 'string') {
+            onPhotoDrop(imgString)
+            setPhotos(
+              uploadedPhoto.map((photo: any) =>
+                Object.assign(photo, {
+                  preview: URL.createObjectURL(photo)
+                })
+              )
             )
-          )
+          }
         }
       } else {
         throw new Error(ERROR_FILE_SIZE)
@@ -54,7 +56,10 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
     reader.readAsDataURL(option)
     setErrorMsg('')
     reader.onload = (e) => {
-      if (option.size < MAX_IMAGE_SIZE) {
+      if (
+        option.size < MAX_IMAGE_SIZE &&
+        typeof e.target?.result === 'string'
+      ) {
         onPhotoDrop(e.target?.result)
         setPhotos([
           {
@@ -66,7 +71,7 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
     }
   }, [])
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/jpeg',
     onDrop,
     multiple: false

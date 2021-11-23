@@ -3,7 +3,6 @@ import axios from 'axios'
 
 import {
   CheckLimitResponse,
-  StandardResponse,
   CheckAccountResponse
 } from '../types/responses'
 

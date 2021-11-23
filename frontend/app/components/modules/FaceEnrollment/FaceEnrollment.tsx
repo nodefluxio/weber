@@ -11,8 +11,8 @@ import { ENROLL_SNAPSHOT } from 'app/constants/localStorage'
 import { CustomError } from 'app/errors/CustomError'
 
 type Props = {
-  openModal: Function
-  nextStep: Function
+  openModal: () => void
+  nextStep: () => void
   payload: {
     session_id: string
     full_name: string

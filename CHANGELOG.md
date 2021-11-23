@@ -6,18 +6,28 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
+
 ### Changed
 - [FRONTEND] Error handling mechanism
 
+- [BACKEND] Refactor API Get Activate Account on Face Payment
+- [BACKEND] Delete API Check Limit on Face Payment
+
 ### Fixed
 
+- [FRONTEND] Fix Camera not full on mobile
+- [FRONTEND] Fix compressed photo quality on Camera
 
+### Changed
+
+- [FRONTEND] Revamp landing page
 
 ## [0.3.0 - 17/11/2021]
 
 ### Added
 
-- [FRONTEND] Add loading animation 
+- [FRONTEND] Add loading animation
 - [FRONTEND] Face Payment Main Menu
 - [FRONTEND] Face Payment Registration Form
 - [FRONTEND] Face Payment Activation Pin Form

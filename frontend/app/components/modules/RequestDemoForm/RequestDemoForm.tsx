@@ -53,7 +53,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         const e = err as AxiosError<StandardResponse>
         setErrorMessage(e.response?.data.message)
       } else {
-        console.log(err)
+        console.error(err)
       }
     }
   }

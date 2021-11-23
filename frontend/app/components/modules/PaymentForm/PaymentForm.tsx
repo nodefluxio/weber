@@ -16,8 +16,8 @@ type PaymentFormData = {
 }
 
 type Props = {
-  onNextStep: Function
-  onInvalidSession: Function
+  onNextStep: (data: any) => void
+  onInvalidSession: () => void
 }
 
 export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
