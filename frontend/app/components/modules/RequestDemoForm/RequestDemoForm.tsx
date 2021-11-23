@@ -4,16 +4,16 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Color } from '../../../types/elements'
 import axios, { AxiosError } from 'axios'
 import {
-  VisitorsPostErrorResponse,
+  StandardResponse,
   VisitorsPostResponse
 } from '../../../types/responses'
 import { setCookie } from 'nookies'
 import { useState } from 'react'
 import styles from './RequestDemoForm.module.scss'
 import { SelectBox } from '../../elements/SelectBox/SelectBox'
-import data from './industry.json';
+import data from './industry.json'
 
-const Industries = (data).Industries;
+const Industries = data.Industries
 
 type Props = {
   onSuccess: () => void
@@ -50,7 +50,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const e = err as AxiosError<VisitorsPostErrorResponse>
+        const e = err as AxiosError<StandardResponse>
         setErrorMessage(e.response?.data.message)
       } else {
         console.error(err)
@@ -110,7 +110,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
           <SelectBox
             id="industry"
             label="Industry"
-            options= {Industries}
+            options={Industries}
             register={register}
             registerOptions={{ required: 'required' }}
             errors={errors}
