@@ -73,7 +73,6 @@ export const Cam = ({
               audio={false}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              screenshotQuality={1}
               videoConstraints={
                 videoConstraints
                   ? videoConstraints
