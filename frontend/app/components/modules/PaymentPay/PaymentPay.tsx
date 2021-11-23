@@ -43,7 +43,6 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       }
     } catch (e) {
       if (e instanceof CustomError) {
-        localStorage.removeItem(FACE_MATCH_LIVENESS_SNAPSHOT)
         switch (e.statusCode) {
           case 400:
             setPhoneError(e.message)
@@ -85,6 +84,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
           case 402:
             setIsSuccess(false)
             setMessage(e.message)
+            localStorage.removeItem(FACE_MATCH_LIVENESS_SNAPSHOT)
             break
           case 401:
             // TODO ADD OPEN MODAL
