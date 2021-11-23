@@ -53,6 +53,7 @@ func SetupRouter(ctrl *controllers.Controller) *gin.Engine {
 			facePayments.POST("/pay", ctrl.CreateTransaction)
 
 			facePayments.PATCH("/account", ctrl.UpdateFacePaymentAccount)
+			facePayments.PATCH("/reset-balance/:session_id", ctrl.ResetBalanceFacePaymentAccount)
 		}
 	}
 
