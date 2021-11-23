@@ -1,35 +1,63 @@
 .receiptDisplayWrapper {
   position: relative;
+  $border-config: 1px solid grey;
 
   .receiptButtonDiv {
-    margin-bottom: 1rem;
+    .buttonActive {
+      background: lightgray;
+    }
+    .buttonRight {
+      border-left: none;
+    }
+    .buttonLeft {
+      border-right: none;
+    }
     button {
       width: 50%;
+      padding: 0.5rem;
+      background: none;
+      cursor: pointer;
+      border: $border-config;
+      border-bottom: none;
+      transition: background 0.2s linear;
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        background: lightgray;
+      }
     }
   }
   .receiptInfoWrapper {
-    height: 280px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    height: 400px;
+    border: $border-config;
+    border-radius: 0 0 5px 5px;
+    padding: 1rem 0.5rem;
 
     .receiptJSON {
-      overflow: scroll;
       margin: 0;
-      max-height: 280px;
       font-family: 'Consolas', ui-monospace, monospace;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      &::-webkit-scrollbar {
-        display: none;
-      }
     }
     .receiptTable {
       text-align: left;
+      margin: 0.75rem 0;
       width: 100%;
-      border-top: 1px solid grey;
-      border-bottom: 1px solid grey;
-
+      border-top: $border-config;
+      border-bottom: $border-config;
       .totalCell {
         text-align: right;
       }
+    }
+
+    .receiptHeader {
+      margin-bottom: 0.25rem;
+      font-weight: 600;
     }
   }
 }

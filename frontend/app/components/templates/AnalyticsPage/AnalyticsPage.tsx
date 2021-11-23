@@ -6,13 +6,10 @@ import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
 import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
 import Feedback from '../../modules/Feedback/Feedback'
-import { Color } from '../../../types/elements'
+import { Color, InnovationData } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
-<<<<<<< HEAD
 import { postInnovation } from '@/api/innovationsAPI'
-=======
 import { CustomError } from 'app/errors/CustomError'
->>>>>>> 07ffa52023d532184fc921e9f1005a58252b2ac4
 
 type Props = {
   analyticsName: string
@@ -58,9 +55,9 @@ export const AnalyticsPage: React.FC<Props> = ({
   const resolveAnalytics = async (session_id: string) => {
     try {
       const res = isInnovation
-        ? await postInnovation(serviceID, session_id, photo)
+        ? await postInnovation<InnovationData>(serviceID, session_id, photo)
         : await postServicePhoto(serviceID, session_id, photo)
-      handleResult(res)
+      handleResult(isInnovation ? (res as InnovationData) : res)
       setIsResult(true)
     } catch (err) {
       if (err instanceof CustomError && err.statusCode === 401) {

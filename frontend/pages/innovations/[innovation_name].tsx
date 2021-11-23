@@ -1,7 +1,9 @@
-// import { getServiceBySlug } from '@/api/analyticsAPI'
+import { getServiceBySlug } from '@/api/analyticsAPI'
 import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
+import { InnovationData } from '@/types/elements'
 import { ServiceBySlugResponseData } from '@/types/responses'
+import { isOCRReceipt } from '@/utils/utils'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { ParsedUrlQuery } from 'querystring'
@@ -14,7 +16,14 @@ const Innovations = ({
   id,
   slug
 }: ServiceBySlugResponseData) => {
-  const [res, setRes] = useState()
+  const [res, setRes] = useState<InnovationData>()
+  const renderResult = () => {
+    if (isOCRReceipt(res)) {
+      return <ReceiptDisplay result={res} />
+    } else {
+      return <pre>{JSON.stringify(res, null, 2)}</pre>
+    }
+  }
 
   return (
     <>
@@ -28,9 +37,9 @@ const Innovations = ({
         examples={[]}
         serviceID={id}
         slug={slug}
-        handleResult={(res) => setRes(res)}
+        handleResult={(res: InnovationData) => setRes(res)}
         isInnovation>
-        <ReceiptDisplay result={res} />
+        {renderResult()}
       </AnalyticsPage>
     </>
   )
@@ -45,38 +54,19 @@ interface Params extends ParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<any, Params> = async ({
   params
 }) => {
-  // const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
-  // console.log(params)
-  // await delay(500)
-  // if (params) {
-  //   try {
-  // const res = await getServiceBySlug(params.innovation_name)
-  //     return {
-  //       props: {
-  //         ...res?.data
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.error(e)
-  //     return { notFound: true }
-  //   }
-  // } else {
-  //   return { notFound: true }
-  // }
-  try {
-    const res: ServiceBySlugResponseData = {
-      name: 'OCR Receipt',
-      short_description: 'This is a short description',
-      long_description: 'This is a long description',
-      id: 7,
-      slug: 'ocr-receipt',
-      type: 'innovation',
-      thumbnail: 'ocr-receipt.jpg',
-      created_at: '',
-      updated_at: ''
+  if (params) {
+    try {
+      const res = await getServiceBySlug(params.innovation_name)
+      return {
+        props: {
+          ...res?.data
+        }
+      }
+    } catch (e) {
+      console.error(e)
+      return { notFound: true }
     }
-    return { props: res }
-  } catch (e) {
+  } else {
     return { notFound: true }
   }
 }
