@@ -7,11 +7,13 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Add current balance to catalog browse step
 - [FRONTEND] Add feature to remove local storage if face payment face analytics failed
 - [FRONTEND] Add back to catalog feature if balance insufficient
 - [FRONTEND] Add reset balance feature
+- [FRONTEND] Make Big Input Component responsive
 
 ### Changed
 
@@ -22,8 +24,10 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Fix Camera not full on mobile
 - [FRONTEND] Fix compressed photo quality on Camera
 - [FRONTEND] Fix cannot use external webcam
+- [FRONTEND] Update Face Match with Enrollment examples with our CEO & CTO faces
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Update description on seeds data
+- [BACKEND] Update env FACE_ID to use by Face Match with Enrollment matching with our CEO's face
 
 ### Removed
 
