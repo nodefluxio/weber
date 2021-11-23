@@ -9,7 +9,11 @@ import { Button } from '../../elements/Button/Button'
 import { Catalog } from '@/modules/Catalog/Catalog'
 import { Cart } from '@/modules/Cart/Cart'
 import { OrderSummary } from '@/modules/OrderSummary/OrderSummary'
-import { Color, ShoppingItem } from '../../../types/elements'
+import {
+  Color,
+  PaymentAccountInfo,
+  ShoppingItem
+} from '../../../types/elements'
 import { parseCookies } from 'nookies'
 import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
@@ -47,6 +51,8 @@ export const FacePaymentPage = ({
   const [cart, setCart] = useState<ShoppingItem>()
   const [total, setTotal] = useState(0)
   const [isAccountMade, setIsAccountMade] = useState(false)
+  const [paymentAccountInfo, setPaymentAccountInfo] =
+    useState<PaymentAccountInfo>()
   const { session_id } = parseCookies()
 
   const moveStep = (numStep: number, moveStepStepper?: boolean) => {
@@ -81,7 +87,10 @@ export const FacePaymentPage = ({
     if (session_id) {
       try {
         const res = await checkAccount(session_id)
-        if (res) setIsAccountMade(res.ok)
+        if (res) {
+          setIsAccountMade(res.ok)
+          setPaymentAccountInfo(res.data)
+        }
       } catch (e) {
         if (e instanceof CustomError && e.statusCode === 400) {
           setIsAccountMade(false)
@@ -213,6 +222,7 @@ export const FacePaymentPage = ({
 
         {currentStep === 8 && (
           <PaymentPay
+            paymentAccountInfo={paymentAccountInfo}
             sessionId={session_id}
             amount={total}
             afterPay={() => {

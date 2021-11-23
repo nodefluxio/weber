@@ -2,61 +2,55 @@ import Image from 'next/image'
 import { BigInput } from '@/elements/BigInput/BigInput'
 import { Button } from '@/elements/Button/Button'
 import { PinInput } from '@/elements/PinInput/PinInput'
-import { Color } from '@/types/elements'
+import { Color, PaymentAccountInfo } from '@/types/elements'
 import { PIN_DIGIT_LENGTH } from 'app/constants/amounts'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Cam } from '../Cam/Cam'
 import styles from './PaymentPay.module.scss'
-import { checkLimit, pay } from '@/api/paymentAPI'
+import { pay } from '@/api/paymentAPI'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
 import { CustomError } from 'app/errors/CustomError'
 
-type Props = { sessionId: string; amount: number; afterPay: () => void }
+type Props = {
+  sessionId: string
+  amount: number
+  paymentAccountInfo: PaymentAccountInfo
+  afterPay: () => void
+}
 
-export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
+export const PaymentPay = ({
+  sessionId,
+  amount,
+  paymentAccountInfo,
+  afterPay
+}: Props) => {
   const [step, setStep] = useState(1)
   const [pinCode, setPinCode] = useState('')
   const [phone, setPhone] = useState('')
   const [isPinRequired, setIsPinRequired] = useState(true)
-  const [user, setUser] = useState('User')
-  const [balance, setBalance] = useState(0)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isBalanceSufficient, setIsBalanceSufficient] = useState(false)
   const [message, setMessage] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [httpCode, setHttpCode] = useState(500)
 
-  const resolveCheckLimit = async (
-    session_id: string,
-    phone: string,
-    amount: number
-  ) => {
-    try {
-      const res = await checkLimit(session_id, phone, amount)
-      if (res?.ok) {
-        setIsPinRequired(res.data[0].is_limit || res.data[0].have_twin)
-        setUser(res.data[0].full_name)
-        setBalance(res.data[0].balance)
-        setPhoneError('')
-      }
-    } catch (e) {
-      if (e instanceof CustomError) {
-        switch (e.statusCode) {
-        case 400:
-          setPhoneError(e.message)
-          setStep(1)
-          break
-        case 401:
-          // TODO ADD OPEN MODAL
-          break
-        default:
-          break
-        }
-      } else {
-        console.error(e)
-      }
+  useEffect(() => {
+    setIsBalanceSufficient(paymentAccountInfo.balance - amount >= 0)
+    setIsPinRequired(
+      paymentAccountInfo.minimum_payment < amount ||
+        paymentAccountInfo.have_twin
+    )
+  }, [])
+
+  const checkPhone = () => {
+    if (paymentAccountInfo.phone !== phone) {
+      setPhoneError('Your phone number does not match with the registered one')
+    } else {
+      setPhoneError('')
+      setStep(2)
     }
   }
 
@@ -80,16 +74,16 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       if (e instanceof CustomError) {
         setHttpCode(e.statusCode)
         switch (e.statusCode) {
-        case 400:
-        case 402:
-          setIsSuccess(false)
-          setMessage(e.message)
-          break
-        case 401:
-          // TODO ADD OPEN MODAL
-          break
-        default:
-          console.error(e)
+          case 400:
+          case 402:
+            setIsSuccess(false)
+            setMessage(e.message)
+            break
+          case 401:
+            // TODO ADD OPEN MODAL
+            break
+          default:
+            console.error(e)
         }
       } else {
         setIsSuccess(false)
@@ -114,8 +108,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
             <Button
               color={Color.Primary}
               onClick={() => {
-                setStep(2)
-                resolveCheckLimit(sessionId, phone, amount)
+                checkPhone()
               }}>
               Next Step
             </Button>
@@ -151,17 +144,24 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       )}
       {step === 4 && (
         <div className={styles.resultWrapper}>
-          <h2>{`Hello, ${user}`}</h2>
+          <h2>{`Hello, ${paymentAccountInfo.full_name}`}</h2>
 
           <p className={styles.balance}>
             You have to pay <strong>{amount}</strong>
           </p>
           <p className={styles.balance}>
-            Current Balance <strong>{balance}</strong>
+            Current Balance <strong>{paymentAccountInfo.balance}</strong>
           </p>
-          <p className={styles.balance}>
-            Remaining Balance <strong>{balance - amount}</strong>
-          </p>
+          {isBalanceSufficient ? (
+            <p className={styles.balance}>
+              Remaining Balance{' '}
+              <strong>{paymentAccountInfo.balance - amount}</strong>
+            </p>
+          ) : (
+            <p className={styles.balance}>
+              <strong>Sorry, your balance is not enough</strong>
+            </p>
+          )}
 
           <Button
             type="button"
