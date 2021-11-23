@@ -220,26 +220,28 @@ export const PaymentPay = ({
               <p className={styles.balance}>
                 <strong>Sorry, your balance is not enough</strong>
               </p>
-              <Button
-                type="button"
-                color={Color.Primary}
-                onClick={() => backToCatalog()}>
-                Back to Catalog
-              </Button>
-              <Button
-                type="button"
-                color={Color.Primary}
-                onClick={() => resolveResetBalance(sessionId)}>
-                Reset Balance
-              </Button>
-              <Button
-                type="button"
-                color={Color.Primary}
-                onClick={() => {
-                  afterPay()
-                }}>
-                Finish
-              </Button>
+              <div className={styles.btnGroup}>
+                <Button
+                  type="button"
+                  color={Color.Primary}
+                  onClick={() => backToCatalog()}>
+                  Back to Catalog
+                </Button>
+                <Button
+                  type="button"
+                  color={Color.Primary}
+                  onClick={() => resolveResetBalance(sessionId)}>
+                  Reset Balance
+                </Button>
+                <Button
+                  type="button"
+                  color={Color.Primary}
+                  onClick={() => {
+                    afterPay()
+                  }}>
+                  Finish
+                </Button>
+              </div>
             </>
           )}
         </div>
