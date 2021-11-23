@@ -896,7 +896,7 @@ OR
 </details>
 
 <details>
-<summary><b>Check Active Account by Session ID</b></summary>
+<summary><b>Get Active Face Payment Account by Session ID</b></summary>
 
 - **URL**
 
@@ -912,17 +912,13 @@ OR
 
 ```json
 {
-  "have_active_account": false,
-  "message": "This session id does not have an active face payment account",
-  "ok": true
-}
-```
-
-OR
-
-```json
-{
-  "have_active_account": true,
+  "data": {
+    "phone": "081395827314",
+    "full_name": "Natasha Romanoff",
+    "have_twin": true,
+    "balance": 100000,
+    "minimum_payment": 50000
+  },
   "message": "This session id has an active face payment account",
   "ok": true
 }
@@ -932,9 +928,27 @@ OR
 
 ```json
 {
-   "have_active_account": boolean,
+   "data":
+    {
+        "phone": string,
+        "full_name": string,
+        "have_twin": boolean,
+        "balance": integer,
+        "minimum_payment": integer
+    },
    "message": string,
    "ok": boolean
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 404 Not Found
+
+```json
+{
+  "message": "This session id does not have an active face payment account",
+  "ok": false
 }
 ```
 
@@ -1395,7 +1409,7 @@ OR
 }
 ```
 
-  **Code**: 401 Unauthorized
+**Code**: 401 Unauthorized
 
 ```json
 {
@@ -1404,7 +1418,7 @@ OR
 }
 ```
 
-  **Code**: 402 Payment Required
+**Code**: 402 Payment Required
 
 ```json
 {
@@ -1412,4 +1426,5 @@ OR
   "ok": false
 }
 ```
+
 </details>

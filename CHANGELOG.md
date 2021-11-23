@@ -10,13 +10,15 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- [FRONTEND] Revamp landing page
+- [FRONTEND] Fix Camera not full on mobile
+- [FRONTEND] Fix compressed photo quality on Camera
 - [BACKEND] Refactor API Get Activate Account on Face Payment
-- [BACKEND] Delete API Check Limit on Face Payment
 - [BACKEND] Update description on seeds data
 
-### Fixed
+### Removed
 
-- [FRONTEND] Revamp landing page
+- [BACKEND] Delete API Check Limit on Face Payment
 
 ## [0.3.0 - 17/11/2021]
 

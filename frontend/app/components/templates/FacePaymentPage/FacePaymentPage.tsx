@@ -69,7 +69,7 @@ export const FacePaymentPage = ({
       if ((err as Error).message === SESSION_ID_ERROR) {
         setOpenModal(true)
       } else {
-        console.log((err as Error).message)
+        console.error(err)
       }
     }
   }

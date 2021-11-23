@@ -10,8 +10,8 @@ type RegistPayload = {
 }
 
 type Props = {
-  openModal: Function,
-  onFinished: Function
+  openModal: () => void,
+  onFinished: () => void
 }
 
 export const FaceRegistration = ({ openModal, onFinished }: Props) => {

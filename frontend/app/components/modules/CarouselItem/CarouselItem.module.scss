@@ -4,32 +4,7 @@
 .carouselItem {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient($primary-color, $primary-color);
   overflow: hidden;
-  .image {
-    opacity: 0.5;
-  }
-  .card {
-    position: absolute;
-    width: 350px;
-    height: 60vh;
-    left: 12%;
-    top: 22vh;
-    @include tablet {
-      top: 50vh;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    @include phone {
-      top: 55%;
-    }
-    .cardContent {
-      padding: 4rem 3rem;
-      .footer {
-        position: absolute;
-        bottom: 4rem;
-      }
-    }
-  }
 }
