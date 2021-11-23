@@ -9,13 +9,17 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
 
 ### Changed
-
-- [BACKEND] Refactor API Get Activate Account on Face Payment
-- [BACKEND] Delete API Check Limit on Face Payment
-
-### Fixed
-
+- [FRONTEND] Error handling mechanism
 - [FRONTEND] Revamp landing page
+- [FRONTEND] Fix Camera not full on mobile
+- [FRONTEND] Fix compressed photo quality on Camera
+- [FRONTEND] Fix cannot use external webcam
+- [BACKEND] Refactor API Get Activate Account on Face Payment
+- [BACKEND] Update description on seeds data
+
+### Removed
+
+- [BACKEND] Delete API Check Limit on Face Payment
 
 ## [0.3.0 - 17/11/2021]
 

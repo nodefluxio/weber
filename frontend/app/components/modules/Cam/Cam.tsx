@@ -10,25 +10,31 @@ import {
 import Image from 'next/image'
 import { Button } from '../../elements/Button/Button'
 import { Color } from '../../../types/elements'
+import { useMediaQuery } from 'app/hooks/useMediaQuery'
 
 type Props = {
   localkey: string
   nextStep: MouseEventHandler<HTMLButtonElement>
-  videoConstraints?: MediaTrackConstraints
   overlayShape: 'rect' | 'circle'
+  videoConstraints?: MediaTrackConstraints
+  mirrored?: boolean
+  facingMode?: 'user' | 'environment'
 }
 
 export const Cam = ({
   localkey,
   nextStep,
   videoConstraints,
-  overlayShape
+  overlayShape,
+  mirrored = true,
+  facingMode = 'user'
 }: Props) => {
   const webcamRef = useRef<Webcam>(null)
-
   const [disabled, setDisabled] = useState(true)
   const [flash, setFlash] = useState(false)
   const [photo, setPhoto] = useState('')
+
+  const isMobile = useMediaQuery('(max-width: 480px)')
 
   useEffect(() => {
     const storedPhoto = localStorage.getItem(localkey)
@@ -67,7 +73,20 @@ export const Cam = ({
               audio={false}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              videoConstraints={videoConstraints}
+              videoConstraints={
+                videoConstraints
+                  ? videoConstraints
+                  : {
+                      width: { min: isMobile ? 420 : 450 },
+                      height: { min: isMobile ? 420 : 337.5 },
+                      aspectRatio: isMobile ? 1 : 1.333333,
+                      facingMode: { ideal: isMobile ? facingMode : '' },
+                      frameRate: { ideal: 30, max: 30 }
+                    }
+              }
+              minScreenshotWidth={401}
+              minScreenshotHeight={301}
+              mirrored={mirrored}
             />
             <Image
               className={styles.overlayImg}
@@ -83,7 +102,7 @@ export const Cam = ({
                 className={styles.capturedPhoto}
                 src={photo}
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
                 alt="captured photos"
               />
             </div>

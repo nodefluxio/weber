@@ -1,5 +1,6 @@
-import axios, { AxiosError } from "axios"
-import { ReviewResponse } from "../types/responses"
+import { errorHandler } from '@/utils/errorHandler'
+import axios from 'axios'
+import { StandardResponse } from '../types/responses'
 
 type ReviewReqBody = {
   id: number
@@ -8,16 +9,22 @@ type ReviewReqBody = {
   comment: string
 }
 
-export const postFeedback = async ({ id, session_id, rating, comment }: ReviewReqBody): Promise<ReviewResponse|undefined> => {
+export const postFeedback = async ({
+  id,
+  session_id,
+  rating,
+  comment
+}: ReviewReqBody): Promise<StandardResponse | undefined> => {
   try {
-    const res = await axios.post<ReviewResponse>(`/feedback/${id}`,
-      { session_id, rating, comment })
+    const res = await axios.post<StandardResponse>(`/feedback/${id}`, {
+      session_id,
+      rating,
+      comment
+    })
     if (res.data.ok) {
       return res.data
     }
   } catch (err) {
-    if (axios.isAxiosError(err)) {
-      throw new Error((err as AxiosError<ReviewResponse>).message)
-    }
+    errorHandler(err)
   }
 }

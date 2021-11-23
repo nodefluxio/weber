@@ -5,27 +5,20 @@ export type StandardResponse = {
   ok: boolean
 }
 
-export type ServicesGetResponse = {
+export interface ServicesGetResponse extends StandardResponse {
   data: Service[]
-  message: string
-  ok: boolean
 }
 
-export type VisitorsPostResponse = {
+export interface VisitorsPostResponse extends StandardResponse {
   data: [
     {
       session_id: string
       max_age: number
     }
   ]
-  message: string
-  ok: boolean
 }
 
-export type VisitorsPostErrorResponse = StandardResponse
-export type ActivitiesPostResponse = StandardResponse
-
-export type ServiceBySlugResponse = {
+export interface ServiceBySlugResponse extends StandardResponse {
   data: {
     id: number
     type: string
@@ -37,9 +30,8 @@ export type ServiceBySlugResponse = {
     created_at: string
     updated_at: string
   }
-  message: string
-  ok: boolean
 }
+
 export type ServiceBySlugResponseData = {
   id: number
   type: string
@@ -52,38 +44,20 @@ export type ServiceBySlugResponseData = {
   updated_at: string
 }
 
-export type ServiceByIdErrorResponse = StandardResponse
-
-export type NodefluxCloudResponse<AnalyticsResultResponse> = {
+export interface NodefluxCloudResponse<T> extends StandardResponse {
   job: {
     result: {
       analytic_type: string
-      result: [AnalyticsResultResponse]
+      result: [T]
       status: string
     }
   }
-  message: string
-  ok: boolean
 }
 
-export type AnalyticsResponse<AnalyticsResultResponse> = {
-  message: string
-  ok: boolean
-  service_data: {
-    job: {
-      result: {
-        analytic_type: string
-        result: [AnalyticsResultResponse]
-        status: string
-      }
-    }
-  }
+export interface AnalyticsResponse<T> extends StandardResponse {
+  service_data: NodefluxCloudResponse<T>
   thumbnails: Array<string>
 }
-
-export type AnalyticsError = StandardResponse
-
-export type ReviewResponse = StandardResponse
 
 export type OCRResultResponse = {
   agama: string
@@ -128,9 +102,7 @@ export type FMEResultResponse = {
   }
 }
 
-export type EKYCResultResponse = {
-  message: string
-  ok: boolean
+export interface EKYCResultResponse extends StandardResponse {
   service_data: {
     face_liveness: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>
     ocr_ktp: NodefluxCloudResponse<OCRKTP>
@@ -143,17 +115,7 @@ export type AnyResultResponse =
   | OCRResultResponse
   | LPRResultResponse
 
-export type PhoneNumberResponse = StandardResponse
-export type ActivationResponse = StandardResponse
-export type PaymentResponse = {
-  ok: boolean
-  error?: number
-  message: string
-}
-
-export type CheckLimitResponse = {
-  ok: boolean
-  message: string
+export interface CheckLimitResponse extends StandardResponse {
   data: [
     {
       full_name: string
@@ -163,11 +125,8 @@ export type CheckLimitResponse = {
     }
   ]
 }
-
-export type CheckAccountResponse = {
-  have_active_account: boolean,
-  message: string,
-  ok: boolean
+export interface CheckAccountResponse extends StandardResponse {
+  have_active_account: boolean
 }
 
 export type InnovationResponse<T> = {

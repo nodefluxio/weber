@@ -1,15 +1,18 @@
 import { postServicePhoto } from '../../../../app/api/analyticsAPI'
 import { ReactNode, useState } from 'react'
 import { parseCookies } from 'nookies'
-import { SESSION_ID_ERROR } from 'app/constants/message'
-import { AnalyticsContainer } from '../../../components/modules/AnalyticsContainer/AnalyticsContainer'
+import { AnalyticsContainer } from '../../modules/AnalyticsContainer/AnalyticsContainer'
 import { DropzoneOptions } from '../../modules/DropzoneOptions/DropzoneOptions'
 import { Button } from '../../elements/Button/Button'
 import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
 import Feedback from '../../modules/Feedback/Feedback'
 import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
+<<<<<<< HEAD
 import { postInnovation } from '@/api/innovationsAPI'
+=======
+import { CustomError } from 'app/errors/CustomError'
+>>>>>>> 07ffa52023d532184fc921e9f1005a58252b2ac4
 
 type Props = {
   analyticsName: string
@@ -60,13 +63,14 @@ export const AnalyticsPage: React.FC<Props> = ({
       handleResult(res)
       setIsResult(true)
     } catch (err) {
-      if ((err as Error).message === SESSION_ID_ERROR) {
+      if (err instanceof CustomError && err.statusCode === 401) {
         setOpenModal(true)
         setCurrentStep(1)
       } else {
+        console.error(err)
         setErrorMsg((err as Error).message)
-        setIsResult(false)
       }
+      setIsResult(false)
     }
   }
 

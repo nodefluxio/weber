@@ -10,12 +10,12 @@
       border: 2px solid $primary-color;
       border-radius: 25px;
       position: relative;
-      width: 445px;
-      height: 335px;
+      width: 450px;
+      height: 337.5px;
       @include phone {
-        max-width: 90vw;
-        width: 400px;
-        height: 300px;
+        max-width: 95vw;
+        width: 401px;
+        height: 401px;
       }
       .webcam {
         border-radius: 20px;
@@ -29,12 +29,14 @@
     }
     .capturedPhotoContainer {
       position: relative;
-      width: 445px;
-      height: 335px;
+      width: 450px;
+      height: 337.5px;
+      border-radius: 20px;
       @include phone {
-        max-width: 90vw;
-        width: 400px;
-        height: 300px;
+        max-width: 95vw;
+        width: 401px;
+        height: 401px;
+        max-height: 65vh;
       }
       .capturedPhoto {
         border-radius: 20px;

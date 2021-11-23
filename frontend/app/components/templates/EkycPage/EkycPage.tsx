@@ -1,7 +1,6 @@
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
-import { SESSION_ID_ERROR } from '../../../constants/message'
 import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
 import { Modal } from '../../elements/Modal/Modal'
@@ -20,6 +19,7 @@ import {
   KTP_LOCAL_STORAGE
 } from '../../../constants/localStorage'
 import { EKYCResultResponse } from '../../../types/responses'
+import { CustomError } from 'app/errors/CustomError'
 
 type Props = {
   serviceId: number
@@ -43,11 +43,11 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
   ) => {
     try {
       await postActivities(serviceId, sessionId, completeness)
-    } catch (err) {
-      if ((err as Error).message === SESSION_ID_ERROR) {
+    } catch (e) {
+      if (e instanceof CustomError && e.statusCode === 401) {
         setOpenModal(true)
       } else {
-        console.error((err as Error).message)
+        console.error(e)
       }
     }
   }
@@ -72,11 +72,11 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       if (res) {
         setResult(res)
       }
-    } catch (err) {
-      if ((err as Error).message === SESSION_ID_ERROR) {
+    } catch (e) {
+      if (e instanceof CustomError && e.statusCode === 401) {
         setOpenModal(true)
       } else {
-        console.error(err)
+        console.error(e)
       }
     }
   }
@@ -155,8 +155,9 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 nextStep()
                 createVisitorActivities(serviceId, session_id, 60)
               }}
-              videoConstraints={{ facingMode: { ideal: 'environment' } }}
+              facingMode="environment"
               overlayShape="rect"
+              mirrored={false}
             />
           </div>
         )}
