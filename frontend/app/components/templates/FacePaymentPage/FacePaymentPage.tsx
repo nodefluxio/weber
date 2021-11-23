@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
 import { Modal } from '../../elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
-import { SESSION_ID_ERROR } from '../../../constants/message'
 import { Banner } from '../../modules/Banner/Banner'
 import { Stepper } from '../../elements/Stepper/Stepper'
 import { Button } from '../../elements/Button/Button'
@@ -18,7 +17,11 @@ import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
 import { PaymentPay } from '@/modules/PaymentPay/PaymentPay'
 import { PaymentMenu } from '@/modules/PaymentMenu/PaymentMenu'
 import { checkAccount } from '@/api/paymentAPI'
-import { ENROLL_SNAPSHOT, FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
+import { CustomError } from 'app/errors/CustomError'
+import {
+  ENROLL_SNAPSHOT,
+  FACE_MATCH_LIVENESS_SNAPSHOT
+} from 'app/constants/localStorage'
 
 type Props = {
   id: number
@@ -66,7 +69,7 @@ export const FacePaymentPage = ({
     try {
       await postActivities(serviceId, sessionId, completeness)
     } catch (err) {
-      if ((err as Error).message === SESSION_ID_ERROR) {
+      if (err instanceof CustomError && err.statusCode === 401) {
         setOpenModal(true)
       } else {
         console.error(err)

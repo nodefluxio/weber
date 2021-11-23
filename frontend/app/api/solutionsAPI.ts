@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios'
-import { SESSION_ID_ERROR } from '../constants/message'
-import { AnalyticsError, EKYCResultResponse } from '../types/responses'
+import { errorHandler } from '@/utils/errorHandler'
+import axios from 'axios'
+import { EKYCResultResponse } from '../types/responses'
 
 export const postEKYC = async (
   sessionId: string,
@@ -25,13 +25,6 @@ export const postEKYC = async (
 
     return res.data
   } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const error = e as AxiosError<AnalyticsError>
-      if (error && error.response) {
-        throw new Error(SESSION_ID_ERROR)
-      }
-    } else {
-      throw new Error((e as Error).message)
-    }
+    errorHandler(e)
   }
 }
