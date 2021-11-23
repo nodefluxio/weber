@@ -38,46 +38,33 @@ const ITEM_LIST: ShoppingItem[] = [
 ]
 type Props = {
   onAddToCart: (item: ShoppingItem) => void
-  balance: number
 }
-export const Catalog = ({ onAddToCart, balance }: Props) => {
+export const Catalog = ({ onAddToCart }: Props) => {
   return (
-    <div className={styles.catalogContainer}>
-      <div className={styles.balanceContainer}>
-        <span className={styles.balanceText}>
-          <img
-            className={styles.balanceIcon}
-            src="/assets/icons/coin.svg"
-            alt="coin"
+    <div className={styles.catalog}>
+      {ITEM_LIST.map((item) => (
+        <Card key={item.id} className={styles.card} color={Color.Secondary}>
+          <CardImage
+            className={styles.cardImage}
+            img={`/assets/images/solutions/face-payment/${item.image}`}
+            layout="fill"
+            objectFit="contain"
           />
-          {`Rp. ${formatMoney(balance)}`}
-        </span>
-      </div>
-      <div className={styles.catalog}>
-        {ITEM_LIST.map((item) => (
-          <Card key={item.id} className={styles.card} color={Color.Secondary}>
-            <CardImage
-              className={styles.cardImage}
-              img={`/assets/images/solutions/face-payment/${item.image}`}
-              layout="fill"
-              objectFit="contain"
-            />
-            <CardContent className={styles.cardContent}>
-              <h3>{item.name}</h3>
-              <div className={styles.row}>
-                <p>IDR {formatMoney(item.price)}</p>
-                <Button
-                  className={styles.btn}
-                  color={Color.Primary}
-                  onClick={() => onAddToCart(item)}
-                  rect>
-                  Add to cart
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+          <CardContent className={styles.cardContent}>
+            <h3>{item.name}</h3>
+            <div className={styles.row}>
+              <p>IDR {formatMoney(item.price)}</p>
+              <Button
+                className={styles.btn}
+                color={Color.Primary}
+                onClick={() => onAddToCart(item)}
+                rect>
+                Add to cart
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   )
 }

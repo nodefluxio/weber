@@ -7,7 +7,6 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
-- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Add current balance to catalog browse step
 - [FRONTEND] Add feature to remove local storage if face payment face analytics failed
