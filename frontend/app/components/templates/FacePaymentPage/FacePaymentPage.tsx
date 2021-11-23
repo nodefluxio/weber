@@ -182,6 +182,7 @@ export const FacePaymentPage = ({
 
         {currentStep === 5 && (
           <Catalog
+            sessionId={session_id}
             onAddToCart={(item) => {
               setCart(item)
               moveStep(1)
