@@ -11,9 +11,12 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Add feature to remove local storage if face payment face analytics failed
 - [FRONTEND] Make Big Input Component responsive
+- [FRONTEND] Add current balance to catalog browse step
 
 ### Changed
 
+- [FRONTEND] Change pin required checking to client side
+- [FRONTEND] Change phone checking to client side
 - [FRONTEND] Error handling mechanism
 - [FRONTEND] Revamp landing page
 - [FRONTEND] Fix Camera not full on mobile
@@ -26,6 +29,7 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 
+- [FRONTEND] Remove check-phone api handler
 - [BACKEND] Delete API Check Limit on Face Payment
 
 ## [0.3.0 - 17/11/2021]
