@@ -66,13 +66,20 @@
   .balanceContainer {
     display: flex;
     justify-content: end;
+    margin: 1rem;
 
     .balanceText {
+      display: inherit;
+      align-items: center;
       background-color: $primary-color;
       color: $white-text;
-      font-size: large;
-      padding: 1rem;
+      font-size: 1.5rem;
+      padding: 0.75rem;
       border-radius: 1rem;
+
+      .balanceIcon {
+        margin-right: 0.25rem;
+      }
     }
   }
 }

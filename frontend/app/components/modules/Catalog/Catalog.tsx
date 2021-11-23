@@ -44,7 +44,14 @@ export const Catalog = ({ onAddToCart, balance }: Props) => {
   return (
     <div className={styles.catalogContainer}>
       <div className={styles.balanceContainer}>
-        <p className={styles.balanceText}>{`Rp. ${formatMoney(balance)}`}</p>
+        <span className={styles.balanceText}>
+          <img
+            className={styles.balanceIcon}
+            src="/assets/icons/coin.svg"
+            alt="coin"
+          />
+          {`Rp. ${formatMoney(balance)}`}
+        </span>
       </div>
       <div className={styles.catalog}>
         {ITEM_LIST.map((item) => (
