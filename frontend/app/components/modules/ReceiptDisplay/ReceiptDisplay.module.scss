@@ -1,0 +1,35 @@
+.receiptDisplayWrapper {
+  position: relative;
+
+  .receiptButtonDiv {
+    margin-bottom: 1rem;
+    button {
+      width: 50%;
+    }
+  }
+  .receiptInfoWrapper {
+    height: 280px;
+
+    .receiptJSON {
+      overflow: scroll;
+      margin: 0;
+      max-height: 280px;
+      font-family: 'Consolas', ui-monospace, monospace;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .receiptTable {
+      text-align: left;
+      width: 100%;
+      border-top: 1px solid grey;
+      border-bottom: 1px solid grey;
+
+      .totalCell {
+        text-align: right;
+      }
+    }
+  }
+}

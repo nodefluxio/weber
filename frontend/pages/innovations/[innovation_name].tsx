@@ -1,5 +1,5 @@
 // import { getServiceBySlug } from '@/api/analyticsAPI'
-import { ReceiptDisplay } from '@/modules/ReceiptDisplay'
+import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
 import { ServiceBySlugResponseData } from '@/types/responses'
 import { GetServerSideProps } from 'next'

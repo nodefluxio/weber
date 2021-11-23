@@ -10,13 +10,25 @@ export const postInnovation = async <T>(
     return {
       address: 'address',
       number: 'number-info',
-      info: ['Alfamart BSD'],
+      info: ['Alfamart BSD', 'Jl Tubagus Ismail'],
       item: [
         {
           qty: 1,
           name: 'Sunlight 200mL',
           price: 15000,
           total: 15000
+        },
+        {
+          qty: 1,
+          name: 'Sunco 1L',
+          price: 45000,
+          total: 45000
+        },
+        {
+          qty: 3,
+          name: 'Sunmori 350mL',
+          price: 23000,
+          total: 69000
         }
       ]
     }
