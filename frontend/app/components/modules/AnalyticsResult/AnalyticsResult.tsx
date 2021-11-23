@@ -67,7 +67,7 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
       // @ts-ignore
       if (resultMap[slug]) {
         // @ts-ignore
-        let analyticSlugResultMap = resultMap[slug]
+        const analyticSlugResultMap = resultMap[slug]
         let mappedResultResponse = result
         if ('result' in result) {
           if (result.result) {
@@ -80,13 +80,13 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
               mappedResultResponse[analyticSlugResultMap.starting_key[i]]
           }
         }
-        let fieldList: [] = []
-        let fields = analyticSlugResultMap.fields
+        const fieldList: [] = []
+        const fields = analyticSlugResultMap.fields
         if (analyticSlugResultMap.type === 'array') {
           for (let i = 0; i < mappedResultResponse.length; i++) {
             if (i >= analyticSlugResultMap.max_result || i >= 20) break
-            let currentMappedResultResponse = mappedResultResponse[i]
-            let currentThumbnail = result.thumbnails[i]
+            const currentMappedResultResponse = mappedResultResponse[i]
+            const currentThumbnail = result.thumbnails[i]
             generateFieldList(
               fields,
               fieldList,

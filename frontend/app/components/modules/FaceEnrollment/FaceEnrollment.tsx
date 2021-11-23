@@ -11,8 +11,8 @@ import { SESSION_ID_ERROR } from '../../../constants/message'
 import { ENROLL_SNAPSHOT } from 'app/constants/localStorage'
 
 type Props = {
-  openModal: Function
-  nextStep: Function
+  openModal: () => void
+  nextStep: () => void
   payload: {
     session_id: string
     full_name: string
