@@ -236,7 +236,9 @@ func (ctrl *Controller) ResetBalanceFacePaymentAccount(ctx *gin.Context) {
 
 	var accountWallet models.FacePaymentWallet
 	ctrl.Model.GetAccountWallet(&accountWallet, account.ID)
-	accountWallet.Balance = 1000000
+
+	const DEFAULT_BALANCE = 1000000
+	accountWallet.Balance = DEFAULT_BALANCE
 	ctrl.Model.UpdateBalance(&accountWallet)
 
 	ctx.JSON(http.StatusOK, gin.H{
