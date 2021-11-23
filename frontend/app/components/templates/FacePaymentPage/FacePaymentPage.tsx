@@ -220,7 +220,7 @@ export const FacePaymentPage = ({
           />
         )}
 
-        {currentStep === 8 && (
+        {currentStep === 8 && paymentAccountInfo !== undefined && (
           <PaymentPay
             paymentAccountInfo={paymentAccountInfo}
             sessionId={session_id}
