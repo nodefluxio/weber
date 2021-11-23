@@ -73,7 +73,6 @@ export const Cam = ({
               audio={false}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              screenshotQuality={1}
               videoConstraints={
                 videoConstraints
                   ? videoConstraints
@@ -81,11 +80,10 @@ export const Cam = ({
                       width: { min: isMobile ? 420 : 450 },
                       height: { min: isMobile ? 420 : 337.5 },
                       aspectRatio: isMobile ? 1 : 1.333333,
-                      facingMode: { ideal: facingMode },
+                      facingMode: { ideal: isMobile ? facingMode : '' },
                       frameRate: { ideal: 30, max: 30 }
                     }
               }
-              imageSmoothing={false}
               minScreenshotWidth={401}
               minScreenshotHeight={301}
               mirrored={mirrored}
