@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file.
 
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Delete API Check Limit on Face Payment
-- [BACKEND] Update description on seeds data
+
 ### Fixed
 
 - [FRONTEND] Revamp landing page
