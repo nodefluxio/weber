@@ -5,12 +5,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 
 ### Changed
+- [BACKEND] Refactor API Get Activate Account on Face Payment
+- [BACKEND] Delete API Check Limit on Face Payment
+- [BACKEND] Update description on seeds data
 
 ### Fixed
-
-
+- [FRONTEND] Revamp landing page
 
 ## [0.3.0 - 17/11/2021]
 
