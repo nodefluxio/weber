@@ -2,25 +2,9 @@
 @import '../../../styles/abstracts/mixins';
 
 .carousel {
+  width: 100%;
+  height: 100%;
   position: relative;
-  h1 {
-    position: absolute;
-    color: $secondary-color;
-    z-index: 3;
-    left: 12%;
-    top: 8vh;
-    font-size: 2.5rem;
-    font-weight: 800;
-    @include tablet {
-      width: 100%;
-      text-align: center;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    @include phone {
-      top: 10vh;
-    }
-  }
   .slide {
     position: relative;
     display: none;
@@ -55,19 +39,29 @@
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-  }
 
-  .dotItem {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    margin: 0 5px;
-    background: $white-bg;
-    cursor: pointer;
-  }
+    .dotItem {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin: 0 5px;
+      background: $white-bg;
+      cursor: pointer;
+    }
+    &.vertical {
+      bottom: 50%;
+      left: unset;
+      right: 5%;
+      transform: translate(-50%, 50%);
+      flex-direction: column;
 
-  .dotActive {
-    background: $secondary-color;
-    cursor: auto;
+      .dotItem {
+        margin: 5px 0;
+      }
+    }
+    .dotActive {
+      background: $secondary-color;
+      cursor: auto;
+    }
   }
 }

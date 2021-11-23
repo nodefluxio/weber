@@ -1,7 +1,8 @@
 export enum Color {
   Primary = 'primary',
   Secondary = 'secondary',
-  Tertiary = 'tertiary'
+  Tertiary = 'tertiary',
+  Quaternary = 'quaternary'
 }
 
 export enum AnalyticsSlug {
@@ -73,7 +74,7 @@ export type OCRKTP = {
 
 export type MenuInfo = {
   title: string
-  onClick: Function
+  onClick: () => void
 }
 
 export type ReceiptItem = {

@@ -31,124 +31,106 @@
     }
   }
   .heroSection {
-    overflow: hidden;
     width: 100%;
     height: 90vh;
-    position: relative;
-    h1 {
-      position: absolute;
-      text-align: center;
-      width: 50%;
-      top: 45%;
-      left: 50%;
-      line-height: 3.5rem;
-      font-size: 2.5rem;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      font-weight: 800;
-      color: $primary-color;
-      @include tablet {
-        width: 80%;
-      }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include tablet {
+      height: 100vh;
     }
-  }
-  .productsSection {
-    .productCards {
+    .heroContentContainer {
       display: flex;
-      justify-content: space-around;
-      font-weight: 600;
-      line-height: 1.5rem;
+      width: 80%;
+      margin: auto;
+      height: 90vh;
+      justify-content: center;
+      align-items: center;
       @include tablet {
+        flex-direction: row-reverse;
+        height: 100vh;
+      }
+      .texts {
+        width: 40%;
+        display: flex;
         flex-direction: column;
-      }
-      .cardImage {
-        padding: 3rem 10vw;
-      }
-      .card {
-        width: 35%;
-        margin: auto;
-        @include tablet {
-          width: 80%;
+        justify-content: center;
+        color: $white-text;
+        @include phone {
+          width: 100%;
         }
-        .cardContent {
-          padding: 3rem;
+        h1 {
+          margin: 0;
         }
-      }
-      .visionaire {
-        @include tablet {
-          margin-bottom: 2rem;
+        hr {
+          margin: 2rem 0;
+          width: 100px;
+          border: 2px solid $secondary-color;
+          border-radius: 5px;
         }
-        .cardContent {
-          padding-bottom: 4rem;
-          @include tablet {
-            padding-bottom: 3rem;
+        .titleHero {
+          color: $tertiary-color;
+          font-weight: 700;
+          margin-bottom: 4px;
+          font-size: 4rem;
+          &.tertiary {
+            color: $tertiary-color;
+          }
+          &.quaternary {
+            color: $quaternary-color;
+          }
+        }
+        .tagLine {
+          font-size: 4rem;
+          font-weight: 700;
+        }
+        .secondTitle {
+          font-size: 1.5rem;
+          font-weight: 500;
+          margin: 0;
+        }
+        .desc {
+          font-size: 1.2rem;
+        }
+        @keyframes bounce {
+          0% {
+            transform: translateY(0);
+          }
+          30% {
+            transform: translateY(-8px);
+          }
+          50% {
+            transform: translateY(0);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+        .arrow {
+          cursor: pointer;
+          width: 24px;
+          margin: 2rem auto 0 45%;
+          animation-name: bounce;
+          animation-timing-function: ease;
+          animation-iteration-count: infinite;
+          animation-duration: 2s;
+          transform-origin: bottom;
+          .arrowImg {
+            width: 24px;
           }
         }
       }
-      .identifai {
-        .cardImage {
-          padding: 2.2rem 10vw;
+      .imgContainer {
+        width: 60%;
+        height: 80%;
+        position: relative;
+        @include tablet {
+          width: 100%;
+          margin-left: -100%;
+          margin-right: 2rem;
         }
-      }
-    }
-  }
-  .awardsSection {
-    background-color: $secondary-color;
-    padding: 3rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .title {
-      margin-bottom: 3rem;
-    }
-    .whiteContainer {
-      padding: 3rem;
-      background-color: $white-bg;
-      border-radius: 50px;
-      max-width: 50%;
-      margin-bottom: 2rem;
-      @include tablet {
-        max-width: 80%;
-      }
-    }
-    .awardsContainer {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, auto));
-      justify-items: center;
-      align-items: center;
-
-      @include tablet {
-        grid-template-columns: repeat(2, minmax(0, auto));
-        gap: 1rem;
-      }
-    }
-    .recognitionsContainer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      h4 {
-        font-weight: 400;
-        letter-spacing: 2px;
-        margin: 2rem 0;
-      }
-      h3 {
-        color: $primary-color;
-        margin: 0 0 1rem 0;
-        font-family: $secondary-font;
-        font-weight: 800;
-      }
-    }
-  }
-  .ourDemoSection {
-    .texts {
-      .title {
-        &:nth-child(1) {
-          margin-bottom: 6px;
-        }
-        &:nth-child(2) {
-          margin-top: 0;
-          color: $secondary-color;
+        @include phone {
+          display: none;
         }
       }
     }
@@ -213,6 +195,55 @@
       .footer {
         position: absolute;
         bottom: 2.5rem;
+      }
+    }
+  }
+  .newInnovationsSection {
+    position: relative;
+    .container {
+      height: 100vh;
+    }
+    h1 {
+      position: absolute;
+      color: $secondary-color;
+      z-index: 3;
+      left: 12%;
+      top: 8vh;
+      font-size: 2.5rem;
+      font-weight: 800;
+      @include tablet {
+        width: 100%;
+        text-align: center;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      @include phone {
+        top: 10vh;
+      }
+    }
+    .image {
+      opacity: 0.5;
+    }
+    .card {
+      position: absolute;
+      width: 350px;
+      height: 60vh;
+      left: 12%;
+      top: 22vh;
+      @include tablet {
+        top: 50vh;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      @include phone {
+        top: 55%;
+      }
+      .cardContent {
+        padding: 4rem 3rem;
+        .footer {
+          position: absolute;
+          bottom: 4rem;
+        }
       }
     }
   }

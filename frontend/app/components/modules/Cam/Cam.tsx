@@ -14,7 +14,7 @@ import { Color } from '../../../types/elements'
 type Props = {
   localkey: string
   nextStep: MouseEventHandler<HTMLButtonElement>
-  videoConstraints?: Object
+  videoConstraints?: MediaTrackConstraints
   overlayShape: 'rect' | 'circle'
 }
 

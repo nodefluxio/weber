@@ -165,16 +165,21 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 		return
 	}
 
+	// Set user activity completeness
+	visitorActivity := &models.VisitorActivity{SessionID: inputData.SessionID, ServiceID: service.ID, Completeness: 100}
+	if err = ctrl.Model.CreateVisitorActivity(visitorActivity); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": err.Error(),
+		})
+		return
+	}
+
 	if service.Type == "analytic" {
-		visitorActivity := &models.VisitorActivity{SessionID: inputData.SessionID, ServiceID: service.ID, Completeness: 100}
-		if err = ctrl.Model.CreateVisitorActivity(visitorActivity); err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"ok":      false,
-				"message": err.Error(),
-			})
-			return
-		}
 		RequestToServiceAnalytics(ctx, service, inputData)
+		return
+	} else if service.Type == "innovation" {
+		RequestToServiceInnovation(ctx, service, inputData)
 		return
 	}
 

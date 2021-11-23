@@ -5,19 +5,31 @@
   background-color: $primary-color;
   color: $white-text;
   padding: 4rem 0 2rem 0;
+  .imgContainer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
   .container {
     width: 80%;
     margin: auto;
     .info {
       display: flex;
-      @include phone {
+      align-items: center;
+      justify-content: space-between;
+      @include tablet {
         flex-direction: column;
       }
       .col1 {
-        width: 60%;
+        width: 30%;
         margin-right: 2rem;
-        @include phone {
+        .imgContainer {
+          width: 150px;
+        }
+        @include tablet {
           width: 100%;
+        }
+        @include phone {
           margin-right: unset;
         }
         p {
@@ -27,13 +39,48 @@
           }
         }
       }
-      .links {
+      .col2 {
         display: flex;
-        @include phone {
-        }
-        .col2 {
-          margin-right: 5rem;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .awardsAndRecognitions {
+          width: 50%;
+          margin: 0 1rem;
+          display: flex;
+          flex-direction: column;
+          @include tablet {
+            margin: unset;
+          }
           @include phone {
+            width: 100%;
+          }
+          .recognitions {
+            display: flex;
+            position: relative;
+            justify-content: space-between;
+            margin-left: -1rem;
+          }
+          .awards {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .imgContainer {
+              margin-right: 1rem;
+            }
+          }
+        }
+        .links {
+          display: flex;
+          @include phone {
+            width: 100%;
+          }
+          .imgContainer {
+            height: 50px;
+          }
+          .col {
+            &:nth-child(1) {
+              margin-right: 5rem;
+            }
           }
         }
       }
