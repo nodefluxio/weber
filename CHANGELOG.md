@@ -6,8 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add API Reset Balance Account on Face Payment
+- [FRONTEND] Make Big Input Component responsive
 
 ### Changed
 - [FRONTEND] Error handling mechanism
