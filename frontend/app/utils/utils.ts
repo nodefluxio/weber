@@ -1,3 +1,5 @@
+import { OCRReceiptData } from '@/types/elements'
+
 export const formatMoney = (money: string | number) => {
   if (money === null) {
     return '0'
@@ -23,7 +25,7 @@ export const formatMoneyOnChange = (money: string | number) => {
     split = number_string.split(','),
     remainder = split[0].length % 3,
     thousands = split[0].substr(remainder).match(/\d{3}/gi)
-  
+
   let rupiah = split[0].substr(0, remainder)
 
   // tambahkan titik jika yang di input sudah menjadi angka thousands
@@ -34,4 +36,32 @@ export const formatMoneyOnChange = (money: string | number) => {
 
   rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
   return rupiah
+}
+
+export const isOCRReceipt = (obj: any): obj is OCRReceiptData => {
+  if (typeof obj === 'undefined') { 
+    return false
+  } else {
+    let infoIsStringArray = true
+
+    if (obj.info && Array.isArray(obj.info)) {
+      for (let i = 0; i < obj.info.length; i++) {
+        infoIsStringArray = typeof obj.info[i] === 'string'
+        if (!infoIsStringArray) break
+      }
+    } else {
+      infoIsStringArray = false
+    }
+
+    // if (obj.item && Array.isArray(obj.item)) {
+
+    // }
+
+    return (
+      obj &&
+      typeof obj.address === 'string' &&
+      typeof obj.number === 'string' &&
+      infoIsStringArray
+    )
+  }
 }

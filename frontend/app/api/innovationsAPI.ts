@@ -1,49 +1,29 @@
-// import { InnovationResponse } from '@/types/responses'
-// import axios from 'axios'
+import { InnovationResponse } from '@/types/responses'
+import axios from 'axios'
+import { errorHandler } from '@/utils/errorHandler'
 
 export const postInnovation = async <T>(
   id: number,
   session_id: string,
   photoBase64: string
-) => {
+): Promise<T | undefined> => {
   try {
-    return {
-      address: 'address',
-      number: 'number-info',
-      info: ['Alfamart BSD', 'Jl Tubagus Ismail'],
-      item: [
-        {
-          qty: 1,
-          name: 'Sunlight 200mL',
-          price: 15000,
-          total: 15000
-        },
-        {
-          qty: 1,
-          name: 'Sunco 1L',
-          price: 45000,
-          total: 45000
-        },
-        {
-          qty: 3,
-          name: 'Sunmori 350mL',
-          price: 23000,
-          total: 69000
+    const { data } = await axios.post<InnovationResponse<T>>(
+      `/services/${id}`,
+      {
+        session_id: session_id,
+        data: {
+          additional_params: {
+            templates: []
+          },
+          images: [photoBase64]
         }
-      ]
-    }
-    /*
-    const res = await axios.post<InnovationResponse<T>>(`/services/${id}`, {
-      session_id: session_id,
-      data: {
-        images: [photoBase64]
       }
-    })
-    if (res.data.ok) {
-      return res.data
+    )
+    if (data.ok) {
+      return data.service_data.job as T
     }
-    */
   } catch (e) {
-    console.error(e)
+    errorHandler(e)
   }
 }

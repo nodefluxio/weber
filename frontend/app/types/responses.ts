@@ -132,5 +132,7 @@ export interface CheckAccountResponse extends StandardResponse {
 export type InnovationResponse<T> = {
   message: string,
   ok: boolean,
-  service_data: T
+  service_data: {
+    job: T
+  }
 }
