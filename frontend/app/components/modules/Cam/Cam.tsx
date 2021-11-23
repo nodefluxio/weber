@@ -81,7 +81,7 @@ export const Cam = ({
                       width: { min: isMobile ? 420 : 450 },
                       height: { min: isMobile ? 420 : 337.5 },
                       aspectRatio: isMobile ? 1 : 1.333333,
-                      facingMode: { ideal: facingMode },
+                      facingMode: { ideal: isMobile ? facingMode : '' },
                       frameRate: { ideal: 30, max: 30 }
                     }
               }

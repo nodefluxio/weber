@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 - [FRONTEND] Fix Camera not full on mobile
 - [FRONTEND] Fix compressed photo quality on Camera
+- [FRONTEND] Fix cannot use external webcam
 
 ### Changed
 
