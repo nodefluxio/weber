@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Add current balance to catalog browse step
 - [FRONTEND] Add feature to remove local storage if face payment face analytics failed
+- [FRONTEND] Add back to catalog feature if balance insufficient
+- [FRONTEND] Add reset balance feature
 
 ### Changed
 
