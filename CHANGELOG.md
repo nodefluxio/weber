@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
+- [FRONTEND] Make Big Input Component responsive
 
 ### Changed
 - [FRONTEND] Error handling mechanism
