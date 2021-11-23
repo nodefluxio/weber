@@ -126,5 +126,11 @@ export interface CheckLimitResponse extends StandardResponse {
   ]
 }
 export interface CheckAccountResponse extends StandardResponse {
-  have_active_account: boolean
+  data: {
+    phone: string
+    full_name: string
+    have_twin: boolean
+    balance: number
+    minimum_payment: number
+  }
 }
