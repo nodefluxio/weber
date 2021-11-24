@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Fix cannot use external webcam
 - [FRONTEND] Change catalog shopping items
 - [FRONTEND] Update Face Match with Enrollment examples with our CEO & CTO faces
+- [FRONTEND] Update Face-payment instructions
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Update description on seeds data
 - [BACKEND] Update env FACE_ID to use by Face Match with Enrollment matching with our CEO's face
