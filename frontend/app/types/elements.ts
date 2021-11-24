@@ -90,3 +90,11 @@ export interface OCRReceiptData {
   info: string[]
   item: ReceiptItem[]
 }
+
+export type PaymentAccountInfo = {
+  full_name: string
+  phone: string
+  have_twin: boolean
+  balance: number
+  minimum_payment: number
+}

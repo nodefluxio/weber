@@ -1,59 +1,85 @@
 @import '../../../styles/abstracts/mixins';
+@import '../../../styles/abstracts/variables';
 
-.catalog {
+.catalogContainer {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   width: 80%;
-  margin: auto;
-  gap: 8px;
   @include phone {
     width: 90%;
   }
-  .card {
-    flex: 1 0 40%;
-
-    .cardImage {
-      position: relative;
-      height: 200px;
-      width: 200px;
-      margin: 2rem auto;
-      @include phone {
-        width: 100px;
-        height: 100px;
-      }
+  .balance {
+    width: auto;
+    display: flex;
+    align-self: flex-end;
+    background-color: $primary-color;
+    padding: 1rem;
+    border-radius: 8px;
+    color: $white-text;
+    margin-right: 12px;
+    @include phone {
+      margin-right: unset;
     }
-    .cardContent {
-      padding: 1rem 2rem;
-      color: black;
-      h3 {
-        margin: 0 0 1rem 0;
-        font-weight: 600;
-      }
-      .row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        @include tablet {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        p {
-          margin: 1rem 0;
-          font-size: 1.2rem;
-          font-weight: 800;
-          display: block;
-          width: 30%;
-        }
-        .btn {
-          @include tablet {
-            align-self: flex-end;
-          }
+    p {
+      margin: 0;
+      margin-left: 1rem;
+      font-size: 1.2rem;
+    }
+    margin-bottom: 2rem;
+  }
+  .catalog {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    .item {
+      flex: 1 0 40%;
+      .card {
+        width: 95%;
+        margin-bottom: 5%;
+        .cardImage {
+          position: relative;
+          height: 200px;
+          width: 200px;
+          margin: 2rem auto;
           @include phone {
-            margin-top: 1rem;
-            align-self: center;
+            width: 100px;
+            height: 100px;
           }
-          &:active {
-            transform: translatey(1px);
+        }
+        .cardContent {
+          padding: 1rem 2rem;
+          color: black;
+          h3 {
+            margin: 0 0 1rem 0;
+            height: 40px;
+            font-weight: 600;
+          }
+          .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            @include tablet {
+              flex-direction: column;
+              align-items: flex-start;
+            }
+            p {
+              margin: 1rem 0;
+              font-size: 1.2rem;
+              font-weight: 800;
+              display: block;
+            }
+            .btn {
+              @include tablet {
+                align-self: flex-end;
+              }
+              @include phone {
+                margin-top: 1rem;
+                align-self: center;
+              }
+              &:active {
+                transform: translatey(1px);
+              }
+            }
           }
         }
       }

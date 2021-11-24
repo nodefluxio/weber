@@ -1,4 +1,4 @@
-import { FaceLiveness, FaceMatch, OCRKTP, Service } from './elements'
+import { FaceLiveness, FaceMatch, OCRKTP, PaymentAccountInfo, Service } from './elements'
 
 export type StandardResponse = {
   message: string
@@ -125,8 +125,9 @@ export interface CheckLimitResponse extends StandardResponse {
     }
   ]
 }
+
 export interface CheckAccountResponse extends StandardResponse {
-  have_active_account: boolean
+  data: PaymentAccountInfo
 }
 
 export type InnovationResponse<T> = {

@@ -2,7 +2,6 @@ import { errorHandler } from '@/utils/errorHandler'
 import axios from 'axios'
 
 import {
-  CheckLimitResponse,
   CheckAccountResponse,
   StandardResponse
 } from '../types/responses'
@@ -55,30 +54,6 @@ export const activateAccount = async (
   }
 }
 
-export const checkLimit = async (
-  sessionId: string,
-  phone: string,
-  amount: number
-): Promise<CheckLimitResponse | undefined> => {
-  try {
-    const res = await axios.post<CheckLimitResponse>(
-      `/face-payment/check-limit`,
-      {
-        session_id: sessionId,
-        phone,
-        amount
-      }
-    )
-    if (res.data.ok) {
-      return {
-        ...res.data
-      }
-    }
-  } catch (e) {
-    errorHandler(e)
-  }
-}
-
 export const pay = async (
   sessionId: string,
   phone: string,
@@ -108,6 +83,21 @@ export const checkAccount = async (
   try {
     const res = await axios.get<CheckAccountResponse>(
       `/face-payment/account/${sessionId}`
+    )
+    return {
+      ...res.data
+    }
+  } catch (e) {
+    errorHandler(e)
+  }
+}
+
+export const resetBalance = async (
+  sessionId: string
+): Promise<StandardResponse | undefined> => {
+  try {
+    const res = await axios.patch<StandardResponse>(
+      `/face-payment/reset-balance/${sessionId}`
     )
     return {
       ...res.data

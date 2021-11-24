@@ -76,6 +76,10 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
           Before making any transaction using face payment, you must register
           your e-wallet account first
         </p>
+        <p>
+          *Please remember the phone number, your phone number will be used when
+          you did the transaction
+        </p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formOutline}>

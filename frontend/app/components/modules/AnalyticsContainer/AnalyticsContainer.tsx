@@ -6,7 +6,6 @@ import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/Request
 
 type Props = {
   analyticsName: string
-  shortDescription: string
   longDescription: string
   currentStep: number
   openModal: boolean
@@ -17,7 +16,6 @@ type Props = {
 
 export const AnalyticsContainer = ({
   analyticsName,
-  shortDescription,
   longDescription,
   currentStep,
   openModal,
@@ -33,7 +31,6 @@ export const AnalyticsContainer = ({
       <Banner
         bannerUrl={`/assets/images/analytics/${slug}/banner.jpg`}
         analyticsName={analyticsName}
-        shortDescription={shortDescription}
         longDescription={longDescription}
       />
       <Stepper

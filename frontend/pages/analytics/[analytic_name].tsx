@@ -9,7 +9,6 @@ import { AnalyticsResult } from '../../app/components/modules/AnalyticsResult/An
 
 const Analytics = ({
   name,
-  short_description,
   long_description,
   id,
   slug
@@ -23,7 +22,6 @@ const Analytics = ({
       </Head>
       <AnalyticsPage
         analyticsName={name}
-        shortDescription={short_description}
         longDescription={long_description}
         examples={[
           `/assets/images/analytics/${slug}/example1.jpg`,

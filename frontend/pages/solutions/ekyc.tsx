@@ -5,27 +5,16 @@ import { EkycPage } from '../../app/components/templates/EkycPage/EkycPage'
 interface Props {
   id: number
   name: string
-  short_description: string
   long_description: string
 }
 
-const Ekyc: React.FC<Props> = ({
-  id,
-  name,
-  short_description,
-  long_description
-}) => {
+const Ekyc: React.FC<Props> = ({ id, name, long_description }) => {
   return (
     <>
       <Head>
         <title>{`Solution | ${name} - Demo`}</title>
       </Head>
-      <EkycPage
-        serviceId={id}
-        name={name}
-        shortDesc={short_description}
-        longDesc={long_description}
-      />
+      <EkycPage serviceId={id} name={name} longDesc={long_description} />
     </>
   )
 }
