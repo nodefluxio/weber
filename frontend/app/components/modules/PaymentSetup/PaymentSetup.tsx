@@ -70,7 +70,7 @@ export const PaymentSetup = ({ onChange }: Props) => {
         type="text"
         value={fieldInput}
         placeholder={'Enter nominal'}
-        maxLength={6}
+        maxLength={7}
         onChange={handleInputChange}
         className={styles.inputNominal}
       />
