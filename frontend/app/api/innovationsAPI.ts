@@ -21,7 +21,11 @@ export const postInnovation = async <T>(
       }
     )
     if (data.ok) {
-      return data.service_data.job as T
+      if (data.service_data.ok) {
+        return data.service_data.job
+      } else {
+        return data.service_data.message
+      }
     }
   } catch (e) {
     errorHandler(e)

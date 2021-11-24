@@ -17,14 +17,26 @@ const Innovations = ({
 }: ServiceBySlugResponseData) => {
   const [res, setRes] = useState()
   const renderResult = () => {
-    if (isOCRReceipt(res)) {
-      return <ReceiptDisplay result={res} />
+    // Error message passed
+    if (typeof res !== 'undefined') {
+      if (typeof res === 'string') {
+        return <div>{res}</div>
+      }
+
+      if (isOCRReceipt(res)) {
+        return <ReceiptDisplay result={res} />
+      } else {
+        return (
+          <pre>
+            <code>{JSON.stringify(res, null, 2)}</code>
+          </pre>
+        )
+      }
     } else {
-      // Fallback
       return (
-        <pre style={{ maxHeight: '240px', overflowY: 'auto' }}>
-          {JSON.stringify(res, null, 2)}
-        </pre>
+        <div>
+          {'There is a problem on our analytics. Please use another photo.'}
+        </div>
       )
     }
   }
