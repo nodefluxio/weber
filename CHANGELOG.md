@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Add shopping balance in catalog
 - [FRONTEND] Make Big Input Component responsive
+- [FRONTEND] Add contact us link
 
 ### Changed
 
