@@ -12,6 +12,7 @@ import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { FACE_MATCH_LIVENESS_SNAPSHOT } from 'app/constants/localStorage'
 import { CustomError } from 'app/errors/CustomError'
+import { formatMoney } from '@/utils/utils'
 
 type Props = {
   sessionId: string
@@ -185,16 +186,19 @@ export const PaymentPay = ({
           <h2>{`Hello, ${paymentAccountInfo.full_name}`}</h2>
 
           <p className={styles.balance}>
-            You have to pay <strong>{amount}</strong>
+            You have to pay <strong>{`IDR ${formatMoney(amount)}`}</strong>
           </p>
           <p className={styles.balance}>
-            Current Balance <strong>{paymentAccountInfo.balance}</strong>
+            Current Balance{' '}
+            <strong>{`IDR ${formatMoney(paymentAccountInfo.balance)}`}</strong>
           </p>
           {isBalanceSufficient ? (
             <>
               <p className={styles.balance}>
                 Remaining Balance{' '}
-                <strong>{paymentAccountInfo.balance - amount}</strong>
+                <strong>
+                  {`IDR ${formatMoney(paymentAccountInfo.balance - amount)}`}
+                </strong>
               </p>
 
               <Button
