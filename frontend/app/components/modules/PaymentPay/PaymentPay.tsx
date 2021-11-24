@@ -84,6 +84,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
           case 402:
             setIsSuccess(false)
             setMessage(e.message)
+            localStorage.removeItem(FACE_MATCH_LIVENESS_SNAPSHOT)
             break
           case 401:
             // TODO ADD OPEN MODAL
