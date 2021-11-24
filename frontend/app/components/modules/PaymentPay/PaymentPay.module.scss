@@ -36,3 +36,12 @@
   color: crimson;
   font-size: large;
 }
+
+.btnGroup {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+      margin: .5rem;
+  }
+}

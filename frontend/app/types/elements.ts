@@ -76,3 +76,11 @@ export type MenuInfo = {
   title: string
   onClick: () => void
 }
+
+export type PaymentAccountInfo = {
+  full_name: string
+  phone: string
+  have_twin: boolean
+  balance: number
+  minimum_payment: number
+}
