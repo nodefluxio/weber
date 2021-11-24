@@ -61,7 +61,7 @@ export const Navbar = () => {
           </li>
           <li className={styles.contactUs}>
             <Link href="https://www.nodeflux.io/Contact-Us" passHref>
-              <a>
+              <a target="_blank">
                 <Button
                   className={styles.btn}
                   color={Color.Secondary}
