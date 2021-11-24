@@ -6,7 +6,7 @@ export const postInnovation = async <T>(
   id: number,
   session_id: string,
   photoBase64: string
-): Promise<T | undefined> => {
+): Promise<T | string | undefined> => {
   try {
     const { data } = await axios.post<InnovationResponse<T>>(
       `/services/${id}`,
