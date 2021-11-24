@@ -20,12 +20,7 @@ const Ekyc: React.FC<Props> = ({
       <Head>
         <title>{`Solution | ${name} - Demo`}</title>
       </Head>
-      <EkycPage
-        serviceId={id}
-        name={name}
-        shortDesc={short_description}
-        longDesc={long_description}
-      />
+      <EkycPage serviceId={id} name={name} longDesc={long_description} />
     </>
   )
 }
