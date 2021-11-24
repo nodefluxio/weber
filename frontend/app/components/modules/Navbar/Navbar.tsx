@@ -60,9 +60,16 @@ export const Navbar = () => {
             </Link>
           </li>
           <li className={styles.contactUs}>
-            <Button className={styles.btn} color={Color.Secondary}>
-              Contact Us
-            </Button>
+            <Link href="https://www.nodeflux.io/Contact-Us" passHref>
+              <a>
+                <Button
+                  className={styles.btn}
+                  color={Color.Secondary}
+                  type="link">
+                  Contact Us
+                </Button>
+              </a>
+            </Link>
           </li>
         </ul>
       </div>
