@@ -98,13 +98,13 @@ export const ActivationForm = ({ nextStep }: Props) => {
       </Modal>
       <div className={styles.pinInputWrapper}>
         <div>
-          <h2>Activate Account</h2>
+          <h2>Create PIN</h2>
           <p>
-            You are required to input them if you exceed the minimum payment
+            When you exceed the minimum payment amount, you must enter your PIN
           </p>
         </div>
         <PinInput
-          message={'Please remember the code and don’t tell anyone your code'}
+          message={"Keep your PIN private and don't tell anyone your PIN!"}
           digits={PIN_DIGIT_LENGTH}
           onPinChange={setPinCode}
         />
