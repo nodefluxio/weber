@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add feature to remove local storage if face payment face analytics failed
 - [FRONTEND] Add back to catalog feature if balance insufficient
 - [FRONTEND] Add reset balance feature
+- [FRONTEND] Add shopping balance in catalog
 - [FRONTEND] Make Big Input Component responsive
 
 ### Changed
@@ -23,6 +24,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Fix Camera not full on mobile
 - [FRONTEND] Fix compressed photo quality on Camera
 - [FRONTEND] Fix cannot use external webcam
+- [FRONTEND] Change catalog shopping items
 - [FRONTEND] Update Face Match with Enrollment examples with our CEO & CTO faces
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Update description on seeds data
