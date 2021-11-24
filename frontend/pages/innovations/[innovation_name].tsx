@@ -10,7 +10,6 @@ import { useState } from 'react'
 
 const Innovations = ({
   name,
-  short_description,
   long_description,
   id,
   slug
