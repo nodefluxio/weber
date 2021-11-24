@@ -48,7 +48,6 @@ const Innovations = ({
       </Head>
       <AnalyticsPage
         analyticsName={name}
-        shortDescription={short_description}
         longDescription={long_description}
         examples={[
           `/assets/images/innovations/${slug}/example1.jpg`,
