@@ -38,10 +38,14 @@ const Innovations = ({
         analyticsName={name}
         shortDescription={short_description}
         longDescription={long_description}
-        examples={[]}
+        examples={[
+          `/assets/images/innovations/${slug}/example1.jpg`,
+          `/assets/images/innovations/${slug}/example2.jpg`,
+          `/assets/images/innovations/${slug}/example3.jpg`
+        ]}
         serviceID={id}
         slug={slug}
-        handleResult={res => setRes(res)}
+        handleResult={(res) => setRes(res)}
         isInnovation>
         {renderResult()}
       </AnalyticsPage>
