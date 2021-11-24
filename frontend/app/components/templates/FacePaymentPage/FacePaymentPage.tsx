@@ -26,7 +26,6 @@ import {
 type Props = {
   id: number
   name: string
-  short_description: string
   long_description: string
 }
 
@@ -35,12 +34,7 @@ const mainMenuInfo = [
   'Do your transactions using face payment'
 ]
 
-export const FacePaymentPage = ({
-  id,
-  name,
-  short_description,
-  long_description
-}: Props) => {
+export const FacePaymentPage = ({ id, name, long_description }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [currentStepStepper, setCurrentStepStepper] = useState(1)
   const [openModal, setOpenModal] = useState(false)
@@ -118,7 +112,6 @@ export const FacePaymentPage = ({
       <Banner
         bannerUrl="/assets/images/solutions/face-payment/banner.jpg"
         analyticsName={name}
-        shortDescription={short_description}
         longDescription={long_description}
       />
 
