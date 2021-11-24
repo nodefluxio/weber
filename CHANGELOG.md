@@ -6,18 +6,20 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation 
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Make Big Input Component responsive
 
 ### Changed
+
 - [FRONTEND] Error handling mechanism
 - [FRONTEND] Revamp landing page
 - [FRONTEND] Fix Camera not full on mobile
 - [FRONTEND] Fix compressed photo quality on Camera
 - [FRONTEND] Fix cannot use external webcam
 - [FRONTEND] Update Face Match with Enrollment examples with our CEO & CTO faces
+- [FRONTEND] Update Face-payment instructions
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Update description on seeds data
 - [BACKEND] Update env FACE_ID to use by Face Match with Enrollment matching with our CEO's face
