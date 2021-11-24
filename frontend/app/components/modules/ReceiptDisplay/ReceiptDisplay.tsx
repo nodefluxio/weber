@@ -16,7 +16,9 @@ export const ReceiptDisplay = ({ result }: Props) => {
     (mode === 'json' ? (
       <div className={styles.receiptInfoWrapper}>
         <pre>
-          <code className={styles.receiptJSON}>{JSON.stringify(result, null, 4)}</code>
+          <code className={styles.receiptJSON}>
+            {JSON.stringify(result, null, 4)}
+          </code>
         </pre>
       </div>
     ) : (

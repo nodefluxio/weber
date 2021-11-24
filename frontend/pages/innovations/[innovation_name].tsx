@@ -1,7 +1,6 @@
 import { getServiceBySlug } from '@/api/analyticsAPI'
 import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
-import { OCRReceiptData } from '@/types/elements'
 import { ServiceBySlugResponseData } from '@/types/responses'
 import { isOCRReceipt } from '@/utils/utils'
 import { GetServerSideProps } from 'next'
@@ -21,7 +20,12 @@ const Innovations = ({
     if (isOCRReceipt(res)) {
       return <ReceiptDisplay result={res} />
     } else {
-      return <pre>{JSON.stringify(res, null, 2)}</pre>
+      // Fallback
+      return (
+        <pre style={{ maxHeight: '240px', overflowY: 'auto' }}>
+          {JSON.stringify(res, null, 2)}
+        </pre>
+      )
     }
   }
 
@@ -37,7 +41,7 @@ const Innovations = ({
         examples={[]}
         serviceID={id}
         slug={slug}
-        handleResult={(res: any) => setRes(res)}
+        handleResult={res => setRes(res)}
         isInnovation>
         {renderResult()}
       </AnalyticsPage>
