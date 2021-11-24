@@ -134,7 +134,7 @@ export const PaymentPay = ({ sessionId, amount, afterPay }: Props) => {
       {step === 3 && (
         <div className={styles.pinInputWrapper}>
           <PinInput
-            message={'You’ve reach the limit, please input your pin'}
+            message={'You’ve reached the limit, please input your pin'}
             digits={PIN_DIGIT_LENGTH}
             onPinChange={setPinCode}
           />
