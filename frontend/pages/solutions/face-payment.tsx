@@ -1,11 +1,10 @@
 import Head from 'next/head'
-import { getServiceBySlug } from "../../app/api/analyticsAPI"
-import { FacePaymentPage } from "../../app/components/templates/FacePaymentPage/FacePaymentPage"
+import { getServiceBySlug } from '../../app/api/analyticsAPI'
+import { FacePaymentPage } from '../../app/components/templates/FacePaymentPage/FacePaymentPage'
 
 interface Props {
-  id: number,
-  name: string,
-  short_description: string,
+  id: number
+  name: string
   long_description: string
 }
 

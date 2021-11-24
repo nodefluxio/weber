@@ -24,11 +24,10 @@ import { CustomError } from 'app/errors/CustomError'
 type Props = {
   serviceId: number
   name: string
-  shortDesc: string
   longDesc: string
 }
 
-export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
+export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
   const { session_id } = parseCookies()
 
   const [currentStep, setCurrentStep] = useState(1)
@@ -104,7 +103,6 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
       <Banner
         bannerUrl="/assets/images/solutions/ekyc/banner.jpg"
         analyticsName={name}
-        shortDescription={shortDesc}
         longDescription={longDesc}
       />
 
@@ -170,21 +168,21 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 {!loading ? (
                   result?.service_data.face_liveness.job.result.result
                     .length === 1 ? (
-                      <>
-                        <span>{`${Math.trunc(
-                          result.service_data.face_liveness.job.result.result[0]
-                            .face_liveness.liveness * 100
-                        )}%`}</span>
-                        <p>
-                          {result.service_data.face_liveness.job.result.result[0]
-                            .face_liveness.live
-                            ? 'Verified'
-                            : 'Not Verified'}
-                        </p>
-                      </>
-                    ) : (
-                      <p>{result?.service_data.face_liveness.message}</p>
-                    )
+                    <>
+                      <span>{`${Math.trunc(
+                        result.service_data.face_liveness.job.result.result[0]
+                          .face_liveness.liveness * 100
+                      )}%`}</span>
+                      <p>
+                        {result.service_data.face_liveness.job.result.result[0]
+                          .face_liveness.live
+                          ? 'Verified'
+                          : 'Not Verified'}
+                      </p>
+                    </>
+                  ) : (
+                    <p>{result?.service_data.face_liveness.message}</p>
+                  )
                 ) : (
                   <Spinner />
                 )}
@@ -195,21 +193,21 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 {!loading ? (
                   result?.service_data.face_match.job.result.result.length ===
                   1 ? (
-                      <>
-                        <span>{`${Math.trunc(
-                          result.service_data.face_match.job.result.result[0]
-                            .face_match.similarity * 100
-                        )}%`}</span>
-                        <p>
-                          {result.service_data.face_match.job.result.result[0]
-                            .face_match.match
-                            ? 'Verified'
-                            : 'Not Verified'}
-                        </p>
-                      </>
-                    ) : (
-                      <p>{result?.service_data.face_match.message}</p>
-                    )
+                    <>
+                      <span>{`${Math.trunc(
+                        result.service_data.face_match.job.result.result[0]
+                          .face_match.similarity * 100
+                      )}%`}</span>
+                      <p>
+                        {result.service_data.face_match.job.result.result[0]
+                          .face_match.match
+                          ? 'Verified'
+                          : 'Not Verified'}
+                      </p>
+                    </>
+                  ) : (
+                    <p>{result?.service_data.face_match.message}</p>
+                  )
                 ) : (
                   <Spinner />
                 )}
@@ -221,14 +219,14 @@ export const EkycPage = ({ serviceId, name, shortDesc, longDesc }: Props) => {
                 {!loading ? (
                   result?.service_data.ocr_ktp.job.result.result.length ===
                   1 ? (
-                      <AnalyticsResult
-                        className={styles.analyticResultOcrKtp}
-                        result={result.service_data.ocr_ktp.job.result.result[0]}
-                        slug={'ocr-ktp'}
-                      />
-                    ) : (
-                      <p>{result?.service_data.ocr_ktp.message}</p>
-                    )
+                    <AnalyticsResult
+                      className={styles.analyticResultOcrKtp}
+                      result={result.service_data.ocr_ktp.job.result.result[0]}
+                      slug={'ocr-ktp'}
+                    />
+                  ) : (
+                    <p>{result?.service_data.ocr_ktp.message}</p>
+                  )
                 ) : (
                   <Spinner />
                 )}
