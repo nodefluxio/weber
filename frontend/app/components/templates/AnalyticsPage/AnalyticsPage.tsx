@@ -12,7 +12,6 @@ import { CustomError } from 'app/errors/CustomError'
 
 type Props = {
   analyticsName: string
-  shortDescription: string
   longDescription: string
   children: ReactNode
   examples: string[]
@@ -24,7 +23,6 @@ type Props = {
 
 export const AnalyticsPage: React.FC<Props> = ({
   analyticsName,
-  shortDescription,
   longDescription,
   children,
   examples,
@@ -76,7 +74,6 @@ export const AnalyticsPage: React.FC<Props> = ({
   return (
     <AnalyticsContainer
       analyticsName={analyticsName}
-      shortDescription={shortDescription}
       longDescription={longDescription}
       currentStep={currentStep}
       openModal={openModal}
