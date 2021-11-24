@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
+- [FRONTEND] Add OCR Receipt Innovations Page 
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Add current balance to catalog browse step
@@ -18,7 +18,6 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add contact us link
 
 ### Changed
-
 
 - [FRONTEND] Change pin required checking to client side
 - [FRONTEND] Change phone checking to client side

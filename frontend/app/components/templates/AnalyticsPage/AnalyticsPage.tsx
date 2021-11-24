@@ -8,6 +8,7 @@ import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/Ana
 import Feedback from '../../modules/Feedback/Feedback'
 import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
+import { postInnovation } from '@/api/innovationsAPI'
 import { CustomError } from 'app/errors/CustomError'
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
   slug: string
   handleResult: (res: any) => void
   addionalStepOneNode?: ReactNode
+  isInnovation?: boolean
 }
 
 export const AnalyticsPage: React.FC<Props> = ({
@@ -29,7 +31,8 @@ export const AnalyticsPage: React.FC<Props> = ({
   serviceID,
   slug,
   handleResult,
-  addionalStepOneNode
+  addionalStepOneNode,
+  isInnovation
 }) => {
   const [photo, setPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
@@ -49,7 +52,9 @@ export const AnalyticsPage: React.FC<Props> = ({
 
   const resolveAnalytics = async (session_id: string) => {
     try {
-      const res = await postServicePhoto(serviceID, session_id, photo)
+      const res = isInnovation
+        ? await postInnovation(serviceID, session_id, photo)
+        : await postServicePhoto(serviceID, session_id, photo)
       handleResult(res)
       setIsResult(true)
     } catch (err) {

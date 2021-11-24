@@ -129,3 +129,13 @@ export interface CheckLimitResponse extends StandardResponse {
 export interface CheckAccountResponse extends StandardResponse {
   data: PaymentAccountInfo
 }
+
+export type InnovationResponse<T> = {
+  message: string
+  ok: boolean
+  service_data: {
+    job: T
+    message: string
+    ok: boolean
+  }
+}

@@ -77,6 +77,20 @@ export type MenuInfo = {
   onClick: () => void
 }
 
+export type ReceiptItem = {
+  qty: string
+  name: string
+  price: string
+  total: string
+}
+
+export interface OCRReceiptData {
+  address: string
+  number: string
+  info: string[]
+  item: ReceiptItem[]
+}
+
 export type PaymentAccountInfo = {
   full_name: string
   phone: string
