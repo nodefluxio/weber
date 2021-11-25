@@ -59,7 +59,11 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
   return (
     <div className={styles.container}>
       <section className={styles.heroSection}>
-        <Carousel withButton={false} vertical={true} delay={4000}>
+        <Carousel
+          className={styles.caraousel}
+          withButton={false}
+          vertical={true}
+          delay={4000}>
           {heroContentItems.map((item, idx) => (
             <CarouselItem className={styles.carouselItem} key={idx}>
               <div className={styles.heroContentContainer}>
@@ -87,6 +91,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                     layout="fill"
                     objectFit="contain"
                     loading="eager"
+                    alt="cover-image"
                     priority
                   />
                 </div>
@@ -102,6 +107,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/solutions-01.png"
               width={672}
               height={522}
+              alt="solutions-01"
             />
           </div>
           <div className={styles.texts}>
@@ -113,6 +119,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt="logogram"
             />
           </div>
         </div>
@@ -140,6 +147,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/products-01.png"
               width={490}
               height={490}
+              alt="products-91"
             />
           </div>
           <div className={styles.texts}>
@@ -151,6 +159,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt="logogram"
             />
           </div>
         </div>
