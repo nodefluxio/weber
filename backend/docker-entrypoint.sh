@@ -2,11 +2,15 @@
 
 if [ ! -z "$1" ]
 then
-    refresh="$1"
-    if [ $refresh == "refresh" ]
+    arg="$1"
+    if [ $arg == "refresh" ]
     then
-        echo "Running migration"
+        echo "Running seed and clean-up data"
         backend refresh
+    elif [ $arg == "seed" ]
+    then
+        echo "Running seed data"
+        backend seed
     fi
 fi
 
