@@ -9,7 +9,10 @@ import styles from './Navbar.module.scss'
 export const Navbar = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
   const drawerRef = useRef<HTMLUListElement>(null)
+  const [scrolled, setScrolled] = useState(false)
+
   const router = useRouter()
+
   useEffect(() => {
     const closeDrawer = (event: any) => {
       if (drawerRef.current && drawerRef.current.contains(event.target)) {
@@ -17,24 +20,32 @@ export const Navbar = () => {
       }
       setOpenDrawer(false)
     }
+    document.addEventListener('scroll', () => {
+      const scroll = window.scrollY > 5
+      if (scroll) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+      }
+    })
     document.addEventListener('mousedown', closeDrawer)
     return () => document.removeEventListener('mousedown', closeDrawer)
   }, [])
 
   return (
     <nav
-      className={`${styles.navbar} ${
-        router.pathname === '/' ? styles.fixedNav : ''
-      }`}>
+      className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}
+    ${router.pathname !== '/' ? styles.plainNavbar : ''}`}>
       <div className={styles.container}>
-        <Link href="/">
+        <Link href="/" passHref>
           <div className={styles.imageContainer}>
             <Image
-              src={'/assets/images/nodeflux-logo.png'}
+              src={'/assets/images/nodeflux-logo 1.png'}
               layout="fill"
               objectFit="contain"
               quality={100}
               priority
+              alt="nodeflux-logo"
             />
           </div>
         </Link>
@@ -46,26 +57,23 @@ export const Navbar = () => {
         <ul ref={drawerRef} className={`${openDrawer && styles.openDrawer}`}>
           <li>
             <Link href="/#solutions">
-              <span>SOLUTIONS</span>
+              <a>SOLUTIONS</a>
             </Link>
           </li>
           <li>
             <Link href="/#analytics">
-              <span>ANALYTICS</span>
+              <a>ANALYTICS</a>
             </Link>
           </li>
           <li>
             <Link href="/#new-innovations">
-              <span>NEW INNOVATIONS</span>
+              <a>NEW INNOVATIONS</a>
             </Link>
           </li>
           <li className={styles.contactUs}>
-            <Link href="https://www.nodeflux.io/Contact-Us" passHref>
+            <Link href="https://www.nodeflux.io/Contact-Us">
               <a target="_blank">
-                <Button
-                  className={styles.btn}
-                  color={Color.Secondary}
-                  type="link">
+                <Button className={styles.btn} color={Color.Secondary}>
                   Contact Us
                 </Button>
               </a>
