@@ -1,0 +1,24 @@
+.codeSnippetContainer {
+  position: relative;
+
+  .receiptButtonCopy {
+    position: -webkit-sticky;
+    position: sticky;
+    width: 30%;
+    background: rgba(black, 0.3);
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    top: 1rem;
+    float: right;
+    margin-right: 1rem;
+    z-index: 5;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: all 0.1s linear;
+    &:hover {
+      background: rgba(black, 0.6);
+    }
+  }
+}
