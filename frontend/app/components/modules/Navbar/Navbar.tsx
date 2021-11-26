@@ -37,18 +37,21 @@ export const Navbar = () => {
       className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}
     ${router.pathname !== '/' ? styles.plainNavbar : ''}`}>
       <div className={styles.container}>
-        <Link href="/" passHref>
-          <div className={styles.imageContainer}>
-            <Image
-              src={'/assets/images/nodeflux-logo.png'}
-              layout="fill"
-              objectFit="contain"
-              quality={100}
-              priority
-              alt="nodeflux-logo"
-            />
-          </div>
-        </Link>
+        <div className={styles.imageContainer}>
+          <Link href="/">
+            <a>
+              <Image
+                src={'/assets/images/nodeflux-logo.png'}
+                layout="fill"
+                objectFit="contain"
+                quality={100}
+                priority
+                alt="nodeflux-logo"
+              />
+            </a>
+          </Link>
+        </div>
+
         <button
           className={styles.hamburgerButton}
           onClick={() => setOpenDrawer(true)}>
