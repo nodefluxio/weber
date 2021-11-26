@@ -7,10 +7,14 @@ then
     then
         echo "Running seed and clean-up data"
         backend refresh
-    elif [ $arg == "seed" ]
+    elif [ $arg == "seed" ] # Use this if we have a new/changed seed and don't want to delete the data
     then
         echo "Running seed data"
         backend seed
+    elif [ $arg == "migrate" ] # Use this if we have a new/changed schema and don't want to delete the data
+    then
+        echo "Running migration"
+        backend migrate
     fi
 fi
 
