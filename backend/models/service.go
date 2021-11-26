@@ -72,10 +72,10 @@ type ResponseResultData struct {
 }
 
 type BoundingBox struct {
-	Left	float64 `json:"left"`
-	Top		float64 `json:"top"`
-	Width	float64 `json:"width"`
-	Height	float64 `json:"height"`
+	Left   float64 `json:"left"`
+	Top    float64 `json:"top"`
+	Width  float64 `json:"width"`
+	Height float64 `json:"height"`
 }
 
 func (m *Model) CreateService(Service *Service) (err error) {
@@ -102,5 +102,10 @@ func (m *Model) GetServiceBySlug(Service *Service, slug string) (err error) {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func (m *Model) UpdateService(Service *Service) (err error) {
+	m.DBConn.Save(Service)
 	return nil
 }

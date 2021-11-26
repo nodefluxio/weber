@@ -178,7 +178,7 @@ func seedService(model *models.Model) {
 			Slug:               "ocr-receipt",
 			Thumbnail:          "ocr-receipt.png",
 			AccessKey:          "",
-			Token:             	"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "OCR Receipt Recognition is one of the new innovations developed by Nodeflux (still experimental). This analytic has the ability to read and extract the characters on a shopping receipt issued by various supermarkets.",
 			LongDescription:    "Nodeflux has developed new technology that allows users to more easily extract data from receipts, called OCR Receipt Recognition. The following data can be extracted: product description, location, price, and total price. By extracting this data, sellers will be able to analyze buyer behavior, and prepare for campaigns, discounts, and cashback in order to set product prices, encourage product improvements, and promote products. In the future, this innovation will continue to improve.",
@@ -190,7 +190,21 @@ func seedService(model *models.Model) {
 	}
 
 	for _, service := range services {
-		model.CreateService(&service)
+		if err := model.CreateService(&service); err != nil {
+			var serviceInDb models.Service
+			model.GetServiceBySlug(&serviceInDb, service.Slug)
+			serviceInDb.Name = service.Name
+			serviceInDb.Type = service.Type
+			serviceInDb.Thumbnail = service.Thumbnail
+			serviceInDb.AccessKey = service.AccessKey
+			serviceInDb.Token = service.Token
+			serviceInDb.Timestamp = service.Timestamp
+			serviceInDb.ShortDescription = service.ShortDescription
+			serviceInDb.LongDescription = service.LongDescription
+			serviceInDb.SpecialInstruction = service.SpecialInstruction
+			serviceInDb.UpdatedAt = service.UpdatedAt
+			model.UpdateService(&serviceInDb)
+		}
 	}
 }
 
