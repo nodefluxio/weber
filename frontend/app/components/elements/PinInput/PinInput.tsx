@@ -77,10 +77,11 @@ export const PinInput = ({
             ref={(el) => refs.current.push(el!)}
             type="password"
             maxLength={1}
-            pattern="[0-9]"
+            pattern="[0-9]*"
             className={styles.pinInput}
             onChange={(event) => handleChange(event, i)}
             onKeyDown={(event) => handleKeyDown(event, i)}
+            inputMode="numeric"
           />
         ))}
       </div>
