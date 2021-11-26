@@ -77,7 +77,7 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
           your e-wallet account first
         </p>
         <p>
-          *Please remember the phone number, your phone number will be used when
+          *Please remember your phone number, since it will be used when
           you did the transaction
         </p>
       </div>
@@ -95,12 +95,12 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
           <TextField
             id="phone"
             label="Phone Number"
-            placeholder="Your phone number"
+            placeholder="Your phone number (e.g. 0812345678 or 62812345678)"
             type="text"
             register={register}
             registerOptions={{
               required: 'required',
-              pattern: { value: /^[0-9]*$/, message: 'wrong format' }
+              pattern: { value: /^[0-9]*$/, message: 'Please enter numbers only (0-9)' }
             }}
             errors={errors}
           />
