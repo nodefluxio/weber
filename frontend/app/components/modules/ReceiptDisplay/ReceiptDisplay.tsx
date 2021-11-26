@@ -63,16 +63,11 @@ export const ReceiptDisplay = ({ result }: Props) => {
         </table>
         <table style={{ float: 'right' }}>
           <tbody>
-            <tr>
-              <td colSpan={2} style={{ padding: '0.5rem 0', fontWeight: 600 }}>
-                Additional Info
-              </td>
-            </tr>
             {Object.keys(result).map(
               (k, i) =>
                 additionalFields.includes(k.toLowerCase()) && (
                   <tr key={i}>
-                    <td style={{ paddingRight: '1rem' }}>{k}</td>
+                    <td style={{ paddingRight: '1rem' }}>{k.toUpperCase()}</td>
                     <td style={{ textAlign: 'right' }}>{(result as any)[k]}</td>
                   </tr>
                 )
