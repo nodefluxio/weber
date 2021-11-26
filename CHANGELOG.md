@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [FRONTEND] Add OCR Receipt Innovations Page 
+- [FRONTEND] Add OCR Receipt Innovations Page
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add API Reset Balance Account on Face Payment
 - [FRONTEND] Add current balance to catalog browse step
@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Make Big Input Component responsive
 - [FRONTEND] Add contact us link
 - [BACKEND] Add entrypoint command for seed only
+- [BACKEND] Add entrypoint command for migrate only
 
 ### Changed
 
@@ -42,6 +43,7 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Update description on seeds data
 - [BACKEND] Update env FACE_ID to use by Face Match with Enrollment matching with our CEO's face
+- [BACKEND] Fix seeder to update when the data already exists
 
 ### Removed
 
