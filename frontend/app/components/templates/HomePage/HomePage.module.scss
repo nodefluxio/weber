@@ -192,6 +192,22 @@
 
   .analyticsSection {
     .cards {
+      .image {
+        width: 171px;
+        height: 171px;
+        margin: 50px auto;
+        @include phone {
+          width: 150px;
+          height: 150px;
+          margin: 30px auto;
+        }
+      }
+      .cardContent {
+        min-height: 300px;
+        @include phone {
+          min-height: 220px;
+        }
+      }
       .footer {
         position: absolute;
         bottom: 2.5rem;

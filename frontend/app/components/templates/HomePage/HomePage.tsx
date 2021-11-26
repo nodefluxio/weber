@@ -163,14 +163,16 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
           {analytics.map((analytic) => (
             <Card key={analytic.id} color={Color.Primary}>
               <CardImage
+                className={styles.image}
+                layout="fill"
+                objectFit="contain"
                 img={`/assets/images/analytics/${analytic.thumbnail}`}
-                width={171}
-                height={171}
+                alt={`icon ${analytic.thumbnail}`}
               />
               <CardContent
+                className={styles.cardContent}
                 color={Color.Primary}
-                title={analytic.name}
-                height={'300px'}>
+                title={analytic.name}>
                 {analytic.short_description}
                 <div className={styles.footer}>
                   <Link href={'/analytics/' + analytic.slug} passHref>
