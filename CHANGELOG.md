@@ -34,6 +34,8 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Update Face-payment instructions
 - [FRONTEND] Update ActivationForm wording about PIN
 - [FRONTEND] Fix minimum payment for pin input accept 1000000
+- [FRONTEND] Update Navbar to be sticky on all devices
+- [FRONTEND] Fix Carousel still slide when dot is clicked
 - [FRONTEND] Update input PinInput mode as numerical (mobile browser)
 - [FRONTEND] Changed error message & placeholder on payment form
 - [BACKEND] Refactor API Get Activate Account on Face Payment
