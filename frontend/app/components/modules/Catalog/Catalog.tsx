@@ -5,9 +5,8 @@ import { Card } from '../Card/Card'
 import { CardContent } from '../CardContent/CardContent'
 import { Color, ShoppingItem } from '@/types/elements'
 import { formatMoney } from '@/utils/utils'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { checkAccount } from '@/api/paymentAPI'
-import { useState } from 'react'
 import Image from 'next/image'
 
 const ITEM_LIST: ShoppingItem[] = [
@@ -61,7 +60,12 @@ export const Catalog = ({ onAddToCart, sessionId }: Props) => {
   return (
     <div className={styles.catalogContainer}>
       <div className={styles.balance}>
-        <Image src="/assets/icons/balance-icon.svg" width={20} height={20} />
+        <Image
+          src="/assets/icons/balance-icon.svg"
+          width={20}
+          height={20}
+          alt="balance-icon"
+        />
         <p>Rp. {balance ? formatMoney(balance) : 0}</p>
       </div>
       <div className={styles.catalog}>
@@ -73,6 +77,7 @@ export const Catalog = ({ onAddToCart, sessionId }: Props) => {
                 img={`/assets/images/solutions/face-payment/${item.image}`}
                 layout="fill"
                 objectFit="contain"
+                alt={item.name}
               />
               <CardContent className={styles.cardContent}>
                 <h3>{item.name}</h3>
