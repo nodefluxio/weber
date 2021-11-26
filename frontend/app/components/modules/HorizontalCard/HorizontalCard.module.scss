@@ -1,0 +1,18 @@
+@import '../../../styles/abstracts/variables';
+
+.horizontalCard {
+  width: 40%;
+
+  .card {
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .title {
+    text-align: left;
+  }
+}
