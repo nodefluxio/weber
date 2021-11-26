@@ -40,7 +40,7 @@ export const Navbar = () => {
         <Link href="/" passHref>
           <div className={styles.imageContainer}>
             <Image
-              src={'/assets/images/nodeflux-logo 1.png'}
+              src={'/assets/images/nodeflux-logo.png'}
               layout="fill"
               objectFit="contain"
               quality={100}
