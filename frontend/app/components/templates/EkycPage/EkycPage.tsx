@@ -225,7 +225,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
                       slug={'ocr-ktp'}
                     />
                   ) : (
-                    <p>{result?.service_data.ocr_ktp.message}</p>
+                    <p className={styles.ocrKtpErrorMessage}>{result?.service_data.ocr_ktp.message}</p>
                   )
                 ) : (
                   <Spinner />
