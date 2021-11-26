@@ -91,7 +91,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                     layout="fill"
                     objectFit="contain"
                     loading="eager"
-                    alt="cover-image"
+                    alt="hero-image"
                     priority
                   />
                 </div>
@@ -107,7 +107,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/solutions-01.png"
               width={672}
               height={522}
-              alt="solutions-01"
+              alt="solution-intersection-image"
             />
           </div>
           <div className={styles.texts}>
@@ -119,7 +119,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
-              alt="logogram"
+              alt="visual of a quarter circle"
             />
           </div>
         </div>
@@ -147,7 +147,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/products-01.png"
               width={490}
               height={490}
-              alt="products-91"
+              alt="product-intersection-image"
             />
           </div>
           <div className={styles.texts}>
@@ -159,7 +159,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
-              alt="logogram"
+              alt="visual of a quarter circle"
             />
           </div>
         </div>
