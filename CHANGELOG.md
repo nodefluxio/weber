@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+### Changed
+
+- [FRONTEND] New OCR Receipt result display (colorized JSON dan simpler text display)
+
+### Removed
+
+## [0.4.0 - 26/11/2021]
+
+### Added
+
 - [FRONTEND] Add OCR Receipt Innovations Page 
 - [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
 - [BACKEND] Add API Reset Balance Account on Face Payment
