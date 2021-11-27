@@ -44,7 +44,23 @@ code {
   font-family: $code-snippet-font;
   margin: 0;
   padding: 0.5rem 0;
+  overflow-y: auto;
+  background: none !important;
   span {
     font-family: $code-snippet-font;
   }
+}
+// Custom scrollbar (for Webkit and Chromium browsers only)
+::-webkit-scrollbar-track {
+  background: none;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
