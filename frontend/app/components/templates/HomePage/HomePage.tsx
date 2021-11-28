@@ -143,17 +143,16 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
           navigation={!isMobile}
           centeredSlides={isMobile}
           slidesPerView={'auto'}
-          spaceBetween={20}
+          spaceBetween={10}
           grabCursor
           breakpoints={{
             '480': {
-              slidesPerView: 2
+              slidesPerView: 2,
+              spaceBetween: 20
             },
             '768': {
-              slidesPerView: 3
-            },
-            '1024': {
-              slidesPerView: 4
+              slidesPerView: 3,
+              spaceBetween: 20
             }
           }}>
           {solutions.map((solution) => (

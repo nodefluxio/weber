@@ -193,9 +193,13 @@
 
   .solutionsSection {
     .swipper {
-      width: 100%;
+      width: 80%;
       height: 420px;
+      @include tablet {
+        width: 90%;
+      }
       @include phone {
+        width: 100%;
         height: unset;
       }
       .swipperSlide {
