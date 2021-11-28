@@ -1,4 +1,5 @@
 @import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
 
 .card {
   position: relative;
@@ -21,7 +22,11 @@
     transform: scale(1.025);
     opacity: 0.9;
   }
-
+  @include tablet {
+    &:hover {
+      transform: unset;
+    }
+  }
   a {
     color: transparent;
 
