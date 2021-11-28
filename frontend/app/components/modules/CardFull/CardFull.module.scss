@@ -11,25 +11,15 @@
   background: linear-gradient($primary-color, $primary-color);
   margin: auto;
 
-  .image {
-    opacity: 0.5;
+  .imgContainer {
+    margin-top: 10px;
+    position: relative;
+    width: 100%;
+    height: 50%;
   }
-
-  .body {
-    position: absolute;
-    bottom: 0px;
-    padding: 1.5rem;
-    h3 {
-      font-size: 1.4rem;
-    }
-  }
-
   &:hover {
     transform: scale(1.025);
-
-    .image {
-      opacity: 1;
-    }
+    opacity: 0.9;
   }
 
   a {

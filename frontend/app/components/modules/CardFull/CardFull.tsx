@@ -1,29 +1,29 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from './CardFull.module.scss'
+import { ReactNode } from 'react'
 
 type Props = {
   img: string
   title: string
-  desc: string
   href: string
+  children: ReactNode
 }
 
-export const CardFull = ({ img, title, desc, href }: Props) => {
+export const CardFull = ({ img, title, href, children }: Props) => {
   return (
     <div className={styles.card}>
-      <Image
-        className={styles.image}
-        alt={`image of ${title}`}
-        src={img}
-        layout="fill"
-        objectFit="cover"
-        quality={100}
-      />
-      <div className={styles.body}>
-        <h3>{title}</h3>
-        <p>{desc}</p>
+      <div className={styles.imgContainer}>
+        <Image
+          alt={`image of ${title}`}
+          src={img}
+          layout="fill"
+          objectFit="contain"
+          quality={100}
+        />
       </div>
+
+      {children}
       <Link href={href}>
         <a>Try it now</a>
       </Link>
