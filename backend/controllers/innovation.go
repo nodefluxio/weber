@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/tidwall/gjson"
 )
 
 func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.ServiceRequestResultData, error) {
@@ -41,4 +43,20 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	}
 
 	return data, nil
+}
+
+func ImplementFOAInnovation(postBody []byte) (models.ServiceRequestResultData, error) {
+	// Request to Face Detection API
+	resultFaceDetection, err := RequestToInnovationSync(postBody, "face-detection")
+	if err != nil {
+		return resultFaceDetection, err
+	}
+
+	resultFaceDetectionJson, _ := json.Marshal(resultFaceDetection)
+	isFaceDetected := gjson.Get(string(resultFaceDetectionJson), "job.result.result.0.face_detection.face_detected").Bool()
+	if !isFaceDetected {
+		return resultFaceDetection, err
+	}
+	
+	return resultFaceDetection, nil
 }
