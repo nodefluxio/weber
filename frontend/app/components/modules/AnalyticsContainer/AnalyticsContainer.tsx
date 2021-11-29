@@ -29,7 +29,7 @@ export const AnalyticsContainer = ({
         <RequestDemoFormPopup />
       </Modal>
       <Banner
-        bannerUrl={`/assets/images/analytics/${slug}/banner.jpg`}
+        bannerUrl={`/assets/images/analytics/${slug}/banner.png`}
         analyticsName={analyticsName}
         longDescription={longDescription}
       />

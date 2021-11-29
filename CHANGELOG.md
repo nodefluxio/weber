@@ -3,7 +3,14 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
 
+- [FRONTEND] Add solutions banner image
+### Changed
+
+- [FRONTEND] Update banner image of analytics
+
+## [0.4.0 - 26/11/2021]
 ### Added
 
 ### Changed
