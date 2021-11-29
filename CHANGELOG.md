@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [FRONTEND] Add Horizontal Card Component
 - [FRONTEND] Add nodeflux social media, products, and company links
 - [FRONTEND] Add solutions banner image
 
@@ -15,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Update banner image of analytics
 
 ## [0.4.0 - 26/11/2021]
+
 ### Added
 
 ### Changed
