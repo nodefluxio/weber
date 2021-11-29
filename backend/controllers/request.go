@@ -49,13 +49,18 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 
 func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputData models.ServiceRequestInput) {
 	var err error
+	var serviceData models.ServiceRequestResultData
 
 	requestData := inputData.Data
 	additionalParams, _ := json.Marshal(requestData.AdditionalParams)
 	postBody := []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
 		string(additionalParams), strings.Join(requestData.Images, `", "`)))
 
-	serviceData, err := RequestToInnovationSync(postBody, service.Slug)
+	if service.Slug == "face-occlusion-attribute" {
+		serviceData, err = ImplementFOAInnovation(postBody)
+	} else {
+		serviceData, err = RequestToInnovationSync(postBody, service.Slug)
+	}
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
