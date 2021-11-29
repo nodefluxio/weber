@@ -1,4 +1,5 @@
 import { getServiceBySlug } from '@/api/analyticsAPI'
+import { CodeSnippet } from '@/elements/CodeSnippet/CodeSnippet'
 import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
 import { ServiceBySlugResponseData } from '@/types/responses'
@@ -21,15 +22,10 @@ const Innovations = ({
       if (typeof res === 'string') {
         return <div>{res}</div>
       }
-
       if (isOCRReceipt(res)) {
         return <ReceiptDisplay result={res} />
       } else {
-        return (
-          <pre>
-            <code>{JSON.stringify(res, null, 2)}</code>
-          </pre>
-        )
+        return <CodeSnippet lang="json" code={JSON.stringify(res, null, 3)} />
       }
     } else {
       return (
