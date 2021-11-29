@@ -1,7 +1,8 @@
 @import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
 
 .horizontalCard {
-  width: 40%;
+  width: 100%;
 
   .card {
     overflow: hidden;
