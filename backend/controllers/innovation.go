@@ -3,6 +3,7 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,11 +14,9 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (map[string
 	var request *http.Request
 	var data map[string]interface{}
 
+	BASE_URL := fmt.Sprintf("%s/%s/predict", os.Getenv("URL_INNOVATIONS"), innovationSlug)
 	payload := bytes.NewBuffer(postBody)
-
-	if innovationSlug == "ocr-receipt" {
-		request, err = http.NewRequest("POST", os.Getenv("URL_OCR_RECEIPT"), payload)
-	} // add new condition for new innovation here
+	request, err = http.NewRequest("POST", BASE_URL, payload)
 
 	if err != nil {
 		log.Fatal(err)

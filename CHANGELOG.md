@@ -6,9 +6,23 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [FRONTEND] Add OCR Receipt Innovations Page 
-- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
-- [BACKEND] Add API Reset Balance Account on Face Payment
+### Changed
+
+- [FRONTEND] Update Navbar to be sticky on all devices
+- [FRONTEND] Fix Carousel still slide when dot is clicked
+- [FRONTEND] Make analytic cards smaller on mobile
+- [FRONTEND] Changed error message & placeholder on payment form
+- [FRONTEND] Update input PinInput mode as numerical (mobile browser)
+- [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
+- [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
+
+### Removed
+
+## [0.4.0 - 25/11/2021]
+
+### Added
+
+- [FRONTEND] Add OCR Receipt Innovations Page
 - [FRONTEND] Add current balance to catalog browse step
 - [FRONTEND] Add feature to remove local storage if face payment face analytics failed
 - [FRONTEND] Add back to catalog feature if balance insufficient
@@ -16,6 +30,8 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add shopping balance in catalog
 - [FRONTEND] Make Big Input Component responsive
 - [FRONTEND] Add contact us link
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
+- [BACKEND] Add API Reset Balance Account on Face Payment
 - [BACKEND] Add entrypoint command for seed only
 
 ### Changed
@@ -34,11 +50,6 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Update Face-payment instructions
 - [FRONTEND] Update ActivationForm wording about PIN
 - [FRONTEND] Fix minimum payment for pin input accept 1000000
-- [FRONTEND] Make analytic cards smaller on mobile
-- [FRONTEND] Update Navbar to be sticky on all devices
-- [FRONTEND] Fix Carousel still slide when dot is clicked
-- [FRONTEND] Update input PinInput mode as numerical (mobile browser)
-- [FRONTEND] Changed error message & placeholder on payment form
 - [BACKEND] Refactor API Get Activate Account on Face Payment
 - [BACKEND] Update description on seeds data
 - [BACKEND] Update env FACE_ID to use by Face Match with Enrollment matching with our CEO's face
@@ -46,7 +57,8 @@ All notable changes to this project will be documented in this file.
 ### Removed
 
 - [FRONTEND] Remove check-phone api handler
-- [BACKEND] Delete API Check Limit on Face Payment
+- [FRONTEND] Remove short description on Banner
+- [BACKEND] Remove API Check Limit on Face Payment
 
 ## [0.3.0 - 17/11/2021]
 
