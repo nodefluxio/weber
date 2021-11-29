@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/models"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -9,10 +10,10 @@ import (
 	"os"
 )
 
-func RequestToInnovationSync(postBody []byte, innovationSlug string) (map[string]interface{}, error) {
+func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.ServiceRequestResultData, error) {
 	var err error
 	var request *http.Request
-	var data map[string]interface{}
+	var data models.ServiceRequestResultData
 
 	BASE_URL := fmt.Sprintf("%s/%s/predict", os.Getenv("URL_INNOVATIONS"), innovationSlug)
 	payload := bytes.NewBuffer(postBody)

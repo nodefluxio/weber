@@ -175,10 +175,10 @@ func seedService(model *models.Model) {
 		{
 			Name:               "OCR Receipt Recognition",
 			Type:               "innovation",
-			Slug:               "ocr-struct",
-			Thumbnail:          "ocr-struct.png",
+			Slug:               "ocr-receipt",
+			Thumbnail:          "ocr-receipt.png",
 			AccessKey:          "",
-			Token:             	"",
+			Token:				"",
 			Timestamp:          "",
 			ShortDescription:   "OCR Receipt Recognition is one of the new innovations developed by Nodeflux (still experimental). This analytic has the ability to read and extract the characters on a shopping receipt issued by various supermarkets.",
 			LongDescription:    "Nodeflux has developed new technology that allows users to more easily extract data from receipts, called OCR Receipt Recognition. The following data can be extracted: product description, location, price, and total price. By extracting this data, sellers will be able to analyze buyer behavior, and prepare for campaigns, discounts, and cashback in order to set product prices, encourage product improvements, and promote products. In the future, this innovation will continue to improve.",
