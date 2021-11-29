@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+
+- [FRONTEND] Add nodeflux social media, products, and company links
+### Changed
+
+- [FRONTEND] Update contact us direct link
+## [0.4.0 - 26/11/2021]
 
 ### Added
 
