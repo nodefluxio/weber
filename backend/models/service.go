@@ -105,6 +105,14 @@ func (m *Model) GetServiceBySlug(Service *Service, slug string) (err error) {
 	return nil
 }
 
+func (m *Model) GetServiceByID(Service *Service, id uint) (err error) {
+	err = m.DBConn.Where("id = ?", id).First(Service).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (m *Model) UpdateService(Service *Service) (err error) {
 	m.DBConn.Save(Service)
 	return nil

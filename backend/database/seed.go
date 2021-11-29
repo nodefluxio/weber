@@ -61,6 +61,7 @@ func seedService(model *models.Model) {
 	// all tokens and access keys provided here are just a random example
 	var services = []models.Service{
 		{
+			ID:                 1,
 			Name:               "OCR Kartu Tanda Penduduk",
 			Type:               "analytic",
 			Slug:               "ocr-ktp",
@@ -75,6 +76,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 2,
 			Name:               "License Plate Recognition",
 			Type:               "analytic",
 			Slug:               "license-plate-recognition",
@@ -89,6 +91,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 3,
 			Name:               "People Density",
 			Type:               "analytic",
 			Slug:               "people-density",
@@ -103,6 +106,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 4,
 			Name:               "Face Match with Enrollment",
 			Type:               "analytic",
 			Slug:               "face-match-enrollment",
@@ -117,6 +121,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 5,
 			Name:               "Face Mask Detection",
 			Type:               "analytic",
 			Slug:               "face-mask",
@@ -131,6 +136,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 6,
 			Name:               "Face Demography",
 			Type:               "analytic",
 			Slug:               "face-demography",
@@ -145,6 +151,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 7,
 			Name:               "Electronic Know Your Customer",
 			Type:               "solution",
 			Slug:               "ekyc",
@@ -159,6 +166,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 8,
 			Name:               "Face Payment",
 			Type:               "solution",
 			Slug:               "face-payment",
@@ -173,6 +181,7 @@ func seedService(model *models.Model) {
 			UpdatedAt:          time.Now(),
 		},
 		{
+			ID:                 9,
 			Name:               "OCR Receipt Recognition",
 			Type:               "innovation",
 			Slug:               "ocr-receipt",
@@ -192,8 +201,9 @@ func seedService(model *models.Model) {
 	for _, service := range services {
 		if err := model.CreateService(&service); err != nil {
 			var serviceInDb models.Service
-			model.GetServiceBySlug(&serviceInDb, service.Slug)
+			model.GetServiceByID(&serviceInDb, service.ID)
 			serviceInDb.Name = service.Name
+			serviceInDb.Slug = service.Slug
 			serviceInDb.Type = service.Type
 			serviceInDb.Thumbnail = service.Thumbnail
 			serviceInDb.AccessKey = service.AccessKey
