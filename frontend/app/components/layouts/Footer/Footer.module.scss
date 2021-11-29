@@ -78,6 +78,13 @@
             height: 50px;
           }
           .col {
+            a {
+              display: block;
+              margin: 12px 0;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
             &:nth-child(1) {
               margin-right: 5rem;
             }

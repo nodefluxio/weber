@@ -3,19 +3,22 @@
 
 .navbar {
   flex: 1;
-  height: 10vh;
-  background-color: $primary-color;
+  height: 70px;
+  background: linear-gradient(270deg, #240a50 0%, #7f4fa8 100%);
+
   z-index: 300;
   text-transform: uppercase;
   font-family: $secondary-font;
   width: 100%;
-  &.fixedNav {
-    @include tablet {
-      position: fixed;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-    }
+  position: fixed;
+  &.plainNavbar {
+    background: unset;
+    background-color: $primary-color;
   }
+  &.scrolled {
+    box-shadow: rgba(#200449, 0.2) 0px 8px 24px;
+  }
+
   .container {
     width: 90%;
     height: 100%;
@@ -116,7 +119,7 @@
             color: unset;
           }
         }
-        span {
+        a {
           padding: 1rem 0;
           @include tablet {
             padding: unset;

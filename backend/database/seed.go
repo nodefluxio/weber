@@ -175,8 +175,8 @@ func seedService(model *models.Model) {
 		{
 			Name:               "OCR Receipt Recognition",
 			Type:               "innovation",
-			Slug:               "ocr-receipt",
-			Thumbnail:          "ocr-receipt.png",
+			Slug:               "ocr-struct",
+			Thumbnail:          "ocr-struct.png",
 			AccessKey:          "",
 			Token:             	"",
 			Timestamp:          "",

@@ -61,6 +61,7 @@ export const Footer = () => {
                     src="/assets/images/nist-logo.png"
                     layout="fill"
                     objectFit="contain"
+                    alt="NIST logo"
                   />
                 </div>
                 <div>
@@ -72,36 +73,52 @@ export const Footer = () => {
               <div className={styles.col}>
                 <h4>Products</h4>
                 <div className={styles.imgContainer}>
-                  <Image
-                    src="/assets/images/visionaire-white.png"
-                    layout="fill"
-                    objectFit="contain"
-                  />
+                  <Link href="https://docs.nodeflux.io/">
+                    <a target="_blank">
+                      <Image
+                        src="/assets/images/visionaire-white.png"
+                        layout="fill"
+                        objectFit="contain"
+                        alt="Visionaire logo"
+                      />
+                    </a>
+                  </Link>
                 </div>
                 <div className={styles.imgContainer}>
-                  <Image
-                    src="/assets/images/identifai-white.png"
-                    layout="fill"
-                    objectFit="contain"
-                  />
+                  <Link href="https://www.identifai.id/">
+                    <a target="_blank">
+                      <Image
+                        src="/assets/images/identifai-white.png"
+                        layout="fill"
+                        objectFit="contain"
+                        alt="Identifai logo"
+                      />
+                    </a>
+                  </Link>
                 </div>
               </div>
               <div className={styles.col}>
                 <h4>Company</h4>
-                <p>About Us</p>
-                <p>FAQ</p>
-                <p>Press</p>
+                <Link href="https://www.nodeflux.io/about-nodeflux">
+                  <a target="_blank">About Us</a>
+                </Link>
+                <Link href="https://www.nodeflux.io/about-nodeflux">
+                  <a target="_blank">FAQ</a>
+                </Link>
+                <Link href="https://www.nodeflux.io/about-nodeflux">
+                  <a target="_blank">Press</a>
+                </Link>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.sosmed}>
           <div className={styles.icon}>
-            <Link href="/">
-              <a>
+            <Link href="https://bit.ly/NodefluxwhatsApp">
+              <a target="_blank">
                 <Image
                   src="/assets/icons/wa.png"
-                  alt="whatsap"
+                  alt="nodeflux WhatsApp phone number"
                   width={27}
                   height={27}
                 />
@@ -109,11 +126,11 @@ export const Footer = () => {
             </Link>
           </div>
           <div className={styles.icon}>
-            <Link href="/">
-              <a>
+            <Link href="https://instagram.com/nodeflux">
+              <a target="_blank">
                 <Image
                   src="/assets/icons/ig.png"
-                  alt="whatsap"
+                  alt="nodeflux instagram profile"
                   width={27}
                   height={27}
                 />
@@ -121,11 +138,11 @@ export const Footer = () => {
             </Link>
           </div>
           <div className={styles.icon}>
-            <Link href="/">
-              <a>
+            <Link href="https://www.linkedin.com/company/nodeflux">
+              <a target="_blank">
                 <Image
                   src="/assets/icons/linkedin.png"
-                  alt="whatsap"
+                  alt="nodeflux linkedin profile"
                   width={27}
                   height={27}
                 />

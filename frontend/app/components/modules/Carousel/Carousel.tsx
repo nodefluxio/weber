@@ -8,25 +8,30 @@ type Props = {
   withButton?: boolean
   vertical?: boolean
   delay?: number
+  className?: string
 }
 
 export const Carousel = ({
   children,
   withButton = true,
   vertical = false,
-  delay = 3000
+  delay = 3000,
+  className
 }: Props) => {
   const [slideIndex, setSlideIndex] = useState(1)
   const [isDotClicked, setIsDotClicked] = useState(false)
 
   useEffect(() => {
     if (!isDotClicked) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (slideIndex === children.length) moveDot(1)
         else moveDot(slideIndex + 1)
       }, delay)
+      return () => {
+        clearTimeout(timer)
+      }
     }
-  }, [slideIndex])
+  }, [slideIndex, isDotClicked, children.length, delay])
 
   const next = () => {
     if (slideIndex !== children.length) {
@@ -49,7 +54,7 @@ export const Carousel = ({
   }
 
   return (
-    <div className={styles.carousel}>
+    <div className={`${styles.carousel} ${className}`}>
       {children.map((child, index) => (
         <div
           key={index}

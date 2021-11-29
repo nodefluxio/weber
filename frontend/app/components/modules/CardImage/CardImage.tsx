@@ -3,6 +3,7 @@ import styles from './CardImage.module.scss'
 
 type Props = {
   img: string
+  alt: string
   width?: number
   height?: number
   layout?: 'fixed' | 'fill' | 'intrinsic' | 'responsive' | undefined
@@ -16,6 +17,7 @@ export const CardImage = ({
   height,
   layout,
   objectFit,
+  alt,
   className
 }: Props) => {
   return (
@@ -26,6 +28,7 @@ export const CardImage = ({
         height={height}
         layout={layout}
         objectFit={objectFit}
+        alt={alt}
       />
     </div>
   )
