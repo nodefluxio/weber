@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [FRONTEND] Add Responsive Image Component
 - [FRONTEND] Add Horizontal Card Component
 - [FRONTEND] Add nodeflux social media, products, and company links
 - [FRONTEND] Add solutions banner image
