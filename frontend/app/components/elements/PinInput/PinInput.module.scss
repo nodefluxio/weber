@@ -4,24 +4,27 @@
 .pinInputWrapper {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  margin-right: 1rem;
   align-items: center;
-  justify-content: center;
-  margin: 2rem 0;
+  justify-content: space-between;
+  margin: 2rem 0.5rem;
   padding: 3rem 1.5rem;
   box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.2);
   border-radius: 9px;
   min-width: 240px;
   max-width: 720px;
 
-
   .grid {
     display: flex;
     flex: 1 1 0;
     min-width: 0;
-    gap: 1rem;
+    * + * {
+      margin-left: 1rem;
+    }
     @include phone {
-      gap: 0.5rem;
+      * + * {
+        margin-left: 0.5rem;
+      }
     }
   }
 
@@ -35,6 +38,7 @@
     outline: none;
     border: 1px solid $grey-text;
     border-radius: 4px;
+    margin-top: 1rem;
 
     &:focus {
       border-width: 1.5px;

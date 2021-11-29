@@ -9,11 +9,15 @@
 
   .buttonWrapper {
     display: flex;
-    gap: 2.5rem;
     flex-direction: row;
+    * + * {
+      margin-left: 2.5rem;
+    }
     @include phone {
       flex-direction: column;
-      gap: 1.5rem
+      * + * {
+        margin-top: 1.5rem;
+      }
     }
   }
 }
