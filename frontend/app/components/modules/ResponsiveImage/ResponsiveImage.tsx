@@ -10,7 +10,7 @@ type Props = {
 
 export const ResponsiveImage = ({ className, src, alt, objectFit }: Props) => {
   return (
-    <div className={className || styles.responsiveImage}>
+    <div className={`${styles.responsiveImage} ${className}`}>
       <Image src={src} alt={alt} layout="fill" objectFit={objectFit} />
     </div>
   )
