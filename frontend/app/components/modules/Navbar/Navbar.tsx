@@ -74,7 +74,7 @@ export const Navbar = () => {
             </Link>
           </li>
           <li className={styles.contactUs}>
-            <Link href="https://www.nodeflux.io/Contact-Us">
+            <Link href="https://bit.ly/nodeflux-engagement-form">
               <a target="_blank">
                 <Button className={styles.btn} color={Color.Secondary}>
                   Contact Us

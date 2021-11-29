@@ -3,11 +3,15 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
 ### Added
 
+- [FRONTEND] Add nodeflux social media, products, and company links
 - [FRONTEND] Add solutions banner image
+
 ### Changed
 
+- [FRONTEND] Update contact us direct link
 - [FRONTEND] Update banner image of analytics
 
 ## [0.4.0 - 26/11/2021]
