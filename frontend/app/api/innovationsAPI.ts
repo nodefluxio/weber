@@ -21,8 +21,8 @@ export const postInnovation = async <T>(
       }
     )
     if (data.ok) {
-      if (data.service_data.ok) {
-        return data.service_data.job
+      if (data.service_data.ok && data.service_data.job.result.length > 0) {
+        return data.service_data.job.result[0]
       } else {
         return data.service_data.message
       }
