@@ -67,7 +67,9 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
 
   return isSubmitted && isSuccess ? (
     <div className={styles.thankYou}>
-      <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} />
+      <div style={{ marginBottom: '1rem' }}>
+        <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} />
+      </div>
       <h3>{message}</h3>
       <div className={styles.buttons}>
         <Button type="button" color={Color.Primary} onClick={onTryAgain}>

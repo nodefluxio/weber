@@ -21,8 +21,10 @@
   .starFlex {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
     margin: 1rem auto;
+    * + * {
+      margin-left: 1rem;
+    }
   }
 
   .star {
@@ -82,7 +84,6 @@
   align-items: center;
   justify-content: center;
   margin-top: 3rem;
-  gap: 1rem;
   text-align: center;
   h3 {
     margin: auto;

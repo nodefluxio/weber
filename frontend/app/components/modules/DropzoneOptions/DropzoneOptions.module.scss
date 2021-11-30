@@ -30,14 +30,23 @@
     margin: auto;
     display: flex;
     flex-direction: row;
-    gap: 2rem;
     justify-content: center;
     cursor: pointer;
+
+    * + * {
+      margin-left: 2rem;
+    }
+
     @include tablet {
       flex-direction: column;
       align-items: flex-start;
       width: 80%;
+      * + * {
+        margin-left: 0;
+        margin-top: 2rem;
+      }
     }
+
     .dropzoneContainer {
       width: 600px;
       height: 360px;
@@ -56,10 +65,18 @@
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      gap: 1rem;
+      
+      * + * {
+        margin-top: 1rem;
+      }
+
       @include tablet {
         flex-direction: row;
         width: 100%;
+        * + * {
+          margin-top: 0;
+          margin-left: 1rem;
+        }
       }
 
       .items {
