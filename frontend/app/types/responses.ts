@@ -1,4 +1,10 @@
-import { FaceLiveness, FaceMatch, OCRKTP, PaymentAccountInfo, Service } from './elements'
+import {
+  FaceLiveness,
+  FaceMatch,
+  OCRKTP,
+  PaymentAccountInfo,
+  Service
+} from './elements'
 
 export type StandardResponse = {
   message: string
@@ -134,7 +140,13 @@ export type InnovationResponse<T> = {
   message: string
   ok: boolean
   service_data: {
-    job: T
+    job: {
+      result: {
+        analytic_type: string
+        result: T[]
+        status: string
+      }
+    }
     message: string
     ok: boolean
   }

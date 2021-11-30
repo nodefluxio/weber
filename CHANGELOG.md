@@ -1,11 +1,18 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-
 ## [Unreleased]
+### Changed
+
+- [FRONTEND] Make solution cards slideable/swipeable
+
+### Removed
+
+## [0.4.0 - 26/11/2021]
 
 ### Added
 
+- [FRONTEND] Add Responsive Image Component
 - [FRONTEND] Add Horizontal Card Component
 - [FRONTEND] Add nodeflux social media, products, and company links
 - [FRONTEND] Add solutions banner image
@@ -20,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Changed error message & placeholder on payment form
 - [FRONTEND] Update input PinInput mode as numerical (mobile browser)
 - [FRONTEND] New OCR Receipt result display (colorized JSON dan simpler text display)
+- [FRONTEND] Fix title for analytics page
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
 

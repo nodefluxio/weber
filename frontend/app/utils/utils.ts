@@ -41,18 +41,28 @@ export const formatMoneyOnChange = (money: string | number) => {
 export const isOCRReceipt = (obj: any): obj is OCRReceiptData => {
   if (typeof obj === 'undefined') {
     return false
-  } else {
+  } else if ('ocr_receipt' in obj) {
+    const { ocr_receipt } = obj
     let infoIsStringArray = true
 
-    if (obj.info && Array.isArray(obj.info)) {
-      for (let i = 0; i < obj.info.length; i++) {
-        infoIsStringArray = typeof obj.info[i] === 'string'
+    if (ocr_receipt.info && Array.isArray(ocr_receipt.info)) {
+      for (let i = 0; i < ocr_receipt.info.length; i++) {
+        infoIsStringArray = typeof ocr_receipt.info[i] === 'string'
         if (!infoIsStringArray) break
       }
     } else {
       infoIsStringArray = false
     }
 
-    return obj && 'address' in obj && 'number' in obj && infoIsStringArray
+    return (
+      obj &&
+      'address' in ocr_receipt &&
+      'number' in ocr_receipt &&
+      'date' in ocr_receipt &&
+      'item' in ocr_receipt &&
+      infoIsStringArray
+    )
+  } else {
+    return false
   }
 }

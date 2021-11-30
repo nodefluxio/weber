@@ -18,7 +18,7 @@ const Analytics = ({
   return (
     <>
       <Head>
-        <title>{`Solution | ${name} - Demo`}</title>
+        <title>{`Analytic | ${name} - Demo`}</title>
       </Head>
       <AnalyticsPage
         analyticsName={name}

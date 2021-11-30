@@ -20,6 +20,7 @@ const additionalFields = [
 
 export const ReceiptDisplay = ({ result }: Props) => {
   const [mode, setMode] = useState<'text' | 'json'>('text')
+  const { ocr_receipt } = result
 
   const displayResult =
     result &&
@@ -31,12 +32,12 @@ export const ReceiptDisplay = ({ result }: Props) => {
       <div
         className={`${styles.receiptInfoWrapper} ${styles.receiptTextFormat}`}>
         <div className={styles.receiptHeader}>
-          Merchant Address: {result.address}
+          Merchant Address: {ocr_receipt.address}
         </div>
         <div className={styles.receiptHeader}>
-          Merchant Number: {result.number}
+          Merchant Number: {ocr_receipt.number}
         </div>
-        <div className={styles.receiptHeader}>Merchant Date: {result.date}</div>
+        <div className={styles.receiptHeader}>Merchant Date: {ocr_receipt.date}</div>
         <table className={styles.receiptTable}>
           <thead>
             <tr>
@@ -47,7 +48,7 @@ export const ReceiptDisplay = ({ result }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {result.item.map((r: ReceiptItem, i: number) => (
+            {ocr_receipt.item.map((r: ReceiptItem, i: number) => (
               <tr key={i}>
                 <td style={{ padding: '0.25rem 0' }}>{r.name}</td>
                 <td>{r.qty}</td>
@@ -63,12 +64,12 @@ export const ReceiptDisplay = ({ result }: Props) => {
         </table>
         <table style={{ float: 'right' }}>
           <tbody>
-            {Object.keys(result).map(
+            {Object.keys(ocr_receipt).map(
               (k, i) =>
                 additionalFields.includes(k.toLowerCase()) && (
                   <tr key={i}>
                     <td style={{ paddingRight: '1rem' }}>{k.toUpperCase()}</td>
-                    <td style={{ textAlign: 'right' }}>{(result as any)[k]}</td>
+                    <td style={{ textAlign: 'right' }}>{(ocr_receipt as any)[k]}</td>
                   </tr>
                 )
             )}
