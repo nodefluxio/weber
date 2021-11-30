@@ -52,7 +52,7 @@ func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  visitor,
-		}).Error("Error on create visitor!")
+		}).Error("error on create visitor!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err, "ok": false})
 		return

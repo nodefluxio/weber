@@ -26,10 +26,10 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 			"error":    err,
 			"data":     data,
 			"payload":  payload,
-			"BASE_URL": BASE_URL,
+			"base_url": BASE_URL,
 			"slug":     innovationSlug,
-			"Method":   "POST",
-		}).Fatal("Fatal on send http new request!")
+			"method":   "POST",
+		}).Error("error on send http new request to innovation!")
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -41,7 +41,7 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 			"error":   err,
 			"data":    data,
 			"request": request,
-		}).Error("Error on request to innovation!")
+		}).Error("error on request to innovation!")
 		return data, err
 	}
 
@@ -53,7 +53,7 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 			"error":         err,
 			"data":          data,
 			"response_body": response.Body,
-		}).Error("Error request to innovation sync!")
+		}).Error("error on decode response body!")
 		return data, err
 	}
 

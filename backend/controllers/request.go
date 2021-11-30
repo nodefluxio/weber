@@ -32,7 +32,7 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 			"error":         err,
 			"data_analytic": dataAnalytic,
 			"slug":          service.Slug,
-		}).Error("Error on Request Analytics Service")
+		}).Error("error on request analytics service")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -68,7 +68,7 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 			"error":     err,
 			"post_body": postBody,
 			"slug":      service.Slug,
-		}).Error("Error on Request Innovation Service")
+		}).Error("error on request innovation service")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,

@@ -50,7 +50,7 @@ func (ctrl *Controller) getAllServices(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  analyticsService,
-		}).Fatal("Can't Find Services")
+		}).Error("error on get all services")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -68,7 +68,7 @@ func (ctrl *Controller) getServiceAnalytic(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  analyticsService,
-		}).Fatal("Analytics service not found!")
+		}).Error("analytics service not found!")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -86,7 +86,7 @@ func (ctrl *Controller) getServiceSolution(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  solutionsService,
-		}).Fatal("Solutions service not found!")
+		}).Error("solutions service not found!")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -104,7 +104,7 @@ func (ctrl *Controller) getServiceInnovation(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  innovationsService,
-		}).Fatal("Innovations service not found!")
+		}).Error("innovations service not found!")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -134,7 +134,7 @@ func (ctrl *Controller) GetServiceBySlug(ctx *gin.Context) {
 				"slug":  slug,
 				"error": err,
 				"data":  apiService,
-			}).Error("Error on finding Slug!")
+			}).Error("error on finding Slug!")
 
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"ok":      false,
@@ -207,7 +207,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  visitorActivity,
-		}).Error("Error on Set user activity completeness!")
+		}).Error("error on Set user activity completeness!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -227,7 +227,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 	log.WithFields(log.Fields{
 		"error": err,
 		"data":  inputData,
-	}).Error("Error on Create service request!")
+	}).Error("error on create service request!")
 
 	ctx.JSON(http.StatusInternalServerError, gin.H{
 		"ok":      false,
