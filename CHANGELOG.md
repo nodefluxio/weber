@@ -1,8 +1,14 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-
 ## [Unreleased]
+### Changed
+
+- [FRONTEND] Make solution cards slideable/swipeable
+
+### Removed
+
+## [0.4.0 - 26/11/2021]
 
 ### Added
 

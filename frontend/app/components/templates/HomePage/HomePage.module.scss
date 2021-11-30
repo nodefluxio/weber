@@ -191,6 +191,35 @@
     }
   }
 
+  .solutionsSection {
+    .swipper {
+      width: 80%;
+      height: 420px;
+      @include tablet {
+        width: 90%;
+      }
+      @include phone {
+        width: 100%;
+        height: unset;
+      }
+      .swipperSlide {
+        display: flex;
+        @include phone {
+          width: 80%;
+        }
+        .content {
+          background: rgba(0, 0, 0, 0.5);
+          position: absolute;
+          bottom: 0px;
+
+          padding: 1.5rem;
+          h3 {
+            font-size: 1.4rem;
+          }
+        }
+      }
+    }
+  }
   .analyticsSection {
     .cards {
       .image {
