@@ -1,17 +1,12 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
 ## [Unreleased]
-### Changed
-
-- [FRONTEND] Make solution cards slideable/swipeable
-
-### Removed
-
-## [0.4.0 - 26/11/2021]
 
 ### Added
 
+- [FRONTEND] Add Horizontal Card Content Component
 - [FRONTEND] Add Responsive Image Component
 - [FRONTEND] Add Horizontal Card Component
 - [FRONTEND] Add nodeflux social media, products, and company links
@@ -19,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- [FRONTEND] Make solution cards slideable/swipeable
 - [FRONTEND] Update contact us direct link
 - [FRONTEND] Update banner image of analytics
 - [FRONTEND] Update Navbar to be sticky on all devices
