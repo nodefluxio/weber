@@ -4,12 +4,12 @@ import styles from './HCardContent.module.scss'
 
 type Props = {
   title: string
-  content: ReactNode
+  children: ReactNode
   imgSrc: string
   imgAlt: string
 }
 
-export const HCardContent = ({ imgSrc, imgAlt, title, content }: Props) => {
+export const HCardContent = ({ imgSrc, imgAlt, title, children }: Props) => {
   return (
     <div className={styles.hCardContent}>
       <div className={styles.image}>
@@ -17,7 +17,7 @@ export const HCardContent = ({ imgSrc, imgAlt, title, content }: Props) => {
       </div>
       <div className={styles.body}>
         <h2 className={styles.title}>{title}</h2>
-        <div className={styles.content}>{content}</div>
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   )
