@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"image"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mitchellh/mapstructure"
+	log "github.com/sirupsen/logrus"
 )
 
 type Thumbnails []string
@@ -28,6 +28,11 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 	serviceData, err = RequestToAnalyticSync(dataAnalytic, service.Slug)
 
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  serviceData,
+		}).Error("Error on Request Service Analytics")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -58,6 +63,11 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 	serviceData, err := RequestToInnovationSync(postBody, service.Slug)
 
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  serviceData,
+		}).Error("Error on Request Service Innovation")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),

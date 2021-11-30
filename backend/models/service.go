@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type ServiceType string
@@ -72,15 +74,20 @@ type ResponseResultData struct {
 }
 
 type BoundingBox struct {
-	Left	float64 `json:"left"`
-	Top		float64 `json:"top"`
-	Width	float64 `json:"width"`
-	Height	float64 `json:"height"`
+	Left   float64 `json:"left"`
+	Top    float64 `json:"top"`
+	Width  float64 `json:"width"`
+	Height float64 `json:"height"`
 }
 
 func (m *Model) CreateService(Service *Service) (err error) {
 	err = m.DBConn.Create(Service).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  Service,
+		}).Error("Error on create Service DB!")
+
 		return err
 	}
 	return nil
@@ -100,6 +107,11 @@ func (m *Model) IsValidServiceType(serviceType string) (bool, ServiceType) {
 func (m *Model) GetServiceBySlug(Service *Service, slug string) (err error) {
 	err = m.DBConn.Where("slug = ?", slug).First(Service).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"slug":  slug,
+		}).Error("Error get service by slug!")
+
 		return err
 	}
 	return nil

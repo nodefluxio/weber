@@ -12,6 +12,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	log "github.com/sirupsen/logrus"
 )
 
 func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
@@ -48,6 +49,11 @@ func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 
 	err = ctrl.Model.CreateVisitor(&visitor)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  visitor,
+		}).Error("Error on create visitor!")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err, "ok": false})
 		return
 	}

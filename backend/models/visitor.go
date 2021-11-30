@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Visitor struct {
@@ -18,6 +20,11 @@ type Visitor struct {
 func (m *Model) CreateVisitor(Visitor *Visitor) (err error) {
 	err = m.DBConn.Create(Visitor).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  Visitor,
+		}).Error("Error on create visitor DB!")
+
 		return err
 	}
 	return nil
@@ -26,6 +33,11 @@ func (m *Model) CreateVisitor(Visitor *Visitor) (err error) {
 func (m *Model) GetVisitors(Visitor *[]Visitor) (err error) {
 	err = m.DBConn.Find(Visitor).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  Visitor,
+		}).Error("Error on get visitors!")
+
 		return err
 	}
 	return nil
@@ -34,6 +46,11 @@ func (m *Model) GetVisitors(Visitor *[]Visitor) (err error) {
 func (m *Model) GetVisitor(Visitor *Visitor, id string) (err error) {
 	err = m.DBConn.Where("session_id = ?", id).First(Visitor).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"session_id": id,
+			"error":      err,
+		}).Error("Error on get visitor!")
+
 		return err
 	}
 	return nil
