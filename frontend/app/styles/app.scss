@@ -11,3 +11,31 @@
     padding: 0rem 32px;
   }
 }
+.swiper-button-next,
+.swiper-button-prev {
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: $primary-font;
+  background-color: $secondary-color;
+  width: 50px !important;
+  height: 50px !important;
+  &:hover,
+  &:focus {
+    background-color: darken($secondary-color, 10%);
+  }
+  padding: 10px 16px;
+  line-height: 1.33;
+  border-radius: 25px;
+  &::after {
+    font-size: 18px !important;
+
+    color: $white-text;
+    content: '➜' !important;
+  }
+}
+.swiper-button-prev {
+  &::after {
+    transform: scaleX(-1);
+  }
+}

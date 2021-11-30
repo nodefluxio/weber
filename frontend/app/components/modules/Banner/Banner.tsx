@@ -13,13 +13,15 @@ export const Banner = ({
 }: Props) => {
   return (
     <div
-      className={styles.intro}
+      className={styles.banner}
       style={{
         backgroundImage: `url("${bannerUrl}")`
       }}>
-      <div className={styles.texts}>
-        <h1>{analyticsName}</h1>
-        <p>{longDescription}</p>
+      <div className={styles.container}>
+        <div className={styles.texts}>
+          <h1>{analyticsName}</h1>
+          <p>{longDescription}</p>
+        </div>
       </div>
     </div>
   )

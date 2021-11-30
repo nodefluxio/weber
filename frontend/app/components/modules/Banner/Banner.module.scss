@@ -1,20 +1,33 @@
 @import '../../../styles/abstracts/mixins';
 @import '../../../styles/abstracts/variables';
 
-.intro {
+.banner {
   background: $primary-color;
-  padding: 2rem 8rem;
+  padding: 2rem 0;
   background-position: center;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-size: cover;
-  align-items: center;
-  justify-content: space-evenly;
+  background-position: center;
+
   color: $white-text;
-  @include tablet {
-    padding: 2rem 3rem;
-  }
-  .texts {
-    max-width: 600px;
-    padding-bottom: 1rem;
+  .container {
+    width: 85%;
+    margin: auto;
+
+    .texts {
+      margin-top: 70px;
+      width: 50%;
+      max-width: 700px;
+      padding-bottom: 1rem;
+      @include tablet {
+        width: 60%;
+      }
+      @include phone {
+        width: 90%;
+      }
+      p {
+        font-size: 1.1rem;
+      }
+    }
   }
 }

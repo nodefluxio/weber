@@ -1,23 +1,23 @@
 package controllers
 
 import (
+	"backend/models"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 )
 
-func RequestToInnovationSync(postBody []byte, innovationSlug string) (map[string]interface{}, error) {
+func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.ServiceRequestResultData, error) {
 	var err error
 	var request *http.Request
-	var data map[string]interface{}
+	var data models.ServiceRequestResultData
 
+	BASE_URL := fmt.Sprintf("%s/%s/predict", os.Getenv("URL_INNOVATIONS"), innovationSlug)
 	payload := bytes.NewBuffer(postBody)
-
-	if innovationSlug == "ocr-receipt" {
-		request, err = http.NewRequest("POST", os.Getenv("URL_OCR_RECEIPT"), payload)
-	} // add new condition for new innovation here
+	request, err = http.NewRequest("POST", BASE_URL, payload)
 
 	if err != nil {
 		log.Fatal(err)

@@ -1,0 +1,36 @@
+.wholeSnippetContainer {
+  position: relative;
+  height: inherit;
+
+  .codeSnippetContainer {
+    position: relative;
+    overflow-y: auto;
+    height: inherit;
+  }
+
+  .receiptButtonCopy {
+    background: rgba(black, 0.3);
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    top: 1rem;
+    right: 2rem;
+    z-index: 10;
+    height: 2.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: absolute;
+    transition: all 0.1s linear;
+    div {
+      display: block !important;
+    }
+    &:hover {
+      background: rgba(black, 0.6);
+    }
+  }
+
+  .copyMessage {
+    right: 5rem;
+  }
+}

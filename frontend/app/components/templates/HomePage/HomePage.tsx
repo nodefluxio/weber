@@ -9,6 +9,12 @@ import { CardContent } from '../../modules/CardContent/CardContent'
 import { Button } from '../../elements/Button/Button'
 import Link from 'next/link'
 import { CardImage } from '../../modules/CardImage/CardImage'
+import { Navigation } from 'swiper'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+/* eslint-disable import/no-unresolved */
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 type Props = {
   analytics: Service[]
@@ -56,10 +62,17 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
       href: '/#new-innovations'
     }
   ]
+
+  const isMobile = useMediaQuery('(max-width: 480px)')
+
   return (
     <div className={styles.container}>
       <section className={styles.heroSection}>
-        <Carousel withButton={false} vertical={true} delay={4000}>
+        <Carousel
+          className={styles.caraousel}
+          withButton={false}
+          vertical={true}
+          delay={4000}>
           {heroContentItems.map((item, idx) => (
             <CarouselItem className={styles.carouselItem} key={idx}>
               <div className={styles.heroContentContainer}>
@@ -72,7 +85,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                   <h3 className={styles.secondTitle}>{item.secondTitle}</h3>
                   <p className={styles.desc}>{item.description}</p>
                   <div className={styles.arrow}>
-                    <Link href={item.href}>
+                    <Link href={item.href} passHref>
                       <img
                         className={styles.arrowImg}
                         src="/assets/icons/arrow-down.svg"
@@ -87,6 +100,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                     layout="fill"
                     objectFit="contain"
                     loading="eager"
+                    alt="hero-image"
                     priority
                   />
                 </div>
@@ -102,6 +116,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/solutions-01.png"
               width={672}
               height={522}
+              alt="solution-intersection-image"
             />
           </div>
           <div className={styles.texts}>
@@ -113,6 +128,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt="visual of a quarter circle"
             />
           </div>
         </div>
@@ -121,17 +137,38 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
         id="solutions"
         className={`${styles.solutionsSection} ${styles.sectionPadding}`}>
         <h1 className={styles.titleLine}>Our Solutions</h1>
-        <div className={styles.cards}>
+        <Swiper
+          modules={[Navigation]}
+          className={styles.swipper}
+          navigation={!isMobile}
+          centeredSlides={isMobile}
+          slidesPerView={'auto'}
+          spaceBetween={10}
+          grabCursor
+          breakpoints={{
+            '480': {
+              slidesPerView: 2,
+              spaceBetween: 20
+            },
+            '768': {
+              slidesPerView: 3,
+              spaceBetween: 20
+            }
+          }}>
           {solutions.map((solution) => (
-            <CardFull
-              key={solution.id}
-              img={`/assets/images/solutions/${solution.thumbnail}`}
-              title={solution.name}
-              desc={solution.short_description}
-              href={`/solutions/${solution.slug}`}
-            />
+            <SwiperSlide className={styles.swipperSlide} key={solution.id}>
+              <CardFull
+                img={`/assets/images/solutions/${solution.thumbnail}`}
+                title={solution.name}
+                href={`/solutions/${solution.slug}`}>
+                <div className={styles.content}>
+                  <h3>{solution.name}</h3>
+                  <p>{solution.short_description}</p>
+                </div>
+              </CardFull>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </section>
       <section className={styles.intersection}>
         <div className={styles.container}>
@@ -140,6 +177,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/products-01.png"
               width={490}
               height={490}
+              alt="product-intersection-image"
             />
           </div>
           <div className={styles.texts}>
@@ -151,6 +189,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
               src="/assets/images/nodeflux-logogram.png"
               width={359}
               height={348}
+              alt="visual of a quarter circle"
             />
           </div>
         </div>
@@ -163,14 +202,16 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
           {analytics.map((analytic) => (
             <Card key={analytic.id} color={Color.Primary}>
               <CardImage
+                className={styles.image}
+                layout="fill"
+                objectFit="contain"
                 img={`/assets/images/analytics/${analytic.thumbnail}`}
-                width={171}
-                height={171}
+                alt={`icon ${analytic.thumbnail}`}
               />
               <CardContent
+                className={styles.cardContent}
                 color={Color.Primary}
-                title={analytic.name}
-                height={'300px'}>
+                title={analytic.name}>
                 {analytic.short_description}
                 <div className={styles.footer}>
                   <Link href={'/analytics/' + analytic.slug} passHref>

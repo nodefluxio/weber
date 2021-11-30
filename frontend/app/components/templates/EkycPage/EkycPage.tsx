@@ -101,7 +101,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
       </Modal>
 
       <Banner
-        bannerUrl="/assets/images/solutions/ekyc/banner.jpg"
+        bannerUrl="/assets/images/solutions/ekyc/banner.png"
         analyticsName={name}
         longDescription={longDesc}
       />
@@ -225,7 +225,9 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
                       slug={'ocr-ktp'}
                     />
                   ) : (
-                    <p className={styles.ocrKtpErrorMessage}>{result?.service_data.ocr_ktp.message}</p>
+                    <p className={styles.ocrKtpErrorMessage}>
+                      {result?.service_data.ocr_ktp.message}
+                    </p>
                   )
                 ) : (
                   <Spinner />

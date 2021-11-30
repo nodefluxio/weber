@@ -6,9 +6,34 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [FRONTEND] Add OCR Receipt Innovations Page 
-- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
-- [BACKEND] Add API Reset Balance Account on Face Payment
+- [FRONTEND] Add Responsive Image Component
+- [FRONTEND] Add nodeflux social media, products, and company links
+- [FRONTEND] Add solutions banner image
+- [FRONTEND] Add Horizontal Card Component
+- [BACKEND] Add new seed for innovation Car Damage Assessment
+
+### Changed
+
+- [FRONTEND] Update contact us direct link
+- [FRONTEND] Update banner image of analytics
+- [FRONTEND] Update Navbar to be sticky on all devices
+- [FRONTEND] Fix Carousel still slide when dot is clicked
+- [FRONTEND] Make analytic cards smaller on mobile
+- [FRONTEND] Changed error message & placeholder on payment form
+- [FRONTEND] Update input PinInput mode as numerical (mobile browser)
+- [FRONTEND] New OCR Receipt result display (colorized JSON dan simpler text display)
+- [FRONTEND] Make solution cards slideable/swipeable
+- [FRONTEND] Fix title for analytics page
+- [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
+- [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
+
+### Removed
+
+## [0.4.0 - 25/11/2021]
+
+### Added
+
+- [FRONTEND] Add OCR Receipt Innovations Page
 - [FRONTEND] Add current balance to catalog browse step
 - [FRONTEND] Add feature to remove local storage if face payment face analytics failed
 - [FRONTEND] Add back to catalog feature if balance insufficient
@@ -16,6 +41,8 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add shopping balance in catalog
 - [FRONTEND] Make Big Input Component responsive
 - [FRONTEND] Add contact us link
+- [BACKEND] Add HTTP Requester for OCR Receipt Recognition Innovation
+- [BACKEND] Add API Reset Balance Account on Face Payment
 - [BACKEND] Add entrypoint command for seed only
 
 ### Changed
@@ -41,7 +68,8 @@ All notable changes to this project will be documented in this file.
 ### Removed
 
 - [FRONTEND] Remove check-phone api handler
-- [BACKEND] Delete API Check Limit on Face Payment
+- [FRONTEND] Remove short description on Banner
+- [BACKEND] Remove API Check Limit on Face Payment
 
 ## [0.3.0 - 17/11/2021]
 

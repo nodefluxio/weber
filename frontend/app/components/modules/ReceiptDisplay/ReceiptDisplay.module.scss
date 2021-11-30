@@ -36,17 +36,9 @@
     }
   }
   .receiptInfoWrapper {
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    height: 400px;
     border: $border-config;
     border-radius: 0 0 $border-radius $border-radius;
-    padding: 1rem 0.5rem;
-
+    height: 400px;
     .receiptJSON {
       margin: 0;
       font-family: 'Consolas', ui-monospace, monospace;
@@ -61,10 +53,14 @@
         text-align: right;
       }
     }
-
     .receiptHeader {
       margin-bottom: 0.25rem;
       font-weight: 600;
     }
+  }
+
+  .receiptTextFormat {
+    padding: 1rem 0.5rem;
+    overflow-y: auto;
   }
 }

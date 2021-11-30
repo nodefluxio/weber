@@ -2,38 +2,42 @@ import { useState } from 'react'
 import { OCRReceiptData, ReceiptItem } from '@/types/elements'
 import styles from './ReceiptDisplay.module.scss'
 import { formatMoneyOnChange } from '@/utils/utils'
+import { CodeSnippet } from '@/elements/CodeSnippet/CodeSnippet'
 
 type Props = {
   result: OCRReceiptData
 }
-const fixedFields = ['address', 'info', 'item', 'number']
+const additionalFields = [
+  'total',
+  'ppn',
+  'diskon',
+  'discount',
+  'subtotal',
+  'total diskon',
+  'pajak',
+  'tax'
+]
 
 export const ReceiptDisplay = ({ result }: Props) => {
   const [mode, setMode] = useState<'text' | 'json'>('text')
+  const { ocr_receipt } = result
 
   const displayResult =
     result &&
     (mode === 'json' ? (
       <div className={styles.receiptInfoWrapper}>
-        <pre>
-          <code className={styles.receiptJSON}>
-            {JSON.stringify(result, null, 2)}
-          </code>
-        </pre>
+        <CodeSnippet code={JSON.stringify(result, null, 3)} lang="json" />
       </div>
     ) : (
-      <div className={styles.receiptInfoWrapper}>
+      <div
+        className={`${styles.receiptInfoWrapper} ${styles.receiptTextFormat}`}>
         <div className={styles.receiptHeader}>
-          Merchant Address: {result.address}
+          Merchant Address: {ocr_receipt.address}
         </div>
         <div className={styles.receiptHeader}>
-          Merchant Number: {result.number}
+          Merchant Number: {ocr_receipt.number}
         </div>
-        {result.info.map((s, i) => (
-          <div style={{ fontSize: '0.9rem' }} key={i}>
-            {s}
-          </div>
-        ))}
+        <div className={styles.receiptHeader}>Merchant Date: {ocr_receipt.date}</div>
         <table className={styles.receiptTable}>
           <thead>
             <tr>
@@ -44,7 +48,7 @@ export const ReceiptDisplay = ({ result }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {result.item.map((r: ReceiptItem, i: number) => (
+            {ocr_receipt.item.map((r: ReceiptItem, i: number) => (
               <tr key={i}>
                 <td style={{ padding: '0.25rem 0' }}>{r.name}</td>
                 <td>{r.qty}</td>
@@ -59,20 +63,17 @@ export const ReceiptDisplay = ({ result }: Props) => {
           </tbody>
         </table>
         <table style={{ float: 'right' }}>
-          <tr>
-            <td colSpan={2} style={{ padding: '0.5rem 0', fontWeight: 600 }}>
-              Additional Info
-            </td>
-          </tr>
-          {Object.keys(result).map(
-            (k, i) =>
-              !fixedFields.includes(k) && (
-                <tr key={i}>
-                  <td style={{ paddingRight: '1rem' }}>{k}</td>
-                  <td style={{ textAlign: 'right' }}>{(result as any)[k]}</td>
-                </tr>
-              )
-          )}
+          <tbody>
+            {Object.keys(ocr_receipt).map(
+              (k, i) =>
+                additionalFields.includes(k.toLowerCase()) && (
+                  <tr key={i}>
+                    <td style={{ paddingRight: '1rem' }}>{k.toUpperCase()}</td>
+                    <td style={{ textAlign: 'right' }}>{(ocr_receipt as any)[k]}</td>
+                  </tr>
+                )
+            )}
+          </tbody>
         </table>
       </div>
     ))
