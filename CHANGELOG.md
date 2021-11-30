@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [FRONTEND] Add Horizontal Card Content Component
 - [FRONTEND] Add Responsive Image Component
 - [FRONTEND] Add nodeflux social media, products, and company links
 - [FRONTEND] Add solutions banner image
@@ -14,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- [FRONTEND] Make solution cards slideable/swipeable
 - [FRONTEND] Update contact us direct link
 - [FRONTEND] Update banner image of analytics
 - [FRONTEND] Update Navbar to be sticky on all devices
