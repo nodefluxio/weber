@@ -22,7 +22,7 @@ func (m *Model) CreateVisitorActivity(VisitorActivity *VisitorActivity) (err err
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  VisitorActivity,
-		}).Error("Error on create visitor activity DB!")
+		}).Error("error on create visitor activity!")
 
 		return err
 	}
@@ -36,7 +36,7 @@ func (m *Model) GetCurrentVisitorActivity(VisitorActivity *VisitorActivity, sess
 			"session_id": session_id,
 			"service_id": service_id,
 			"error":      err,
-		}).Error("Error on get current visitor activity!")
+		}).Error("error get last visitor activity based on session_id and service_id")
 
 		return err
 	}

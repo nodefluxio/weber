@@ -86,7 +86,7 @@ func (m *Model) CreateService(Service *Service) (err error) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Service,
-		}).Error("Error on create Service DB!")
+		}).Error("error on create service!")
 
 		return err
 	}
@@ -110,7 +110,7 @@ func (m *Model) GetServiceBySlug(Service *Service, slug string) (err error) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"slug":  slug,
-		}).Error("Error get service by slug!")
+		}).Error("error on find service slug!")
 
 		return err
 	}

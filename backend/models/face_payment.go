@@ -72,6 +72,10 @@ type PayInput struct {
 func (m *Model) CreateAccount(newAccount *FacePaymentAccount) (err error) {
 	err = m.DBConn.Select("SessionID", "FullName", "Phone", "HaveTwin", "CreatedAt", "UpdatedAt").Create(newAccount).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  newAccount,
+		}).Error("error on create face payment account!")
 		return err
 	}
 
@@ -98,7 +102,7 @@ func (m *Model) ActivateAccount(newAccount *FacePaymentAccount) (err error) {
 			"error":      err,
 			"data":       newAccount,
 			"session_id": newAccount.SessionID,
-		}).Error("Error on Activate Account to DB!")
+		}).Error("error on activate face payment account!")
 
 		return err
 	}
@@ -116,13 +120,18 @@ func (m *Model) CreateAccountWallet(sessionId string, newAccountWallet *FacePaym
 			"data":       newAccountWallet,
 			"session_id": sessionId,
 			"is_active":  newAccount.IsActive,
-		}).Error("Error on create account wallet to DB!")
+		}).Error("error on find last account with session_id!")
 		return err
 	}
 
 	newAccountWallet.AccountID = newAccount.ID
 	err = m.DBConn.Create(newAccountWallet).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  newAccountWallet,
+		}).Error("error on create new account wallet!")
+
 		return err
 	}
 
@@ -137,7 +146,7 @@ func (m *Model) GetActiveAccount(Account *FacePaymentAccount, sessionId string) 
 			"data":       Account,
 			"session_id": sessionId,
 			"is_active":  Account.IsActive,
-		}).Error("Error on Get Active Account to DB!")
+		}).Error("error on get active account with session_id")
 		return err
 	}
 
@@ -151,7 +160,7 @@ func (m *Model) GetAccountWallet(FacePaymentWallet *FacePaymentWallet, accountId
 			"error":      err,
 			"data":       FacePaymentWallet,
 			"account_id": accountId,
-		}).Error("Error on Get Account Wallet to DB!")
+		}).Error("error on get face payment wallet with account_id!")
 
 		return err
 	}
@@ -162,11 +171,10 @@ func (m *Model) CreateTransactionDb(sessionId string, fpAccount *FacePaymentAcco
 	err = m.DBConn.Select("id").Find(fpAccount).Where("session_id = ?", sessionId).Error
 	if err != nil {
 		log.WithFields(log.Fields{
-			"error":          err,
-			"fp_data":        fpAccount,
-			"fp_transaction": FacePaymentTransaction,
-			"session_id":     sessionId,
-		}).Error("Error on create transaction to DB!")
+			"error":      err,
+			"fp_data":    fpAccount,
+			"session_id": sessionId,
+		}).Error("error on find face payment account with session_id!")
 
 		return err
 	}
@@ -174,6 +182,12 @@ func (m *Model) CreateTransactionDb(sessionId string, fpAccount *FacePaymentAcco
 	FacePaymentTransaction.AccountID = fpAccount.ID
 	err = m.DBConn.Create(FacePaymentTransaction).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":        err,
+			"fp_data":      FacePaymentTransaction,
+			"fpAccount_id": fpAccount.ID,
+		}).Error("error on create face payment transaction!")
+
 		return err
 	}
 	return nil
@@ -192,7 +206,7 @@ func (m *Model) UpdateBalance(fpWallet *FacePaymentWallet) (err error) {
 			"error":       err,
 			"id_fpwallet": fpWallet.ID,
 			"data":        fpWallet,
-		}).Error("Error on Update balance to DB!")
+		}).Error("error on Update face payment wallet balance!")
 
 		return err
 	}

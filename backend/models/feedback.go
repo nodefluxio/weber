@@ -27,7 +27,7 @@ func (m *Model) CreateFeedbackDb(Feedback *Feedback) (err error) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Feedback,
-		}).Error("Error on create Feedback DB!")
+		}).Error("error on create feedback!")
 
 		return err
 	}

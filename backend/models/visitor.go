@@ -23,7 +23,7 @@ func (m *Model) CreateVisitor(Visitor *Visitor) (err error) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Visitor,
-		}).Error("Error on create visitor DB!")
+		}).Error("error on create visitor!")
 
 		return err
 	}
@@ -36,7 +36,7 @@ func (m *Model) GetVisitors(Visitor *[]Visitor) (err error) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Visitor,
-		}).Error("Error on get visitors!")
+		}).Error("error on get visitors!")
 
 		return err
 	}
@@ -49,7 +49,7 @@ func (m *Model) GetVisitor(Visitor *Visitor, id string) (err error) {
 		log.WithFields(log.Fields{
 			"session_id": id,
 			"error":      err,
-		}).Error("Error on get visitor!")
+		}).Error("error get visitor based on session_id!")
 
 		return err
 	}
