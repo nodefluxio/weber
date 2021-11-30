@@ -186,6 +186,20 @@ func seedService(model *models.Model) {
 			CreatedAt:          time.Now(),
 			UpdatedAt:          time.Now(),
 		},
+		{
+			Name:               "Car Damage Assessment",
+			Type:               "innovation",
+			Slug:               "car-damage",
+			Thumbnail:          "car-damage.png",
+			AccessKey:          "",
+			Token:             	"",
+			Timestamp:          "",
+			ShortDescription:   "Car Damage Assessment is one of the new innovations developed by Nodeflux (still experimental). This analytic has the ability to detect and assess the level of damage to a car.",
+			LongDescription:    "Nodeflux has developed a new technology that has the ability to detect and assess the level of damage to a car, called Car Damage Assessment. The parts of the damage that can be detected are the front side, wing (left and right) side, and back side of the car. This analytic also provides an assessment of the level of damage detected, so it can be used to help industries such as car insurance or car repair shops. In the future, this innovation will continue to improve.",
+			SpecialInstruction: "Special Instruction for Car Damage Assessment",
+			CreatedAt:          time.Now(),
+			UpdatedAt:          time.Now(),
+		},
 		// Add new service here
 	}
 
