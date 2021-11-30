@@ -20,7 +20,6 @@ export const postInnovation = async <T>(
         }
       }
     )
-    console.log(data)
     if (data.ok) {
       if (data.service_data.ok && data.service_data.job.result.result.length > 0) {
         return data.service_data.job.result.result[0]
