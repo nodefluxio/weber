@@ -4,22 +4,13 @@ import (
 	"backend/controllers"
 	"net/http"
 
-	"github.com/sirupsen/logrus"
-	ginlogrus "github.com/toorop/gin-logrus"
-
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter(ctrl *controllers.Controller) *gin.Engine {
 
-	log := logrus.New()
-	log.SetFormatter(&logrus.JSONFormatter{
-		TimestampFormat: "2006-01-02 15:04:05",
-	})
-
 	r := gin.Default()
-
-	r.Use(CORSMiddleware(), ginlogrus.Logger(log))
+	r.Use(CORSMiddleware())
 
 	r.GET("ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "pong")
