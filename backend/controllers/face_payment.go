@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
 	"gorm.io/gorm"
 )
@@ -39,6 +40,12 @@ func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 	var account models.FacePaymentAccount
 	err := ctrl.Model.GetActiveAccount(&account, sessionId)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
+		log.WithFields(log.Fields{
+			"error":      err,
+			"session_id": sessionId,
+			"data":       account,
+		}).Error("Error on get active account")
+
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
 			"message": "This session id does not have an active face payment account",
@@ -47,6 +54,12 @@ func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 	}
 
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":      err,
+			"session_id": sessionId,
+			"data":       account,
+		}).Error("Error on get active account by sessionID")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -149,6 +162,12 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	// with inputted image
 	resultFaceLiveness, err := GetResultFaceLiveness(service, inputDataToAnalytic)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":        err,
+			"data_service": service,
+			"request_data": inputDataToAnalytic,
+		}).Error("Error on Get Result Face Liveness")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -172,6 +191,12 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	inputDataToAnalytic.AdditionalParams = map[string]interface{}{"face_id": phone}
 	_, err = GetResultFaceEnrollment(service, inputDataToAnalytic)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":        err,
+			"data_service": service,
+			"request_data": inputDataToAnalytic,
+		}).Error("Error on Get Result Face Enrollment")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -190,6 +215,11 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 
 	err = ctrl.Model.CreateAccount(&newAccount)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  newAccount,
+		}).Error("Error on Create Account")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -227,6 +257,12 @@ func (ctrl *Controller) ResetBalanceFacePaymentAccount(ctx *gin.Context) {
 	var account models.FacePaymentAccount
 	err := ctrl.Model.GetActiveAccount(&account, sessionId)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":      err,
+			"data":       account,
+			"session_id": sessionId,
+		}).Error("Error on Get Active Account")
+
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
 			"message": "This session id does not have an active face payment account",
@@ -303,6 +339,11 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 
 	err = ctrl.Model.ActivateAccount(&newAccount)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  newAccount,
+		}).Error("Error on Activate Account")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -314,6 +355,12 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 	var newAccountWallet models.FacePaymentWallet
 	err = ctrl.Model.CreateAccountWallet(sessionId, &newAccountWallet)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":      err,
+			"session_id": sessionId,
+			"data":       newAccountWallet,
+		}).Error("Error on create account wallet")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -369,6 +416,12 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	// Get the face payment account
 	err = ctrl.Model.GetActiveAccount(&fpAccount, sessionId)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":      err,
+			"session_id": sessionId,
+			"data":       fpAccount,
+		}).Error("Error on get activate account")
+
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -385,6 +438,12 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	// Check face liveness
 	resultFaceLiveness, err := GetResultFaceLiveness(service, inputDataToAnalytic)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":        err,
+			"data_service": service,
+			"request_data": inputDataToAnalytic,
+		}).Error("Error on Get Result Face Liveness")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -406,6 +465,12 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	inputDataToAnalytic.AdditionalParams = map[string]interface{}{"face_id": phone}
 	resultFaceMatch, err := GetResultFaceMatchEnrollment(service, inputDataToAnalytic)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":        err,
+			"data_service": service,
+			"request_data": inputDataToAnalytic,
+		}).Error("Error on Get Result Face Match Enrollment")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -450,6 +515,12 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	fpwallet.Balance = fpwallet.Balance - payInput.Amount
 	err = ctrl.Model.UpdateBalance(&fpwallet)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":   err,
+			"data":    fpwallet,
+			"balance": fpwallet.Balance,
+		}).Error("Error on Update Balance")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -463,6 +534,13 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	newTransaction.CreatedAt = time.Now()
 	err = ctrl.Model.CreateTransactionDb(sessionId, &fpAccount, &newTransaction)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":                err,
+			"session_id":           sessionId,
+			"face_payment_account": fpAccount,
+			"new_transaction":      newTransaction,
+		}).Error("Error on Create transaction")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),

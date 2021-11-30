@@ -21,7 +21,7 @@ func (ctrl *Controller) GetServices(ctx *gin.Context) {
 	if isAnyQueryType && !isValid {
 		log.WithFields(log.Fields{
 			"data": serviceTypeQuery,
-		}).Error("Error on get services!")
+		}).Error("Error on query type not valid")
 
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,

@@ -29,9 +29,10 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 
 	if err != nil {
 		log.WithFields(log.Fields{
-			"error": err,
-			"data":  serviceData,
-		}).Error("Error on Request Service Analytics")
+			"error":         err,
+			"data_analytic": dataAnalytic,
+			"slug":          service.Slug,
+		}).Error("Error on Request Analytics Service")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -64,9 +65,10 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 
 	if err != nil {
 		log.WithFields(log.Fields{
-			"error": err,
-			"data":  serviceData,
-		}).Error("Error on Request Service Innovation")
+			"error":     err,
+			"post_body": postBody,
+			"slug":      service.Slug,
+		}).Error("Error on Request Innovation Service")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
