@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Changed error message & placeholder on payment form
 - [FRONTEND] Update input PinInput mode as numerical (mobile browser)
 - [FRONTEND] New OCR Receipt result display (colorized JSON dan simpler text display)
+- [FRONTEND] Fix title for analytics page
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
 
