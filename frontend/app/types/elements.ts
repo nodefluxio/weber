@@ -85,11 +85,13 @@ export type ReceiptItem = {
 }
 
 export interface OCRReceiptData {
-  address: string
-  number: string
-  date: string
-  info: string[]
-  item: ReceiptItem[]
+  ocr_receipt: {
+    address: string
+    number: string
+    date: string
+    info: string[]
+    item: ReceiptItem[]
+  }
 }
 
 export type PaymentAccountInfo = {

@@ -20,16 +20,20 @@ export const CodeSnippet = ({ code, lang }: Props) => {
   }
 
   return (
-    <div className={styles.codeSnippetContainer}>
+    <div className={styles.wholeSnippetContainer}>
       <button className={styles.receiptButtonCopy} onClick={() => copyCode()}>
-        <div className={styles.imagePadding}>
-          <Image src="/assets/icons/copy.svg" width={20} height={20} />
-        </div>
+        <Image src="/assets/icons/copy.svg" width={20} height={20} />
       </button>
-      {isMessage && <div className={styles.receiptButtonCopy}>Copied!</div>}
-      <SyntaxHighlighter language={lang} style={googlecode}>
-        {code}
-      </SyntaxHighlighter>
+      {isMessage && (
+        <div className={`${styles.receiptButtonCopy} ${styles.copyMessage}`}>
+          Copied!
+        </div>
+      )}
+      <div className={styles.codeSnippetContainer}>
+        <SyntaxHighlighter language={lang} style={googlecode}>
+          {code}
+        </SyntaxHighlighter>
+      </div>
     </div>
   )
 }
