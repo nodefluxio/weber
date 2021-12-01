@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] New OCR Receipt result display (colorized JSON dan simpler text display)
 - [FRONTEND] Make solution cards slideable/swipeable
 - [FRONTEND] Fix title for analytics page
+- [FRONTEND] Update field title and company name in request demo form to have minimum input length to 5 char
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
 
