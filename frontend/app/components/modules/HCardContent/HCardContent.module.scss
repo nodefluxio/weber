@@ -1,0 +1,25 @@
+@import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
+
+.hCardContent {
+  display: inherit;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+
+  .image {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-right: 3rem;
+  }
+
+  .body {
+    text-align: left;
+
+    .title,
+    .content > * {
+      margin: 0 0 0.5rem 0;
+    }
+  }
+}

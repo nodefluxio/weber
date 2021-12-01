@@ -141,9 +141,11 @@ export type InnovationResponse<T> = {
   ok: boolean
   service_data: {
     job: {
-      analytic_type: string
-      result: T[]
-      status: string
+      result: {
+        analytic_type: string
+        result: T[]
+        status: string
+      }
     }
     message: string
     ok: boolean
