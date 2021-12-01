@@ -200,6 +200,20 @@ func seedService(model *models.Model) {
 			CreatedAt:          time.Now(),
 			UpdatedAt:          time.Now(),
 		},
+		{
+			Name:               "Face Occlusion & Attribute",
+			Type:               "innovation",
+			Slug:               "face-occlusion-attribute",
+			Thumbnail:          "face-occlusion-attribute.png",
+			AccessKey:          "",
+			Token:				"",
+			Timestamp:          "",
+			ShortDescription:   "This analytics is a combination of face occlusion and face attributes. Face occlusion can detect the part of the face area that is occluded, while face attribute can detect the type of attribute found in the face area.",
+			LongDescription:    "This analytics is a combination of face occlusion and face attributes. Face occlusion can detect the part of the face area that is occluded, while face attribute can detect the type of attribute found in the face area. The combination of these two analytics can ensure the user's face is clearly visible and can safely perform the face liveness and face recognition processes.",
+			SpecialInstruction: "Special Instruction for Face Occlusion & Attribute",
+			CreatedAt:          time.Now(),
+			UpdatedAt:          time.Now(),
+		},
 		// Add new service here
 	}
 
