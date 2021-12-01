@@ -52,7 +52,6 @@
   "face-demography": {
     "type": "array",
     "starting_key": ["face_demography"],
-    "max_result": 10,
     "fields": [
       {
         "key": "gender",
