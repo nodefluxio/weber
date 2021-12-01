@@ -66,7 +66,7 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	return data, nil
 }
 
-func ImplementFOAInnovation(ctx *gin.Context, postBody []byte) {
+func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	// Request to Face Detection API
 	resultFaceDetection, err := RequestToInnovationSync(postBody, "face-detection")
 	if err != nil {

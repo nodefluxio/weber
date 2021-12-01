@@ -63,7 +63,7 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 		string(additionalParams), strings.Join(requestData.Images, `", "`)))
 
 	if service.Slug == "face-occlusion-attribute" {
-		ImplementFOAInnovation(ctx, postBody)
+		RequestToFaceOcclusionAttribute(ctx, postBody)
 		return
 	} else {
 		serviceData, err = RequestToInnovationSync(postBody, service.Slug)
