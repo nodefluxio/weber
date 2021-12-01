@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add solutions banner image
 - [FRONTEND] Add Horizontal Card Component
 - [BACKEND] Add new seed for innovation Car Damage Assessment
+- [BACKEND] Add logging system in backend use logrus
 
 ### Changed
 

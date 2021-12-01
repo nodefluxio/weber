@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
@@ -49,6 +50,13 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 
 	var lastActivity models.VisitorActivity
 	if err := ctrl.Model.GetCurrentVisitorActivity(&lastActivity, feedbackInput.SessionID, serviceId); err != nil {
+		log.WithFields(log.Fields{
+			"error":             err,
+			"session_id":        feedbackInput.SessionID,
+			"service_id":        serviceId,
+			"data_lastActivity": lastActivity,
+		}).Error("Error on get current visitor activity!")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -62,6 +70,12 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 	feedback.Rating = feedbackInput.Rating
 
 	if err := ctrl.Model.CreateFeedbackDb(&feedback); err != nil {
+		log.WithFields(log.Fields{
+			"service_id":    serviceId,
+			"error":         err,
+			"data_feedback": feedback,
+		}).Error("Error on create feedback!")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
