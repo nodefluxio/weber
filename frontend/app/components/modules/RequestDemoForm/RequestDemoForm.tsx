@@ -69,7 +69,10 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         placeholder="Your business email"
         type="email"
         register={register}
-        registerOptions={{ required: 'required' }}
+        registerOptions={{
+          required: 'required',
+          minLength: { value: 5, message: 'minimum length is 5' }
+        }}
         errors={errors}
       />
       <TextField
@@ -91,7 +94,10 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         placeholder="Company name"
         type="text"
         register={register}
-        registerOptions={{ required: 'required' }}
+        registerOptions={{
+          required: 'required',
+          minLength: { value: 5, message: 'minimum length is 5' }
+        }}
         errors={errors}
       />
       <div className={styles.divide}>
@@ -102,7 +108,10 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
             placeholder="Job title"
             type="text"
             register={register}
-            registerOptions={{ required: 'required' }}
+            registerOptions={{
+              required: 'required',
+              minLength: { value: 5, message: 'minimum length is 5' }
+            }}
             errors={errors}
           />
         </div>
