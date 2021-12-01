@@ -212,7 +212,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                 className={styles.cardContent}
                 color={Color.Primary}
                 title={analytic.name}>
-                {analytic.short_description}
+                <p>{analytic.short_description}</p>
                 <div className={styles.footer}>
                   <Link href={'/analytics/' + analytic.slug} passHref>
                     <Button type="link" color={Color.Secondary}>
@@ -244,7 +244,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                     className={styles.cardContent}
                     title={innovation.name}
                     height={'100%'}>
-                    {innovation.short_description}
+                    <p> {innovation.short_description}</p>
                     <div className={styles.footer}>
                       <Link href={'/innovations/' + innovation.slug} passHref>
                         <Button type="link" color={Color.Secondary}>
