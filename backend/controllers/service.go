@@ -4,11 +4,11 @@ import (
 	"backend/models"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -19,6 +19,10 @@ func (ctrl *Controller) GetServices(ctx *gin.Context) {
 	// and it has an invalid value
 	isValid, serviceType := ctrl.Model.IsValidServiceType(serviceTypeQuery)
 	if isAnyQueryType && !isValid {
+		log.WithFields(log.Fields{
+			"data": serviceTypeQuery,
+		}).Error("Error on query type not valid")
+
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
 			"message": "Value of argument '?type=' is not valid",
@@ -43,7 +47,10 @@ func (ctrl *Controller) getAllServices(ctx *gin.Context) {
 	analyticsService := &[]models.APIService{}
 
 	if err := ctrl.DBConn.Model(service).Find(analyticsService).Error; err != nil {
-		log.Fatal(err)
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  analyticsService,
+		}).Error("error on get all services")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -58,7 +65,10 @@ func (ctrl *Controller) getServiceAnalytic(ctx *gin.Context) {
 	analyticsService := &[]models.APIService{}
 
 	if err := ctrl.DBConn.Model(service).Where("type = ?", "analytic").Find(analyticsService).Error; err != nil {
-		log.Fatal(err)
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  analyticsService,
+		}).Error("analytics service not found!")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -73,7 +83,10 @@ func (ctrl *Controller) getServiceSolution(ctx *gin.Context) {
 	solutionsService := &[]models.APIService{}
 
 	if err := ctrl.DBConn.Model(service).Where("type = ?", "solution").Find(solutionsService).Error; err != nil {
-		log.Fatal(err)
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  solutionsService,
+		}).Error("solutions service not found!")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -88,7 +101,10 @@ func (ctrl *Controller) getServiceInnovation(ctx *gin.Context) {
 	innovationsService := &[]models.APIService{}
 
 	if err := ctrl.DBConn.Model(service).Where("type = ?", "innovation").Find(innovationsService).Error; err != nil {
-		log.Fatal(err)
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  innovationsService,
+		}).Error("innovations service not found!")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -103,8 +119,23 @@ func (ctrl *Controller) GetServiceBySlug(ctx *gin.Context) {
 	apiService := &models.APIService{}
 	slug := ctx.Param("slug")
 
+	// Log as JSON instead of the default ASCII formatter.
+	log.SetFormatter(&log.JSONFormatter{})
+
+	// Output to stdout instead of the default stderr
+	// Can be any io.Writer, see below for File example
+
+	// Only log the warning severity or above.
+	log.SetLevel(log.WarnLevel)
+
 	if err := ctrl.DBConn.Model(service).First(&apiService, "slug = ?", slug).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
+			log.WithFields(log.Fields{
+				"slug":  slug,
+				"error": err,
+				"data":  apiService,
+			}).Error("error on finding Slug!")
+
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"ok":      false,
 				"message": "Service not found",
@@ -158,6 +189,11 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 	// Get service data from database
 	var service models.Service
 	if err = ctrl.DBConn.First(&service, serviceId).Error; err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  service,
+		}).Error("Error on get service data!")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -168,6 +204,11 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 	// Set user activity completeness
 	visitorActivity := &models.VisitorActivity{SessionID: inputData.SessionID, ServiceID: service.ID, Completeness: 100}
 	if err = ctrl.Model.CreateVisitorActivity(visitorActivity); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  visitorActivity,
+		}).Error("error on Set user activity completeness!")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -182,6 +223,11 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 		RequestToServiceInnovation(ctx, service, inputData)
 		return
 	}
+
+	log.WithFields(log.Fields{
+		"error": err,
+		"data":  inputData,
+	}).Error("error on create service request!")
 
 	ctx.JSON(http.StatusInternalServerError, gin.H{
 		"ok":      false,

@@ -8,6 +8,7 @@ import (
 )
 
 func SetupRouter(ctrl *controllers.Controller) *gin.Engine {
+
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 

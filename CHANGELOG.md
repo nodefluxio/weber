@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add solutions banner image
 - [FRONTEND] Add Horizontal Card Component
 - [BACKEND] Add new seed for innovation Car Damage Assessment
+- [BACKEND] Add logging system in backend use logrus
+- [BACKEND] Add request handler for service Face Occlusion & Attribute innovation, including handler for request to Face Detection API
 
 ### Changed
 
@@ -26,6 +28,9 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] New OCR Receipt result display (colorized JSON dan simpler text display)
 - [FRONTEND] Make solution cards slideable/swipeable
 - [FRONTEND] Fix title for analytics page
+- [FRONTEND] Update field title and company name in request demo form to have minimum input length to 5 char
+- [FRONTEND] Fix sticky navbar in request demo form page
+- [FRONTEND] Scrollable analytic result
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
 

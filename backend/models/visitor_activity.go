@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type VisitorActivity struct {
@@ -17,6 +19,11 @@ type VisitorActivity struct {
 func (m *Model) CreateVisitorActivity(VisitorActivity *VisitorActivity) (err error) {
 	err = m.DBConn.Create(VisitorActivity).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  VisitorActivity,
+		}).Error("error on create visitor activity!")
+
 		return err
 	}
 	return nil
@@ -25,6 +32,12 @@ func (m *Model) CreateVisitorActivity(VisitorActivity *VisitorActivity) (err err
 func (m *Model) GetCurrentVisitorActivity(VisitorActivity *VisitorActivity, session_id string, service_id int) (err error) {
 	err = m.DBConn.Where("session_id = ? AND service_id = ?", session_id, service_id).Last(VisitorActivity).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"session_id": session_id,
+			"service_id": service_id,
+			"error":      err,
+		}).Error("error get last visitor activity based on session_id and service_id")
+
 		return err
 	}
 	return nil

@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"image"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mitchellh/mapstructure"
+	log "github.com/sirupsen/logrus"
 )
 
 type Thumbnails []string
@@ -28,6 +28,12 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 	serviceData, err = RequestToAnalyticSync(dataAnalytic, service.Slug)
 
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":         err,
+			"data_analytic": dataAnalytic,
+			"slug":          service.Slug,
+		}).Error("error on request analytics service")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),
@@ -49,15 +55,27 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 
 func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputData models.ServiceRequestInput) {
 	var err error
+	var serviceData models.ServiceRequestResultData
 
 	requestData := inputData.Data
 	additionalParams, _ := json.Marshal(requestData.AdditionalParams)
 	postBody := []byte(fmt.Sprintf(`{ "additional_params": %v , "images":  [ "%v" ]}`,
 		string(additionalParams), strings.Join(requestData.Images, `", "`)))
 
-	serviceData, err := RequestToInnovationSync(postBody, service.Slug)
+	if service.Slug == "face-occlusion-attribute" {
+		RequestToFaceOcclusionAttribute(ctx, postBody)
+		return
+	} else {
+		serviceData, err = RequestToInnovationSync(postBody, service.Slug)
+	}
 
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":     err,
+			"post_body": postBody,
+			"slug":      service.Slug,
+		}).Error("error on request innovation service")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),

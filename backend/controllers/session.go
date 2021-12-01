@@ -2,16 +2,23 @@ package controllers
 
 import (
 	"backend/models"
-	"log"
 	"os"
 	"strconv"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func (ctrl *Controller) IsSessionExist(sessionId string) bool {
 	var visitor models.Visitor
 
 	if err := ctrl.Model.GetVisitor(&visitor, sessionId); err != nil {
+
+		log.WithFields(log.Fields{
+			"error":      err,
+			"session_id": sessionId,
+		}).Error("error, session id not exist")
+
 		return false
 	}
 
@@ -26,6 +33,13 @@ func (ctrl *Controller) IsSessionExpired(sessionId string) bool {
 
 	var visitor models.Visitor
 	if err := ctrl.Model.GetVisitor(&visitor, sessionId); err != nil {
+
+		log.WithFields(log.Fields{
+			"error":      err,
+			"session_id": sessionId,
+			"data":       visitor,
+		}).Error("error, session id expired")
+
 		return false
 	}
 

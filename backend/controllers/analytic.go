@@ -10,13 +10,13 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/oliamb/cutter"
+	log "github.com/sirupsen/logrus"
 )
 
 type dataAnalytic struct {
@@ -47,7 +47,14 @@ func RequestToAnalyticSync(dataAnalytic dataAnalytic, analyticSlug string) (mode
 	payload := bytes.NewBuffer(dataAnalytic.postBody)
 	request, err := http.NewRequest("POST", os.Getenv("URL_ANALYTICS")+analyticSlug, payload)
 	if err != nil {
-		log.Fatal(err)
+		log.WithFields(log.Fields{
+			"error":   err,
+			"data":    data,
+			"payload": payload,
+			"slug":    analyticSlug,
+			"method":  "POST",
+		}).Error("error on send http new request to analytic!")
+
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -57,6 +64,11 @@ func RequestToAnalyticSync(dataAnalytic dataAnalytic, analyticSlug string) (mode
 	var client = &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":   err,
+			"data":    data,
+			"request": request,
+		}).Error("error on request to analytic!")
 		return data, err
 	}
 
@@ -65,6 +77,11 @@ func RequestToAnalyticSync(dataAnalytic dataAnalytic, analyticSlug string) (mode
 	var dataResponse models.ResponseResultData
 	err = json.NewDecoder(response.Body).Decode(&dataResponse)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":         err,
+			"data":          dataResponse,
+			"response_body": response.Body,
+		}).Error("error on decode response body!")
 		return data, err
 	}
 
@@ -90,6 +107,12 @@ func getJobStatus(dataAnalytic dataAnalytic, jobId string) (models.ServiceReques
 
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":  err,
+			"data":   data,
+			"url":    url,
+			"method": "GET",
+		}).Error("error on http new request to url!")
 		return data, err
 	}
 
@@ -100,6 +123,12 @@ func getJobStatus(dataAnalytic dataAnalytic, jobId string) (models.ServiceReques
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":   err,
+			"data":    data,
+			"request": request,
+		}).Error("error on client request!")
+
 		return data, err
 	}
 
@@ -107,6 +136,12 @@ func getJobStatus(dataAnalytic dataAnalytic, jobId string) (models.ServiceReques
 
 	err = json.NewDecoder(response.Body).Decode(&data)
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":         err,
+			"data":          data,
+			"response_body": response.Body,
+		}).Error("error on decode response body!")
+
 		return data, err
 	}
 
@@ -118,6 +153,12 @@ func GetResultFaceLiveness(service models.Service, input models.RequestData) (mo
 	dataAnalytic := GetDataAnalytic(service, input)
 	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness")
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  dataAnalytic,
+			"slug":  "face-liveness",
+		}).Error("error on request to analytic face liveness!")
+
 		fmt.Println("Error during fetching API face liveness: ", err)
 		return result, err
 	}
@@ -129,6 +170,12 @@ func GetResultOCRKTP(service models.Service, input models.RequestData) (models.S
 	dataAnalytic := GetDataAnalytic(service, input)
 	result, err := RequestToAnalyticSync(dataAnalytic, "ocr-ktp")
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  dataAnalytic,
+			"slug":  "ocr-ktp",
+		}).Error("error on request to analytic ocr ktp!")
+
 		fmt.Println("Error during fetching API ocr ktp: ", err)
 		return result, err
 	}
@@ -140,6 +187,12 @@ func GetResultFaceMatch(service models.Service, input models.RequestData) (model
 	dataAnalytic := GetDataAnalytic(service, input)
 	result, err := RequestToAnalyticSync(dataAnalytic, "face-match")
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  dataAnalytic,
+			"slug":  "face-match",
+		}).Error("error on request to analytic face match!")
+
 		fmt.Println("Error during fetching API face match: ", err)
 		return result, err
 	}
@@ -152,6 +205,12 @@ func GetResultFaceEnrollment(service models.Service, input models.RequestData) (
 	result, err := RequestToAnalyticSync(dataAnalytic, "create-face-enrollment")
 
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  dataAnalytic,
+			"slug":  "create-face-enrollment",
+		}).Error("error on request to analytic create face enrollment!")
+
 		fmt.Println("Error during fetching API face enrollment: ", err)
 		return result, err
 	}
@@ -163,6 +222,12 @@ func GetResultFaceMatchEnrollment(service models.Service, input models.RequestDa
 	dataAnalytic := GetDataAnalytic(service, input)
 	result, err := RequestToAnalyticSync(dataAnalytic, "face-match-enrollment")
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  dataAnalytic,
+			"slug":  "face-match-enrollment",
+		}).Error("error on request to analytic face match enrollment!")
+
 		fmt.Println("Error during fetching API face match with enrollment: ", err)
 		return result, err
 	}
