@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Feedback struct {
@@ -22,6 +24,11 @@ type FeedbackInput struct {
 func (m *Model) CreateFeedbackDb(Feedback *Feedback) (err error) {
 	err = m.DBConn.Create(Feedback).Error
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  Feedback,
+		}).Error("error on create feedback!")
+
 		return err
 	}
 	return nil
