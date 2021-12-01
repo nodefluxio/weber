@@ -119,20 +119,19 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	// Declare channels
 	resultFaceOcclusionChannel := make(chan models.ServiceRequestResultData)
 	resultFaceAttributeChannel := make(chan models.ServiceRequestResultData)
-	errorFaceOcclusionChannel := make(chan error)
-	errorFaceAttributeChannel := make(chan error)
+	errorFaceOcclusionAttributeChannel := make(chan error)
 
 	// Create and execute goroutines
 	go func() {
 		postBody := []byte(fmt.Sprintf(`{"images":  [ "%v" ]}`, inputFaceOcclusion))
 		resultFaceOcclusion, err := RequestToInnovationSync(postBody, "face-occlusion")
-		errorFaceOcclusionChannel <- err
+		errorFaceOcclusionAttributeChannel <- err
 		resultFaceOcclusionChannel <- resultFaceOcclusion
 	}()
 	go func() {
 		postBody := []byte(fmt.Sprintf(`{"images":  [ "%v" ]}`, inputFaceAttribute))
 		resultFaceAttribute, err := RequestToInnovationSync(postBody, "face-attribute")
-		errorFaceAttributeChannel <- err
+		errorFaceOcclusionAttributeChannel <- err
 		resultFaceAttributeChannel <- resultFaceAttribute
 	}()
 	
@@ -141,13 +140,13 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	// Share the results with channel - select
 	for i := 0; i < 4; i++ {
 		select {
-		case resultFaceOcclusion := <-resultFaceOcclusionChannel:
+		case resultFaceOcclusion := <- resultFaceOcclusionChannel:
 			serviceData.FaceOcclusion = resultFaceOcclusion
-		case resultFaceAttribute := <-resultFaceAttributeChannel:
+		case resultFaceAttribute := <- resultFaceAttributeChannel:
 			serviceData.FaceAttribute = resultFaceAttribute
-		case errorFaceOcclusion := <-errorFaceOcclusionChannel:
+		case errorFaceOcclusion := <- errorFaceOcclusionAttributeChannel:
 			err = errorFaceOcclusion
-		case errorFaceAttribute := <-errorFaceAttributeChannel:
+		case errorFaceAttribute := <- errorFaceOcclusionAttributeChannel:
 			err = errorFaceAttribute
 		}
 	}
