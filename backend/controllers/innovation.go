@@ -13,7 +13,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-type foaServiceData struct {
+type faceOcclusionAttributeServiceData struct {
 	FaceOcclusion	models.ServiceRequestResultData `json:"face_occlusion"`
 	FaceAttribute	models.ServiceRequestResultData `json:"face_attribute"`
 }
@@ -136,7 +136,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		resultFaceAttributeChannel <- resultFaceAttribute
 	}()
 	
-	var serviceData foaServiceData
+	var serviceData faceOcclusionAttributeServiceData
 
 	// Share the results with channel - select
 	for i := 0; i < 4; i++ {
