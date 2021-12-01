@@ -109,7 +109,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               ) : errorMsg ? (
                 <div>{errorMsg}</div>
               ) : (
-                <div style={{ textAlign: 'center' }}>
+                <div className={styles.loadingState}>
                   <h3>Loading your results...</h3>
                   <Spinner />
                   <p>Please wait a moment</p>
