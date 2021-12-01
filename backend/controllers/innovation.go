@@ -92,6 +92,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		return
 	}
 
+	// Error response if face not detected
 	isFaceDetected := gjson.Get(string(resultFaceDetectionJson), "job.result.result.0.face_detection.face_detected").Bool()
 	if !isFaceDetected {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -101,6 +102,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		return
 	}
 
+	// Error response if multiple faces detected
 	isMultipleFaceDetected := gjson.Get(string(resultFaceDetectionJson), "job.result.result.0.face_detection.multiple_faces_detected").Bool()
 	if isMultipleFaceDetected {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -122,12 +124,14 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 
 	// Create and execute goroutines
 	go func() {
-		resultFaceOcclusion, err := getResultFaceOcclusionAttribute(inputFaceOcclusion, "face-occlusion")
+		postBody := []byte(fmt.Sprintf(`{"images":  [ "%v" ]}`, inputFaceOcclusion))
+		resultFaceOcclusion, err := RequestToInnovationSync(postBody, "face-occlusion")
 		errorFaceOcclusionChannel <- err
 		resultFaceOcclusionChannel <- resultFaceOcclusion
 	}()
 	go func() {
-		resultFaceAttribute, err := getResultFaceOcclusionAttribute(inputFaceAttribute, "face-attribute")
+		postBody := []byte(fmt.Sprintf(`{"images":  [ "%v" ]}`, inputFaceAttribute))
+		resultFaceAttribute, err := RequestToInnovationSync(postBody, "face-attribute")
 		errorFaceAttributeChannel <- err
 		resultFaceAttributeChannel <- resultFaceAttribute
 	}()
@@ -166,21 +170,4 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		"message":      "Service demo request success",
 		"service_data": &serviceData,
 	})
-}
-
-func getResultFaceOcclusionAttribute(base64InputImage string, innovationSlug string) (models.ServiceRequestResultData, error) {
-	postBody := []byte(fmt.Sprintf(`{"images":  [ "%v" ]}`, base64InputImage))
-	resultFaceOcclusionAttribute, err := RequestToInnovationSync(postBody, innovationSlug)
-
-	if err != nil {
-		log.WithFields(log.Fields{
-			"error":     err,
-			"post_body": postBody,
-			"slug":      innovationSlug,
-		}).Error("error on request innovation service")
-
-		return resultFaceOcclusionAttribute, err
-	}
-
-	return resultFaceOcclusionAttribute, nil
 }
