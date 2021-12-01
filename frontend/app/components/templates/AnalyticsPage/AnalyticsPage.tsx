@@ -10,6 +10,7 @@ import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
 import { postInnovation } from '@/api/innovationsAPI'
 import { CustomError } from 'app/errors/CustomError'
+import { Spinner } from 'app/components/elements/Spinner/Spinner'
 
 type Props = {
   analyticsName: string
@@ -108,7 +109,11 @@ export const AnalyticsPage: React.FC<Props> = ({
               ) : errorMsg ? (
                 <div>{errorMsg}</div>
               ) : (
-                <div>Loading your results... Please wait</div>
+                <div style={{ textAlign: 'center' }}>
+                  <h3>Loading your results...</h3>
+                  <Spinner />
+                  <p>Please wait a moment</p>
+                </div>
               )}
             </AnalyticsResultWrapper>
             {isResult && (
