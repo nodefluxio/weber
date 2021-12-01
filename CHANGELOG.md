@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add Horizontal Card Component
 - [BACKEND] Add new seed for innovation Car Damage Assessment
 - [BACKEND] Add logging system in backend use logrus
+- [BACKEND] Add request handler for service Face Occlusion & Attribute innovation, including handler for request to Face Detection API
 
 ### Changed
 
