@@ -81,7 +81,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":     	err,
-			"json_result": 	resultFaceDetectionJson,
+			"json_result": 	string(resultFaceDetectionJson),
 			"slug":      	"face-detection",
 		}).Error("error on marshaling json result")
 
