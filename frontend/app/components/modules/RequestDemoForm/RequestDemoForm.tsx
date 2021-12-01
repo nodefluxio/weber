@@ -70,8 +70,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         type="email"
         register={register}
         registerOptions={{
-          required: 'required',
-          minLength: { value: 5, message: 'minimum length is 5' }
+          required: 'required'
         }}
         errors={errors}
       />
