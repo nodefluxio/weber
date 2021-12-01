@@ -101,3 +101,40 @@ export type PaymentAccountInfo = {
   balance: number
   minimum_payment: number
 }
+
+export type CarDamage<T> = {
+  front: T
+  left: T
+  right: T
+  rear: T
+}
+
+export type CarDamageSample = {
+  front: string[]
+  left: string[]
+  right: string[]
+  rear: string[]
+}
+
+export enum CarDamageStatus {
+  Damage = 'Damage',
+  Normal = 'Normal'
+}
+
+export enum CarDamageSeverity {
+  Minor = 'Minor',
+  Moderate = 'Moderate',
+  Severe = 'Severe'
+}
+
+export enum CarDamageScore {
+  Two = 2,
+  Four = 4,
+  Eight = 8
+}
+
+export enum CarDamageRecomendation {
+  NotUrgent = 'Not Urgent',
+  Important = 'Important',
+  UrgentToFix = 'Urgent To Fix'
+}

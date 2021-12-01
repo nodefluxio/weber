@@ -1,4 +1,4 @@
-import { InnovationResponse } from '@/types/responses'
+import { CarDamageResult, InnovationResponse } from '@/types/responses'
 import axios from 'axios'
 import { errorHandler } from '@/utils/errorHandler'
 
@@ -25,6 +25,37 @@ export const postInnovation = async <T>(
         return data.service_data.job.result.result[0]
       } else {
         return data.service_data.message
+      }
+    }
+  } catch (e) {
+    errorHandler(e)
+  }
+}
+
+export const postCarDamage = async (
+  id: number,
+  sessionId: string,
+  frontSideImage: string,
+  leftSideImage: string,
+  rightSideImage: string,
+  rearSideImage: string
+): Promise<InnovationResponse<CarDamageResult> | undefined> => {
+  try {
+    const { data } = await axios.post<InnovationResponse<CarDamageResult>>(
+      `/services/${id}`,
+      {
+        session_id: sessionId,
+        data: {
+          images: [frontSideImage, leftSideImage, rightSideImage, rearSideImage]
+        }
+      }
+    )
+    if (data.ok) {
+      if (
+        data.service_data.ok &&
+        data.service_data.job.result.result.length > 0
+      ) {
+        return data
       }
     }
   } catch (e) {
