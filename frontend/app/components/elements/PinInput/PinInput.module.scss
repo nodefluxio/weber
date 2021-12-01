@@ -34,15 +34,13 @@
     width: 3.5rem;
     height: 3.5rem;
     text-align: center;
-    box-sizing: border-box;
-    outline: none;
     border: 1px solid $grey-text;
     border-radius: 4px;
     margin-top: 1rem;
 
     &:focus {
       border-width: 1.5px;
-      border-color: $primary-color;
+      outline-color: $primary-color;
     }
 
     @include phone {
