@@ -145,6 +145,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
       setResult(res)
     } catch (e) {
       if (e instanceof CustomError && e.statusCode === 401) {
+        setCurrentStep(1)
         setOpenModal(true)
       } else {
         console.error(e)
