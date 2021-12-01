@@ -5,9 +5,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
+
 	"net/http"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.ServiceRequestResultData, error) {
@@ -20,7 +22,14 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	request, err = http.NewRequest("POST", BASE_URL, payload)
 
 	if err != nil {
-		log.Fatal(err)
+		log.WithFields(log.Fields{
+			"error":    err,
+			"data":     data,
+			"payload":  payload,
+			"base_url": BASE_URL,
+			"slug":     innovationSlug,
+			"method":   "POST",
+		}).Error("error on send http new request to innovation!")
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -28,7 +37,11 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	var client = &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		log.Println(err)
+		log.WithFields(log.Fields{
+			"error":   err,
+			"data":    data,
+			"request": request,
+		}).Error("error on request to innovation!")
 		return data, err
 	}
 
@@ -36,7 +49,11 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 
 	err = json.NewDecoder(response.Body).Decode(&data)
 	if err != nil {
-		log.Println(err)
+		log.WithFields(log.Fields{
+			"error":         err,
+			"data":          data,
+			"response_body": response.Body,
+		}).Error("error on decode response body!")
 		return data, err
 	}
 
