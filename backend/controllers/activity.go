@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
@@ -31,6 +32,11 @@ func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
 
 	// Insert new record into db
 	if err := ctrl.Model.CreateVisitorActivity(&visitorActivity); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  visitorActivity,
+		}).Error("Error on create visitor activity!")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),

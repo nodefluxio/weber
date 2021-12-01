@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 type ekycAnalyticBody struct {
@@ -111,6 +112,11 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 	}
 
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error":        err,
+			"service_data": serviceData,
+		}).Error("Error on Implement EKYC Solution!")
+
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"message": err.Error(),

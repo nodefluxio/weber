@@ -11,6 +11,7 @@
       "@/utils/*":["app/utils/*"],
       "@/pages/*":["app/pages/*"],
       "@/api/*":["app/api/*"],
+      "@/hooks/*":["app/hooks/*"],
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
