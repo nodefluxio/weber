@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] New OCR Receipt result display (colorized JSON dan simpler text display)
 - [FRONTEND] Make solution cards slideable/swipeable
 - [FRONTEND] Fix title for analytics page
+- [FRONTEND] CSS Display fallback on Safari browsers
 - [FRONTEND] Update field title and company name in request demo form to have minimum input length to 5 char
 - [FRONTEND] Fix sticky navbar in request demo form page
 - [FRONTEND] Scrollable analytic result

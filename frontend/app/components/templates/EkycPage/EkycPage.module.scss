@@ -30,24 +30,6 @@
     }
   }
 
-  .imgContainer {
-    position: relative;
-
-    display: flex;
-    gap: 1rem;
-    flex-direction: column;
-
-    .imgItem {
-      position: relative;
-      width: 300px;
-      height: 225px;
-    }
-
-    .caption {
-      display: block;
-    }
-  }
-
   .result {
     display: flex;
     flex-direction: column;
