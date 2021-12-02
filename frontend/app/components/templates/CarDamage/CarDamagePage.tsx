@@ -240,7 +240,10 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                             <HCardContent
                               imgSrc={selectedImageSide[1]}
                               imgAlt={`${selectedImageSide[0]} side image`}
-                              title={`${selectedImageSide[0]} side`}>
+                              title={`${
+                                selectedImageSide[0][0].toUpperCase() +
+                                selectedImageSide[0].substring(1)
+                              } Side`}>
                               <>
                                 <p>{`Status: ${result.service_data.job.result.result[0].car_damage_assessment[i].damage}`}</p>
                                 <p>{`Severity: ${result.service_data.job.result.result[0].car_damage_assessment[i].severity}`}</p>
