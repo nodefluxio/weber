@@ -255,7 +255,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                     <p>{`Recomendation: ${result.service_data.job.result.result[0].recommendation}`}</p>
                   </>
                 ) : (
-                  <h2 className={styles.danger}>Oops, Something When Wrong</h2>
+                  <h2 className={styles.danger}>Oops, Something Went Wrong</h2>
                 )}
                 <Feedback id={id} onTryAgain={() => setCurrentStep(1)} />
               </>
