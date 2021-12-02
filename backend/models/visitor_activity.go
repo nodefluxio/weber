@@ -17,28 +17,48 @@ type VisitorActivity struct {
 }
 
 func (m *Model) CreateVisitorActivity(VisitorActivity *VisitorActivity) (err error) {
+
+	log.WithFields(log.Fields{
+		"data": VisitorActivity,
+	}).Info("[MODEL] create visitor activity start...")
+
 	err = m.DBConn.Create(VisitorActivity).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  VisitorActivity,
-		}).Error("error on create visitor activity!")
+		}).Error("[MODEL] error on create visitor activity!")
 
 		return err
 	}
+	log.WithFields(log.Fields{
+		"data": VisitorActivity,
+	}).Info("[MODEL] success on create visitor activity!")
+
 	return nil
 }
 
 func (m *Model) GetCurrentVisitorActivity(VisitorActivity *VisitorActivity, session_id string, service_id int) (err error) {
+
+	log.WithFields(log.Fields{
+		"data": VisitorActivity,
+	}).Info("[MODEL] get last visitor activity start...")
+
 	err = m.DBConn.Where("session_id = ? AND service_id = ?", session_id, service_id).Last(VisitorActivity).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"session_id": session_id,
 			"service_id": service_id,
 			"error":      err,
-		}).Error("error get last visitor activity based on session_id and service_id")
+		}).Error("[MODEL] error get last visitor activity based on session_id and service_id!")
 
 		return err
 	}
+	log.WithFields(log.Fields{
+		"data":       VisitorActivity,
+		"session_id": session_id,
+		"service_id": service_id,
+	}).Info("[MODEL] success on get last visitor activity")
+
 	return nil
 }
