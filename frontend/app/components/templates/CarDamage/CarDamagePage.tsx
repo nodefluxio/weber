@@ -250,9 +250,15 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                           </HorizontalCard>
                         )
                       )}
+                      <p
+                        className={
+                          styles.resultText
+                        }>{`Total Score: ${result.service_data.job.result.result[0].total_score}`}</p>
+                      <p
+                        className={
+                          styles.resultText
+                        }>{`Recomendation: ${result.service_data.job.result.result[0].recommendation}`}</p>
                     </div>
-                    <p>{`Total Score: ${result.service_data.job.result.result[0].total_score}`}</p>
-                    <p>{`Recomendation: ${result.service_data.job.result.result[0].recommendation}`}</p>
                   </>
                 ) : (
                   <h2 className={styles.danger}>Oops, Something Went Wrong</h2>

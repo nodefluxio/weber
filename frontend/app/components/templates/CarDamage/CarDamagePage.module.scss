@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: left;
   padding: 2rem 0;
   min-height: 80vh;
   flex-direction: column;
@@ -56,9 +56,12 @@
   }
 
   .carDamageResult {
-
     .result {
       margin-bottom: 1rem;
+    }
+
+    .resultText {
+      font-size: 1.25rem;
     }
   }
 }
