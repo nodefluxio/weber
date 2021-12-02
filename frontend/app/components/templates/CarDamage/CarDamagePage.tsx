@@ -166,7 +166,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
       </Modal>
 
       <Banner
-        bannerUrl="/assets/images/solutions/ekyc/banner.jpg"
+        bannerUrl="/assets/images/innovation/car-damage/banner.jpg"
         analyticsName={name}
         longDescription={long_description}
       />
