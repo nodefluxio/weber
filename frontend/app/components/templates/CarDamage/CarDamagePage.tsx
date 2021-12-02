@@ -23,7 +23,7 @@ type Props = {
   long_description: string
 }
 
-const CarDamageSamples: CarDamage<string[]> = {
+const CAR_DAMAGE_SAMPLES: CarDamage<string[]> = {
   front: [
     '/assets/images/innovations/car-damage/front_good.jpg',
     '/assets/images/innovations/car-damage/front_minor.jpg',
@@ -180,7 +180,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
         {currentStep === 1 && (
           <>
             <p className={styles.instruction}>Select image for each part:</p>
-            {Object.entries(CarDamageSamples).map((sample, i) => (
+            {Object.entries(CAR_DAMAGE_SAMPLES).map((sample, i) => (
               <Fragment key={i}>
                 <HorizontalCard
                   title={sample[0][0].toUpperCase() + sample[0].substring(1)}
