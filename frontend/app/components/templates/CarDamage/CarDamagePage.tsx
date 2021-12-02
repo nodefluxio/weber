@@ -231,22 +231,24 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
               <>
                 {result ? (
                   <>
-                    {Object.entries(selectedImage).map(
-                      (selectedImageSide, i) => (
-                        <HorizontalCard key={i}>
-                          <HCardContent
-                            imgSrc={selectedImageSide[1]}
-                            imgAlt={`${selectedImageSide[0]} side image`}
-                            title={`${selectedImageSide[0]} side`}>
-                            <>
-                              <p>{`Status: ${result.service_data.job.result.result[0].car_damage_assessment[i].damage}`}</p>
-                              <p>{`Severity: ${result.service_data.job.result.result[0].car_damage_assessment[i].severity}`}</p>
-                              <p>{`Score: ${result.service_data.job.result.result[0].car_damage_assessment[i].score}`}</p>
-                            </>
-                          </HCardContent>
-                        </HorizontalCard>
-                      )
-                    )}
+                    <div className={styles.carDamageResult}>
+                      {Object.entries(selectedImage).map(
+                        (selectedImageSide, i) => (
+                          <HorizontalCard key={i} className={styles.result}>
+                            <HCardContent
+                              imgSrc={selectedImageSide[1]}
+                              imgAlt={`${selectedImageSide[0]} side image`}
+                              title={`${selectedImageSide[0]} side`}>
+                              <>
+                                <p>{`Status: ${result.service_data.job.result.result[0].car_damage_assessment[i].damage}`}</p>
+                                <p>{`Severity: ${result.service_data.job.result.result[0].car_damage_assessment[i].severity}`}</p>
+                                <p>{`Score: ${result.service_data.job.result.result[0].car_damage_assessment[i].score}`}</p>
+                              </>
+                            </HCardContent>
+                          </HorizontalCard>
+                        )
+                      )}
+                    </div>
                     <p>{`Total Score: ${result.service_data.job.result.result[0].total_score}`}</p>
                     <p>{`Recomendation: ${result.service_data.job.result.result[0].recommendation}`}</p>
                   </>
