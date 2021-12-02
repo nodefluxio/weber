@@ -34,6 +34,11 @@ func (ctrl *Controller) CreateEKYCRequest(ctx *gin.Context) {
 	ctx.BindJSON(&inputData)
 	sessionId := inputData.SessionID
 
+	log.WithFields(log.Fields{
+		"data":       inputData,
+		"session_id": sessionId,
+	}).Info("[Controller] create ekyc request start...")
+
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
@@ -115,7 +120,7 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 		log.WithFields(log.Fields{
 			"error":        err,
 			"service_data": serviceData,
-		}).Error("Error on Implement EKYC Solution!")
+		}).Error("[Controller] error on Implement EKYC Solution!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -123,6 +128,10 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 		})
 		return
 	}
+
+	log.WithFields(log.Fields{
+		"data": serviceData,
+	}).Info("[Controller] implement ekyc solution successfully done")
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":           true,

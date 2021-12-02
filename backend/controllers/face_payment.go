@@ -19,6 +19,10 @@ import (
 func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 	sessionId := ctx.Param("session_id")
 
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+	}).Info("[Controller] get active account by session_id start...")
+
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
@@ -44,7 +48,7 @@ func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 			"error":      err,
 			"session_id": sessionId,
 			"data":       account,
-		}).Error("Error on get active account")
+		}).Error("[Controller] error on get active account")
 
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
@@ -58,7 +62,7 @@ func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 			"error":      err,
 			"session_id": sessionId,
 			"data":       account,
-		}).Error("Error on get active account by sessionID")
+		}).Error("[Controller] error on get active account by sessionID")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -87,6 +91,11 @@ func (ctrl *Controller) GetActiveAccountBySessionID(ctx *gin.Context) {
 		"ok":      true,
 		"message": "This session id has an active face payment account",
 	})
+
+	log.WithFields(log.Fields{
+		"data": accountResultData,
+	}).Info("[Controller] get active account by session_id successfully done")
+
 }
 
 func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
@@ -97,6 +106,12 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 	phone := newAccountData.Phone
 	phoneFormatted := ctrl.reformatPhone(phone, sessionId)
 	inputDataToAnalytic := newAccountData.Data
+
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+		"phone":      phone,
+		"data":       inputDataToAnalytic,
+	}).Info("[Controller] create face payment account start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
@@ -166,7 +181,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 			"error":        err,
 			"data_service": service,
 			"request_data": inputDataToAnalytic,
-		}).Error("Error on Get Result Face Liveness")
+		}).Error("[Controller] error on Get Result Face Liveness")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -195,7 +210,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 			"error":        err,
 			"data_service": service,
 			"request_data": inputDataToAnalytic,
-		}).Error("Error on Get Result Face Enrollment")
+		}).Error("[Controller] error on Get Result Face Enrollment")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -218,7 +233,7 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  newAccount,
-		}).Error("Error on Create Account")
+		}).Error("[Controller] error on Create Account")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -231,10 +246,19 @@ func (ctrl *Controller) CreateFacePaymentAccount(ctx *gin.Context) {
 		"ok":      true,
 		"message": "Face payment account registration has been successful",
 	})
+
+	log.WithFields(log.Fields{
+		"data": newAccount,
+	}).Info("[Controller] create face payment account successfully done")
+
 }
 
 func (ctrl *Controller) ResetBalanceFacePaymentAccount(ctx *gin.Context) {
 	sessionId := ctx.Param("session_id")
+
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+	}).Info("[Controller] reset balance payment account start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
@@ -261,7 +285,7 @@ func (ctrl *Controller) ResetBalanceFacePaymentAccount(ctx *gin.Context) {
 			"error":      err,
 			"data":       account,
 			"session_id": sessionId,
-		}).Error("Error on Get Active Account")
+		}).Error("[Controller] error on Get Active Account")
 
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
@@ -281,6 +305,11 @@ func (ctrl *Controller) ResetBalanceFacePaymentAccount(ctx *gin.Context) {
 		"ok":      true,
 		"message": "The balance in this account has been reset successfully",
 	})
+
+	log.WithFields(log.Fields{
+		"account_wallet": accountWallet,
+	}).Info("[Controller] reset balance payment account successfully done")
+
 }
 
 func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
@@ -289,6 +318,11 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 
 	sessionId := accountActivationData.SessionID
 	pin := accountActivationData.Pin
+
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+		"pin":        pin,
+	}).Info("[Controller] update face payment account start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
@@ -342,7 +376,7 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  newAccount,
-		}).Error("Error on Activate Account")
+		}).Error("[Controller] error on Activate Account")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -359,7 +393,7 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 			"error":      err,
 			"session_id": sessionId,
 			"data":       newAccountWallet,
-		}).Error("Error on create account wallet")
+		}).Error("[Controller] error on create account wallet")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -372,6 +406,10 @@ func (ctrl *Controller) UpdateFacePaymentAccount(ctx *gin.Context) {
 		"ok":      true,
 		"message": "Account activated successfully",
 	})
+
+	log.WithFields(log.Fields{
+		"data": newAccountWallet,
+	}).Info("[Controller] update face payment account successfully done")
 }
 
 func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
@@ -383,6 +421,10 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 	pin := payInput.Pin
 	phone := payInput.Phone
 	amount := payInput.Amount
+
+	log.WithFields(log.Fields{
+		"data": payInput,
+	}).Info("[Controller] create transaction start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
@@ -420,7 +462,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 			"error":      err,
 			"session_id": sessionId,
 			"data":       fpAccount,
-		}).Error("Error on get activate account")
+		}).Error("[Controller] error on get activate account")
 
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"ok":      false,
@@ -442,7 +484,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 			"error":        err,
 			"data_service": service,
 			"request_data": inputDataToAnalytic,
-		}).Error("Error on Get Result Face Liveness")
+		}).Error("[Controller] error on Get Result Face Liveness")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -469,7 +511,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 			"error":        err,
 			"data_service": service,
 			"request_data": inputDataToAnalytic,
-		}).Error("Error on Get Result Face Match Enrollment")
+		}).Error("[Controller] error on Get Result Face Match Enrollment")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -519,7 +561,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 			"error":   err,
 			"data":    fpwallet,
 			"balance": fpwallet.Balance,
-		}).Error("Error on Update Balance")
+		}).Error("[Controller] error on Update Balance")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -539,7 +581,7 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 			"session_id":           sessionId,
 			"face_payment_account": fpAccount,
 			"new_transaction":      newTransaction,
-		}).Error("Error on Create transaction")
+		}).Error("[Controller] error on Create transaction")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -552,6 +594,11 @@ func (ctrl *Controller) CreateTransaction(ctx *gin.Context) {
 		"ok":      true,
 		"message": "Payment transaction success",
 	})
+
+	log.WithFields(log.Fields{
+		"data": newTransaction,
+	}).Info("[Controller] create transaction successfully done")
+
 }
 
 func (ctrl *Controller) getPrefixPhone(sessionId string) string {
