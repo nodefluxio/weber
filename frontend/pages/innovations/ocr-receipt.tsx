@@ -4,12 +4,10 @@ import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
 import { ServiceBySlugResponseData } from '@/types/responses'
 import { isOCRReceipt } from '@/utils/utils'
-import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { ParsedUrlQuery } from 'querystring'
 import { useState } from 'react'
 
-const Innovations = ({
+const OCRReceipt = ({
   name,
   long_description,
   id,
@@ -59,28 +57,17 @@ const Innovations = ({
   )
 }
 
-export default Innovations
+export default OCRReceipt
 
-interface Params extends ParsedUrlQuery {
-  innovation_name: string
-}
-
-export const getServerSideProps: GetServerSideProps<any, Params> = async ({
-  params
-}) => {
-  if (params) {
-    try {
-      const res = await getServiceBySlug(params.innovation_name)
-      return {
-        props: {
-          ...res?.data
-        }
+export const getServerSideProps = async () => {
+  try {
+    const res = await getServiceBySlug('ocr-receipt')
+    return {
+      props: {
+        ...res?.data
       }
-    } catch (e) {
-      console.error(e)
-      return { notFound: true }
     }
-  } else {
+  } catch (e) {
     return { notFound: true }
   }
 }
