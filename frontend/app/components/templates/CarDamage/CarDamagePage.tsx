@@ -7,7 +7,7 @@ import { Banner } from '@/modules/Banner/Banner'
 import { Stepper } from '@/elements/Stepper/Stepper'
 import styles from './CarDamagePage.module.scss'
 import { HorizontalCard } from '@/modules/HorizontalCard/HorizontalCard'
-import { CarDamage, CarDamageSample, Color } from '@/types/elements'
+import { CarDamage, Color } from '@/types/elements'
 import { HCardContent } from '@/modules/HCardContent/HCardContent'
 import { ResponsiveImage } from '@/modules/ResponsiveImage/ResponsiveImage'
 import { Button } from '@/elements/Button/Button'
@@ -23,7 +23,7 @@ type Props = {
   long_description: string
 }
 
-const CarDamageSamples: CarDamageSample = {
+const CarDamageSamples: CarDamage<string[]> = {
   front: [
     '/assets/images/innovations/car-damage/front_good.jpg',
     '/assets/images/innovations/car-damage/front_minor.jpg',

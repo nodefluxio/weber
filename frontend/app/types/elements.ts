@@ -109,13 +109,6 @@ export type CarDamage<T> = {
   rear: T
 }
 
-export type CarDamageSample = {
-  front: string[]
-  left: string[]
-  right: string[]
-  rear: string[]
-}
-
 export enum CarDamageStatus {
   Damage = 'Damage',
   Normal = 'Normal'
