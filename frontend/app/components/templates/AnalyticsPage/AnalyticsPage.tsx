@@ -20,6 +20,8 @@ type Props = {
   serviceID: number
   slug: string
   handleResult: (res: any) => void
+  maxImageSize: number
+  acceptedFileFormat: string
   addionalStepOneNode?: ReactNode
   isInnovation?: boolean
 }
@@ -32,6 +34,8 @@ export const AnalyticsPage: React.FC<Props> = ({
   serviceID,
   slug,
   handleResult,
+  maxImageSize,
+  acceptedFileFormat,
   addionalStepOneNode,
   isInnovation
 }) => {
@@ -89,7 +93,12 @@ export const AnalyticsPage: React.FC<Props> = ({
         {currentStep === 1 && (
           <div className={styles.dropzoneNButton}>
             {addionalStepOneNode}
-            <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
+            <DropzoneOptions
+              images={examples}
+              onPhotoDrop={setPhoto}
+              maxSize={maxImageSize}
+              acceptedFileFormat={acceptedFileFormat}
+            />
             {photo && (
               <div className={styles.buttonContainer}>
                 <Button color={Color.Primary} onClick={handleAnalytics}>

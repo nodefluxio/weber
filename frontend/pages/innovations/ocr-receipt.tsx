@@ -14,6 +14,7 @@ const OCRReceipt = ({
   slug
 }: ServiceBySlugResponseData) => {
   const [res, setRes] = useState()
+  const MAX_IMAGE_SIZE = 3000000 // 3MB
   const renderResult = () => {
     // Error message passed
     if (typeof res !== 'undefined') {
@@ -50,6 +51,8 @@ const OCRReceipt = ({
         serviceID={id}
         slug={slug}
         handleResult={(res) => setRes(res)}
+        maxImageSize={MAX_IMAGE_SIZE}
+        acceptedFileFormat={'image/jpeg, image/png'}
         isInnovation>
         {renderResult()}
       </AnalyticsPage>

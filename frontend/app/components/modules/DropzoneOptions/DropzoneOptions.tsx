@@ -6,23 +6,34 @@ import styles from './DropzoneOptions.module.scss'
 type Props = {
   images: string[]
   onPhotoDrop: (arg: string) => void
+  maxSize: number
+  acceptedFileFormat: string
 }
 
-export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
+export const DropzoneOptions = ({
+  images,
+  onPhotoDrop,
+  maxSize,
+  acceptedFileFormat
+}: Props) => {
   const [photos, setPhotos] = useState<any[]>([])
   const [errorMsg, setErrorMsg] = useState<string>('')
+  const parsedFileFormat = acceptedFileFormat.split(/[\/,]+/).filter((v, i) => {
+    return i % 2 !== 0
+  })
 
-  const MAX_IMAGE_SIZE = 800000 // 800kB
+  console.log(parsedFileFormat)
+
   const ERROR_FILE_SIZE =
     'Image too large. Please upload another image lower than 800kB'
-  const ERROR_FILE_FORMAT = 'Wrong file format. Please upload jpeg file only!'
+  const ERROR_FILE_FORMAT = `Wrong file format. Please upload ${parsedFileFormat.toString()} file only!`
 
   const onDrop = useCallback((uploadedPhoto) => {
     // Setup file reader
     const reader = new FileReader()
     try {
       reader.readAsDataURL(uploadedPhoto[0])
-      if (uploadedPhoto[0].size < MAX_IMAGE_SIZE) {
+      if (uploadedPhoto[0].size < maxSize) {
         setErrorMsg('')
         reader.onload = (event) => {
           const imgString = event.target?.result
@@ -56,10 +67,7 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
     reader.readAsDataURL(option)
     setErrorMsg('')
     reader.onload = (e) => {
-      if (
-        option.size < MAX_IMAGE_SIZE &&
-        typeof e.target?.result === 'string'
-      ) {
+      if (option.size < maxSize && typeof e.target?.result === 'string') {
         onPhotoDrop(e.target?.result)
         setPhotos([
           {
@@ -72,7 +80,7 @@ export const DropzoneOptions = ({ images, onPhotoDrop }: Props) => {
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/jpeg',
+    accept: acceptedFileFormat,
     onDrop,
     multiple: false
   })

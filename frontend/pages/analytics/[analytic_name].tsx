@@ -14,7 +14,7 @@ const Analytics = ({
   slug
 }: ServiceBySlugResponseData) => {
   const [result, setResult] = useState<any>()
-
+  const MAX_IMAGE_SIZE = 800000 // 800kB
   return (
     <>
       <Head>
@@ -30,7 +30,9 @@ const Analytics = ({
         ]}
         serviceID={id}
         slug={slug}
-        handleResult={(res) => setResult(res)}>
+        handleResult={(res) => setResult(res)}
+        maxImageSize={MAX_IMAGE_SIZE}
+        acceptedFileFormat={'image/jpeg'}>
         <AnalyticsResult result={result} slug={slug} />
       </AnalyticsPage>
     </>
