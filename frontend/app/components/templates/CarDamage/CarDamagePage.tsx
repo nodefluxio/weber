@@ -13,7 +13,7 @@ import { ResponsiveImage } from '@/modules/ResponsiveImage/ResponsiveImage'
 import { Button } from '@/elements/Button/Button'
 import { postCarDamage } from '@/api/innovationsAPI'
 import { Spinner } from '@/elements/Spinner/Spinner'
-import { CarDamageResult, InnovationResponse } from '@/types/responses'
+import { CarDamageResponse, InnovationResponse } from '@/types/responses'
 import Feedback from '@/modules/Feedback/Feedback'
 
 type Props = {
@@ -55,7 +55,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [result, setResult] = useState<InnovationResponse<CarDamageResult>>()
+  const [result, setResult] = useState<InnovationResponse<CarDamageResponse>>()
   const [selectedImage, setSelectedImage] = useState<CarDamage<string>>({
     front: '',
     left: '',

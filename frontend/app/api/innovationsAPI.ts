@@ -1,4 +1,4 @@
-import { CarDamageResult, InnovationResponse } from '@/types/responses'
+import { CarDamageResponse, InnovationResponse } from '@/types/responses'
 import axios from 'axios'
 import { errorHandler } from '@/utils/errorHandler'
 
@@ -39,9 +39,9 @@ export const postCarDamage = async (
   leftSideImage: string,
   rightSideImage: string,
   rearSideImage: string
-): Promise<InnovationResponse<CarDamageResult> | undefined> => {
+): Promise<InnovationResponse<CarDamageResponse> | undefined> => {
   try {
-    const { data } = await axios.post<InnovationResponse<CarDamageResult>>(
+    const { data } = await axios.post<InnovationResponse<CarDamageResponse>>(
       `/services/${id}`,
       {
         session_id: sessionId,

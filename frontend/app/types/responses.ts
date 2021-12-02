@@ -156,7 +156,7 @@ export type InnovationResponse<T> = {
   }
 }
 
-export type CarDamageResult = {
+export type CarDamageResponse = {
   car_damage_assessment: {
     damage: CarDamageStatus
     damage_confidence: number
