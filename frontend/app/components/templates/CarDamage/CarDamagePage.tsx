@@ -187,26 +187,23 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                     validationError[sample[0]] && styles.dangerHighlight
                   }>
                   {sample[1].map((imgSrc, j) => (
-                    // TODO: move onclick to Responsive Image component
-                    <div
+                    <ResponsiveImage
                       key={j}
                       onClick={() => {
                         setSelectedImage({
                           ...selectedImage,
                           ...{ [sample[0]]: imgSrc }
                         })
-                      }}>
-                      <ResponsiveImage
-                        src={imgSrc}
-                        alt={`${sample[0]} car damage sample no. ${j + 1}`}
-                        className={`${styles.responsiveImage} ${
-                          imgSrc === selectedImage[sample[0]]
-                            ? styles.selected
-                            : ''
-                        }`}
-                        objectFit="cover"
-                      />
-                    </div>
+                      }}
+                      src={imgSrc}
+                      alt={`${sample[0]} car damage sample no. ${j + 1}`}
+                      className={`${styles.responsiveImage} ${
+                        imgSrc === selectedImage[sample[0]]
+                          ? styles.selected
+                          : ''
+                      }`}
+                      objectFit="cover"
+                    />
                   ))}
                 </HorizontalCard>
                 {validationError[sample[0]] && (
