@@ -15,6 +15,7 @@ import { postCarDamage } from '@/api/innovationsAPI'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { CarDamageResponse, InnovationResponse } from '@/types/responses'
 import Feedback from '@/modules/Feedback/Feedback'
+import { getKeyValue } from '@/utils/utils'
 
 type Props = {
   id: number
@@ -184,7 +185,8 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                 <HorizontalCard
                   title={sample[0][0].toUpperCase() + sample[0].substring(1)}
                   className={
-                    validationError[sample[0]] && styles.dangerHighlight
+                    getKeyValue(sample[0])(validationError) &&
+                    styles.dangerHighlight
                   }>
                   {sample[1].map((imgSrc, j) => (
                     <ResponsiveImage
@@ -198,7 +200,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                       src={imgSrc}
                       alt={`${sample[0]} car damage sample no. ${j + 1}`}
                       className={`${styles.responsiveImage} ${
-                        imgSrc === selectedImage[sample[0]]
+                        imgSrc === getKeyValue(sample[0])(selectedImage)
                           ? styles.selected
                           : ''
                       }`}
@@ -206,9 +208,9 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                     />
                   ))}
                 </HorizontalCard>
-                {validationError[sample[0]] && (
+                {getKeyValue(sample[0])(validationError) && (
                   <span className={styles.danger}>
-                    {validationError[sample[0]]}
+                    {getKeyValue(sample[0])(validationError)}
                   </span>
                 )}
               </Fragment>

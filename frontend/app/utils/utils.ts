@@ -66,3 +66,6 @@ export const isOCRReceipt = (obj: any): obj is OCRReceiptData => {
     return false
   }
 }
+
+export const getKeyValue = (key: string) => (obj: Record<string, any>) =>
+  obj[key]
