@@ -32,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Update field title and company name in request demo form to have minimum input length to 5 char
 - [FRONTEND] Fix sticky navbar in request demo form page
 - [FRONTEND] Scrollable analytic result
+- [FRONTEND] Renamed [innovation-page].tsx to various innovation slug name
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
 
