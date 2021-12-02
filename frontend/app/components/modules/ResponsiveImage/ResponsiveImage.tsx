@@ -6,11 +6,20 @@ type Props = {
   src: string
   alt: string
   objectFit: NonNullable<JSX.IntrinsicElements['img']['style']>['objectFit']
+  onClick?: () => void
 }
 
-export const ResponsiveImage = ({ className, src, alt, objectFit }: Props) => {
+export const ResponsiveImage = ({
+  className,
+  src,
+  alt,
+  objectFit,
+  onClick
+}: Props) => {
   return (
-    <div className={`${styles.responsiveImage} ${className}`}>
+    <div
+      className={`${styles.responsiveImage} ${className}`}
+      onClick={() => onClick && onClick()}>
       <Image src={src} alt={alt} layout="fill" objectFit={objectFit} />
     </div>
   )
