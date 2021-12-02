@@ -114,7 +114,12 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
 
   const resolveCarDamage = async (sessionId: string) => {
     try {
-      let selectedImageBase64: CarDamage<string>
+      let selectedImageBase64: CarDamage<string> = {
+        front: '',
+        left: '',
+        right: '',
+        rear: ''
+      }
 
       await Promise.all(
         Object.entries(selectedImage).map(async (side) => {
@@ -136,10 +141,10 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
       const res = await postCarDamage(
         id,
         sessionId,
-        selectedImage.front,
-        selectedImage.left,
-        selectedImage.right,
-        selectedImage.rear
+        selectedImageBase64.front,
+        selectedImageBase64.left,
+        selectedImageBase64.right,
+        selectedImageBase64.rear
       )
 
       setResult(res)
