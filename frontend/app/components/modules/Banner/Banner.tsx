@@ -20,7 +20,7 @@ export const Banner = ({
       <div className={styles.container}>
         <div className={styles.texts}>
           <h1>{analyticsName}</h1>
-          <p>{longDescription}</p>
+          <p className={styles.descriptions}>{longDescription}</p>
         </div>
       </div>
     </div>

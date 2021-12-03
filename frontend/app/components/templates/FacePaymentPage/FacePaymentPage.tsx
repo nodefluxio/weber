@@ -34,8 +34,7 @@ type Props = {
 }
 
 const mainMenuInfo = [
-  'Before we start our payment, create your account first',
-  'Do your transactions using face payment'
+  'Create an account to enable your face payment'
 ]
 
 export const FacePaymentPage = ({ id, name, long_description }: Props) => {
@@ -138,7 +137,7 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
       <div className={styles.container}>
         {currentStep === 1 && (
           <div className={styles.welcome}>
-            <h2>Welcome to {name} Demo</h2>
+            <h2>Welcome to {name} Demo App</h2>
             <p style={{ width: '65%', margin: '2rem auto' }}>
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience

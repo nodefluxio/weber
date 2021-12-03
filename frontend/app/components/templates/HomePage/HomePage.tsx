@@ -25,9 +25,7 @@ type Props = {
 type HeroContentItem = {
   title: string
   color: Color
-  tagLine: string
   secondTitle: string
-  description: string
   coverImg: string
   href: string
 }
@@ -37,27 +35,21 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
     {
       title: 'Solutions',
       color: Color.Quaternary,
-      tagLine: 'Cool Tag Line',
-      secondTitle: 'COOL TITLE MAYBE',
-      description: 'Cool Description about these, lorem ipsum',
+      secondTitle: 'Creating end-to-end solutions for each use case that the user needs.',
       coverImg: 'cover1.png',
       href: '/#solutions'
     },
     {
       title: 'Analytics',
       color: Color.Tertiary,
-      tagLine: 'Cool Tag Line',
-      secondTitle: 'COOL TITLE MAYBE',
-      description: 'Cool Description about these, lorem ipsum',
+      secondTitle: 'Converting visual data into structured data and suitable for deployment.',
       coverImg: 'cover2.png',
       href: '/#analytics'
     },
     {
-      title: 'Innovations',
+      title: 'New Innovations',
       color: Color.Quaternary,
-      tagLine: 'Cool Tag Line',
-      secondTitle: 'COOL TITLE MAYBE',
-      description: 'Cool Description about these, lorem ipsum',
+      secondTitle: 'Creating new innovations to solve more problems in the future.',
       coverImg: 'cover3.png',
       href: '/#new-innovations'
     }
@@ -80,10 +72,8 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                   <h1 className={`${styles.titleHero} ${styles[item.color]}`}>
                     {item.title}
                   </h1>
-                  <h1 className={styles.tagLine}>{item.tagLine}</h1>
                   <hr />
                   <h3 className={styles.secondTitle}>{item.secondTitle}</h3>
-                  <p className={styles.desc}>{item.description}</p>
                   <div className={styles.arrow}>
                     <Link href={item.href} passHref>
                       <img
