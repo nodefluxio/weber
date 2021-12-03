@@ -101,13 +101,8 @@ export const DropzoneOptions = ({
 
   return (
     <div className={styles.dropzoneOptions}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-        <WarningDiv message={errorMsg} />
+      <div className={styles.warningWrapper}>
+        <WarningDiv message={errorMsg} className={styles.errorMsg} />
       </div>
       <div className={styles.previewNOptions}>
         <div {...getRootProps()} className={styles.dropzoneContainer}>

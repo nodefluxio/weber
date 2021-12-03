@@ -4,13 +4,18 @@ import styles from './WarningDiv.module.scss'
 
 type Props = {
   message: string
-  style?: CSSProperties
+  className?: string
 }
 
-export const WarningDiv = ({ message, style }: Props) => {
+export const WarningDiv = ({ message, className }: Props) => {
   return (
-    <div className={`${styles.warningDivWrapper} ${message && styles.warningDivWrapperActive}`} style={style}>
-      {message && <Image src={'/assets/icons/warning.svg'} width={30} height={30} />}
+    <div
+      className={`${styles.warningDivWrapper} ${
+        message && styles.warningDivWrapperActive
+      } ${className}`}>
+      {message && (
+        <Image src={'/assets/icons/error-icon.svg'} width={32} height={32} />
+      )}
       <span>{message}</span>
     </div>
   )

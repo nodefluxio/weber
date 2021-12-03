@@ -3,9 +3,16 @@
 
 .dropzoneOptions {
   width: 100%;
-  .errorMsg {
-    text-align: center;
+
+  .warningWrapper {
+    display: flex;
+    justify-content: center;
+    .errorMsg {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
   }
+  
   .imagePreview {
     width: inherit;
     height: inherit;
