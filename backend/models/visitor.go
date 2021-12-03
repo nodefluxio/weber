@@ -21,20 +21,20 @@ func (m *Model) CreateVisitor(Visitor *Visitor) (err error) {
 
 	log.WithFields(log.Fields{
 		"data": Visitor,
-	}).Info("[MODEL] create visitor start...")
+	}).Info("[MODEL: CreateVisitor] create visitor start...")
 
 	err = m.DBConn.Create(Visitor).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Visitor,
-		}).Error("[MODEL] error on create visitor!")
+		}).Error("[MODEL: CreateVisitor] error on create visitor!")
 
 		return err
 	}
 	log.WithFields(log.Fields{
 		"data": Visitor,
-	}).Info("[MODEL] success on create visitor!")
+	}).Info("[MODEL: CreateVisitor] success on create visitor!")
 
 	return nil
 }
@@ -43,20 +43,20 @@ func (m *Model) GetVisitors(Visitor *[]Visitor) (err error) {
 
 	log.WithFields(log.Fields{
 		"data": Visitor,
-	}).Info("[MODEL] get visitors start...")
+	}).Info("[MODEL: GetVisitors] get visitors start...")
 
 	err = m.DBConn.Find(Visitor).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Visitor,
-		}).Error("[MODEL] error on get visitors!")
+		}).Error("[MODEL: GetVisitors] error on get visitors!")
 
 		return err
 	}
 	log.WithFields(log.Fields{
 		"data": Visitor,
-	}).Info("[MODEL] success on get visitors!")
+	}).Info("[MODEL: GetVisitors] success on get visitors!")
 
 	return nil
 }
@@ -66,20 +66,20 @@ func (m *Model) GetVisitor(Visitor *Visitor, id string) (err error) {
 	log.WithFields(log.Fields{
 		"data": Visitor,
 		"id":   id,
-	}).Info("[MODEL] get visitor start...")
+	}).Info("[MODEL: GetVisitor] get visitor start...")
 
 	err = m.DBConn.Where("session_id = ?", id).First(Visitor).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"session_id": id,
 			"error":      err,
-		}).Error("[MODEL] error get visitor based on session_id!")
+		}).Error("[MODEL: GetVisitor] error get visitor based on session_id!")
 
 		return err
 	}
 	log.WithFields(log.Fields{
 		"data": Visitor,
-	}).Info("[MODEL] success on get visitor")
+	}).Info("[MODEL: GetVisitor] success on get visitor")
 	return nil
 }
 

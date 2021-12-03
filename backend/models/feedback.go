@@ -25,19 +25,19 @@ func (m *Model) CreateFeedbackDb(Feedback *Feedback) (err error) {
 
 	log.WithFields(log.Fields{
 		"data": Feedback,
-	}).Info("[MODEL] create feedback start...")
+	}).Info("[MODEL: CreateFeedbackDb] create feedback start...")
 
 	err = m.DBConn.Create(Feedback).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Feedback,
-		}).Error("[MODEL] error on create feedback!")
+		}).Error("[MODEL: CreateFeedbackDb] error on create feedback!")
 
 		return err
 	}
 	log.WithFields(log.Fields{
 		"data": Feedback,
-	}).Info("[MODEL] success on create feedback")
+	}).Info("[MODEL: CreateFeedbackDb] success on create feedback")
 	return nil
 }
