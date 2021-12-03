@@ -2,6 +2,7 @@ import { MouseEvent, useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import Image from 'next/image'
 import styles from './DropzoneOptions.module.scss'
+import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 
 type Props = {
   images: string[]
@@ -22,11 +23,10 @@ export const DropzoneOptions = ({
     return i % 2 !== 0
   })
 
-  console.log(parsedFileFormat)
-
-  const ERROR_FILE_SIZE =
-    'Image too large. Please upload another image lower than 800kB'
-  const ERROR_FILE_FORMAT = `Wrong file format. Please upload ${parsedFileFormat.toString()} file only!`
+  const ERROR_FILE_SIZE = `Please upload another image lower than ${
+    maxSize / 1000
+  }kB`
+  const ERROR_FILE_FORMAT = `Please upload ${parsedFileFormat.toString()} file only`
 
   const onDrop = useCallback((uploadedPhoto) => {
     // Setup file reader
@@ -101,7 +101,14 @@ export const DropzoneOptions = ({
 
   return (
     <div className={styles.dropzoneOptions}>
-      <p className={styles.errorMsg}>{errorMsg}</p>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+        <WarningDiv message={errorMsg} />
+      </div>
       <div className={styles.previewNOptions}>
         <div {...getRootProps()} className={styles.dropzoneContainer}>
           <input {...getInputProps()} />

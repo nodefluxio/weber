@@ -4,6 +4,7 @@ import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
 import { ServiceBySlugResponseData } from '@/types/responses'
 import { isOCRReceipt } from '@/utils/utils'
+import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 import Head from 'next/head'
 import { useState } from 'react'
 
@@ -19,7 +20,7 @@ const OCRReceipt = ({
     // Error message passed
     if (typeof res !== 'undefined') {
       if (typeof res === 'string') {
-        return <div>{res}</div>
+        return <WarningDiv message={res} />
       }
       if (isOCRReceipt(res)) {
         return <ReceiptDisplay result={res} />

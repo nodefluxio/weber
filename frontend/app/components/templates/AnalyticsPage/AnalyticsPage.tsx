@@ -11,6 +11,7 @@ import styles from './AnalyticsPage.module.scss'
 import { postInnovation } from '@/api/innovationsAPI'
 import { CustomError } from 'app/errors/CustomError'
 import { Spinner } from 'app/components/elements/Spinner/Spinner'
+import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 
 type Props = {
   analyticsName: string
@@ -77,6 +78,7 @@ export const AnalyticsPage: React.FC<Props> = ({
   const refreshState = () => {
     setCurrentStep(1)
     setPhoto('')
+    setErrorMsg('')
     handleResult(undefined)
     setIsResult(false)
   }
@@ -116,7 +118,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               {isResult ? (
                 children
               ) : errorMsg ? (
-                <div>{errorMsg}</div>
+                <WarningDiv message={errorMsg}/>
               ) : (
                 <div className={styles.loadingState}>
                   <h3>Loading your results...</h3>
@@ -125,7 +127,7 @@ export const AnalyticsPage: React.FC<Props> = ({
                 </div>
               )}
             </AnalyticsResultWrapper>
-            {isResult && (
+            {(isResult || errorMsg) && (
               <Feedback id={serviceID} onTryAgain={() => refreshState()} />
             )}
           </>

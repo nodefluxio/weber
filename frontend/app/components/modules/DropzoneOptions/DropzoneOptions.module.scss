@@ -9,6 +9,8 @@
   .imagePreview {
     width: inherit;
     height: inherit;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
   }
 
   .instruction {
@@ -17,6 +19,8 @@
     justify-items: center;
     width: 100%;
     height: inherit;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
     p {
       width: 80%;
       cursor: pointer;
@@ -66,7 +70,7 @@
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      
+
       * + * {
         margin-top: 1rem;
         margin-left: 0;
