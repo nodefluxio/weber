@@ -101,9 +101,7 @@ export const DropzoneOptions = ({
 
   return (
     <div className={styles.dropzoneOptions}>
-      <div className={styles.warningWrapper}>
-        <WarningDiv message={errorMsg} className={styles.errorMsg} />
-      </div>
+      <WarningDiv message={errorMsg} className={styles.warningWrapper} />
       <div className={styles.previewNOptions}>
         <div {...getRootProps()} className={styles.dropzoneContainer}>
           <input {...getInputProps()} />

@@ -8,14 +8,16 @@ type Props = {
 
 export const WarningDiv = ({ message, className }: Props) => {
   return (
-    <div
-      className={`${styles.warningDivWrapper} ${
-        message && styles.warningDivWrapperActive
-      } ${className}`}>
-      {message && (
-        <Image src={'/assets/icons/error-icon.svg'} width={32} height={32} />
-      )}
-      <span className={styles.messageSpan}>{message}</span>
+    <div className={className}>
+      <div
+        className={`${styles.warningDivWrapper} ${
+          message && styles.warningDivWrapperActive
+        }`}>
+        {message && (
+          <Image src={'/assets/icons/error-icon.svg'} width={32} height={32} />
+        )}
+        <span className={styles.messageSpan}>{message}</span>
+      </div>
     </div>
   )
 }
