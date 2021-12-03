@@ -1,4 +1,8 @@
 import {
+  CarDamageRecomendation,
+  CarDamageScore,
+  CarDamageSeverity,
+  CarDamageStatus,
   FaceLiveness,
   FaceMatch,
   OCRKTP,
@@ -161,4 +165,16 @@ export interface FaceOcclusionAttributeResponse extends StandardResponse {
     face_occlusion: NodefluxCloudResponse<FaceOcclusionResultResponse>
     face_attribute: NodefluxCloudResponse<FaceAttributeResultResponse>
   }
+}
+
+export type CarDamageResponse = {
+  car_damage_assessment: {
+    damage: CarDamageStatus
+    damage_confidence: number
+    score: CarDamageScore
+    severity: CarDamageSeverity
+    severity_confidence: number
+  }[]
+  total_score: number
+  recommendation: CarDamageRecomendation
 }

@@ -1,0 +1,69 @@
+@import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
+
+.carDamage {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 2rem 0;
+  min-height: 80vh;
+  flex-direction: column;
+  @include tablet {
+    width: 70%;
+    min-height: 70vh;
+  }
+  @include phone {
+    width: 80%;
+    min-height: 60vh;
+  }
+
+  .instruction {
+    font-size: large;
+  }
+
+  .dangerHighlight {
+    border: 5px solid red;
+  }
+
+  .selected {
+    border: 5px solid $primary-color;
+  }
+
+  .responsiveImage {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    cursor: pointer;
+
+    @include tablet {
+      width: 90px;
+      height: 90px;
+    }
+    @include phone {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .danger {
+    margin-top: 1rem;
+    color: red;
+  }
+
+  .button {
+    margin-top: 3rem;
+  }
+
+  .carDamageResult {
+    .result {
+      margin-bottom: 1rem;
+    }
+
+    .resultText {
+      font-size: 1.25rem;
+    }
+  }
+}
