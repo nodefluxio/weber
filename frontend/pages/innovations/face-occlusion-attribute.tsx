@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import { getServiceBySlug } from '../../app/api/analyticsAPI'
 import { FaceOcclusionAttributePage } from '@/templates/FaceOcclusionAttributePage/FaceOcclusionAttributePage'
-const FaceOcclusionAttribute: React.FC<Props> = ({
+import { ServiceBySlugResponseData } from '@/types/responses'
+const FaceOcclusionAttribute: React.FC<ServiceBySlugResponseData> = ({
   id,
   name,
   slug,
