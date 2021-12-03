@@ -1,0 +1,21 @@
+@import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
+.FOAResult {
+  .tab {
+    margin-top: 20px;
+    padding: 0 10px;
+    overflow-y: auto;
+    height: 285px;
+
+    @include tablet {
+      height: 260px;
+    }
+    .content {
+      display: flex;
+      p {
+        text-transform: capitalize;
+        width: 150px;
+      }
+    }
+  }
+}

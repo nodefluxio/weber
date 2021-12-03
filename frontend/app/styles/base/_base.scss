@@ -51,16 +51,16 @@ code {
   }
 }
 // Custom scrollbar (for Webkit and Chromium browsers only)
-::-webkit-scrollbar-track {
-  background: none;
-}
-::-webkit-scrollbar {
-  width: 10px;  
-}
-::-webkit-scrollbar-thumb {
-  background: $primary-color;
-  border-radius: 8px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: darken($primary-color, 15%);
-}
+// ::-webkit-scrollbar-track {
+//   background: none;
+// }
+// ::-webkit-scrollbar {
+//   width: 10px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   background: $primary-color;
+//   border-radius: 8px;
+// }
+// ::-webkit-scrollbar-thumb:hover {
+//   background: darken($primary-color, 15%);
+// }

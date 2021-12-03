@@ -7,6 +7,7 @@ import { isOCRReceipt } from '@/utils/utils'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 import Head from 'next/head'
 import { useState } from 'react'
+import { postInnovation } from './../../app/api/innovationsAPI'
 
 const OCRReceipt = ({
   name,
@@ -51,10 +52,10 @@ const OCRReceipt = ({
         ]}
         serviceID={id}
         slug={slug}
+        handlePost={(session_id, photo) => postInnovation(id, session_id, photo)}
         handleResult={(res) => setRes(res)}
         maxImageSize={MAX_IMAGE_SIZE}
-        acceptedFileFormat={'image/jpeg, image/png'}
-        isInnovation>
+        acceptedFileFormat={'image/jpeg, image/png'}>
         {renderResult()}
       </AnalyticsPage>
     </>

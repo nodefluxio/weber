@@ -1,10 +1,18 @@
 import {
+  CarDamageRecomendation,
+  CarDamageScore,
+  CarDamageSeverity,
+  CarDamageStatus,
   FaceLiveness,
   FaceMatch,
   OCRKTP,
   PaymentAccountInfo,
   Service
 } from './elements'
+import {
+  FaceAttributeResultResponse,
+  FaceOcclusionResultResponse
+} from './results'
 
 export type StandardResponse = {
   message: string
@@ -150,4 +158,23 @@ export type InnovationResponse<T> = {
     message: string
     ok: boolean
   }
+}
+
+export interface FaceOcclusionAttributeResponse extends StandardResponse {
+  service_data: {
+    face_occlusion: NodefluxCloudResponse<FaceOcclusionResultResponse>
+    face_attribute: NodefluxCloudResponse<FaceAttributeResultResponse>
+  }
+}
+
+export type CarDamageResponse = {
+  car_damage_assessment: {
+    damage: CarDamageStatus
+    damage_confidence: number
+    score: CarDamageScore
+    severity: CarDamageSeverity
+    severity_confidence: number
+  }[]
+  total_score: number
+  recommendation: CarDamageRecomendation
 }

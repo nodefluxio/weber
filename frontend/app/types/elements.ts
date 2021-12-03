@@ -101,3 +101,64 @@ export type PaymentAccountInfo = {
   balance: number
   minimum_payment: number
 }
+
+export type FaceOcclusionDetection = {
+  bounding_box: {
+    height: number
+    left: number
+    top: number
+    width: number
+  }
+  confidence: number
+  label: FaceOcclusionLabel
+}
+
+export type FaceOcclusionLabel =
+  | 'Forehead'
+  | 'Eyebrow Left'
+  | 'Eyebrow Right'
+  | 'Eye Left'
+  | 'Eye Right'
+  | 'Cheek Left'
+  | 'Cheek Right'
+  | 'Nose'
+  | 'Mouth'
+  | 'Chin'
+
+export type FaceAttributeLabel =
+  | 'mask'
+  | 'sunglasses'
+  | 'eyeglasses'
+  | 'helm'
+  | 'cap'
+
+export type FaceAttributeAdditionalLabel = 'eyeglasses'
+export type CarDamage<T> = {
+  front: T
+  left: T
+  right: T
+  rear: T
+}
+
+export enum CarDamageStatus {
+  Damage = 'Damage',
+  Normal = 'Normal'
+}
+
+export enum CarDamageSeverity {
+  Minor = 'Minor',
+  Moderate = 'Moderate',
+  Severe = 'Severe'
+}
+
+export enum CarDamageScore {
+  Two = 2,
+  Four = 4,
+  Eight = 8
+}
+
+export enum CarDamageRecomendation {
+  NotUrgent = 'Not Urgent',
+  Important = 'Important',
+  UrgentToFix = 'Urgent To Fix'
+}

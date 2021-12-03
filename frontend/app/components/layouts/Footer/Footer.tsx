@@ -102,10 +102,10 @@ export const Footer = () => {
                 <Link href="https://www.nodeflux.io/about-nodeflux">
                   <a target="_blank">About Us</a>
                 </Link>
-                <Link href="https://www.nodeflux.io/about-nodeflux">
+                <Link href="https://www.nodeflux.io/faq">
                   <a target="_blank">FAQ</a>
                 </Link>
-                <Link href="https://www.nodeflux.io/about-nodeflux">
+                <Link href="https://www.nodeflux.io/nodeflux-press">
                   <a target="_blank">Press</a>
                 </Link>
               </div>
