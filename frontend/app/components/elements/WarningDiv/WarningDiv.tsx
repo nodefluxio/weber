@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { CSSProperties } from 'react'
 import styles from './WarningDiv.module.scss'
 
 type Props = {
@@ -16,7 +15,7 @@ export const WarningDiv = ({ message, className }: Props) => {
       {message && (
         <Image src={'/assets/icons/error-icon.svg'} width={32} height={32} />
       )}
-      <span>{message}</span>
+      <span className={styles.messageSpan}>{message}</span>
     </div>
   )
 }
