@@ -101,7 +101,6 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
             }}
             errors={errors}
           />
-          <span></span>
           <div style={{ textAlign: 'center' }}>
             <Label
               id={'have_twin'}
