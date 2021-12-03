@@ -62,10 +62,20 @@ export const FaceOcclusionAttributePage = ({
 
     if (result?.face_attribute.ok) {
       result.face_attribute.job.result.result[0].face_attribute.occlusion_object.forEach(
-        (object) => faceAttributeMap.set(object.label, object.confidence * 100)
+        (object) =>
+          faceAttributeMap.set(
+            object.label,
+            parseFloat((object.confidence * 100).toFixed(2))
+          )
       )
+
       result.face_attribute.job.result.result[0].face_attribute.additional_info_object.forEach(
-        (object) => faceAttributeMap.set(object.label, object.confidence * 100)
+        (object) => {
+          faceAttributeMap.set(
+            object.label,
+            parseFloat((object.confidence * 100).toFixed(2))
+          )
+        }
       )
       setFaceAttributeDetections(faceAttributeMap)
     } else setFaceAttributeMessage(result?.face_attribute.message)
