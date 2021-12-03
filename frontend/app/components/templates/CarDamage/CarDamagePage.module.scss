@@ -36,6 +36,8 @@
     width: 120px;
     height: 120px;
     position: relative;
+    cursor: pointer;
+
     @include tablet {
       width: 90px;
       height: 90px;
