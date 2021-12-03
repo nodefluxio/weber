@@ -1,0 +1,21 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  ul {
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    li {
+      &:first-child {
+        button {
+          border-radius: 10px 0 0 0;
+        }
+      }
+      &:last-child {
+        button {
+          border-radius: 0 10px 0 0;
+        }
+      }
+    }
+  }
+}
