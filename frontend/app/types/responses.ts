@@ -1,4 +1,8 @@
 import {
+  CarDamageRecomendation,
+  CarDamageScore,
+  CarDamageSeverity,
+  CarDamageStatus,
   FaceLiveness,
   FaceMatch,
   OCRKTP,
@@ -150,4 +154,16 @@ export type InnovationResponse<T> = {
     message: string
     ok: boolean
   }
+}
+
+export type CarDamageResponse = {
+  car_damage_assessment: {
+    damage: CarDamageStatus
+    damage_confidence: number
+    score: CarDamageScore
+    severity: CarDamageSeverity
+    severity_confidence: number
+  }[]
+  total_score: number
+  recommendation: CarDamageRecomendation
 }
