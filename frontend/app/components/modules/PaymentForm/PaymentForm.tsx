@@ -73,7 +73,7 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
       <div className={styles.subtitle}>
         <h2>Dummy Wallet Registration</h2>
         <p>
-          It's only dummy wallet registration, no need a card or top up anything from you <br />
+          It&apos;s only dummy wallet registration, no need a card or top up anything from you <br />
           You can use a dummy data for the privacy concern.<br/>
           Please remember your phone number, since it will be used when you did the transaction.
         </p>

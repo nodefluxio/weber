@@ -45,7 +45,7 @@ export const PaymentSetup = ({ onChange }: Props) => {
       <h2>Set up your payment limit</h2>
       <span className={styles.value}>{value.toLocaleString()}</span>
       <p>
-        You're required to enter a PIN if the total purchase of items exceeds your entered amount
+        You&apos;re required to enter a PIN if the total purchase of items exceeds your entered amount
       </p>
       <div className={styles.sliderWrapper}>
         <input
