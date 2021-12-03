@@ -100,7 +100,8 @@ export const ActivationForm = ({ nextStep }: Props) => {
         <div>
           <h2>Create PIN</h2>
           <p>
-            When you exceed the minimum payment amount, you must enter your PIN
+            To ensure the security and convinience, you need to create a pin for double layer<br />
+            verification for payment above the limit. 
           </p>
         </div>
         <PinInput

@@ -129,8 +129,13 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
       ) : (
         <>
           <div className={styles.subtitle}>
-            <h2>Say Cheese!</h2>
-            <p>Take a selfie to register your payment account</p>
+            <h2>Take a selfie!</h2>
+            <p>
+              Ensure your face position is in the oval area <br />
+            {/* </p>
+            <p> */}
+              Hold the camera at eye level. Look straight to the camera and smile!
+            </p>
           </div>
           <Cam
             localkey={ENROLL_SNAPSHOT}

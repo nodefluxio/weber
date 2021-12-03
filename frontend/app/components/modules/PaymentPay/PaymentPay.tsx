@@ -157,6 +157,13 @@ export const PaymentPay = ({
       )}
       {step === 2 && (
         <div>
+          <div className={styles.subtitle}>
+            <h2>Take a selfie!</h2>
+            <p>
+              Ensure your face position is in the oval area <br />
+              Hold the camera at eye level. Look straight to the camera and smile!
+            </p>
+          </div>
           <Cam
             localkey={FACE_MATCH_LIVENESS_SNAPSHOT}
             overlayShape="circle"

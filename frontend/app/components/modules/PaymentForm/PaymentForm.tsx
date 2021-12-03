@@ -71,14 +71,11 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
   return (
     <div className={styles.formWrapper}>
       <div className={styles.subtitle}>
-        <h2>Register Yourself</h2>
+        <h2>Dummy Wallet Registration</h2>
         <p>
-          Before making any transaction using face payment, you must register
-          your e-wallet account first
-        </p>
-        <p>
-          *Please remember your phone number, since it will be used when
-          you did the transaction
+          It's only dummy wallet registration, no need a card or top up anything from you <br />
+          You can use a dummy data for the privacy concern.<br/>
+          Please remember your phone number, since it will be used when you did the transaction.
         </p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -104,6 +101,7 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
             }}
             errors={errors}
           />
+          <span></span>
           <div style={{ textAlign: 'center' }}>
             <Label
               id={'have_twin'}
