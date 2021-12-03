@@ -167,7 +167,7 @@ func seedService(model *models.Model) {
 			Token:              os.Getenv("TOKEN_FP"),
 			Timestamp:          os.Getenv("TIMESTAMP_FP"),
 			ShortDescription:   "Cashless payment with face recognition methods by prioritizing the convenience and security of users in transactions with no card and smartphone needed",
-			LongDescription:    "Face recognition payments are a touchless experience for customers. Face recognition provides more security compared to other authentication techniques. Because The human face is unique and can not easily be manipulated. this method of contactless payments is way safer on the pandemic. with face payment, you don’t have to show your phone, just show your face.",
+			LongDescription:    "Face recognition payment is the new touchless experience for customers. Face recognition provides more security compared to other authentication techniques. Because the human face is unique, it is uneasy for an impostor to manipulate the authentication. Bringing contactless payments is way safer on the pandemic. Using face payment,  just by showing your face, no need more to show your phone.",
 			SpecialInstruction: "Special Instruction for Face Payment",
 			CreatedAt:          time.Now(),
 			UpdatedAt:          time.Now(),
