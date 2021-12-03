@@ -202,23 +202,26 @@ export const PaymentPay = ({
                 </strong>
               </p>
 
-              <Button
-                type="button"
-                color={Color.Primary}
-                onClick={() => {
-                  setStep(5)
-                  resolvePay(
-                    sessionId,
-                    phone,
-                    pinCode,
-                    amount,
-                    getImageFromLocalStorage(FACE_MATCH_LIVENESS_SNAPSHOT, () =>
-                      setStep(2)
+              <div className={styles.confirmButtonWrapper}>
+                <Button
+                  type="button"
+                  color={Color.Primary}
+                  onClick={() => {
+                    setStep(5)
+                    resolvePay(
+                      sessionId,
+                      phone,
+                      pinCode,
+                      amount,
+                      getImageFromLocalStorage(
+                        FACE_MATCH_LIVENESS_SNAPSHOT,
+                        () => setStep(2)
+                      )
                     )
-                  )
-                }}>
-                Confirm
-              </Button>
+                  }}>
+                  Confirm
+                </Button>
+              </div>
             </>
           ) : (
             <>

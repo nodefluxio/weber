@@ -84,7 +84,6 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
         const fields = analyticSlugResultMap.fields
         if (analyticSlugResultMap.type === 'array') {
           for (let i = 0; i < mappedResultResponse.length; i++) {
-            if (i >= analyticSlugResultMap.max_result || i >= 20) break
             const currentMappedResultResponse = mappedResultResponse[i]
             const currentThumbnail = result.thumbnails[i]
             generateFieldList(
