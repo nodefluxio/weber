@@ -1,6 +1,11 @@
-import { CarDamageResponse, InnovationResponse } from '@/types/responses'
+import {
+  CarDamageResponse,
+  InnovationResponse,
+  FaceOcclusionAttributeResponse
+} from '@/types/responses'
 import axios from 'axios'
 import { errorHandler } from '@/utils/errorHandler'
+import { CustomError } from 'app/errors/CustomError'
 
 export const postInnovation = async <T>(
   id: number,
@@ -21,12 +26,40 @@ export const postInnovation = async <T>(
       }
     )
     if (data.ok) {
-      if (data.service_data.ok && data.service_data.job.result.result.length > 0) {
+      if (
+        data.service_data.ok &&
+        data.service_data.job.result.result.length > 0
+      ) {
         return data.service_data.job.result.result[0]
       } else {
         return data.service_data.message
       }
     }
+  } catch (e) {
+    errorHandler(e)
+  }
+}
+
+export const postFaceOcclusionAttribute = async (
+  id: number,
+  session_id: string,
+  photoBase64: string
+) => {
+  try {
+    const { data } = await axios.post<FaceOcclusionAttributeResponse>(
+      `/services/${id}`,
+      {
+        session_id: session_id,
+        data: {
+          additional_params: {
+            templates: []
+          },
+          images: [photoBase64]
+        }
+      }
+    )
+    if (data.ok) return data.service_data
+    else throw new CustomError(200, data.message)
   } catch (e) {
     errorHandler(e)
   }

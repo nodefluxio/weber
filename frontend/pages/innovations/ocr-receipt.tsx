@@ -6,6 +6,7 @@ import { ServiceBySlugResponseData } from '@/types/responses'
 import { isOCRReceipt } from '@/utils/utils'
 import Head from 'next/head'
 import { useState } from 'react'
+import { postInnovation } from './../../app/api/innovationsAPI'
 
 const OCRReceipt = ({
   name,
@@ -49,8 +50,10 @@ const OCRReceipt = ({
         ]}
         serviceID={id}
         slug={slug}
-        handleResult={(res) => setRes(res)}
-        isInnovation>
+        handlePost={(session_id, photo) =>
+          postInnovation(id, session_id, photo)
+        }
+        handleResult={(res) => setRes(res)}>
         {renderResult()}
       </AnalyticsPage>
     </>

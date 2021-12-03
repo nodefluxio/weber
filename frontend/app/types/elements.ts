@@ -102,6 +102,37 @@ export type PaymentAccountInfo = {
   minimum_payment: number
 }
 
+export type FaceOcclusionDetection = {
+  bounding_box: {
+    height: number
+    left: number
+    top: number
+    width: number
+  }
+  confidence: number
+  label: FaceOcclusionLabel
+}
+
+export type FaceOcclusionLabel =
+  | 'Forehead'
+  | 'Eyebrow Left'
+  | 'Eyebrow Right'
+  | 'Eye Left'
+  | 'Eye Right'
+  | 'Cheek Left'
+  | 'Cheek Right'
+  | 'Nose'
+  | 'Mouth'
+  | 'Chin'
+
+export type FaceAttributeLabel =
+  | 'mask'
+  | 'sunglasses'
+  | 'eyeglasses'
+  | 'helm'
+  | 'cap'
+
+export type FaceAttributeAdditionalLabel = 'eyeglasses'
 export type CarDamage<T> = {
   front: T
   left: T
