@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [FRONTEND] Add Car Damage Assessment Demo Page
+- [FRONTEND] Add Car Damage Assessment Innovation
+- [FRONTEND] Add Face Occlusion Attribute innovation
 - [FRONTEND] Add Horizontal Card Content Component
 - [FRONTEND] Add Responsive Image Component
 - [FRONTEND] Add nodeflux social media, products, and company links
