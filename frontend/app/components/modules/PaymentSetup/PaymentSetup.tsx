@@ -42,11 +42,10 @@ export const PaymentSetup = ({ onChange }: Props) => {
 
   return (
     <div className={styles.modalPayment}>
-      <h2>Set up your minimum payment</h2>
+      <h2>Set up your payment limit</h2>
       <span className={styles.value}>{value.toLocaleString()}</span>
       <p>
-        If the payment exceeds the minimum payment, you are required to input
-        pin
+        You&apos;re required to enter a PIN if the total purchase of items exceeds your entered amount
       </p>
       <div className={styles.sliderWrapper}>
         <input
