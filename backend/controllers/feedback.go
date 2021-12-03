@@ -17,7 +17,7 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"service_id": serviceId,
-	}).Info("[Controller] create feedback start...")
+	}).Info("[CONTROLLER: CreateFeedback] create feedback start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(feedbackInput.SessionID) {
@@ -59,7 +59,7 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 			"session_id":        feedbackInput.SessionID,
 			"service_id":        serviceId,
 			"data_lastActivity": lastActivity,
-		}).Error("[Controller] error on get current visitor activity!")
+		}).Error("[CONTROLLER: GetCurrentVisitorActivity] error on get current visitor activity!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -78,7 +78,7 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 			"service_id":    serviceId,
 			"error":         err,
 			"data_feedback": feedback,
-		}).Error("[Controller] error on create feedback!")
+		}).Error("[CONTROLLER: CreateFeedbackDb] error on create feedback!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -89,7 +89,7 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"data": feedback,
-	}).Info("[Controller] create feedback successfully done")
+	}).Info("[CONTROLLER: CreateFeedback] create feedback successfully done")
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "Feedback submited!", "ok": true})
 }

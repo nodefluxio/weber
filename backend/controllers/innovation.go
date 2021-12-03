@@ -24,9 +24,9 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	var data models.ServiceRequestResultData
 
 	log.WithFields(log.Fields{
-		"data": data,
-		"slug": innovationSlug,
-	}).Info("[Controller] request to innovation start...")
+		"slug":           innovationSlug,
+		"total_postBody": len(postBody),
+	}).Info("[CONTROLLER: RequestToInnovationSync] request to innovation start...")
 
 	BASE_URL := fmt.Sprintf("%s/%s/predict", os.Getenv("URL_INNOVATIONS"), innovationSlug)
 	payload := bytes.NewBuffer(postBody)
@@ -35,11 +35,10 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":    err,
-			"data":     data,
 			"base_url": BASE_URL,
 			"slug":     innovationSlug,
 			"method":   "POST",
-		}).Error("[Controller] error on send http new request to innovation!")
+		}).Error("[CONTROLLER: RequestToInnovationSync] error on send http new request to innovation!")
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -49,9 +48,8 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":   err,
-			"data":    data,
 			"request": request,
-		}).Error("[Controller] error on request to innovation!")
+		}).Error("[CONTROLLER: RequestToInnovationSync] error on client request to innovation!")
 		return data, err
 	}
 
@@ -62,14 +60,14 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  data,
-		}).Error("[Controller] error on decode response body!")
+		}).Error("[CONTROLLER: RequestToInnovationSync] error on decode response body!")
 		return data, err
 	}
 
 	log.WithFields(log.Fields{
 		"data": data,
 		"slug": innovationSlug,
-	}).Info("[Controller] request to innovation successfully done")
+	}).Info("[CONTROLLER: RequestToInnovationSync] request to innovation successfully done")
 
 	return data, nil
 }
@@ -77,7 +75,7 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	// Request to Face Detection API
 
-	log.Info("[Controller] request to face occlusion atribute start...")
+	log.Info("[CONTROLLER: RequestToFaceOcclusionAttribute] request to face occlusion atribute start...")
 
 	resultFaceDetection, err := RequestToInnovationSync(postBody, "face-detection")
 	if err != nil {
@@ -94,7 +92,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 			"error":       err,
 			"json_result": string(resultFaceDetectionJson),
 			"slug":        "face-detection",
-		}).Error("[Controller] error on marshaling json result")
+		}).Error("[CONTROLLER: RequestToFaceOcclusionAttribute] error on marshaling json result")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -166,7 +164,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		log.WithFields(log.Fields{
 			"error":        err,
 			"service_data": serviceData,
-		}).Error("[Controller] error on implement face occlusion & attribute innovation")
+		}).Error("[CONTROLLER: RequestToFaceOcclusionAttribute] error on implement face occlusion & attribute innovation")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -183,6 +181,6 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 
 	log.WithFields(log.Fields{
 		"data": serviceData,
-	}).Info("[Controller] request to face occlusion atribute successfully done")
+	}).Info("[CONTROLLER: RequestToFaceOcclusionAttribute] request to face occlusion atribute successfully done")
 
 }

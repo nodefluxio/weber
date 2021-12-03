@@ -23,7 +23,7 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 	log.WithFields(log.Fields{
 		"data_service": service,
 		"data_input":   inputData,
-	}).Info("[Controller] request to analytics service start...")
+	}).Info("[CONTROLLER: RequestToServiceAnalytics] request to analytics service start...")
 
 	if service.Slug == "face-match-enrollment" {
 		inputData.Data.AdditionalParams = map[string]interface{}{"face_id": os.Getenv("FACE_ID")}
@@ -34,10 +34,10 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 
 	if err != nil {
 		log.WithFields(log.Fields{
-			"error":         err,
-			"data_analytic": dataAnalytic,
-			"slug":          service.Slug,
-		}).Error("[Controller] error on request analytics service")
+			"error":                  err,
+			"data_analytic_postBody": len(dataAnalytic.postBody),
+			"slug":                   service.Slug,
+		}).Error("[CONTROLLER: RequestToServiceAnalytics] error on request analytics service")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -59,7 +59,7 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 
 	log.WithFields(log.Fields{
 		"data": serviceData,
-	}).Info("[Controller] request to analytics service successfully done")
+	}).Info("[CONTROLLER: RequestToServiceAnalytics] request to analytics service successfully done")
 
 }
 
@@ -70,7 +70,7 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 	log.WithFields(log.Fields{
 		"data_service": service,
 		"data_input":   inputData,
-	}).Info("[Controller] request to innovation service start...")
+	}).Info("[CONTROLLER: RequestToServiceInnovation] request to innovation service start...")
 
 	requestData := inputData.Data
 	additionalParams, _ := json.Marshal(requestData.AdditionalParams)
@@ -90,7 +90,7 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 			"additional_params": string(additionalParams),
 			"total_input_image": len(requestData.Images),
 			"slug":              service.Slug,
-		}).Error("error on request innovation service")
+		}).Error("[CONTROLLER: RequestToServiceInnovation]error on request innovation service")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -107,7 +107,7 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 
 	log.WithFields(log.Fields{
 		"data": serviceData,
-	}).Info("[Controller] request to innovation service successfully done")
+	}).Info("[CONTROLLER: RequestToServiceInnovation] request to innovation service successfully done")
 }
 
 func parseMap(aMap map[string]interface{}, img image.Image, cfg image.Config, thumbnails *Thumbnails) {

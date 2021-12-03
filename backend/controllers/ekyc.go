@@ -35,9 +35,11 @@ func (ctrl *Controller) CreateEKYCRequest(ctx *gin.Context) {
 	sessionId := inputData.SessionID
 
 	log.WithFields(log.Fields{
-		"data":       inputData,
-		"session_id": sessionId,
-	}).Info("[Controller] create ekyc request start...")
+		"total_image_faceliveness": len(inputData.Data.FaceLiveness.Images),
+		"total_image_ocrktp":       len(inputData.Data.OCRKTP.Images),
+		"total_image_facematch":    len(inputData.Data.FaceMatch.Images),
+		"session_id":               sessionId,
+	}).Info("[CONTROLLER: CreateEKYCRequest] create ekyc request start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
@@ -120,7 +122,7 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 		log.WithFields(log.Fields{
 			"error":        err,
 			"service_data": serviceData,
-		}).Error("[Controller] error on Implement EKYC Solution!")
+		}).Error("[CONTROLLER: ImplementEKYCSolution] error on Implement EKYC Solution!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -131,7 +133,7 @@ func ImplementEKYCSolution(ctx *gin.Context, service models.Service, inputData e
 
 	log.WithFields(log.Fields{
 		"data": serviceData,
-	}).Info("[Controller] implement ekyc solution successfully done")
+	}).Info("[CONTROLLER: ImplementEKYCSolution] implement ekyc solution successfully done")
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":           true,

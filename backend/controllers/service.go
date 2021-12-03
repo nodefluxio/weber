@@ -17,13 +17,13 @@ func (ctrl *Controller) GetServices(ctx *gin.Context) {
 
 	// check if there is a query URL "type"
 	// and it has an invalid value
-	log.Info("[Controller] get services start...")
+	log.Info("[CONTROLLER: GetServices] get services start...")
 
 	isValid, serviceType := ctrl.Model.IsValidServiceType(serviceTypeQuery)
 	if isAnyQueryType && !isValid {
 		log.WithFields(log.Fields{
 			"data": serviceTypeQuery,
-		}).Error("[Controller] error on query type not valid")
+		}).Error("[CONTROLLER: GetServices] error on query type not valid")
 
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
@@ -45,7 +45,7 @@ func (ctrl *Controller) GetServices(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"data": serviceType,
-	}).Info("[Controller] get service successfully done!")
+	}).Info("[CONTROLLER: GetServices] get service successfully done!")
 
 }
 
@@ -53,15 +53,13 @@ func (ctrl *Controller) getAllServices(ctx *gin.Context) {
 	service := &models.Service{}
 	analyticsService := &[]models.APIService{}
 
-	log.WithFields(log.Fields{
-		"data": service,
-	}).Info("[Controller] get all services start...")
+	log.Info("[CONTROLLER: getAllServices] get all services start...")
 
 	if err := ctrl.DBConn.Model(service).Find(analyticsService).Error; err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  analyticsService,
-		}).Error("[Controller] error on get all services")
+		}).Error("[CONTROLLER: getAllServices] error on get all services")
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -72,7 +70,7 @@ func (ctrl *Controller) getAllServices(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"data": analyticsService,
-	}).Info("[Controller] get all services successfully done")
+	}).Info("[CONTROLLER: getAllServices] get all services successfully done")
 
 }
 
@@ -80,20 +78,18 @@ func (ctrl *Controller) getServiceAnalytic(ctx *gin.Context) {
 	service := &models.Service{}
 	analyticsService := &[]models.APIService{}
 
-	log.WithFields(log.Fields{
-		"data": service,
-	}).Info("[Controller] get analytic service start...")
+	log.Info("[CONTROLLER: getServiceAnalytic] get analytic service start...")
 
 	if err := ctrl.DBConn.Model(service).Where("type = ?", "analytic").Find(analyticsService).Error; err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  analyticsService,
-		}).Error("[Controller] analytics service not found!")
+		}).Error("[CONTROLLER: getServiceAnalytic] analytics service not found!")
 	}
 
 	log.WithFields(log.Fields{
 		"data": analyticsService,
-	}).Info("[Controller] get analytic service successfully done")
+	}).Info("[CONTROLLER: getServiceAnalytic] get analytic service successfully done")
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":      true,
@@ -106,20 +102,18 @@ func (ctrl *Controller) getServiceSolution(ctx *gin.Context) {
 	service := &models.Service{}
 	solutionsService := &[]models.APIService{}
 
-	log.WithFields(log.Fields{
-		"data": service,
-	}).Info("[Controller] get solution service start...")
+	log.Info("[CONTROLLER: getServiceSolution] get solution service start...")
 
 	if err := ctrl.DBConn.Model(service).Where("type = ?", "solution").Find(solutionsService).Error; err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  solutionsService,
-		}).Error("[Controller] solutions service not found!")
+		}).Error("[CONTROLLER: getServiceSolution] solutions service not found!")
 	}
 
 	log.WithFields(log.Fields{
 		"data": solutionsService,
-	}).Info("[Controller] get solution service successfully done")
+	}).Info("[CONTROLLER: getServiceSolution] get solution service successfully done")
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":      true,
@@ -132,20 +126,18 @@ func (ctrl *Controller) getServiceInnovation(ctx *gin.Context) {
 	service := &models.Service{}
 	innovationsService := &[]models.APIService{}
 
-	log.WithFields(log.Fields{
-		"data": service,
-	}).Info("[Controller] get innovation service start...")
+	log.Info("[CONTROLLER: getServiceInnovation] get innovation service start...")
 
 	if err := ctrl.DBConn.Model(service).Where("type = ?", "innovation").Find(innovationsService).Error; err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  innovationsService,
-		}).Error("[Controller] innovations service not found!")
+		}).Error("[CONTROLLER: getServiceInnovation] innovations service not found!")
 	}
 
 	log.WithFields(log.Fields{
 		"data": innovationsService,
-	}).Info("[Controller] get innovation service successfully done")
+	}).Info("[CONTROLLER: getServiceInnovation] get innovation service successfully done")
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"ok":      true,
@@ -161,7 +153,7 @@ func (ctrl *Controller) GetServiceBySlug(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"slug": slug,
-	}).Info("[Controller] get service by slug start...")
+	}).Info("[CONTROLLER: GetServiceBySlug] get service by slug start...")
 
 	if err := ctrl.DBConn.Model(service).First(&apiService, "slug = ?", slug).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -169,7 +161,7 @@ func (ctrl *Controller) GetServiceBySlug(ctx *gin.Context) {
 				"slug":  slug,
 				"error": err,
 				"data":  apiService,
-			}).Error("[Controller] error on finding Slug!")
+			}).Error("[CONTROLLER: GetServiceBySlug] error on finding Slug!")
 
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"ok":      false,
@@ -182,7 +174,7 @@ func (ctrl *Controller) GetServiceBySlug(ctx *gin.Context) {
 	log.WithFields(log.Fields{
 		"slug": slug,
 		"data": apiService,
-	}).Info("[Controller] get service by slug successfully done")
+	}).Info("[CONTROLLER: GetServiceBySlug] get service by slug successfully done")
 
 	message := fmt.Sprintf("Get service by slug=%v success", slug)
 	ctx.JSON(http.StatusOK, gin.H{
@@ -199,8 +191,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"session_id": sessionId,
-		"data":       inputData,
-	}).Info("[Controller] create service request start...")
+	}).Info("[CONTROLLER: CreateServiceRequest] create service request start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(sessionId) {
@@ -238,7 +229,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 			"error":      err,
 			"data":       service,
 			"service_id": serviceId,
-		}).Error("[Controller] error on get service data!")
+		}).Error("[CONTROLLER: CreateServiceRequest] error on get service data!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -253,7 +244,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  visitorActivity,
-		}).Error("[Controller] error on set user activity completeness!")
+		}).Error("[CONTROLLER: CreateServiceRequest] error on set user activity completeness!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -274,7 +265,7 @@ func (ctrl *Controller) CreateServiceRequest(ctx *gin.Context) {
 		"error":      err,
 		"input_data": inputData,
 		"service":    service,
-	}).Error("[Controller] error on create service request!")
+	}).Error("[CONTROLLER: CreateServiceRequest] error on create service request!")
 
 	ctx.JSON(http.StatusInternalServerError, gin.H{
 		"ok":      false,

@@ -49,14 +49,14 @@ func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"data": visitor,
-	}).Info("[Controller] create visitor start...")
+	}).Info("[CONTROLLER: CreateVisitor] create visitor start...")
 
 	err = ctrl.Model.CreateVisitor(&visitor)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  visitor,
-		}).Error("[Controller] error on create visitor!")
+		}).Error("[CONTROLLER: CreateVisitor] error on create visitor!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err, "ok": false})
 		return
@@ -70,7 +70,7 @@ func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"data": visitor,
-	}).Info("[Controller] create visitor successfully done!")
+	}).Info("[CONTROLLER: CreateVisitor] create visitor successfully done!")
 
 	ctx.JSON(http.StatusOK, gin.H{"data": slice, "message": "Data has been processed successfully", "ok": true})
 }

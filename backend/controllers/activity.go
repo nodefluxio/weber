@@ -13,8 +13,10 @@ func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
 	ctx.BindJSON(&visitorActivity)
 
 	log.WithFields(log.Fields{
-		"data": visitorActivity,
-	}).Info("[Controller] create activity start...")
+		"session_id":   visitorActivity.SessionID,
+		"service_id":   visitorActivity.ServiceID,
+		"completeness": visitorActivity.Completeness,
+	}).Info("[CONTROLLER: CreateActivity] create activity start...")
 
 	// Check if session is not exist in our record
 	if !ctrl.IsSessionExist(visitorActivity.SessionID) {
@@ -39,7 +41,7 @@ func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  visitorActivity,
-		}).Error("[Controller] error on create visitor activity!")
+		}).Error("[CONTROLLER: CreateVisitorActivity] error on create visitor activity!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -50,7 +52,7 @@ func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
 
 	log.WithFields(log.Fields{
 		"data": visitorActivity,
-	}).Info("[Controller] success on create activity!")
+	}).Info("[CONTROLLER: CreateActivity] success on create activity!")
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "Data has been processed successfully", "ok": true})
 }
