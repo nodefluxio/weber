@@ -33,9 +33,7 @@ type Props = {
   long_description: string
 }
 
-const mainMenuInfo = [
-  'Create an account to enable your face payment'
-]
+const mainMenuInfo = ['Create an account to enable your face payment']
 
 export const FacePaymentPage = ({ id, name, long_description }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -134,11 +132,11 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
         activeStep={currentStepStepper}
       />
 
-      <div className={styles.container}>
+      <div className={styles.facePaymentPageContainer}>
         {currentStep === 1 && (
           <div className={styles.welcome}>
             <h2>Welcome to {name} Demo App</h2>
-            <p style={{ width: '65%', margin: '2rem auto' }}>
+            <p>
               Please access this demo via smartphone or any device with at least
               HD camera resolution for better performance and experience
             </p>

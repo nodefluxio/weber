@@ -36,7 +36,7 @@ export const Navbar = () => {
     <nav
       className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}
     ${router.pathname !== '/' ? styles.plainNavbar : ''}`}>
-      <div className={styles.container}>
+      <div className={`${styles.container} fluidContainer`}>
         <div className={styles.imageContainer}>
           <Link href="/">
             <a>
