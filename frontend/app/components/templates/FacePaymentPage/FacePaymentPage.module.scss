@@ -1,10 +1,26 @@
-.container {
+@import '../../../styles/abstracts/mixins.scss';
+
+.facePaymentPageContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 640px;
   padding: 2rem 0 5rem 0;
+
+  @include phone {
+    width: 95%;
+    margin: 0 auto;
+  }
 
   .welcome {
     text-align: center;
+    h2 {
+      font-size: 2rem;
+    }
+    p {
+      width: 65%;
+      margin: 1.5rem auto;
+      font-size: 1.25rem;
+    }
   }
 }
