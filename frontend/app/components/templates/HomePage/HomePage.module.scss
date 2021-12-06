@@ -51,6 +51,9 @@
       @include tablet {
         flex-direction: row-reverse;
       }
+      @include phone {
+        justify-content: flex-end;
+      }
       .texts {
         width: 40%;
         display: flex;
@@ -59,6 +62,7 @@
         color: $white-text;
         @include phone {
           width: 100%;
+          max-width: 280px;
         }
         h1 {
           margin: 0;
