@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+### Changed
+
+### Removed
+
+## [0.5.0 - 06/12/2021]
+
+### Added
+
 - [FRONTEND] Add Car Damage Assessment Innovation
 - [FRONTEND] Add Face Occlusion Attribute innovation
 - [FRONTEND] Add Horizontal Card Content Component
@@ -41,8 +49,6 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Fix hero-section textx too wide on mobile devices
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
-
-### Removed
 
 ## [0.4.0 - 25/11/2021]
 
