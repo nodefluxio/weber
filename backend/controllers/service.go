@@ -39,6 +39,8 @@ func (ctrl *Controller) GetServices(ctx *gin.Context) {
 		ctrl.getServiceSolution(ctx)
 	case models.InnovationServiceType:
 		ctrl.getServiceInnovation(ctx)
+	case models.SolutionPartnerServiceType:
+		ctrl.getServiceSolutionPartner(ctx)
 	default:
 		ctrl.getAllServices(ctx)
 	}
@@ -143,6 +145,30 @@ func (ctrl *Controller) getServiceInnovation(ctx *gin.Context) {
 		"ok":      true,
 		"message": "Get all innovations service success",
 		"data":    &innovationsService,
+	})
+}
+
+func (ctrl *Controller) getServiceSolutionPartner(ctx *gin.Context) {
+	service := &models.Service{}
+	solutionPartnerService := &[]models.APIService{}
+
+	log.Info("[CONTROLLER: getServiceSolutionPartner] get solution partner service start...")
+
+	if err := ctrl.DBConn.Model(service).Where("type = ?", "solution-partner").Find(solutionPartnerService).Error; err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"data":  solutionPartnerService,
+		}).Error("[CONTROLLER: getServiceSolutionPartner] solution partner service not found!")
+	}
+
+	log.WithFields(log.Fields{
+		"data": solutionPartnerService,
+	}).Info("[CONTROLLER: getServiceSolutionPartner] get solution partner service successfully done")
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"ok":      true,
+		"message": "Get all solution partner service success",
+		"data":    &solutionPartnerService,
 	})
 }
 
