@@ -584,6 +584,8 @@ Return json data about all Services by type.
 
   `?type=innovation`
 
+  `?type=solution-partner`
+
 - **Sample Success Response**
 
   **Code**: 200 OK
