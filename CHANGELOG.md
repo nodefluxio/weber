@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 ### Changed
+- [FRONTEND] Modified solution card stylings
 
 ### Removed
 
