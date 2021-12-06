@@ -64,6 +64,7 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
 
   const displayResult = () => {
     if (result) {
+      let isPeopleDensity = false
       // @ts-ignore
       if (resultMap[slug]) {
         // @ts-ignore
@@ -76,11 +77,26 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
         }
         if (analyticSlugResultMap.starting_key) {
           for (let i = 0; i < analyticSlugResultMap.starting_key.length; i++) {
+            if (analyticSlugResultMap.starting_key[i] === 'people_density') {
+              isPeopleDensity = true
+            }
             mappedResultResponse =
               mappedResultResponse[analyticSlugResultMap.starting_key[i]]
           }
         }
-        const fieldList: [] = []
+        const fieldList: any[] = []
+        if (isPeopleDensity) {
+          fieldList.push(
+            <div className={styles.field}>
+              <div>
+                <p className={styles.label}>Count</p>
+                <p className={styles.result}>
+                  {`${mappedResultResponse.length}`}
+                </p>
+              </div>
+            </div>
+          )
+        }
         const fields = analyticSlugResultMap.fields
         if (analyticSlugResultMap.type === 'array') {
           for (let i = 0; i < mappedResultResponse.length; i++) {
