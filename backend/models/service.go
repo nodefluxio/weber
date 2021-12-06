@@ -81,15 +81,23 @@ type BoundingBox struct {
 }
 
 func (m *Model) CreateService(Service *Service) (err error) {
+
+	log.WithFields(log.Fields{
+		"service": Service,
+	}).Info("[MODEL: CreateService] create service start...")
+
 	err = m.DBConn.Create(Service).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Service,
-		}).Error("error on create service!")
+		}).Error("[MODEL: CreateService] error on create service!")
 
 		return err
 	}
+	log.WithFields(log.Fields{
+		"data": Service,
+	}).Info("[MODEL: CreateService] success on create service!")
 	return nil
 }
 
@@ -105,14 +113,24 @@ func (m *Model) IsValidServiceType(serviceType string) (bool, ServiceType) {
 }
 
 func (m *Model) GetServiceBySlug(Service *Service, slug string) (err error) {
+
+	log.WithFields(log.Fields{
+		"service": Service,
+		"slug":    slug,
+	}).Info("[MODEL: GetServiceBySlug] get service by slug start...")
+
 	err = m.DBConn.Where("slug = ?", slug).First(Service).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"slug":  slug,
-		}).Error("error on find service slug!")
+		}).Error("[MODEL: GetServiceBySlug] error on find service slug!")
 
 		return err
 	}
+	log.WithFields(log.Fields{
+		"slug": slug,
+	}).Info("[MODEL: GetServiceBySlug] success on find service slug!")
+
 	return nil
 }
