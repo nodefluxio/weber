@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add solutions banner image
 - [FRONTEND] Add Horizontal Card Component
 - [FRONTEND] Add fluid container to support large screen
+- [FRONTEND] Add custom error message on analytic result display
 - [BACKEND] Add new seed for innovation Car Damage Assessment
 - [BACKEND] Add logging system in backend use logrus
 - [BACKEND] Add request handler for service Face Occlusion & Attribute innovation, including handler for request to Face Detection API
