@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 ### Changed
-
+- [FRONTEND] Change face occlusion & attribute example one
 ### Removed
 
 ## [0.5.0 - 06/12/2021]
