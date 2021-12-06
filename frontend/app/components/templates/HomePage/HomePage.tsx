@@ -144,7 +144,7 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                 slidesPerView: 2,
                 spaceBetween: 20
               },
-              '768': {
+              '780': {
                 slidesPerView: 3,
                 spaceBetween: 20
               }
