@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Add new controller to get services with service type: `solution-partner`
 
 ### Changed
+
+- [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
 
 ### Removed
