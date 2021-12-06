@@ -11,10 +11,9 @@
   min-height: 360px;
   color: $white-text;
   .container {
-    width: 100%;
-    padding: 0 2rem;
+    width: 90%;
     @include tablet {
-      padding: 0 3rem;
+      width: 80%;
     }
     margin: auto;
     display: flex;
@@ -28,7 +27,7 @@
         width: 60%;
       }
       @include phone {
-        width: 90%;
+        width: 80%;
       }
       p {
         font-size: 1.1rem;
