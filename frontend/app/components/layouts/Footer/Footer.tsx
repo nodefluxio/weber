@@ -5,7 +5,7 @@ import Link from 'next/link'
 export const Footer = () => {
   return (
     <div className={styles.footer}>
-      <div className={styles.container}>
+      <div className={`${styles.container} fluidContainer`}>
         <div className={styles.info}>
           <div className={styles.col1}>
             <div className={styles.imgContainer}>

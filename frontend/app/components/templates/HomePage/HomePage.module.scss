@@ -51,6 +51,9 @@
       @include tablet {
         flex-direction: row-reverse;
       }
+      @include phone {
+        justify-content: flex-end;
+      }
       .texts {
         width: 40%;
         display: flex;
@@ -59,6 +62,7 @@
         color: $white-text;
         @include phone {
           width: 100%;
+          max-width: 280px;
         }
         h1 {
           margin: 0;
@@ -156,16 +160,14 @@
           display: none;
         }
       }
-      .imageProduct {
-        margin-left: 10%;
-      }
+
       .texts {
         text-align: center;
-        width: 40%;
+        width: 50%;
         @include tablet {
           width: 80%;
         }
-        h1 {
+        h2 {
           color: $primary-color;
           font-size: 3rem;
           font-weight: 800;
@@ -193,13 +195,12 @@
 
   .solutionsSection {
     .swipper {
-      width: 80%;
       height: 420px;
+      max-width: 1024px;
       @include tablet {
         width: 90%;
       }
       @include phone {
-        width: 100%;
         height: unset;
       }
       .swipperSlide {
@@ -247,47 +248,41 @@
     position: relative;
     .container {
       height: 100vh;
-    }
-    h1 {
-      position: absolute;
-      color: $secondary-color;
-      z-index: 3;
-      left: 12%;
-      top: 8vh;
-      font-size: 2.5rem;
-      font-weight: 800;
-      @include tablet {
-        width: 100%;
-        text-align: center;
-        left: 50%;
-        transform: translate(-50%, -50%);
+
+      .image {
+        opacity: 0.5;
       }
-      @include phone {
-        top: 10vh;
-      }
-    }
-    .image {
-      opacity: 0.5;
-    }
-    .card {
-      position: absolute;
-      width: 350px;
-      height: 60vh;
-      left: 12%;
-      top: 22vh;
-      @include tablet {
-        top: 50vh;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      @include phone {
-        top: 55%;
-      }
-      .cardContent {
-        padding: 4rem 3rem;
-        .footer {
-          position: absolute;
-          bottom: 4rem;
+      .cardContainer {
+        position: absolute;
+        left: 20vw;
+        top: 11%;
+
+        @include tablet {
+          left: 0;
+          right: 0;
+          margin: auto;
+        }
+
+        h2 {
+          color: $secondary-color;
+          z-index: 3;
+          font-size: 2.5rem;
+          font-weight: 800;
+          text-align: center;
+        }
+
+        .card {
+          width: 350px;
+          height: 60vh;
+          max-height: 400px;
+
+          .cardContent {
+            padding: 4rem 3rem;
+            .footer {
+              position: absolute;
+              bottom: 4rem;
+            }
+          }
         }
       }
     }

@@ -111,7 +111,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
         activeStep={currentStep}
       />
 
-      <div className={styles.container}>
+      <div className={`${styles.container} fluidContainer`}>
         {currentStep === 1 && (
           <div>
             <h3 className={styles.title}>Welcome to e-KYC Demo</h3>

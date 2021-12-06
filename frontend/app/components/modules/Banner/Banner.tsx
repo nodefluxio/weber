@@ -17,10 +17,12 @@ export const Banner = ({
       style={{
         backgroundImage: `url("${bannerUrl}")`
       }}>
-      <div className={styles.container}>
-        <div className={styles.texts}>
-          <h1>{analyticsName}</h1>
-          <p className={styles.descriptions}>{longDescription}</p>
+      <div className="fluidContainer">
+        <div className={styles.container}>
+          <div className={styles.texts}>
+            <h1>{analyticsName}</h1>
+            <p className={styles.descriptions}>{longDescription}</p>
+          </div>
         </div>
       </div>
     </div>

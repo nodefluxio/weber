@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add nodeflux social media, products, and company links
 - [FRONTEND] Add solutions banner image
 - [FRONTEND] Add Horizontal Card Component
+- [FRONTEND] Add fluid container to support large screen
 - [BACKEND] Add new seed for innovation Car Damage Assessment
 - [BACKEND] Add logging system in backend use logrus
 - [BACKEND] Add request handler for service Face Occlusion & Attribute innovation, including handler for request to Face Detection API
@@ -36,6 +37,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Scrollable analytic result
 - [FRONTEND] Renamed [innovation-page].tsx to various innovation slug name
 - [FRONTEND] DropzoneOption handles various file format and file size
+- [FRONTEND] Fix hero-section textx too wide on mobile devices
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
 

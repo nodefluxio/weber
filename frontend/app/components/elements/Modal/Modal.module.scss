@@ -13,14 +13,17 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 
   .modal {
     background: $white-bg;
-    min-width: 40%;
+    width: 600px;
     border-radius: 15px;
     padding: 2rem 1rem;
     position: relative;
+
     @include phone {
+      width: 90%;
       padding: 2rem 1rem;
     }
     .header {
