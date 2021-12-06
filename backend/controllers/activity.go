@@ -18,22 +18,42 @@ func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
 		"completeness": visitorActivity.Completeness,
 	}).Info("[CONTROLLER: CreateActivity] create activity start...")
 
-	// Check if session is not exist in our record
-	if !ctrl.IsSessionExist(visitorActivity.SessionID) {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
+	var service models.Service
+	if err := ctrl.Model.GetServiceById(&service, visitorActivity.ServiceID); err != nil {
+		log.WithFields(log.Fields{
+			"error":      err,
+			"service_id": visitorActivity.ServiceID,
+		}).Error("[CONTROLLER: CreateActivity] error when trying to get service by id!")
+
+		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
-			"message": "Session ID is not valid",
+			"message": err.Error(),
 		})
 		return
 	}
 
-	// Check if session has expired
-	if ctrl.IsSessionExpired(visitorActivity.SessionID) {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Session ID has expired",
-		})
-		return
+	if service.Type == "solution-partner" {
+		if visitorActivity.SessionID == "" {
+			visitorActivity.SessionID = "SessionForSolutionPartner"
+		}
+	} else {
+		// Check if session is not exist in our record
+		if !ctrl.IsSessionExist(visitorActivity.SessionID) {
+			ctx.JSON(http.StatusUnauthorized, gin.H{
+				"ok":      false,
+				"message": "Session ID is not valid",
+			})
+			return
+		}
+
+		// Check if session has expired
+		if ctrl.IsSessionExpired(visitorActivity.SessionID) {
+			ctx.JSON(http.StatusUnauthorized, gin.H{
+				"ok":      false,
+				"message": "Session ID has expired",
+			})
+			return
+		}
 	}
 
 	// Insert new record into db
