@@ -10,8 +10,14 @@
   .messageSpan {
     margin-left: 0.75rem;
   }
+  .warningImageWrapper {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+  }
   @include phone {
     width: 80%;
+    margin: 0 auto;
   }
 }
 
