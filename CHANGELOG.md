@@ -6,7 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [BACKEND] Add 5 new seed data for partner solution service
+
 ### Changed
+- [FRONTEND] Modified solution card stylings
 
 ### Removed
 
