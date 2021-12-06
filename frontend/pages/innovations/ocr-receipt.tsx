@@ -4,6 +4,7 @@ import { ReceiptDisplay } from '@/modules/ReceiptDisplay/ReceiptDisplay'
 import { AnalyticsPage } from '@/templates/AnalyticsPage/AnalyticsPage'
 import { ServiceBySlugResponseData } from '@/types/responses'
 import { isOCRReceipt } from '@/utils/utils'
+import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 import Head from 'next/head'
 import { useState } from 'react'
 import { postInnovation } from './../../app/api/innovationsAPI'
@@ -15,11 +16,12 @@ const OCRReceipt = ({
   slug
 }: ServiceBySlugResponseData) => {
   const [res, setRes] = useState()
+  const MAX_IMAGE_SIZE = 3000000 // 3MB
   const renderResult = () => {
     // Error message passed
     if (typeof res !== 'undefined') {
       if (typeof res === 'string') {
-        return <div>{res}</div>
+        return <WarningDiv message={res} />
       }
       if (isOCRReceipt(res)) {
         return <ReceiptDisplay result={res} />
@@ -50,10 +52,10 @@ const OCRReceipt = ({
         ]}
         serviceID={id}
         slug={slug}
-        handlePost={(session_id, photo) =>
-          postInnovation(id, session_id, photo)
-        }
-        handleResult={(res) => setRes(res)}>
+        handlePost={(session_id, photo) => postInnovation(id, session_id, photo)}
+        handleResult={(res) => setRes(res)}
+        maxImageSize={MAX_IMAGE_SIZE}
+        acceptedFileFormat={'image/jpeg, image/png'}>
         {renderResult()}
       </AnalyticsPage>
     </>

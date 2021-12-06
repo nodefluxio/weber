@@ -1,0 +1,22 @@
+@import '../../../styles/abstracts/variables';
+@import '../../../styles/abstracts/mixins';
+
+.warningDivWrapper {
+  color: $error-text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 1rem;
+  .messageSpan {
+    margin-left: 0.75rem;
+  }
+  @include phone {
+    width: 80%;
+  }
+}
+
+.warningDivWrapperActive {
+  background: lighten($error-text, 55%);
+  border: 1px solid $error-text;
+  border-radius: 4px;
+}

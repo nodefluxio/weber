@@ -95,7 +95,9 @@ export const FaceOcclusionAttributePage = ({
       handlePost={(session_id, photo) =>
         postFaceOcclusionAttribute(id, session_id, photo)
       }
-      handleResult={(res) => setResult(res)}>
+      handleResult={(res) => setResult(res)}
+      maxImageSize={800000}
+      acceptedFileFormat={'image/jpeg'}>
       {result && (
         <div className={styles.FOAResult}>
           <Tabs>

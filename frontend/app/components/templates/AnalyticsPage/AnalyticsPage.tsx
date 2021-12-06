@@ -10,6 +10,7 @@ import { Color } from '../../../types/elements'
 import styles from './AnalyticsPage.module.scss'
 import { CustomError } from 'app/errors/CustomError'
 import { Spinner } from 'app/components/elements/Spinner/Spinner'
+import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 
 type Props = {
   analyticsName: string
@@ -19,6 +20,8 @@ type Props = {
   serviceID: number
   slug: string
   handleResult: (res: any) => void
+  maxImageSize: number
+  acceptedFileFormat: string
   handlePost?: (session_id: string, photo: string) => Promise<unknown>
   addionalStepOneNode?: ReactNode
 }
@@ -31,6 +34,8 @@ export const AnalyticsPage: React.FC<Props> = ({
   serviceID,
   slug,
   handleResult,
+  maxImageSize,
+  acceptedFileFormat,
   handlePost,
   addionalStepOneNode
 }) => {
@@ -72,6 +77,7 @@ export const AnalyticsPage: React.FC<Props> = ({
   const refreshState = () => {
     setCurrentStep(1)
     setPhoto('')
+    setErrorMsg('')
     handleResult(undefined)
     setIsResult(false)
   }
@@ -88,7 +94,12 @@ export const AnalyticsPage: React.FC<Props> = ({
         {currentStep === 1 && (
           <div className={styles.dropzoneNButton}>
             {addionalStepOneNode}
-            <DropzoneOptions images={examples} onPhotoDrop={setPhoto} />
+            <DropzoneOptions
+              images={examples}
+              onPhotoDrop={setPhoto}
+              maxSize={maxImageSize}
+              acceptedFileFormat={acceptedFileFormat}
+            />
             {photo && (
               <div className={styles.buttonContainer}>
                 <Button color={Color.Primary} onClick={handleAnalytics}>
@@ -106,7 +117,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               {isResult ? (
                 children
               ) : errorMsg ? (
-                <div>{errorMsg}</div>
+                <WarningDiv message={errorMsg}/>
               ) : (
                 <div className={styles.loadingState}>
                   <h3>Loading your results...</h3>
@@ -115,7 +126,7 @@ export const AnalyticsPage: React.FC<Props> = ({
                 </div>
               )}
             </AnalyticsResultWrapper>
-            {isResult && (
+            {(isResult || errorMsg) && (
               <Feedback id={serviceID} onTryAgain={() => refreshState()} />
             )}
           </>

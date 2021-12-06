@@ -36,6 +36,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Fix sticky navbar in request demo form page
 - [FRONTEND] Scrollable analytic result
 - [FRONTEND] Renamed [innovation-page].tsx to various innovation slug name
+- [FRONTEND] DropzoneOption handles various file format and file size
 - [FRONTEND] Fix hero-section textx too wide on mobile devices
 - [BACKEND] Rename variable URL_OCR_RECEIPT to URL_INNOVATIONS in .env file
 - [BACKEND] Update HTTP requester for innovation to use URL_INNOVATIONS dinamically by combine it with slug
