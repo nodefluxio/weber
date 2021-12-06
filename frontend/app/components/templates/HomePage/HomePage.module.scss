@@ -212,9 +212,14 @@
           background: rgba(0, 0, 0, 0.5);
           position: absolute;
           bottom: 0px;
-
           padding: 1.5rem;
+          height: 55%;
+          box-sizing: border-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
           h3 {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
             font-size: 1.4rem;
           }
         }
