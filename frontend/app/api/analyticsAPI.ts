@@ -30,10 +30,10 @@ export const postServicePhoto = async <T>(
     })
     if (res.data.ok) {
       const { service_data, thumbnails } = res.data
-      if (service_data.job.result.status === 'success') {
+      if (service_data.job.result.status === 'success' && service_data.job.result.result.length > 0) {
         return { result: service_data.job.result.result[0], thumbnails }
       } else {
-        throw new CustomError(200, service_data.job.result.status)
+        throw new CustomError(400, service_data.message)
       }
     }
   } catch (e) {

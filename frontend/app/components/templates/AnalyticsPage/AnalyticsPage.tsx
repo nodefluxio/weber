@@ -63,12 +63,18 @@ export const AnalyticsPage: React.FC<Props> = ({
       handleResult(res)
       setIsResult(true)
     } catch (err) {
-      if (err instanceof CustomError && err.statusCode === 401) {
-        setOpenModal(true)
-        setCurrentStep(1)
-      } else {
-        console.error(err)
-        setErrorMsg((err as Error).message)
+      if (err instanceof CustomError) {
+        switch (err.statusCode) {
+          case 400:
+            setErrorMsg(err.message)
+            break
+          case 401:
+            setOpenModal(true)
+            setCurrentStep(1)
+            break
+          case 500:
+            setErrorMsg('Internal server error. Please contact the administrator or try again later')
+        }
       }
       setIsResult(false)
     }
@@ -117,7 +123,10 @@ export const AnalyticsPage: React.FC<Props> = ({
               {isResult ? (
                 children
               ) : errorMsg ? (
-                <WarningDiv message={errorMsg}/>
+                <WarningDiv
+                  message={errorMsg}
+                  className={styles.analyticsWarning}
+                />
               ) : (
                 <div className={styles.loadingState}>
                   <h3>Loading your results...</h3>
