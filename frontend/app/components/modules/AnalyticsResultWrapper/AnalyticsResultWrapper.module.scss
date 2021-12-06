@@ -39,6 +39,11 @@
     .resultInfo {
       width: 50%;
       align-self: flex-start;
+      .resultFlexInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
       @include tablet {
         width: 90%;
         margin: auto;

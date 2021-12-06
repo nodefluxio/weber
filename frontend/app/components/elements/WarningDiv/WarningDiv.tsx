@@ -14,7 +14,13 @@ export const WarningDiv = ({ message, className }: Props) => {
           message && styles.warningDivWrapperActive
         }`}>
         {message && (
-          <Image src={'/assets/icons/error-icon.svg'} width={32} height={32} />
+          <div className={styles.warningImageWrapper}>
+            <Image
+              src={'/assets/icons/error-icon.svg'}
+              width={32}
+              height={32}
+            />
+          </div>
         )}
         <span className={styles.messageSpan}>{message}</span>
       </div>
