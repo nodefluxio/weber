@@ -14,14 +14,19 @@ import (
 )
 
 type faceOcclusionAttributeServiceData struct {
-	FaceOcclusion	models.ServiceRequestResultData `json:"face_occlusion"`
-	FaceAttribute	models.ServiceRequestResultData `json:"face_attribute"`
+	FaceOcclusion models.ServiceRequestResultData `json:"face_occlusion"`
+	FaceAttribute models.ServiceRequestResultData `json:"face_attribute"`
 }
 
 func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.ServiceRequestResultData, error) {
 	var err error
 	var request *http.Request
 	var data models.ServiceRequestResultData
+
+	log.WithFields(log.Fields{
+		"slug":           innovationSlug,
+		"total_postBody": len(postBody),
+	}).Info("[CONTROLLER: RequestToInnovationSync] request to innovation start...")
 
 	BASE_URL := fmt.Sprintf("%s/%s/predict", os.Getenv("URL_INNOVATIONS"), innovationSlug)
 	payload := bytes.NewBuffer(postBody)
@@ -30,12 +35,10 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":    err,
-			"data":     data,
-			"payload":  payload,
 			"base_url": BASE_URL,
 			"slug":     innovationSlug,
 			"method":   "POST",
-		}).Error("error on send http new request to innovation!")
+		}).Error("[CONTROLLER: RequestToInnovationSync] error on send http new request to innovation!")
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -45,9 +48,8 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":   err,
-			"data":    data,
 			"request": request,
-		}).Error("error on request to innovation!")
+		}).Error("[CONTROLLER: RequestToInnovationSync] error on client request to innovation!")
 		return data, err
 	}
 
@@ -56,18 +58,25 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	err = json.NewDecoder(response.Body).Decode(&data)
 	if err != nil {
 		log.WithFields(log.Fields{
-			"error":         err,
-			"data":          data,
-			"response_body": response.Body,
-		}).Error("error on decode response body!")
+			"error": err,
+			"data":  data,
+		}).Error("[CONTROLLER: RequestToInnovationSync] error on decode response body!")
 		return data, err
 	}
+
+	log.WithFields(log.Fields{
+		"data": data,
+		"slug": innovationSlug,
+	}).Info("[CONTROLLER: RequestToInnovationSync] request to innovation successfully done")
 
 	return data, nil
 }
 
 func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	// Request to Face Detection API
+
+	log.Info("[CONTROLLER: RequestToFaceOcclusionAttribute] request to face occlusion atribute start...")
+
 	resultFaceDetection, err := RequestToInnovationSync(postBody, "face-detection")
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -80,10 +89,10 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	resultFaceDetectionJson, err := json.Marshal(resultFaceDetection)
 	if err != nil {
 		log.WithFields(log.Fields{
-			"error":     	err,
-			"json_result": 	string(resultFaceDetectionJson),
-			"slug":      	"face-detection",
-		}).Error("error on marshaling json result")
+			"error":       err,
+			"json_result": string(resultFaceDetectionJson),
+			"slug":        "face-detection",
+		}).Error("[CONTROLLER: RequestToFaceOcclusionAttribute] error on marshaling json result")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -115,7 +124,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	// Get image base64 string for input Face Occlusion & Attribute
 	inputFaceOcclusion := gjson.Get(string(resultFaceDetectionJson), "job.result.result.0.face_detection.result.input_face_occlusion.0").String()
 	inputFaceAttribute := gjson.Get(string(resultFaceDetectionJson), "job.result.result.0.face_detection.result.input_face_attribute.0").String()
-	
+
 	// Declare channels
 	resultFaceOcclusionChannel := make(chan models.ServiceRequestResultData)
 	resultFaceAttributeChannel := make(chan models.ServiceRequestResultData)
@@ -134,19 +143,19 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		errorFaceOcclusionAttributeChannel <- err
 		resultFaceAttributeChannel <- resultFaceAttribute
 	}()
-	
+
 	var serviceData faceOcclusionAttributeServiceData
 
 	// Share the results with channel - select
 	for i := 0; i < 4; i++ {
 		select {
-		case resultFaceOcclusion := <- resultFaceOcclusionChannel:
+		case resultFaceOcclusion := <-resultFaceOcclusionChannel:
 			serviceData.FaceOcclusion = resultFaceOcclusion
-		case resultFaceAttribute := <- resultFaceAttributeChannel:
+		case resultFaceAttribute := <-resultFaceAttributeChannel:
 			serviceData.FaceAttribute = resultFaceAttribute
-		case errorFaceOcclusion := <- errorFaceOcclusionAttributeChannel:
+		case errorFaceOcclusion := <-errorFaceOcclusionAttributeChannel:
 			err = errorFaceOcclusion
-		case errorFaceAttribute := <- errorFaceOcclusionAttributeChannel:
+		case errorFaceAttribute := <-errorFaceOcclusionAttributeChannel:
 			err = errorFaceAttribute
 		}
 	}
@@ -155,7 +164,7 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		log.WithFields(log.Fields{
 			"error":        err,
 			"service_data": serviceData,
-		}).Error("error on implement face occlusion & attribute innovation")
+		}).Error("[CONTROLLER: RequestToFaceOcclusionAttribute] error on implement face occlusion & attribute innovation")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
@@ -169,4 +178,9 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 		"message":      "Service demo request success",
 		"service_data": &serviceData,
 	})
+
+	log.WithFields(log.Fields{
+		"data": serviceData,
+	}).Info("[CONTROLLER: RequestToFaceOcclusionAttribute] request to face occlusion atribute successfully done")
+
 }

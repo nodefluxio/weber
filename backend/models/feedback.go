@@ -22,14 +22,22 @@ type FeedbackInput struct {
 }
 
 func (m *Model) CreateFeedbackDb(Feedback *Feedback) (err error) {
+
+	log.WithFields(log.Fields{
+		"data": Feedback,
+	}).Info("[MODEL: CreateFeedbackDb] create feedback start...")
+
 	err = m.DBConn.Create(Feedback).Error
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  Feedback,
-		}).Error("error on create feedback!")
+		}).Error("[MODEL: CreateFeedbackDb] error on create feedback!")
 
 		return err
 	}
+	log.WithFields(log.Fields{
+		"data": Feedback,
+	}).Info("[MODEL: CreateFeedbackDb] success on create feedback")
 	return nil
 }

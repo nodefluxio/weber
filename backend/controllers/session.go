@@ -12,15 +12,24 @@ import (
 func (ctrl *Controller) IsSessionExist(sessionId string) bool {
 	var visitor models.Visitor
 
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+	}).Info("[CONTROLLER: IsSessionExist] get visitor session_id start...")
+
 	if err := ctrl.Model.GetVisitor(&visitor, sessionId); err != nil {
 
 		log.WithFields(log.Fields{
 			"error":      err,
 			"session_id": sessionId,
-		}).Error("error, session id not exist")
+			"data":       visitor,
+		}).Error("[CONTROLLER: IsSessionExist] error, session id not exist!")
 
 		return false
 	}
+
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+	}).Info("[CONTROLLER: IsSessionExist] get visitor session_id successfully done")
 
 	return true
 }
@@ -31,6 +40,10 @@ func (ctrl *Controller) IsSessionExpired(sessionId string) bool {
 		log.Fatal("environment variable 'SESSION_EXPIRATION' is not set")
 	}
 
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+	}).Info("[CONTROLLER: IsSessionExpired] get visitor session_id start...")
+
 	var visitor models.Visitor
 	if err := ctrl.Model.GetVisitor(&visitor, sessionId); err != nil {
 
@@ -38,13 +51,17 @@ func (ctrl *Controller) IsSessionExpired(sessionId string) bool {
 			"error":      err,
 			"session_id": sessionId,
 			"data":       visitor,
-		}).Error("error, session id expired")
+		}).Error("[CONTROLLER: IsSessionExpired] error, session id expired!")
 
 		return false
 	}
 
 	dateExpiration := visitor.CreatedAt.AddDate(0, 0, expirationLimit)
 	dateNow := time.Now()
+
+	log.WithFields(log.Fields{
+		"session_id": sessionId,
+	}).Info("[CONTROLLER: IsSessionExpired] get visitor session_id successfully done")
 
 	return dateNow.After(dateExpiration)
 }

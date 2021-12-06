@@ -47,12 +47,16 @@ func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 	}
 	expirationLimitSecond := expirationLimitInt * 24 * 60 * 60
 
+	log.WithFields(log.Fields{
+		"data": visitor,
+	}).Info("[CONTROLLER: CreateVisitor] create visitor start...")
+
 	err = ctrl.Model.CreateVisitor(&visitor)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  visitor,
-		}).Error("error on create visitor!")
+		}).Error("[CONTROLLER: CreateVisitor] error on create visitor!")
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err, "ok": false})
 		return
@@ -63,6 +67,10 @@ func (ctrl *Controller) CreateVisitor(ctx *gin.Context) {
 		"max_age":    expirationLimitSecond,
 	}
 	slice = append(slice, data)
+
+	log.WithFields(log.Fields{
+		"data": visitor,
+	}).Info("[CONTROLLER: CreateVisitor] create visitor successfully done!")
 
 	ctx.JSON(http.StatusOK, gin.H{"data": slice, "message": "Data has been processed successfully", "ok": true})
 }
