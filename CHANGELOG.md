@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- [FRONTEND] Add new background and banner images for innovations
 
 ### Changed
 
