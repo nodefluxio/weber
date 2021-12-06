@@ -15,10 +15,13 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { postActivities } from '@/api/activitiesAPI'
+import { parseCookies } from 'nookies'
 
 type Props = {
   analytics: Service[]
   solutions: Service[]
+  solutionPartners: Service[]
   innovations: Service[]
 }
 
@@ -30,7 +33,7 @@ type HeroContentItem = {
   href: string
 }
 
-export const HomePage = ({ analytics, solutions, innovations }: Props) => {
+export const HomePage = ({ analytics, solutions, solutionPartners, innovations }: Props) => {
   const heroContentItems: Array<HeroContentItem> = [
     {
       title: 'Solutions',
@@ -59,6 +62,20 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
   ]
 
   const isMobile = useMediaQuery('(max-width: 480px)')
+
+  const { session_id } = parseCookies()
+
+  const createSolutionPartnerActivities = async (
+    serviceId: number,
+    sessionId: string | undefined
+  ) => {
+    try {
+      const sessionIdOrEmptyString = sessionId || ''
+      await postActivities(serviceId, sessionIdOrEmptyString, 100)
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -158,6 +175,22 @@ export const HomePage = ({ analytics, solutions, innovations }: Props) => {
                   <div className={styles.content}>
                     <h3>{solution.name}</h3>
                     <p>{solution.short_description}</p>
+                  </div>
+                </CardFull>
+              </SwiperSlide>
+            ))}
+            {solutionPartners.map((solutionPartner) => (
+              <SwiperSlide className={styles.swipperSlide} key={solutionPartner.id}>
+                <CardFull
+                  isExternal={true}
+                  target='_blank'
+                  onClick={() => createSolutionPartnerActivities(solutionPartner.id, session_id)}
+                  img={`/assets/images/solutions/${solutionPartner.thumbnail}`}
+                  title={solutionPartner.name}
+                  href={solutionPartner.slug}>
+                  <div className={styles.content}>
+                    <h3>{solutionPartner.name}</h3>
+                    <p>{solutionPartner.short_description}</p>
                   </div>
                 </CardFull>
               </SwiperSlide>
