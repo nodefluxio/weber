@@ -9,9 +9,10 @@ import (
 type ServiceType string
 
 const (
-	AnalyticServiceType   ServiceType = "analytic"
-	SolutionServiceType               = "solution"
-	InnovationServiceType             = "innovation"
+	AnalyticServiceType   		ServiceType = "analytic"
+	SolutionServiceType   		            = "solution"
+	InnovationServiceType 		            = "innovation"
+	SolutionPartnerServiceType				= "solution-partner"
 )
 
 type Service struct {
@@ -102,7 +103,7 @@ func (m *Model) CreateService(Service *Service) (err error) {
 }
 
 func (m *Model) IsValidServiceType(serviceType string) (bool, ServiceType) {
-	serviceTypes := [...]ServiceType{AnalyticServiceType, SolutionServiceType, InnovationServiceType}
+	serviceTypes := [...]ServiceType{AnalyticServiceType, SolutionServiceType, InnovationServiceType, SolutionPartnerServiceType}
 	for _, st := range serviceTypes {
 		if string(st) == serviceType {
 			return true, st
