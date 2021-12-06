@@ -176,7 +176,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
         activeStep={currentStep}
       />
 
-      <div className={styles.carDamage}>
+      <div className={`${styles.carDamage} fluidContainer`}>
         {currentStep === 1 && (
           <>
             <p className={styles.instruction}>Select image for each part:</p>

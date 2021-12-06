@@ -37,7 +37,7 @@ export const AnalyticsContainer = ({
         steps={['Upload your photo', 'Check your results']}
         activeStep={currentStep}
       />
-      {children}
+      <div className="fluidContainer">{children}</div>
     </>
   )
 }
