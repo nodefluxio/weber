@@ -217,7 +217,7 @@ func seedService(model *models.Model) {
 		{
 			Name:               "Road Traffic Monitoring",
 			Type:               "solution-partner",
-			Slug:               "https://komunestudio.com/register",
+			Slug:               "http://nodeflux-registration.komunestudio.com",
 			Thumbnail:          "road-traffic-monitoring.png",
 			AccessKey:          "",
 			Token:				"",
