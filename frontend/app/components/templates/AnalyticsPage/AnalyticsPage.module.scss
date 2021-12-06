@@ -19,5 +19,9 @@
 
   .analyticsWarning {
     display: inline-block;
+    @include tablet {
+      display: block;
+      margin: 0 auto;
+    }
   }
 }

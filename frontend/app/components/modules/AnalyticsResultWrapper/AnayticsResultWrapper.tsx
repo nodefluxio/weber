@@ -20,7 +20,7 @@ export const AnalyticsResultWrapper = ({ imageBase64, children }: Props) => {
             )}
           </div>
           <div className={styles.resultInfo}>
-            <div>
+            <div className={styles.resultFlexInfo}>
               <h2>Results</h2>
               {children}
             </div>
