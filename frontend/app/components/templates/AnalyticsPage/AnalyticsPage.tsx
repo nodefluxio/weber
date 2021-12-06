@@ -73,7 +73,7 @@ export const AnalyticsPage: React.FC<Props> = ({
             setCurrentStep(1)
             break
           case 500:
-            setErrorMsg('Internal server error')
+            setErrorMsg('Internal server error. Please contact the administrator or try again later')
         }
       }
       setIsResult(false)
