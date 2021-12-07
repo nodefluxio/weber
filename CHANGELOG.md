@@ -8,9 +8,12 @@ All notable changes to this project will be documented in this file.
 
 - [FRONTEND] Add solution partner cards
 - [BACKEND] Add 5 new seed data for partner solution service
+- [BACKEND] Add new service type: `solution-partner`
+- [BACKEND] Add new controller to get services with service type: `solution-partner`
 
 ### Changed
 
+- [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
 
 ### Removed
