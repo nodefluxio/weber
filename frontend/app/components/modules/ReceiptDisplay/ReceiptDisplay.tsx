@@ -26,9 +26,6 @@ export const ReceiptDisplay = ({ result }: Props) => {
   return (
     <div className={styles.receiptDisplayWrapper}>
       <Tabs>
-        <Tab title="JSON" className={styles.receiptInfoWrapper}>
-          <CodeSnippet code={JSON.stringify(result, null, 3)} lang="json" />
-        </Tab>
         <Tab
           title="Text"
           className={`${styles.receiptInfoWrapper} ${styles.receiptTextFormat}`}>
@@ -82,6 +79,9 @@ export const ReceiptDisplay = ({ result }: Props) => {
               )}
             </tbody>
           </table>
+        </Tab>
+        <Tab title="JSON" className={styles.receiptInfoWrapper}>
+          <CodeSnippet code={JSON.stringify(result, null, 3)} lang="json" />
         </Tab>
       </Tabs>
     </div>
