@@ -3,24 +3,26 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- [FRONTEND] Add Count field in people-density analytic
-### Added
-- [FRONTEND] Add new background and banner images for innovations
 
+### Added
+
+- [FRONTEND] Add new background and banner images for innovations
+- [FRONTEND] Add Count field in people-density analytic
 - [FRONTEND] Add solution partner cards
-- [BACKEND] Add 5 new seed data for partner solution service
+- [BACKEND] Add 5 new seed data for partner solution service: Road Traffic Monitoring, HRIS, Citizen Apps, Health Protocol Enforcement (Covid Solution), AML / PEP
 - [BACKEND] Add new service type: `solution-partner`
 - [BACKEND] Add new controller to get services with service type: `solution-partner`
 - [BACKEND] Add new predefined visitor in seed that will be used for a solution partner
-- [BACKEND] Update visitor activities endpoint for solution partner
-- [BACKEND] Take out the unique index in service's slug
 
 ### Changed
 
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
+- [BACKEND] Update visitor activities endpoint for solution partner
 
 ### Removed
+
+- [BACKEND] Take out the unique index in service's slug
 
 ## [0.5.0 - 06/12/2021]
 
