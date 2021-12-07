@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-
+- [FRONTEND] Add Count field in people-density analytic
 ### Added
 - [FRONTEND] Add new background and banner images for innovations
 
