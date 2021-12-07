@@ -52,10 +52,13 @@ const OCRReceipt = ({
         ]}
         serviceID={id}
         slug={slug}
-        handlePost={(session_id, photo) => postInnovation(id, session_id, photo)}
+        handlePost={(session_id, photo) =>
+          postInnovation(id, session_id, photo)
+        }
         handleResult={(res) => setRes(res)}
         maxImageSize={MAX_IMAGE_SIZE}
-        acceptedFileFormat={'image/jpeg, image/png'}>
+        acceptedFileFormat={'image/jpeg, image/png'}
+        customBannerUrl={'/assets/images/innovations/ocr-receipt/banner.png'}>
         {renderResult()}
       </AnalyticsPage>
     </>
