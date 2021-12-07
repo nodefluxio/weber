@@ -23,22 +23,22 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	var request *http.Request
 	var data models.ServiceRequestResultData
 
-	log.WithFields(log.Fields{
-		"slug":           innovationSlug,
-		"total_postBody": len(postBody),
-	}).Info("[CONTROLLER: RequestToInnovationSync] request to innovation start...")
+	// log.WithFields(log.Fields{
+	// 	"slug":           innovationSlug,
+	// 	"total_postBody": len(postBody),
+	// }).Info("[CONTROLLER: RequestToInnovationSync] request to innovation start...")
 
 	BASE_URL := fmt.Sprintf("%s/%s/predict", os.Getenv("URL_INNOVATIONS"), innovationSlug)
 	payload := bytes.NewBuffer(postBody)
 	request, err = http.NewRequest("POST", BASE_URL, payload)
 
 	if err != nil {
-		log.WithFields(log.Fields{
-			"error":    err,
-			"base_url": BASE_URL,
-			"slug":     innovationSlug,
-			"method":   "POST",
-		}).Error("[CONTROLLER: RequestToInnovationSync] error on send http new request to innovation!")
+		// log.WithFields(log.Fields{
+		// 	"error":    err,
+		// 	"base_url": BASE_URL,
+		// 	"slug":     innovationSlug,
+		// 	"method":   "POST",
+		// }).Error("[CONTROLLER: RequestToInnovationSync] error on send http new request to innovation!")
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -46,11 +46,11 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 	var client = &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		log.WithFields(log.Fields{
-			"error":   err,
-			"request": request,
-		}).Error("[CONTROLLER: RequestToInnovationSync] error on client request to innovation!")
-		return data, err
+		// log.WithFields(log.Fields{
+		// 	"error":   err,
+		// 	"request": request,
+		// }).Error("[CONTROLLER: RequestToInnovationSync] error on client request to innovation!")
+		// return data, err
 	}
 
 	defer response.Body.Close()
@@ -64,10 +64,10 @@ func RequestToInnovationSync(postBody []byte, innovationSlug string) (models.Ser
 		return data, err
 	}
 
-	log.WithFields(log.Fields{
-		"data": data,
-		"slug": innovationSlug,
-	}).Info("[CONTROLLER: RequestToInnovationSync] request to innovation successfully done")
+	// log.WithFields(log.Fields{
+	// 	"data": data,
+	// 	"slug": innovationSlug,
+	// }).Info("[CONTROLLER: RequestToInnovationSync] request to innovation successfully done")
 
 	return data, nil
 }
