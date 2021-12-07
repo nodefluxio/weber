@@ -9,17 +9,17 @@ import (
 type ServiceType string
 
 const (
-	AnalyticServiceType   		ServiceType = "analytic"
-	SolutionServiceType   		            = "solution"
-	InnovationServiceType 		            = "innovation"
-	SolutionPartnerServiceType				= "solution-partner"
+	AnalyticServiceType        ServiceType = "analytic"
+	SolutionServiceType                    = "solution"
+	InnovationServiceType                  = "innovation"
+	SolutionPartnerServiceType             = "solution-partner"
 )
 
 type Service struct {
 	ID                 uint `gorm:"primaryKey; autoIncrement" json:"id"`
 	Name               string
 	Type               string
-	Slug               string `gorm:"uniqueIndex"`
+	Slug               string
 	Thumbnail          string
 	AccessKey          string
 	Token              string
@@ -132,6 +132,29 @@ func (m *Model) GetServiceBySlug(Service *Service, slug string) (err error) {
 	log.WithFields(log.Fields{
 		"slug": slug,
 	}).Info("[MODEL: GetServiceBySlug] success on find service slug!")
+
+	return nil
+}
+
+func (m *Model) GetServiceById(Service *Service, id uint) (err error) {
+
+	log.WithFields(log.Fields{
+		"service": Service,
+		"id":      id,
+	}).Info("[MODEL: GetServiceById] get service by id start...")
+
+	err = m.DBConn.Where("id = ?", id).First(Service).Error
+	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+			"id":    id,
+		}).Error("[MODEL: GetServiceById] error on find service by id!")
+
+		return err
+	}
+	log.WithFields(log.Fields{
+		"id": id,
+	}).Info("[MODEL: GetServiceById] success on find service by id!")
 
 	return nil
 }

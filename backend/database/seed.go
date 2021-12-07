@@ -31,15 +31,27 @@ func seedVisitor(model *models.Model) []string {
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 		},
+		{
+			SessionID: "SessionForSolutionPartner",
+			Email:     "nodeflux@nodeflux.io",
+			FullName:  "Nodeflux Autofill for Partner",
+			Company:   "Nodeflux",
+			JobTitle:  "Software Engineer",
+			Industry:  "Computer Vision",
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+		},
 		// Add new visitor here
 	}
 
 	sessionIds := []string{}
 
 	for _, visitor := range visitors {
-		sessionId := uuid.New()
-		sessionIds = append(sessionIds, sessionId.String())
-		visitor.SessionID = sessionId.String()
+		if visitor.SessionID != "SessionForSolutionPartner" {
+			sessionId := uuid.New()
+			sessionIds = append(sessionIds, sessionId.String())
+			visitor.SessionID = sessionId.String()
+		}
 		model.CreateVisitor(&visitor)
 	}
 
@@ -178,7 +190,7 @@ func seedService(model *models.Model) {
 			Slug:               "ocr-receipt",
 			Thumbnail:          "ocr-receipt.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "OCR Receipt Recognition is one of the new innovations developed by Nodeflux (still experimental). This analytic has the ability to read and extract the characters on a shopping receipt issued by various supermarkets.",
 			LongDescription:    "Nodeflux has developed new technology that allows users to more easily extract data from receipts, called OCR Receipt Recognition. The following data can be extracted: product description, location, price, and total price. By extracting this data, sellers will be able to analyze buyer behavior, and prepare for campaigns, discounts, and cashback in order to set product prices, encourage product improvements, and promote products. In the future, this innovation will continue to improve.",
@@ -192,7 +204,7 @@ func seedService(model *models.Model) {
 			Slug:               "car-damage",
 			Thumbnail:          "car-damage.png",
 			AccessKey:          "",
-			Token:             	"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "Car Damage Assessment is one of the new innovations developed by Nodeflux (still experimental). This analytic has the ability to detect and assess the level of damage to a car.",
 			LongDescription:    "Nodeflux has developed a new technology that has the ability to detect and assess the level of damage to a car, called Car Damage Assessment. The parts of the damage that can be detected are the front side, wing (left and right) side, and back side of the car. This analytic also provides an assessment of the level of damage detected, so it can be used to help industries such as car insurance or car repair shops. In the future, this innovation will continue to improve.",
@@ -206,7 +218,7 @@ func seedService(model *models.Model) {
 			Slug:               "face-occlusion-attribute",
 			Thumbnail:          "face-occlusion-attribute.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "This analytics is a combination of face occlusion and face attributes. Face occlusion can detect the part of the face area that is occluded, while face attribute can detect the type of attribute found in the face area.",
 			LongDescription:    "This analytics is a combination of face occlusion and face attributes. Face occlusion can detect the part of the face area that is occluded, while face attribute can detect the type of attribute found in the face area. The combination of these two analytics can ensure the user's face is clearly visible and can safely perform the face liveness and face recognition processes.",
@@ -220,7 +232,7 @@ func seedService(model *models.Model) {
 			Slug:               "http://nodeflux-registration.komunestudio.com",
 			Thumbnail:          "road-traffic-monitoring.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "Road Traffic Monitoring (RTM) is used to monitor vehicle activity and traffic density in real time. RTM will provide real-time visual insight based on factual data in the field taken from CCTV in certain areas as observation points.",
 			LongDescription:    "",
@@ -234,7 +246,7 @@ func seedService(model *models.Model) {
 			Slug:               "https://app.caliana.id/auth?signup",
 			Thumbnail:          "hris.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "Caliana is equipped with a mobile application that can be used as a remote attendance system. Not only a presence application, Caliana mobile is also equipped with interesting features for the safety and comfort of your employees.",
 			LongDescription:    "",
@@ -248,7 +260,7 @@ func seedService(model *models.Model) {
 			Slug:               "https://apps.apple.com/id/app/jaki/id1509621798?l=id",
 			Thumbnail:          "citizen-apps.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "One platform for the various needs of Citizen.",
 			LongDescription:    "",
