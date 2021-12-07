@@ -268,6 +268,20 @@ func seedService(model *models.Model) {
 			CreatedAt:          time.Now(),
 			UpdatedAt:          time.Now(),
 		},
+		{
+			Name:               "Health Protocol Enforcement (Covid Solution)",
+			Type:               "solution-partner",
+			Slug:               "http://nodeflux-registration.komunestudio.com",
+			Thumbnail:          "komune-logo-square.png",
+			AccessKey:          "",
+			Token:              "",
+			Timestamp:          "",
+			ShortDescription:   "A solution for Enforcement of Health Protocols to Reduce the Spread of Covid-19 during the Pandemic.",
+			LongDescription:    "",
+			SpecialInstruction: "",
+			CreatedAt:          time.Now(),
+			UpdatedAt:          time.Now(),
+		},
 		// Add new service here
 	}
 
