@@ -7,10 +7,27 @@ type Props = {
   img: string
   title: string
   href: string
+  isExternal?: boolean
+  target?: string
+  onClick?: () => void
   children: ReactNode
 }
 
-export const CardFull = ({ img, title, href, children }: Props) => {
+export const CardFull = ({
+  img,
+  title,
+  href,
+  target,
+  onClick,
+  isExternal = false,
+  children
+}: Props) => {
+  const anchor = (
+    <a href={href} target={target} onClick={() => onClick && onClick()}>
+      Try it now
+    </a>
+  )
+
   return (
     <div className={styles.card}>
       <div className={styles.imgContainer}>
@@ -24,9 +41,8 @@ export const CardFull = ({ img, title, href, children }: Props) => {
       </div>
 
       {children}
-      <Link href={href}>
-        <a>Try it now</a>
-      </Link>
+
+      {isExternal ? anchor : <Link href={href}>{anchor}</Link>}
     </div>
   )
 }

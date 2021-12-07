@@ -31,15 +31,27 @@ func seedVisitor(model *models.Model) []string {
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 		},
+		{
+			SessionID: "SessionForSolutionPartner",
+			Email:     "nodeflux@nodeflux.io",
+			FullName:  "Nodeflux Autofill for Partner",
+			Company:   "Nodeflux",
+			JobTitle:  "Software Engineer",
+			Industry:  "Computer Vision",
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+		},
 		// Add new visitor here
 	}
 
 	sessionIds := []string{}
 
 	for _, visitor := range visitors {
-		sessionId := uuid.New()
-		sessionIds = append(sessionIds, sessionId.String())
-		visitor.SessionID = sessionId.String()
+		if visitor.SessionID != "SessionForSolutionPartner" {
+			sessionId := uuid.New()
+			sessionIds = append(sessionIds, sessionId.String())
+			visitor.SessionID = sessionId.String()
+		}
 		model.CreateVisitor(&visitor)
 	}
 
@@ -220,7 +232,7 @@ func seedService(model *models.Model) {
 			Slug:               "http://nodeflux-registration.komunestudio.com",
 			Thumbnail:          "road-traffic-monitoring.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "Road Traffic Monitoring (RTM) is used to monitor vehicle activity and traffic density in real time. RTM will provide real-time visual insight based on factual data in the field taken from CCTV in certain areas as observation points.",
 			LongDescription:    "",
@@ -234,7 +246,7 @@ func seedService(model *models.Model) {
 			Slug:               "https://app.caliana.id/auth?signup",
 			Thumbnail:          "hris.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "Caliana is equipped with a mobile application that can be used as a remote attendance system. Not only a presence application, Caliana mobile is also equipped with interesting features for the safety and comfort of your employees.",
 			LongDescription:    "",
@@ -248,7 +260,7 @@ func seedService(model *models.Model) {
 			Slug:               "https://apps.apple.com/id/app/jaki/id1509621798?l=id",
 			Thumbnail:          "citizen-apps.png",
 			AccessKey:          "",
-			Token:				"",
+			Token:              "",
 			Timestamp:          "",
 			ShortDescription:   "One platform for the various needs of Citizen.",
 			LongDescription:    "",

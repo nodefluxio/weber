@@ -8,10 +8,11 @@ import { HomePage } from '../app/components/templates/HomePage/HomePage'
 type Props = {
   analytics: Service[]
   solutions: Service[]
+  solutionPartners: Service[]
   innovations: Service[]
 }
 
-const Home = ({ analytics, solutions, innovations }: Props) => {
+const Home = ({ analytics, solutions, solutionPartners, innovations }: Props) => {
   return (
     <>
       <Head>
@@ -21,6 +22,7 @@ const Home = ({ analytics, solutions, innovations }: Props) => {
         analytics={analytics}
         solutions={solutions}
         innovations={innovations}
+        solutionPartners={solutionPartners}
       />
     </>
   )
@@ -39,12 +41,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const services = await getAllServices()
   const analytics = services.filter((service) => service.type === 'analytic')
   const solutions = services.filter((service) => service.type === 'solution')
+  const solutionPartners = services.filter((service) => service.type === 'solution-partner')
   const innovations = services.filter(
     (service) => service.type === 'innovation'
   )
 
   return {
-    props: { analytics, solutions, innovations }
+    props: { analytics, solutions, solutionPartners, innovations }
   }
 }
 
