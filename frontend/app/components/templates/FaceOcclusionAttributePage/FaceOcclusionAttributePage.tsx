@@ -97,7 +97,10 @@ export const FaceOcclusionAttributePage = ({
       }
       handleResult={(res) => setResult(res)}
       maxImageSize={800000}
-      acceptedFileFormat={'image/jpeg'}>
+      acceptedFileFormat={'image/jpeg'}
+      customBannerUrl={
+        '/assets/images/innovations/face-occlusion-attribute/banner.png'
+      }>
       {result && (
         <div className={styles.FOAResult}>
           <Tabs>

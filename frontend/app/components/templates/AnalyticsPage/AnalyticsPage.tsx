@@ -24,6 +24,7 @@ type Props = {
   acceptedFileFormat: string
   handlePost?: (session_id: string, photo: string) => Promise<unknown>
   addionalStepOneNode?: ReactNode
+  customBannerUrl?: string
 }
 
 export const AnalyticsPage: React.FC<Props> = ({
@@ -37,7 +38,8 @@ export const AnalyticsPage: React.FC<Props> = ({
   maxImageSize,
   acceptedFileFormat,
   handlePost,
-  addionalStepOneNode
+  addionalStepOneNode,
+  customBannerUrl
 }) => {
   const [photo, setPhoto] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
@@ -73,7 +75,9 @@ export const AnalyticsPage: React.FC<Props> = ({
             setCurrentStep(1)
             break
           case 500:
-            setErrorMsg('Internal server error. Please contact the administrator or try again later')
+            setErrorMsg(
+              'Internal server error. Please contact the administrator or try again later'
+            )
         }
       }
       setIsResult(false)
@@ -95,7 +99,8 @@ export const AnalyticsPage: React.FC<Props> = ({
       currentStep={currentStep}
       openModal={openModal}
       slug={slug}
-      onModalClose={() => setOpenModal(false)}>
+      onModalClose={() => setOpenModal(false)}
+      customBannerUrl={customBannerUrl}>
       <div className={styles.container}>
         {currentStep === 1 && (
           <div className={styles.dropzoneNButton}>
