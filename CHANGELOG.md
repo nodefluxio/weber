@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add new background and banner images for innovations
 - [FRONTEND] Add Count field in people-density analytic
 - [FRONTEND] Add solution partner cards
-- [BACKEND] Add 4 new seed data for partner solution service: Road Traffic Monitoring, HRIS, Citizen Apps, and Health Protocol Enforcement (Covid Solution)
+- [BACKEND] Add 5 new seed data for partner solution service: Road Traffic Monitoring, HRIS, Citizen Apps, Health Protocol Enforcement (Covid Solution), AML / PEP
 - [BACKEND] Add new service type: `solution-partner`
 - [BACKEND] Add new controller to get services with service type: `solution-partner`
 - [BACKEND] Add new predefined visitor in seed that will be used for a solution partner
