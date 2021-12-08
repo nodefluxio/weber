@@ -15,6 +15,7 @@ import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 type Props = {
   analyticsName: string
   longDescription: string
+  specialInstruction: string
   children: ReactNode
   examples: string[]
   serviceID: number
@@ -30,6 +31,7 @@ type Props = {
 export const AnalyticsPage: React.FC<Props> = ({
   analyticsName,
   longDescription,
+  specialInstruction,
   children,
   examples,
   serviceID,
@@ -110,6 +112,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               onPhotoDrop={setPhoto}
               maxSize={maxImageSize}
               acceptedFileFormat={acceptedFileFormat}
+              instruction={specialInstruction}
             />
             {photo && (
               <div className={styles.buttonContainer}>
