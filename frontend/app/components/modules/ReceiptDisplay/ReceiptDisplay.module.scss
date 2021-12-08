@@ -5,39 +5,10 @@
   $border-config: 1px solid grey;
   $border-radius: 5px;
   $active-color: lightgrey;
-
-  .receiptButtonDiv {
-    .buttonActive {
-      background: $active-color;
-    }
-    .buttonRight {
-      border-left: none;
-      border-top-right-radius: $border-radius;
-    }
-    .buttonLeft {
-      border-right: none;
-      border-top-left-radius: $border-radius;
-    }
-    button {
-      width: 50%;
-      padding: 0.5rem;
-      cursor: pointer;
-      border: $border-config;
-      background: lighten($active-color, 10%);
-      border-bottom: none;
-      transition: background 0.2s linear;
-      font-weight: 600;
-      &:focus {
-        outline: none;
-      }
-      &:hover {
-        background: $active-color;
-      }
-    }
-  }
+  
   .receiptInfoWrapper {
     border: $border-config;
-    border-radius: 0 0 $border-radius $border-radius;
+    border-color: $primary-color;
     height: 400px;
     .receiptJSON {
       margin: 0;

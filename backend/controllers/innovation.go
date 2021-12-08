@@ -180,7 +180,10 @@ func RequestToFaceOcclusionAttribute(ctx *gin.Context, postBody []byte) {
 	})
 
 	log.WithFields(log.Fields{
-		"data": serviceData,
+		"face_occlusion_message": serviceData.FaceOcclusion.Message,
+		"face_occlusion_ok":      serviceData.FaceOcclusion.Ok,
+		"face_attribute_message": serviceData.FaceAttribute.Message,
+		"face_attribute_ok":      serviceData.FaceAttribute.Ok,
 	}).Info("[CONTROLLER: RequestToFaceOcclusionAttribute] request to face occlusion atribute successfully done")
 
 }
