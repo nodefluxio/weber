@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
+- [FRONTEND] Modified OCR receipt stylings
 - [BACKEND] Update visitor activities endpoint for solution partner
 
 ### Removed
