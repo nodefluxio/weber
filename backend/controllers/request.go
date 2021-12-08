@@ -21,9 +21,8 @@ func RequestToServiceAnalytics(ctx *gin.Context, service models.Service, inputDa
 	var err error
 
 	log.WithFields(log.Fields{
-		"data_service":      service,
-		"session_id":        inputData.SessionID,
-		"additional_params": inputData.Data.AdditionalParams,
+		"data_service": service,
+		"data_input":   inputData,
 	}).Info("[CONTROLLER: RequestToServiceAnalytics] request to analytics service start...")
 
 	if service.Slug == "face-match-enrollment" {
@@ -69,9 +68,8 @@ func RequestToServiceInnovation(ctx *gin.Context, service models.Service, inputD
 	var serviceData models.ServiceRequestResultData
 
 	log.WithFields(log.Fields{
-		"data_service":      service,
-		"session_id":        inputData.SessionID,
-		"additional_params": inputData.Data.AdditionalParams,
+		"data_service": service,
+		"data_input":   inputData,
 	}).Info("[CONTROLLER: RequestToServiceInnovation] request to innovation service start...")
 
 	requestData := inputData.Data
