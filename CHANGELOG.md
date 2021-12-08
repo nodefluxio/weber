@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Modified solution card stylings
 - [FRONTEND] Modified OCR receipt stylings
 - [BACKEND] Update visitor activities endpoint for solution partner
+- [BACKEND] Replace base64 logging in analytics/innovation
 
 ### Removed
 
