@@ -45,6 +45,7 @@ export const FaceOcclusionAttributePage = ({
     useState<Map<FaceAttributeLabel | FaceAttributeAdditionalLabel, number>>()
   const [faceOcclusionMessage, setFaceOcclusionMessage] = useState<string>()
   const [faceAttributeMessage, setFaceAttributeMessage] = useState<string>()
+  const [isFaceOccluded, setIsFaceOccluded] = useState<boolean>()
 
   useEffect(() => {
     const faceOcclusionMap = new Map<FaceOcclusionLabel, number>()
@@ -53,9 +54,12 @@ export const FaceOcclusionAttributePage = ({
       number
     >()
     if (result?.face_occlusion.ok) {
-      result.face_occlusion.job.result.result[0].face_occlusion.detections.forEach(
-        (detection) =>
-          faceOcclusionMap.set(detection.label, detection.confidence)
+      const face_occlusion =
+        result.face_occlusion.job.result.result[0].face_occlusion
+      setIsFaceOccluded(face_occlusion.occlusion)
+
+      face_occlusion.detections.forEach((detection) =>
+        faceOcclusionMap.set(detection.label, detection.confidence)
       )
       setFaceOcclusionDetections(faceOcclusionMap)
     } else setFaceOcclusionMessage(result?.face_occlusion.message)
@@ -105,6 +109,11 @@ export const FaceOcclusionAttributePage = ({
         <div className={styles.FOAResult}>
           <Tabs>
             <Tab className={styles.tab} title="Face Occlusion">
+              <p className={styles.msg}>
+                {isFaceOccluded
+                  ? 'One or more areas of your face are occluded!'
+                  : 'Your face is clear and free from occlusion!'}
+              </p>
               {faceOcclusionDetections ? (
                 FACE_OCCLUSION_LABEL.map((label, idx) => (
                   <div className={styles.content} key={idx}>
