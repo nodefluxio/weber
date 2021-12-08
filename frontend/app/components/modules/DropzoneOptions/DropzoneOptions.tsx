@@ -9,13 +9,15 @@ type Props = {
   onPhotoDrop: (arg: string) => void
   maxSize: number
   acceptedFileFormat: string
+  instruction?: string
 }
 
 export const DropzoneOptions = ({
   images,
   onPhotoDrop,
   maxSize,
-  acceptedFileFormat
+  acceptedFileFormat,
+  instruction
 }: Props) => {
   const [photos, setPhotos] = useState<any[]>([])
   const [errorMsg, setErrorMsg] = useState<string>('')
@@ -107,7 +109,7 @@ export const DropzoneOptions = ({
           <input {...getInputProps()} />
           {photos.length === 0 ? (
             <aside className={styles.instruction}>
-              <p>Drag and drop your image here, or click to select image</p>
+              <p><strong>{instruction || 'Drag and drop your image here, or click to select image'}</strong></p>
             </aside>
           ) : (
             <aside className={styles.imagePreview}>{preview}</aside>
