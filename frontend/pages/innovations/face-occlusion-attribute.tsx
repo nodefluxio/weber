@@ -6,7 +6,8 @@ const FaceOcclusionAttribute: React.FC<ServiceBySlugResponseData> = ({
   id,
   name,
   slug,
-  long_description
+  long_description,
+  special_instruction
 }) => {
   return (
     <>
@@ -18,6 +19,7 @@ const FaceOcclusionAttribute: React.FC<ServiceBySlugResponseData> = ({
         name={name}
         slug={slug}
         long_description={long_description}
+        special_instruction={special_instruction}
       />
     </>
   )
