@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
 - [BACKEND] Update visitor activities endpoint for solution partner
+- [BACKEND] Replace base64 logging in analytics/innovation
 
 ### Removed
 
