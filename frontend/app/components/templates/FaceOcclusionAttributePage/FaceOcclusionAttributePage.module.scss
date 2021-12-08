@@ -6,7 +6,9 @@
     padding: 0 10px;
     overflow-y: auto;
     height: 285px;
-
+    .msg {
+      text-align: center;
+    }
     @include tablet {
       height: 260px;
     }
