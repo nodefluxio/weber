@@ -12,6 +12,7 @@ import { postInnovation } from './../../app/api/innovationsAPI'
 const OCRReceipt = ({
   name,
   long_description,
+  special_instruction,
   id,
   slug
 }: ServiceBySlugResponseData) => {
@@ -58,6 +59,7 @@ const OCRReceipt = ({
         handleResult={(res) => setRes(res)}
         maxImageSize={MAX_IMAGE_SIZE}
         acceptedFileFormat={'image/jpeg, image/png'}
+        specialInstruction={special_instruction}
         customBannerUrl={'/assets/images/innovations/ocr-receipt/banner.png'}>
         {renderResult()}
       </AnalyticsPage>
