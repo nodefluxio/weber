@@ -285,7 +285,7 @@ func seedService(model *models.Model) {
 		{
 			Name:               "AML / PEP",
 			Type:               "solution-partner",
-			Slug:               "",
+			Slug:               "aml-pep",
 			Thumbnail:          "sijitu.png",
 			AccessKey:          "",
 			Token:              "",
