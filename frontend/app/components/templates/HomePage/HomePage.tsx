@@ -329,7 +329,7 @@ export const HomePage = ({
         <section
           id="new-innovations"
           className={`${styles.newInnovationsSection} ${styles.sectionPadding} fluidContainer`}>
-          <h2 className={styles.titleLine}>Our New Innovations</h2>
+          <h2 className={styles.titleLine}>New Innovations</h2>
           <div className={styles.innovationsContent}>
             {innovations.map((innovation) => (
               <div key={innovation.id} className={styles.innovationCard}>
