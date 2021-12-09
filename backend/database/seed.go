@@ -216,7 +216,7 @@ func seedService(model *models.Model) {
 			Name:               "Face Occlusion & Attribute",
 			Type:               "innovation",
 			Slug:               "face-occlusion-attribute",
-			Thumbnail:          "face-occlusion-attribute.png",
+			Thumbnail:          "face-occlusion-attribute.jpg",
 			AccessKey:          "",
 			Token:              "",
 			Timestamp:          "",
