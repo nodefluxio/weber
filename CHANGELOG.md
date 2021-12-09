@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add Count field in people-density analytic
 - [FRONTEND] Add solution partner cards
 - [FRONTEND] Add message to tell is the face occluded or not
+- [FRONTEND] Add Custom popup for Partner's Solution
 - [BACKEND] Add 5 new seed data for partner solution service: Road Traffic Monitoring, HRIS, Citizen Apps, Health Protocol Enforcement (Covid Solution), AML / PEP
 - [BACKEND] Add new service type: `solution-partner`
 - [BACKEND] Add new controller to get services with service type: `solution-partner`
