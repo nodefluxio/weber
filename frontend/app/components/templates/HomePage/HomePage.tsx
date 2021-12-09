@@ -20,6 +20,7 @@ import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import { Modal } from '@/elements/Modal/Modal'
 import { DownloadApp } from '@/modules/DownloadApp/DownloadApp'
+import { APP_DOWNLOAD_MODAL_SOLUTION } from '../../../constants/constant'
 
 type Props = {
   analytics: Service[]
@@ -88,7 +89,7 @@ export const HomePage = ({
 
   const handleClickSolutionPartner = async (id: number, name: string) => {
     try {
-      if (name.toLowerCase() === 'citizen apps') {
+      if (name === APP_DOWNLOAD_MODAL_SOLUTION) {
         await createSolutionPartnerActivities(id, session_id, 50)
         setCityAppId(id)
         setIsDownloadShown(true)
@@ -184,7 +185,7 @@ export const HomePage = ({
           id="solutions"
           className={`${styles.solutionsSection} ${styles.sectionPadding}`}>
           <div className="fluidContainer">
-            <h2 className={styles.titleLine}>Our Solutions</h2>
+            <h2 className={styles.titleLine}>Solutions</h2>
             <Swiper
               modules={[Navigation]}
               className={styles.swipper}
@@ -222,6 +223,9 @@ export const HomePage = ({
                   key={solutionPartner.id}>
                   <CardFull
                     isExternal
+                    isPopUp={
+                      solutionPartner.name === APP_DOWNLOAD_MODAL_SOLUTION
+                    }
                     target="_blank"
                     onClick={() =>
                       handleClickSolutionPartner(
@@ -269,7 +273,7 @@ export const HomePage = ({
         <section
           id="analytics"
           className={`${styles.analyticsSection} ${styles.sectionPadding}`}>
-          <h2 className={styles.titleLine}>Our Analytics</h2>
+          <h2 className={styles.titleLine}>Analytics</h2>
           <div className={styles.cards}>
             {analytics.map((analytic) => (
               <Card key={analytic.id} color={Color.Primary}>

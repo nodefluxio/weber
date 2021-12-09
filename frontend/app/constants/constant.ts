@@ -19,3 +19,6 @@ export const FACE_ATTRIBUTE_LABEL: Array<FaceAttributeLabel> = [
   'helm',
   'cap'
 ]
+
+export const APP_DOWNLOAD_MODAL_SOLUTION =
+  process.env.APP_DOWNLOAD_MODAL_SOLUTION || 'Citizen Apps'
