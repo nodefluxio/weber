@@ -243,7 +243,7 @@ func seedService(model *models.Model) {
 		{
 			Name:               "Mobile Employee Attendance (HRIS)",
 			Type:               "solution-partner",
-			Slug:               "https://app.caliana.id/auth?signup",
+			Slug:               "https://employee.caliana.id/auth?signup",
 			Thumbnail:          "hris.png",
 			AccessKey:          "",
 			Token:              "",
