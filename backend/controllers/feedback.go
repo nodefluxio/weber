@@ -91,5 +91,5 @@ func (ctrl *Controller) CreateFeedback(ctx *gin.Context) {
 		"data": feedback,
 	}).Info("[CONTROLLER: CreateFeedback] create feedback successfully done")
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "Feedback submited!", "ok": true})
+	ctx.JSON(http.StatusOK, gin.H{"message": "Feedback submitted!", "ok": true})
 }
