@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
 - [FRONTEND] Modified OCR receipt stylings
+- [FRONTEND] Fix examples being compressed
 - [BACKEND] Update visitor activities endpoint for solution partner
 - [BACKEND] Update visitor activities endpoint for "AML / PEP (Sijitu)" partner
 - [BACKEND] Replace base64 logging in analytics/innovation
