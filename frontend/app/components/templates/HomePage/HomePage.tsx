@@ -283,8 +283,8 @@ export const HomePage = ({
           <div className={styles.logogramContainer}>
             <Image
               src="/assets/images/nodeflux-logogram.png"
-              width={359}
-              height={348}
+              width={552}
+              height={530}
               alt="visual of a quarter circle"
             />
           </div>
