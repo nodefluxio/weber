@@ -117,9 +117,10 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
             <h3 className={styles.title}>Welcome to e-KYC Demo</h3>
             <div className={styles.specialInstruction}>
               <p className={styles.desc}>
-                  Please access this demo via smartphone or any device with at
-                  least HD camera resolution for better performance and
-                  experience
+                Please access this demo via <strong>smartphone</strong> or any
+                device with at least <strong>HD camera</strong> resolution for
+                <strong>better performance</strong> and
+                <strong>experience</strong>
               </p>
             </div>
             <Button
