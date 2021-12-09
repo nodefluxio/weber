@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add new background and banner images for innovations
 - [FRONTEND] Add Count field in people-density analytic
 - [FRONTEND] Add solution partner cards
+- [FRONTEND] Add message to tell is the face occluded or not
 - [BACKEND] Add 5 new seed data for partner solution service: Road Traffic Monitoring, HRIS, Citizen Apps, Health Protocol Enforcement (Covid Solution), AML / PEP
 - [BACKEND] Add new service type: `solution-partner`
 - [BACKEND] Add new controller to get services with service type: `solution-partner`
@@ -19,7 +20,10 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
 - [FRONTEND] Change new-innovations layout and style in home page
+- [FRONTEND] Modified OCR receipt stylings
 - [BACKEND] Update visitor activities endpoint for solution partner
+- [BACKEND] Update visitor activities endpoint for "AML / PEP (Sijitu)" partner
+- [BACKEND] Replace base64 logging in analytics/innovation
 
 
 ### Removed

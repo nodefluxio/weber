@@ -262,7 +262,7 @@ func seedService(model *models.Model) {
 			AccessKey:          "",
 			Token:              "",
 			Timestamp:          "",
-			ShortDescription:   "One platform for the various needs of Citizen.",
+			ShortDescription:   "JAKI is an official local government information center application that integrates various services for citizens.",
 			LongDescription:    "",
 			SpecialInstruction: "",
 			CreatedAt:          time.Now(),
@@ -285,7 +285,7 @@ func seedService(model *models.Model) {
 		{
 			Name:               "AML / PEP",
 			Type:               "solution-partner",
-			Slug:               "",
+			Slug:               "aml-pep",
 			Thumbnail:          "sijitu.png",
 			AccessKey:          "",
 			Token:              "",
