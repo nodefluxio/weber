@@ -32,7 +32,9 @@ func (ctrl *Controller) CreateActivity(ctx *gin.Context) {
 		return
 	}
 
-	if service.Type == "solution-partner" {
+	// If the service is from the partner, we need to use a predefined visitor.
+	// But for "AML / PEP (Sijitu)" we still need the real identity of the visitor.
+	if service.Type == "solution-partner" && service.Slug != "aml-pep" {
 		if visitorActivity.SessionID == "" {
 			visitorActivity.SessionID = "SessionForSolutionPartner"
 		}
