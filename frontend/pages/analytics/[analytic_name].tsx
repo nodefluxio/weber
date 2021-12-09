@@ -10,7 +10,6 @@ import { AnalyticsResult } from '../../app/components/modules/AnalyticsResult/An
 const Analytics = ({
   name,
   long_description,
-  special_instruction,
   id,
   slug
 }: ServiceBySlugResponseData) => {
@@ -24,7 +23,6 @@ const Analytics = ({
       <AnalyticsPage
         analyticsName={name}
         longDescription={long_description}
-        specialInstruction={special_instruction}
         examples={[
           `/assets/images/analytics/${slug}/example1.jpg`,
           `/assets/images/analytics/${slug}/example2.jpg`,

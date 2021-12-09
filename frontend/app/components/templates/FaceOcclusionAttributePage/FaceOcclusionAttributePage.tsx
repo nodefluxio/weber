@@ -25,8 +25,7 @@ type Props = {
   id: number
   name: string
   slug: string
-  long_description: string,
-  special_instruction: string
+  long_description: string
 }
 type Result = {
   face_occlusion: NodefluxCloudResponse<FaceOcclusionResultResponse>
@@ -37,8 +36,7 @@ export const FaceOcclusionAttributePage = ({
   id,
   name,
   slug,
-  long_description,
-  special_instruction
+  long_description
 }: Props) => {
   const [result, setResult] = useState<Result>()
   const [faceOcclusionDetections, setFaceOcclusionDetections] =
@@ -104,7 +102,6 @@ export const FaceOcclusionAttributePage = ({
       handleResult={(res) => setResult(res)}
       maxImageSize={800000}
       acceptedFileFormat={'image/jpeg'}
-      specialInstruction={special_instruction}
       customBannerUrl={
         '/assets/images/innovations/face-occlusion-attribute/banner.png'
       }>
