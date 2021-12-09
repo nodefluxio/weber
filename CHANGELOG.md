@@ -18,7 +18,9 @@ All notable changes to this project will be documented in this file.
 
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
+- [FRONTEND] Change new-innovations layout and style in home page
 - [BACKEND] Update visitor activities endpoint for solution partner
+
 
 ### Removed
 
