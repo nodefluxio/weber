@@ -116,14 +116,14 @@ export const DropzoneOptions = ({
         <div className={styles.imageOptions}>
           {images.map((imageName: string, i: number) => (
             <div className={styles.items} key={i}>
-              <Image
+              {/* eslint-disable @next/next/no-img-element*/}
+              <img
                 onClick={(e: MouseEvent<HTMLImageElement>) => {
                   const img = e.target as HTMLImageElement
                   onChoose(img.src)
                 }}
                 src={imageName}
-                layout="fill"
-                objectFit="cover"
+                alt={imageName}
               />
             </div>
           ))}
