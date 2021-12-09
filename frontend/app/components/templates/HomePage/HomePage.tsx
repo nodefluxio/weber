@@ -150,7 +150,7 @@ export const HomePage = ({
         <MailConfirmation
           handleAccept={() => {
             try {
-              createSolutionPartnerActivities(cityAppId, session_id, 100)
+              createSolutionPartnerActivities(emailSolutionId, session_id, 100)
             } catch (e) {}
           }}
           handleReject={() => setIsEmailShown(false)}
