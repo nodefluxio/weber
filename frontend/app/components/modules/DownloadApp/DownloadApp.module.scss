@@ -12,6 +12,10 @@
     font-weight: 800;
     color: $primary-color;
     text-align: center;
+    @include phone {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+    }
   }
   .storeMessage {
     font-size: 1.25rem;
