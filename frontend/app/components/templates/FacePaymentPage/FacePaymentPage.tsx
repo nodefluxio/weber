@@ -140,7 +140,7 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
               <p className={styles.desc}>
                 Please access this demo via <strong>smartphone</strong> or any
                 device with at least <strong>HD camera</strong> resolution for{' '}
-                <strong>better performance</strong> and
+                <strong>better performance</strong> and{' '}
                 <strong>experience</strong>
               </p>
             </div>
