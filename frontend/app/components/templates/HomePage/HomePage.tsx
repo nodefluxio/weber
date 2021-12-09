@@ -259,7 +259,7 @@ export const HomePage = ({
             </div>
             <div className={styles.texts}>
               <h2>Products</h2>
-              <h2>Boost Your Bussines Value</h2>
+              <h2>Boost Your Business Value</h2>
             </div>
             <div className={styles.logogramContainer}>
               <Image
