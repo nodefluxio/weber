@@ -17,10 +17,23 @@
     h2 {
       font-size: 2rem;
     }
-    p {
-      width: 65%;
-      margin: 1.5rem auto;
-      font-size: 1.25rem;
+
+    .specialInstruction {
+      background-color: #ffbb00;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      margin: 2rem auto;
+      height: min-content;
+      width: 55%;
+      @include phone {
+        width: 100%;
+      }
+
+      .desc {
+        margin: 1rem;
+        font-size: large;
+      }
     }
   }
 }
