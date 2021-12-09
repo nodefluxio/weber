@@ -21,7 +21,8 @@ import 'swiper/css/navigation'
 import { useState } from 'react'
 import { Modal } from '@/elements/Modal/Modal'
 import { DownloadApp } from '@/modules/DownloadApp/DownloadApp'
-import { APP_DOWNLOAD_MODAL_SOLUTION } from '../../../constants/constant'
+import { APP_DOWNLOAD_MODAL_SOLUTION, EMAIL_MODAL_SOLUTION } from '../../../constants/constant'
+import { MailConfirmation } from '@/modules/MailConfirmation/MailConfirmation'
 
 type Props = {
   analytics: Service[]
@@ -94,6 +95,10 @@ export const HomePage = ({
         await createSolutionPartnerActivities(id, session_id, 50)
         setCityAppId(id)
         setIsDownloadShown(true)
+      } else if (name === EMAIL_MODAL_SOLUTION) {
+        await createSolutionPartnerActivities(id, session_id, 50)
+        setEmailSolutionId(id)
+        setIsEmailShown(true)
       } else {
         await createSolutionPartnerActivities(id, session_id, 100)
       }
@@ -103,10 +108,13 @@ export const HomePage = ({
   }
 
   const [isDownloadShown, setIsDownloadShown] = useState<boolean>(false)
+  const [isEmailShown, setIsEmailShown] = useState<boolean>(false)
+  const [emailSolutionId, setEmailSolutionId] = useState<number>(0)
   const [cityAppId, setCityAppId] = useState<number>(0)
 
   return (
     <>
+      {/* (Citizen App) Download badges */}
       <Modal show={isDownloadShown} onClose={() => setIsDownloadShown(false)}>
         <DownloadApp
           appStoreUrl="https://apps.apple.com/id/app/jaki/id1509621798?l=id"
@@ -114,6 +122,15 @@ export const HomePage = ({
           onBadgeClick={() =>
             createSolutionPartnerActivities(cityAppId, session_id, 100)
           }
+        />
+      </Modal>
+      {/* (Sijitu) Send email confirmation */}
+      <Modal show={isEmailShown} onClose={() => setIsEmailShown(false)}>
+        <MailConfirmation
+          handleAccept={() =>
+            createSolutionPartnerActivities(emailSolutionId, session_id, 100)
+          }
+          handleReject={() => setIsEmailShown(false)}
         />
       </Modal>
       <div className={styles.container}>
@@ -225,7 +242,8 @@ export const HomePage = ({
                   <CardFull
                     isExternal
                     isPopUp={
-                      solutionPartner.name === APP_DOWNLOAD_MODAL_SOLUTION
+                      solutionPartner.name === APP_DOWNLOAD_MODAL_SOLUTION ||
+                      solutionPartner.name === EMAIL_MODAL_SOLUTION
                     }
                     target="_blank"
                     onClick={() =>
