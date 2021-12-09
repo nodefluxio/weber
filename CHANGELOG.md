@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Update visitor activities endpoint for solution partner
 - [BACKEND] Update visitor activities endpoint for "AML / PEP (Sijitu)" partner
 - [BACKEND] Replace base64 logging in analytics/innovation
+- [BACKEND] Update description innovation Face Occlusion & Attribute
 
 ### Removed
 
