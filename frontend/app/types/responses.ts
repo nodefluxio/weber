@@ -40,7 +40,6 @@ export interface ServiceBySlugResponse extends StandardResponse {
     name: string
     short_description: string
     long_description: string
-    special_instruction: string
     thumbnail: string
     created_at: string
     updated_at: string
@@ -54,7 +53,6 @@ export type ServiceBySlugResponseData = {
   name: string
   short_description: string
   long_description: string
-  special_instruction: string
   thumbnail: string
   created_at: string
   updated_at: string
