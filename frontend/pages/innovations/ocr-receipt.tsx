@@ -8,6 +8,7 @@ import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 import Head from 'next/head'
 import { useState } from 'react'
 import { postInnovation } from './../../app/api/innovationsAPI'
+import { MAX_IMAGE_SIZE } from 'app/constants/constant'
 
 const OCRReceipt = ({
   name,
@@ -16,7 +17,6 @@ const OCRReceipt = ({
   slug
 }: ServiceBySlugResponseData) => {
   const [res, setRes] = useState()
-  const MAX_IMAGE_SIZE = 3000000 // 3MB
   const renderResult = () => {
     // Error message passed
     if (typeof res !== 'undefined') {
