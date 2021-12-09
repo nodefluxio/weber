@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Modified solution card stylings
 - [FRONTEND] Change new-innovations layout and style in home page
 - [FRONTEND] Modified OCR receipt stylings
+- [FRONTEND] Fix examples being compressed
 - [FRONTEND] Change OCR KTP samples image now using KTP with fake data
 - [BACKEND] Update visitor activities endpoint for solution partner
 - [BACKEND] Update visitor activities endpoint for "AML / PEP (Sijitu)" partner
