@@ -11,12 +11,13 @@ import Link from 'next/link'
 import { CardImage } from '../../modules/CardImage/CardImage'
 import { Navigation } from 'swiper'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { ResponsiveImage } from '@/modules/ResponsiveImage/ResponsiveImage'
+import { parseCookies } from 'nookies'
+import { postActivities } from '@/api/activitiesAPI'
 /* eslint-disable import/no-unresolved */
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { postActivities } from '@/api/activitiesAPI'
-import { parseCookies } from 'nookies'
 
 type Props = {
   analytics: Service[]
@@ -33,7 +34,12 @@ type HeroContentItem = {
   href: string
 }
 
-export const HomePage = ({ analytics, solutions, solutionPartners, innovations }: Props) => {
+export const HomePage = ({
+  analytics,
+  solutions,
+  solutionPartners,
+  innovations
+}: Props) => {
   const heroContentItems: Array<HeroContentItem> = [
     {
       title: 'Solutions',
@@ -180,11 +186,18 @@ export const HomePage = ({ analytics, solutions, solutionPartners, innovations }
               </SwiperSlide>
             ))}
             {solutionPartners.map((solutionPartner) => (
-              <SwiperSlide className={styles.swipperSlide} key={solutionPartner.id}>
+              <SwiperSlide
+                className={styles.swipperSlide}
+                key={solutionPartner.id}>
                 <CardFull
                   isExternal={true}
-                  target='_blank'
-                  onClick={() => createSolutionPartnerActivities(solutionPartner.id, session_id)}
+                  target="_blank"
+                  onClick={() =>
+                    createSolutionPartnerActivities(
+                      solutionPartner.id,
+                      session_id
+                    )
+                  }
                   img={`/assets/images/solutions/${solutionPartner.thumbnail}`}
                   title={solutionPartner.name}
                   href={solutionPartner.slug}>
@@ -253,45 +266,58 @@ export const HomePage = ({ analytics, solutions, solutionPartners, innovations }
           ))}
         </div>
       </section>
-      <section id="new-innovations" className={styles.newInnovationsSection}>
-        <Carousel>
+      <section className={styles.intersection}>
+        <div className={`${styles.container} fluidContainer`}>
+          <div className={styles.imageContainer}>
+            <Image
+              src="/assets/images/innovations-01.png"
+              width={490}
+              height={415}
+              alt="solution-intersection-image"
+            />
+          </div>
+          <div className={styles.texts}>
+            <h2>Experiments</h2>
+            <h2>Push the Boundaries with Cutting-edge Technology</h2>
+          </div>
+          <div className={styles.logogramContainer}>
+            <Image
+              src="/assets/images/nodeflux-logogram.png"
+              width={552}
+              height={530}
+              alt="visual of a quarter circle"
+            />
+          </div>
+        </div>
+      </section>
+      <section
+        id="new-innovations"
+        className={`${styles.newInnovationsSection} ${styles.sectionPadding} fluidContainer`}>
+        <h2 className={styles.titleLine}>Our New Innovations</h2>
+        <div className={styles.innovationsContent}>
           {innovations.map((innovation) => (
-            <CarouselItem key={innovation.id}>
-              <div className="fluidContainer">
-                <div className={styles.container}>
-                  <Image
-                    className={styles.image}
-                    alt={`image of ${innovation.name}`}
-                    src={`/assets/images/innovations/${innovation.thumbnail}`}
-                    layout="fill"
-                    objectFit="cover"
-                    loading="eager"
-                  />
-                  <div className={styles.cardContainer}>
-                    <h2>New Innovations</h2>
-                    <Card className={styles.card}>
-                      <CardContent
-                        className={styles.cardContent}
-                        title={innovation.name}
-                        height={'100%'}>
-                        {innovation.short_description}
-                        <div className={styles.footer}>
-                          <Link
-                            href={'/innovations/' + innovation.slug}
-                            passHref>
-                            <Button type="link" color={Color.Secondary}>
-                              Try It Now
-                            </Button>
-                          </Link>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
+            <div key={innovation.id} className={styles.innovationCard}>
+              <div className={styles.content}>
+                <h3>{innovation.name}</h3>
+                <p>{innovation.short_description}</p>
+                <div className={styles.btn}>
+                  <Link href={'/innovations/' + innovation.slug} passHref>
+                    <Button type="link" color={Color.Secondary}>
+                      Try It Now
+                    </Button>
+                  </Link>
                 </div>
               </div>
-            </CarouselItem>
+              <ResponsiveImage
+                src={`/assets/images/innovations/${innovation.thumbnail}`}
+                objectFit="cover"
+                alt={innovation.thumbnail}
+                className={styles.innovationImg}
+                imgClassName={styles.img}
+              />
+            </div>
           ))}
-        </Carousel>
+        </div>
       </section>
     </div>
   )
