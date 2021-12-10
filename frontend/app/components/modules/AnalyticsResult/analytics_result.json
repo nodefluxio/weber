@@ -34,7 +34,7 @@
   "face-match-enrollment": {
     "starting_key": ["face_match"],
     "fields": [
-      { "label": "Match?", "key": "match" },
+      { "label": "Match?", "key": "match", "hasThumbnail": true },
       { "label": "Similarity", "key": "similarity" }
     ]
   },
