@@ -21,7 +21,13 @@ import 'swiper/css/navigation'
 import { useState } from 'react'
 import { Modal } from '@/elements/Modal/Modal'
 import { DownloadApp } from '@/modules/DownloadApp/DownloadApp'
-import { APP_DOWNLOAD_MODAL_SOLUTION } from '../../../constants/constant'
+import {
+  APP_DOWNLOAD_MODAL_SOLUTION,
+  EMAIL_MODAL_SOLUTION
+} from '../../../constants/constant'
+import { MailConfirmation } from '@/modules/MailConfirmation/MailConfirmation'
+import { RequestDemoFormPopup } from '@/modules/RequestDemoFormPopup/RequestDemoFormModal'
+import { CustomError } from 'app/errors/CustomError'
 
 type Props = {
   analytics: Service[]
@@ -84,7 +90,10 @@ export const HomePage = ({
       const sessionIdOrEmptyString = sessionId || ''
       await postActivities(serviceId, sessionIdOrEmptyString, completeness)
     } catch (e) {
-      console.error(e)
+      // Unauthorized
+      if (e instanceof CustomError && e.statusCode === 401) {
+        throw e
+      }
     }
   }
 
@@ -94,6 +103,14 @@ export const HomePage = ({
         await createSolutionPartnerActivities(id, session_id, 50)
         setCityAppId(id)
         setIsDownloadShown(true)
+      } else if (name === EMAIL_MODAL_SOLUTION) {
+        try {
+          await createSolutionPartnerActivities(id, session_id, 50)
+          setEmailSolutionId(id)
+          setIsEmailShown(true)
+        } catch (e) {
+          setIsRequestModalShown(true)
+        }
       } else {
         await createSolutionPartnerActivities(id, session_id, 100)
       }
@@ -103,17 +120,40 @@ export const HomePage = ({
   }
 
   const [isDownloadShown, setIsDownloadShown] = useState<boolean>(false)
+  const [isEmailShown, setIsEmailShown] = useState<boolean>(false)
+  const [isRequestModalShown, setIsRequestModalShown] = useState<boolean>(false)
+  const [emailSolutionId, setEmailSolutionId] = useState<number>(0)
   const [cityAppId, setCityAppId] = useState<number>(0)
 
   return (
     <>
+      {/* Request Form Modal */}
+      <Modal
+        show={isRequestModalShown}
+        onClose={() => setIsRequestModalShown(false)}>
+        <RequestDemoFormPopup />
+      </Modal>
+      {/* (Citizen App) Download badges */}
       <Modal show={isDownloadShown} onClose={() => setIsDownloadShown(false)}>
         <DownloadApp
           appStoreUrl="https://apps.apple.com/id/app/jaki/id1509621798?l=id"
           googlePlayUrl="https://play.google.com/store/apps/details?id=id.go.jakarta.smartcity.jaki&hl=in&gl=US"
-          onBadgeClick={() =>
-            createSolutionPartnerActivities(cityAppId, session_id, 100)
-          }
+          onBadgeClick={() => {
+            try {
+              createSolutionPartnerActivities(cityAppId, session_id, 100)
+            } catch (e) {}
+          }}
+        />
+      </Modal>
+      {/* (Sijitu) Send email confirmation */}
+      <Modal show={isEmailShown} onClose={() => setIsEmailShown(false)}>
+        <MailConfirmation
+          handleAccept={() => {
+            try {
+              createSolutionPartnerActivities(emailSolutionId, session_id, 100)
+            } catch (e) {}
+          }}
+          handleReject={() => setIsEmailShown(false)}
         />
       </Modal>
       <div className={styles.container}>
@@ -225,7 +265,8 @@ export const HomePage = ({
                   <CardFull
                     isExternal
                     isPopUp={
-                      solutionPartner.name === APP_DOWNLOAD_MODAL_SOLUTION
+                      solutionPartner.name === APP_DOWNLOAD_MODAL_SOLUTION ||
+                      solutionPartner.name === EMAIL_MODAL_SOLUTION
                     }
                     target="_blank"
                     onClick={() =>
