@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Add Count field in people-density analytic
 - [FRONTEND] Add solution partner cards
 - [FRONTEND] Add message to tell is the face occluded or not
+- [FRONTEND] Add simple custom error display (404)
 - [FRONTEND] Add Custom popup for Partner's Solution
 - [FRONTEND] Add Compared photo in face match with enrollment results
 - [BACKEND] Add 5 new seed data for partner solution service: Road Traffic Monitoring, HRIS, Citizen Apps, Health Protocol Enforcement (Covid Solution), AML / PEP
