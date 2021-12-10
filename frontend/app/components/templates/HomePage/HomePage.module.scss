@@ -251,42 +251,72 @@
     }
   }
   .newInnovationsSection {
-    position: relative;
-    .container {
-      height: 100vh;
-
-      .image {
-        opacity: 0.5;
-      }
-      .cardContainer {
-        position: absolute;
-        left: 20vw;
-        top: 11%;
-
+    .innovationsContent {
+      display: flex;
+      flex-direction: column;
+      margin: 0 1rem;
+      .innovationCard {
+        &:nth-child(2) {
+          flex-direction: row-reverse;
+          @include phone {
+            flex-direction: column-reverse;
+          }
+          .innovationImg {
+            .img {
+              border-radius: 1.5rem 0 0 1.5rem;
+              @include phone {
+                border-radius: 1.5rem 1.5rem 0 0;
+              }
+            }
+          }
+        }
+        display: flex;
+        background-color: #240a50;
+        margin-bottom: 1rem;
+        border-radius: 1.5rem;
+        height: 350px;
         @include tablet {
-          left: 0;
-          right: 0;
-          margin: auto;
+          height: 410px;
         }
-
-        h2 {
-          color: $secondary-color;
-          z-index: 3;
-          font-size: 2.5rem;
-          font-weight: 800;
-          text-align: center;
+        @include phone {
+          height: unset;
+          flex-direction: column-reverse;
         }
+        .content {
+          color: $white-text;
+          padding: 2rem;
+          width: 40%;
+          position: relative;
+          h3 {
+            font-family: $primary-font;
+            font-size: 1.4rem;
+          }
 
-        .card {
-          width: 350px;
-          height: 60vh;
-          max-height: 400px;
-
-          .cardContent {
-            padding: 4rem 3rem;
-            .footer {
-              position: absolute;
-              bottom: 4rem;
+          @include tablet {
+            width: 50%;
+          }
+          @include phone {
+            width: 100%;
+            height: 250px;
+          }
+          .btn {
+            position: absolute;
+            bottom: 3rem;
+          }
+        }
+        .innovationImg {
+          width: 60%;
+          @include tablet {
+            width: 50%;
+          }
+          @include phone {
+            width: 100%;
+            height: 200px;
+          }
+          .img {
+            border-radius: 0 1.5rem 1.5rem 0;
+            @include phone {
+              border-radius: 1.5rem 1.5rem 0 0;
             }
           }
         }

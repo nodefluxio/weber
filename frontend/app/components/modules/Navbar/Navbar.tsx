@@ -74,10 +74,10 @@ export const Navbar = () => {
             </Link>
           </li>
           <li className={styles.contactUs}>
-            <Link href="https://bit.ly/nodeflux-engagement-form">
+            <Link href="https://share.hsforms.com/1OKHV2jCyQ2SA3VCMoacgeQ3lep5">
               <a target="_blank">
                 <Button className={styles.btn} color={Color.Secondary}>
-                  Contact Us
+                  Redeem Free Quota
                 </Button>
               </a>
             </Link>

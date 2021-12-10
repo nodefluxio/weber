@@ -1,0 +1,27 @@
+.mailConfirmationWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+  height: 240px;
+  margin: auto;
+  padding: 1rem 0;
+  .row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5rem;
+    * + * {
+      margin-left: 1rem;
+    }
+  }
+  h3 {
+    font-size: 1.75rem;
+    margin-bottom: 0;
+  }
+  p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+  }
+}

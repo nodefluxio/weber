@@ -33,7 +33,7 @@ type Props = {
   long_description: string
 }
 
-const mainMenuInfo = ['Create an account to enable your face payment']
+const mainMenuInfo = ['Create an account to enable your face payment', 'Now, you can try to make transactions using face payment']
 
 export const FacePaymentPage = ({ id, name, long_description }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)

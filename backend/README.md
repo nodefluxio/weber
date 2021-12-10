@@ -285,7 +285,7 @@ Note: attribute `comment` is required when rating less than equal 3, when rating
 
 ```json
 {
-  "message": "Feedback submited!",
+  "message": "Feedback submitted!",
   "ok": true
 }
 ```

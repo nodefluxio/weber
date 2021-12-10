@@ -8,6 +8,7 @@ type Props = {
   title: string
   href: string
   isExternal?: boolean
+  isPopUp?: boolean
   target?: string
   onClick?: () => void
   children: ReactNode
@@ -20,9 +21,12 @@ export const CardFull = ({
   target,
   onClick,
   isExternal = false,
+  isPopUp = false,
   children
 }: Props) => {
-  const anchor = (
+  const anchor = isPopUp ? (
+    <a onClick={() => onClick && onClick()}>Try it now</a>
+  ) : (
     <a href={href} target={target} onClick={() => onClick && onClick()}>
       Try it now
     </a>
