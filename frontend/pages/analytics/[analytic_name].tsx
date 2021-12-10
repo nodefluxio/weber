@@ -6,6 +6,7 @@ import { ServiceBySlugResponseData } from '../../app/types/responses'
 import { GetServerSideProps } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { AnalyticsResult } from '../../app/components/modules/AnalyticsResult/AnalyticsResult'
+import { MAX_IMAGE_SIZE } from 'app/constants/constant'
 
 const Analytics = ({
   name,
@@ -14,7 +15,6 @@ const Analytics = ({
   slug
 }: ServiceBySlugResponseData) => {
   const [result, setResult] = useState<any>()
-  const MAX_IMAGE_SIZE = 800000 // 800kB
   return (
     <>
       <Head>

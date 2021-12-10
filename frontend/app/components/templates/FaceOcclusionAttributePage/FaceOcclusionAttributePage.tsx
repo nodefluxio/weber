@@ -17,7 +17,8 @@ import {
 import { NodefluxCloudResponse } from '@/types/responses'
 import {
   FACE_ATTRIBUTE_LABEL,
-  FACE_OCCLUSION_LABEL
+  FACE_OCCLUSION_LABEL,
+  MAX_IMAGE_SIZE
 } from 'app/constants/constant'
 import styles from './FaceOcclusionAttributePage.module.scss'
 
@@ -100,8 +101,8 @@ export const FaceOcclusionAttributePage = ({
         postFaceOcclusionAttribute(id, session_id, photo)
       }
       handleResult={(res) => setResult(res)}
-      maxImageSize={800000}
-      acceptedFileFormat={'image/jpeg'}
+      maxImageSize={MAX_IMAGE_SIZE}
+      acceptedFileFormat={'image/jpeg, image/png'}
       customBannerUrl={
         '/assets/images/innovations/face-occlusion-attribute/banner.png'
       }>

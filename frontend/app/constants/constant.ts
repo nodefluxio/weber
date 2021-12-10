@@ -23,5 +23,7 @@ export const FACE_ATTRIBUTE_LABEL: Array<FaceAttributeLabel> = [
 export const APP_DOWNLOAD_MODAL_SOLUTION =
   process.env.APP_DOWNLOAD_MODAL_SOLUTION || 'Citizen Apps'
 
+export const MAX_IMAGE_SIZE = 3000000 //3MB
+
 export const EMAIL_MODAL_SOLUTION =
   process.env.EMAIL_MODAL_SOLUTION || 'AML / PEP'

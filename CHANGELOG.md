@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [FRONTEND] Add support to png file on FOA
 - [FRONTEND] Add new background and banner images for innovations
 - [FRONTEND] Add Count field in people-density analytic
 - [FRONTEND] Add solution partner cards
@@ -20,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- [FRONTEND] Change analytics & FOA upload limit
 - [FRONTEND] Change instruction for analytics, face occlusion and attributes, ekyc, and face payment
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
@@ -31,7 +33,6 @@ All notable changes to this project will be documented in this file.
 - [BACKEND] Update visitor activities endpoint for "AML / PEP (Sijitu)" partner
 - [BACKEND] Replace base64 logging in analytics/innovation
 - [BACKEND] Update description innovation Face Occlusion & Attribute
-
 
 ### Removed
 
