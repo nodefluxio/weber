@@ -20,13 +20,22 @@
     font-size: 2rem;
   }
 
-  .desc {
-    font-size: 1.25rem;
-    width: 70%;
-    line-height: 2rem;
+  .specialInstruction {
+    background-color: #ffbb00;
+    border-radius: 10px;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
     margin: 2rem auto;
+    height: min-content;
+    width: 55%;
     @include phone {
       width: 100%;
+    }
+
+    .desc {
+      margin: 1rem;
+      font-size: large;
     }
   }
 

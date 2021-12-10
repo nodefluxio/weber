@@ -115,10 +115,14 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
         {currentStep === 1 && (
           <div>
             <h3 className={styles.title}>Welcome to e-KYC Demo</h3>
-            <p className={styles.desc}>
-              Please access this demo via smartphone or any device with at least
-              HD camera resolution for better performance and experience
-            </p>
+            <div className={styles.specialInstruction}>
+              <p className={styles.desc}>
+                Please access this demo via <strong>smartphone</strong> or any
+                device with at least <strong>HD camera</strong> resolution for{' '}
+                <strong>better performance</strong> and{' '}
+                <strong>experience</strong>
+              </p>
+            </div>
             <Button
               color={Color.Primary}
               onClick={() => {

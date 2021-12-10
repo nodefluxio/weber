@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- [FRONTEND] Change instruction for analytics, face occlusion and attributes, ekyc, and face payment
 - [FRONTEND] Change face occlusion & attribute example one
 - [FRONTEND] Modified solution card stylings
 - [FRONTEND] Change new-innovations layout and style in home page
