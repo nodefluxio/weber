@@ -65,6 +65,7 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
   const displayResult = () => {
     if (result) {
       let isPeopleDensity = false
+      let isFaceMatchEnrollment = false
       // @ts-ignore
       if (resultMap[slug]) {
         // @ts-ignore
@@ -79,6 +80,9 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
           for (let i = 0; i < analyticSlugResultMap.starting_key.length; i++) {
             if (analyticSlugResultMap.starting_key[i] === 'people_density') {
               isPeopleDensity = true
+            }
+            if (analyticSlugResultMap.starting_key[i] === 'face_match') {
+              isFaceMatchEnrollment = true
             }
             mappedResultResponse =
               mappedResultResponse[analyticSlugResultMap.starting_key[i]]
@@ -110,6 +114,10 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
             )
           }
         } else {
+          if (isFaceMatchEnrollment) {
+            result.thumbnails =
+              '/assets/images/analytics/face-match-enrollment/compared.jpg'
+          }
           generateFieldList(
             fields,
             fieldList,

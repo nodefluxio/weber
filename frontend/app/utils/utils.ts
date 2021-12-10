@@ -69,3 +69,16 @@ export const isOCRReceipt = (obj: any): obj is OCRReceiptData => {
 
 export const getKeyValue = (key: string) => (obj: Record<string, any>) =>
   obj[key]
+
+export const getFileSizeWithUnit = (size: number) => {
+  const FSUnit = ['Bytes', 'KB', 'MB', 'GB']
+  let sz = size
+
+  let i = 0
+  while (sz > 999) {
+    sz /= 1000
+    i++
+  }
+
+  return `${Math.round(sz)} ${FSUnit[i]}`
+}

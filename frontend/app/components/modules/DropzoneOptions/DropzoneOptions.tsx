@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone'
 import Image from 'next/image'
 import styles from './DropzoneOptions.module.scss'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
+import { getFileSizeWithUnit } from '@/utils/utils'
 
 type Props = {
   images: string[]
@@ -107,7 +108,9 @@ export const DropzoneOptions = ({
           <input {...getInputProps()} />
           {photos.length === 0 ? (
             <aside className={styles.instruction}>
-              <p>Drag and drop your image here, or click to select image</p>
+              <p>{`Click or drag and drop image here or simply click on the given examples. Image is limited to ${getFileSizeWithUnit(
+                maxSize
+              )} and ${parsedFileFormat} format`}</p>
             </aside>
           ) : (
             <aside className={styles.imagePreview}>{preview}</aside>
