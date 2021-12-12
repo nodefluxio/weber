@@ -164,6 +164,7 @@
       .texts {
         text-align: center;
         width: 50%;
+        z-index: 10;
         @include tablet {
           width: 80%;
         }
@@ -201,12 +202,13 @@
         width: 90%;
       }
       @include phone {
+        width: 100%;
         height: unset;
       }
       .swipperSlide {
         display: flex;
         @include phone {
-          width: 80%;
+          width: 70%;
         }
         .content {
           background: rgba(0, 0, 0, 0.5);
