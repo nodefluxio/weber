@@ -10,6 +10,7 @@ import { Color } from '../../../types/elements'
 import { FeedbackData } from '../../../types/elements'
 import styles from './Feedback.module.scss'
 import Link from 'next/link'
+import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 
 interface ReviewProp {
   id: number
@@ -23,6 +24,7 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [message, setMessage] = useState('Thank you!')
   const [isDisabled, setIsDisabled] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     register,
@@ -45,6 +47,7 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
 
   const onSubmit: SubmitHandler<FeedbackData> = async (data) => {
     try {
+      setIsLoading(true)
       const { session_id } = parseCookies() // Assume cookies exist
       const res = await postFeedback({ id, session_id, ...data })
       if (res && res.ok) {
@@ -58,10 +61,11 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
         throw new Error('Empty response')
       }
     } catch (err) {
-      setMessage('Please try submit again')
+      setMessage('Please submit again')
       setIsSuccess(false)
     } finally {
       setIsSubmitted(true)
+      setIsLoading(false)
     }
   }
 
@@ -88,7 +92,9 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
       method="post"
       onSubmit={handleSubmit(onSubmit)}>
       <h3>How was your experience?</h3>
-      {isSubmitted && <span>{message}</span>}
+      {isSubmitted && (
+        <WarningDiv message={message} className={styles.warningDiv} />
+      )}
       <div className={styles.starFlex}>
         {[...Array(5)].map((_, i) => (
           <Star
@@ -119,8 +125,11 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
         {...register('comment')}
       />
       <div className={styles.buttonWrapper}>
-        <Button type="submit" color={Color.Secondary} disabled={isDisabled}>
-          Submit
+        <Button
+          type="submit"
+          color={Color.Secondary}
+          disabled={isDisabled || isLoading}>
+          {isLoading ? 'Sending feedback...' : 'Submit'}
         </Button>
       </div>
     </form>
