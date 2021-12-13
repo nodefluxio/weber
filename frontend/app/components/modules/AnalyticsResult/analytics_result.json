@@ -67,7 +67,7 @@
         "key": "age",
         "fields": [
           {
-            "label": "Age",
+            "label": "Estimated age",
             "key": "prediction"
           }
         ]
