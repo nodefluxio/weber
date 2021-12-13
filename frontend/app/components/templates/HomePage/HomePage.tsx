@@ -71,7 +71,7 @@ export const HomePage = ({
       title: 'New Innovations',
       color: Color.Quaternary,
       secondTitle:
-        'Creating new innovations to solve more problems in the future.',
+        'Experimenting with new ideas and innovations to solve more problems in the future.',
       coverImg: 'cover3.png',
       href: '/#new-innovations'
     }
@@ -141,7 +141,7 @@ export const HomePage = ({
           onBadgeClick={() => {
             try {
               createSolutionPartnerActivities(cityAppId, session_id, 100)
-            } catch (e) {}
+            } catch (e) { }
           }}
         />
       </Modal>
@@ -151,7 +151,7 @@ export const HomePage = ({
           handleAccept={() => {
             try {
               createSolutionPartnerActivities(emailSolutionId, session_id, 100)
-            } catch (e) {}
+            } catch (e) { }
           }}
           handleReject={() => setIsEmailShown(false)}
         />
@@ -203,8 +203,8 @@ export const HomePage = ({
             <div className={styles.imageContainer}>
               <Image
                 src="/assets/images/solutions-01.png"
-                width={672}
-                height={522}
+                width={564}
+                height={425}
                 alt="solution-intersection-image"
               />
             </div>
@@ -215,8 +215,8 @@ export const HomePage = ({
             <div className={styles.logogramContainer}>
               <Image
                 src="/assets/images/nodeflux-logogram.png"
-                width={359}
-                height={348}
+                width={152}
+                height={154}
                 alt="visual of a quarter circle"
               />
             </div>
@@ -293,8 +293,8 @@ export const HomePage = ({
             <div className={`${styles.imageContainer} ${styles.imageProduct}`}>
               <Image
                 src="/assets/images/products-01.png"
-                width={490}
-                height={490}
+                width={423}
+                height={425}
                 alt="product-intersection-image"
               />
             </div>
@@ -305,8 +305,8 @@ export const HomePage = ({
             <div className={styles.logogramContainer}>
               <Image
                 src="/assets/images/nodeflux-logogram.png"
-                width={359}
-                height={348}
+                width={152}
+                height={154}
                 alt="visual of a quarter circle"
               />
             </div>
@@ -348,8 +348,8 @@ export const HomePage = ({
             <div className={styles.imageContainer}>
               <Image
                 src="/assets/images/innovations-01.png"
-                width={490}
-                height={415}
+                width={443}
+                height={425}
                 alt="solution-intersection-image"
               />
             </div>
@@ -360,8 +360,8 @@ export const HomePage = ({
             <div className={styles.logogramContainer}>
               <Image
                 src="/assets/images/nodeflux-logogram.png"
-                width={552}
-                height={530}
+                width={152}
+                height={154}
                 alt="visual of a quarter circle"
               />
             </div>
