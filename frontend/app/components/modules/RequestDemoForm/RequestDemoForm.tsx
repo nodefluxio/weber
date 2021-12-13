@@ -69,7 +69,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
       onSubmit={handleSubmit(onSubmit)}>
       <Modal show={isTermsShown} onClose={() => setIsTermsShown(false)}>
         <div className={styles.termsAndConditionsModal}>
-          <h2>Kebijakan Privasi / Privacy and Policy</h2>
+          <h2>Kebijakan Privasi / Privacy Policy</h2>
           <div className={styles.body}>
             <p>
               PT Nodeflux Teknologi Indonesia (&quot;Nodeflux&quot;) berkomitmen
