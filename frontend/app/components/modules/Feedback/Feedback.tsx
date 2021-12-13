@@ -10,7 +10,6 @@ import { Color } from '../../../types/elements'
 import { FeedbackData } from '../../../types/elements'
 import styles from './Feedback.module.scss'
 import Link from 'next/link'
-import { Spinner } from '@/elements/Spinner/Spinner'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 
 interface ReviewProp {
