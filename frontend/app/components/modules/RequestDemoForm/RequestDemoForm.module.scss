@@ -58,8 +58,18 @@
 
 .termsAndConditionsModal {
   padding: 1rem;
-  p {
+  .body {
     overflow-y: auto;
     height: 75vh;
+    padding-right: 0.5rem;
+    a {
+      color: #0645ad;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    p:nth-child(even) {
+      font-style: italic;
+    }
   }
 }
