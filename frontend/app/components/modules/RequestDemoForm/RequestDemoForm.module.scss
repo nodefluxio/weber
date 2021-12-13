@@ -35,4 +35,41 @@
       padding: 12px 0;
     }
   }
+  .terms {
+    display: flex;
+    align-items: flex-start;
+    label {
+      font-weight: 400;
+      a {
+        color: #0645ad;
+        cursor: pointer;
+        font-weight: 500;
+      }
+    }
+    input {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: 1rem;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+  }
+}
+
+.termsAndConditionsModal {
+  padding: 1rem;
+  .body {
+    overflow-y: auto;
+    height: 75vh;
+    padding-right: 0.5rem;
+    a {
+      color: #0645ad;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    p:nth-child(even) {
+      font-style: italic;
+    }
+  }
 }

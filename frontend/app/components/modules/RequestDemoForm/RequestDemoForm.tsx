@@ -12,6 +12,8 @@ import { useState } from 'react'
 import styles from './RequestDemoForm.module.scss'
 import { SelectBox } from '../../elements/SelectBox/SelectBox'
 import data from './industry.json'
+import { Label } from '@/elements/Label/Label'
+import { Modal } from '@/elements/Modal/Modal'
 
 const Industries = data.Industries
 
@@ -25,10 +27,12 @@ type FormData = {
   company: string
   job_title: string
   industry: string
+  terms_and_conditions: boolean
 }
 
 export const RequestDemoForm = ({ onSuccess }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
+  const [isTermsShown, setIsTermsShown] = useState(false)
 
   const {
     register,
@@ -63,6 +67,67 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
       className={styles.form}
       method="post"
       onSubmit={handleSubmit(onSubmit)}>
+      <Modal show={isTermsShown} onClose={() => setIsTermsShown(false)}>
+        <div className={styles.termsAndConditionsModal}>
+          <h2>Kebijakan Privasi / Privacy Policy</h2>
+          <div className={styles.body}>
+            <p>
+              PT Nodeflux Teknologi Indonesia (&quot;Nodeflux&quot;) berkomitmen
+              untuk melindungi dan menghormati privasi anda, dan oleh karenanya
+              kami hanya menggunakan informasi pribadi anda untuk melakukan
+              demonstrasi produk kami dan memberikan produk dan layanan yang
+              anda minta dari kami. Dari waktu ke waktu kami hendak menghubungi
+              anda untuk memberikan informasi mengenai produk dan layanan kami
+              serta konten lain yang menjadi ketertarikan anda.
+            </p>
+            <p>
+              PT Nodeflux Teknologi Indonesia (&quot;Nodeflux&quot;) is
+              committed to protecting and respecting your privacy, and
+              we&apos;ll only use your personal information to perform our
+              product demonstrations and to provide the products and services
+              you requested from us. From time to time, we would like to contact
+              you in order to provide information about our products and
+              services, as well as other content that may be of interest to you.
+            </p>
+            <p>
+              Selanjutnya, bagi kami tidak ada yang lebih penting dari privasi
+              dan keamanan anda. Kami tidak akan pernah menjual atau salah dalam
+              menjaga data anda. Silahkan untuk mempelajari komitmen kami dalam
+              menjaga privasi anda{' '}
+              <a
+                rel="noopener noreferrer"
+                target={'_blank'}
+                href="https://drive.google.com/file/d/13vUKTqzyJWIFVydkZmyW1flXiTJ38V5n/view?usp=sharing">
+                di sini
+              </a>
+              .
+            </p>
+            <p>
+              Furthermore, nothing matters more to us than your privacy and
+              security. We&apos;ll never sell or mishandle your data. Learn more
+              about our commitment to protecting your privacy{' '}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://drive.google.com/file/d/19AnK4pFPh1oNloJTRNO7Yb-5HoHRTYfF/view?usp=sharing">
+                here
+              </a>
+              .
+            </p>
+            <p>
+              Dengan anda melakukan tick pada &quot;checkbox&quot; di formulir
+              yang tersedia, maka anda setuju dengan ketentuan-ketentuan di
+              Kebijakan Privasi kami dan memperbolehkan kami untuk menghubungi
+              anda di kemudian hari.
+            </p>
+            <p>
+              By ticking the &quot;checkbox&quot; in the form, you agree to the
+              terms contained in our Privacy Policy and allow us to contact you
+              in the future.
+            </p>
+          </div>
+        </div>
+      </Modal>
       <TextField
         id="email"
         label="Email"
@@ -124,6 +189,31 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
             errors={errors}
           />
         </div>
+      </div>
+      <div className={styles.terms}>
+        <input
+          {...register('terms_and_conditions', { required: 'required' })}
+          name="terms_and_conditions"
+          id="terms_and_conditions"
+          type="checkbox"
+        />
+        <Label id="terms_and_conditions" errors={errors}>
+          I agree and accept to this{' '}
+          <a
+            onClick={() => {
+              setIsTermsShown(true)
+            }}>
+            terms & conditions{' '}
+          </a>
+          / Saya setuju dengan{' '}
+          <a
+            onClick={() => {
+              setIsTermsShown(true)
+            }}>
+            syarat & kententuan{' '}
+          </a>
+          yang ada.
+        </Label>
       </div>
       <div className={styles.errorMessage}>
         {errorMessage ? `*${errorMessage}` : null}
