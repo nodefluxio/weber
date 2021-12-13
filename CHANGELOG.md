@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+### Changed
+
+### Removed
+
+## [1.0.0 - 13/12/2021]
+
+### Added
+
 - [FRONTEND] Add support to png file on FOA
 - [FRONTEND] Add new background and banner images for innovations
 - [FRONTEND] Add Count field in people-density analytic
