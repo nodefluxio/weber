@@ -1,4 +1,3 @@
-import styles from './CarouselItem.module.scss'
 import { ReactNode } from 'react'
 
 type Props = {
@@ -6,5 +5,10 @@ type Props = {
   className?: string
 }
 export const CarouselItem = ({ children, className }: Props) => {
-  return <div className={`${styles.carouselItem} ${className}`}>{children}</div>
+  return (
+    <div
+      className={`relative w-full h-full bg-primary overflow-hidden ${className}`}>
+      {children}
+    </div>
+  )
 }
