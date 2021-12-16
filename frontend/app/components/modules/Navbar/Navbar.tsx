@@ -4,7 +4,9 @@ import { Button } from '../../elements/Button/Button'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
-import styles from './Navbar.module.scss'
+import { NavItem } from './NavItem'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { HamburgerMenu } from './HamburgerMenu'
 
 export const Navbar = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -12,6 +14,7 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
 
   const router = useRouter()
+  const isLg = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
     const closeDrawer = (event: any) => {
@@ -34,10 +37,13 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}
-    ${router.pathname !== '/' ? styles.plainNavbar : ''}`}>
-      <div className={`${styles.container} fluidContainer`}>
-        <div className={styles.imageContainer}>
+      className={`flex-1 h-16 lg:h-20 w-full uppercase z-40 fixed font-serif 
+      bg-gradient-to-r from-customPurple-100 to-customPurple-900 ${
+        scrolled && 'drop-shadow-lg'
+      }
+    ${router.pathname !== '/' ? 'from-primary-500 to-primary-500' : ''}`}>
+      <div className="container flex items-center justify-between w-11/12 h-full m-auto lg:w-full">
+        <div className="relative w-40 h-full cursor-pointer sm:w-52">
           <Link href="/">
             <a>
               <Image
@@ -51,37 +57,27 @@ export const Navbar = () => {
             </a>
           </Link>
         </div>
-
-        <button
-          className={styles.hamburgerButton}
-          onClick={() => setOpenDrawer(true)}>
-          <div className={styles.lines}></div>
-        </button>
-        <ul ref={drawerRef} className={`${openDrawer && styles.openDrawer}`}>
-          <li>
-            <Link href="/#solutions">
-              <a>SOLUTIONS</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/#analytics">
-              <a>ANALYTICS</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/#new-innovations">
-              <a>NEW INNOVATIONS</a>
-            </Link>
-          </li>
-          <li className={styles.contactUs}>
-            <Link href="https://share.hsforms.com/1OKHV2jCyQ2SA3VCMoacgeQ3lep5">
-              <a target="_blank">
-                <Button className={styles.btn} color={Color.Secondary}>
-                  Redeem Free Quota
-                </Button>
-              </a>
-            </Link>
-          </li>
+        {/* Hamburger Menu */}
+        <HamburgerMenu onClick={() => setOpenDrawer(true)} />
+        <ul
+          ref={drawerRef}
+          className={`z-50 fixed lg:relative right-0 
+           top-0 lg:top-auto h-screen lg:h-full 
+          flex flex-col lg:flex-row py-[20vh] lg:py-1 px-8 lg:px-1
+          transition-transform translate-x-full lg:translate-x-0 text-primary-500 lg:text-white 
+          font-bold lg:font-semibold bg-secondary-500 lg:bg-transparent  ${
+            openDrawer && 'translate-x-0'
+          }`}>
+          <NavItem href="/#solutions">SOLUTIONS</NavItem>
+          <NavItem href="/#analytics">ANALYTICS</NavItem>
+          <NavItem href="/#new-innovations">NEW INNOVATIONS</NavItem>
+          <NavItem
+            href="https://share.hsforms.com/1OKHV2jCyQ2SA3VCMoacgeQ3lep5"
+            target="_blank">
+            <Button color={isLg ? Color.Secondary : Color.Primary}>
+              Redeem Free Quota
+            </Button>
+          </NavItem>
         </ul>
       </div>
     </nav>
