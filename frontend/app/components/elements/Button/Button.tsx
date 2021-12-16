@@ -1,50 +1,35 @@
-import { ReactNode, MouseEventHandler, forwardRef } from 'react'
-import styles from './Button.module.scss'
+import { ReactNode, MouseEventHandler, ButtonHTMLAttributes } from 'react'
 import { Color } from '../../../types/elements'
 
-type Props = {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
   color?: Color
-  type?: 'button' | 'submit' | 'reset' | 'link' | undefined
-  rounded?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
   rect?: boolean
-  className?: string
 }
 
-export const Button = forwardRef(
-  (
-    {
-      children,
-      color,
-      type,
-      rounded,
-      onClick,
-      className,
-      rect,
-      disabled
-    }: Props,
-    ref
-  ) => {
-    let tagName = 'button'
-    if (type === 'link') {
-      tagName = 'a'
-    }
-
-    const Component = tagName as React.ElementType
-
-    const attributes = {
-      className: `${styles.btn} ${color && styles[color]} ${
-        rounded && styles.rounded
-      } ${rect && styles.rect} ${className}`,
-      type: type === 'link' ? undefined : type,
-      disabled,
-      onClick,
-      ref
-    }
-
-    return <Component {...attributes}>{children}</Component>
-  }
-)
-Button.displayName = 'Button'
+export const Button = ({
+  children,
+  color,
+  rect,
+  className,
+  ...props
+}: Props) => {
+  return (
+    <button
+      className={`py-3 px-5 bg-slate-50 font-bold cursor-pointer rounded-full
+      font-sans  disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors ${
+        color === Color.Primary &&
+        'bg-primary-500 text-secondary-500 hover:bg-primary-600'
+      } 
+      ${
+        color === Color.Secondary &&
+        'bg-secondary-500 text-primary-500 hover:bg-secondary-600'
+      } 
+      ${rect && 'rounded-md'} ${className}`}
+      {...props}>
+      {children}
+    </button>
+  )
+}
