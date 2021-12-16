@@ -1,16 +1,15 @@
-import { Color } from '../../../types/elements'
-import styles from './Card.module.scss'
 import { ReactNode } from 'react'
 
 type Props = {
   children: ReactNode
-  color?: Color
   className?: string
 }
 
-export const Card = ({ color, children, className }: Props) => {
+export const Card = ({ children, className }: Props) => {
   return (
-    <div className={`${styles.card} ${color && styles[color]} ${className}`}>
+    <div
+      className={`w-full overflow-hidden border border-solid 
+      border-primary-500 rounded-3xl relative m-auto ${className}`}>
       {children}
     </div>
   )
