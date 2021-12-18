@@ -99,21 +99,21 @@ export const Footer = () => {
                 <h4 className="mb-4 text-sm">Company</h4>
                 <Link href="https://www.nodeflux.io/about-nodeflux">
                   <a
-                    className="mb-1 font-serif text-sm hover:underline"
+                    className="mb-1 font-serif text-sm hover:underline lg:mb-2"
                     target="_blank">
                     About Us
                   </a>
                 </Link>
                 <Link href="https://www.nodeflux.io/faq">
                   <a
-                    className="mb-1 font-serif text-sm hover:underline"
+                    className="mb-1 font-serif text-sm hover:underline lg:mb-2"
                     target="_blank">
                     FAQ
                   </a>
                 </Link>
                 <Link href="https://www.nodeflux.io/nodeflux-press">
                   <a
-                    className="mb-1 font-serif text-sm hover:underline"
+                    className="mb-1 font-serif text-sm hover:underline lg:mb-2"
                     target="_blank">
                     Press
                   </a>

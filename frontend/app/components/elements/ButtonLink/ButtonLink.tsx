@@ -25,7 +25,7 @@ export const ButtonLink = ({
       font-sans  disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors shadow
        ${
          color === Color.Primary &&
-         'bg-primary-500 text-secondary-500 hover:bg-primary-600'
+         'bg-primary-500 text-white hover:bg-primary-600'
        } 
       ${
         color === Color.Secondary &&

@@ -309,7 +309,7 @@ export const HomePage = ({
                     alt={`Icon ${analytic.thumbnail}`}
                   />
                   <CardContent className="relative px-6 py-8 sm:h-80 sm:pb-0">
-                    <h4 className="mb-4 font-sans text-lg text-white">
+                    <h4 className="mb-2 font-sans text-lg text-white">
                       {analytic.name}
                     </h4>
                     <p className="mb-5 font-serif text-white">
@@ -347,7 +347,7 @@ export const HomePage = ({
                 className="flex flex-col-reverse overflow-hidden bg-primary-700 mb-6 sm:mb-4 rounded-3xl sm:flex-row 
                 sm:h-[350px] lg:h-80 sm:even:flex-row-reverse">
                 <div className="relative w-full px-6 py-8 text-white sm:w-1/2 lg:w-2/5">
-                  <h4 className="mb-4 font-sans text-lg">{innovation.name}</h4>
+                  <h4 className="mb-2 font-sans text-lg">{innovation.name}</h4>
                   <p className="mb-4 font-serif">
                     {innovation.short_description}
                   </p>

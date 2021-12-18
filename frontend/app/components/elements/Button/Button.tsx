@@ -21,7 +21,7 @@ export const Button = ({
       className={`py-3 px-5 bg-slate-50 font-bold cursor-pointer rounded-full
       font-sans  disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors ${
         color === Color.Primary &&
-        'bg-primary-500 text-secondary-500 hover:bg-primary-600'
+        'bg-primary-500 text-white hover:bg-primary-600'
       } 
       ${
         color === Color.Secondary &&
