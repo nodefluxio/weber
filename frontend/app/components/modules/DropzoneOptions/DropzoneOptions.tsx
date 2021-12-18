@@ -1,7 +1,6 @@
 import { MouseEvent, useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import Image from 'next/image'
-import styles from './DropzoneOptions.module.scss'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 import { getFileSizeWithUnit } from '@/utils/utils'
 
@@ -101,26 +100,38 @@ export const DropzoneOptions = ({
   }, [photos])
 
   return (
-    <div className={styles.dropzoneOptions}>
-      <WarningDiv message={errorMsg} className={styles.warningWrapper} />
-      <div className={styles.previewNOptions}>
-        <div {...getRootProps()} className={styles.dropzoneContainer}>
+    <div className="w-full md:ml-11">
+      <WarningDiv
+        message={errorMsg}
+        className="flex justify-center mb-2 text-center"
+      />
+      <div className="w-full mx-auto flex flex-col justify-center cursor-pointer md:flex-row lg:w-7/12">
+        <div
+          {...getRootProps()}
+          className="w-full lg:w-[600px] h-[360px] border border-gray-300 relative 
+          border-solid hover:border-primary-300 mb-3 md:mb-0 md:mr-3">
           <input {...getInputProps()} />
           {photos.length === 0 ? (
-            <aside className={styles.instruction}>
-              <p>{`Click or drag and drop image here or simply click on the given examples. Image is limited to ${getFileSizeWithUnit(
-                maxSize
-              )} and ${parsedFileFormat} format`}</p>
+            <aside className="flex items-center justify-center w-full h-full">
+              <p className="w-4/5 cursor-pointer font-serif text-center m-auto text-xl">
+                {`Click or drag and drop image here or simply click on the given examples. Image is limited to ${getFileSizeWithUnit(
+                  maxSize
+                )} and ${parsedFileFormat} format`}
+              </p>
             </aside>
           ) : (
-            <aside className={styles.imagePreview}>{preview}</aside>
+            <aside className="w-full h-full">{preview}</aside>
           )}
         </div>
-        <div className={styles.imageOptions}>
+        <div className="flex flex-row flex-wrap md:flex-col">
           {images.map((imageName: string, i: number) => (
-            <div className={styles.items} key={i}>
+            <div
+              className="w-16 h-16 relative cursor-pointer 
+              hover:border-primary-300 border-2 mr-2 md:mr-0 md:mb-2"
+              key={i}>
               {/* eslint-disable @next/next/no-img-element*/}
               <img
+                className="w-full h-full bg-cover"
                 onClick={(e: MouseEvent<HTMLImageElement>) => {
                   const img = e.target as HTMLImageElement
                   onChoose(img.src)
