@@ -15,7 +15,7 @@ export const Intersection = ({
 }: Props) => {
   return (
     <section className="relative py-16 bg-secondary-500 md:py-8">
-      <div className="container flex items-center justify-center md:justify-around">
+      <div className="container mx-auto flex items-center justify-center md:justify-around">
         <div className="hidden w-2/5 md:block">
           <Image
             src={imgSrc}
