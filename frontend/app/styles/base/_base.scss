@@ -1,44 +1,6 @@
 @import '../abstracts/mixins';
 @import '../abstracts/variables';
 
-* {
-  box-sizing: border-box;
-  font-family: $secondary-font;
-}
-h1,
-h2,
-h3 {
-  font-weight: 700;
-  font-family: $primary-font;
-}
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 14px;
-  background-color: $white-bg;
-  @include phone {
-    font-size: 12px;
-  }
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  margin: 0;
-  text-decoration: none;
-  color: inherit;
-  &:hover {
-    color: inherit;
-  }
-}
-
 pre,
 code {
   font-family: $code-snippet-font;
