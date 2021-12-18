@@ -9,7 +9,6 @@ import {
 } from '../../../types/responses'
 import { setCookie } from 'nookies'
 import { useState } from 'react'
-import styles from './RequestDemoForm.module.scss'
 import { SelectBox } from '../../elements/SelectBox/SelectBox'
 import data from './industry.json'
 import { Label } from '@/elements/Label/Label'
@@ -63,69 +62,68 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
   }
 
   return (
-    <form
-      className={styles.form}
-      method="post"
-      onSubmit={handleSubmit(onSubmit)}>
+    <form method="post" onSubmit={handleSubmit(onSubmit)}>
       <Modal show={isTermsShown} onClose={() => setIsTermsShown(false)}>
-        <div className={styles.termsAndConditionsModal}>
-          <h2>Kebijakan Privasi / Privacy Policy</h2>
-          <div className={styles.body}>
-            <p>
-              PT Nodeflux Teknologi Indonesia (&quot;Nodeflux&quot;) berkomitmen
-              untuk melindungi dan menghormati privasi anda, dan oleh karenanya
-              kami hanya menggunakan informasi pribadi anda untuk melakukan
-              demonstrasi produk kami dan memberikan produk dan layanan yang
-              anda minta dari kami. Dari waktu ke waktu kami hendak menghubungi
-              anda untuk memberikan informasi mengenai produk dan layanan kami
-              serta konten lain yang menjadi ketertarikan anda.
-            </p>
-            <p>
-              PT Nodeflux Teknologi Indonesia (&quot;Nodeflux&quot;) is
-              committed to protecting and respecting your privacy, and
-              we&apos;ll only use your personal information to perform our
-              product demonstrations and to provide the products and services
-              you requested from us. From time to time, we would like to contact
-              you in order to provide information about our products and
-              services, as well as other content that may be of interest to you.
-            </p>
-            <p>
-              Selanjutnya, bagi kami tidak ada yang lebih penting dari privasi
-              dan keamanan anda. Kami tidak akan pernah menjual atau salah dalam
-              menjaga data anda. Silahkan untuk mempelajari komitmen kami dalam
-              menjaga privasi anda{' '}
-              <a
-                rel="noopener noreferrer"
-                target={'_blank'}
-                href="https://drive.google.com/file/d/13vUKTqzyJWIFVydkZmyW1flXiTJ38V5n/view?usp=sharing">
-                di sini
-              </a>
-              .
-            </p>
-            <p>
-              Furthermore, nothing matters more to us than your privacy and
-              security. We&apos;ll never sell or mishandle your data. Learn more
-              about our commitment to protecting your privacy{' '}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://drive.google.com/file/d/19AnK4pFPh1oNloJTRNO7Yb-5HoHRTYfF/view?usp=sharing">
-                here
-              </a>
-              .
-            </p>
-            <p>
-              Dengan anda melakukan tick pada &quot;checkbox&quot; di formulir
-              yang tersedia, maka anda setuju dengan ketentuan-ketentuan di
-              Kebijakan Privasi kami dan memperbolehkan kami untuk menghubungi
-              anda di kemudian hari.
-            </p>
-            <p>
-              By ticking the &quot;checkbox&quot; in the form, you agree to the
-              terms contained in our Privacy Policy and allow us to contact you
-              in the future.
-            </p>
-          </div>
+        <h2 className="text-lg mb-2 pr-2">
+          Kebijakan Privasi / Privacy Policy
+        </h2>
+        <div className="max-h-[75vh] overflow-y-auto font-serif pr-2">
+          <p className="mb-2 ">
+            PT Nodeflux Teknologi Indonesia (&quot;Nodeflux&quot;) berkomitmen
+            untuk melindungi dan menghormati privasi anda, dan oleh karenanya
+            kami hanya menggunakan informasi pribadi anda untuk melakukan
+            demonstrasi produk kami dan memberikan produk dan layanan yang anda
+            minta dari kami. Dari waktu ke waktu kami hendak menghubungi anda
+            untuk memberikan informasi mengenai produk dan layanan kami serta
+            konten lain yang menjadi ketertarikan anda.
+          </p>
+          <p className="mb-2 italic">
+            PT Nodeflux Teknologi Indonesia (&quot;Nodeflux&quot;) is committed
+            to protecting and respecting your privacy, and we&apos;ll only use
+            your personal information to perform our product demonstrations and
+            to provide the products and services you requested from us. From
+            time to time, we would like to contact you in order to provide
+            information about our products and services, as well as other
+            content that may be of interest to you.
+          </p>
+          <p className="mb-2">
+            Selanjutnya, bagi kami tidak ada yang lebih penting dari privasi dan
+            keamanan anda. Kami tidak akan pernah menjual atau salah dalam
+            menjaga data anda. Silahkan untuk mempelajari komitmen kami dalam
+            menjaga privasi anda{' '}
+            <a
+              className="medium text-blue-900 cursor-pointer underline"
+              rel="noopener noreferrer"
+              target={'_blank'}
+              href="https://drive.google.com/file/d/13vUKTqzyJWIFVydkZmyW1flXiTJ38V5n/view?usp=sharing">
+              di sini
+            </a>
+            .
+          </p>
+          <p className="mb-2 italic">
+            Furthermore, nothing matters more to us than your privacy and
+            security. We&apos;ll never sell or mishandle your data. Learn more
+            about our commitment to protecting your privacy{' '}
+            <a
+              className="medium text-blue-900 cursor-pointer underline"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://drive.google.com/file/d/19AnK4pFPh1oNloJTRNO7Yb-5HoHRTYfF/view?usp=sharing">
+              here
+            </a>
+            .
+          </p>
+          <p className="mb-2">
+            Dengan anda melakukan tick pada &quot;checkbox&quot; di formulir
+            yang tersedia, maka anda setuju dengan ketentuan-ketentuan di
+            Kebijakan Privasi kami dan memperbolehkan kami untuk menghubungi
+            anda di kemudian hari.
+          </p>
+          <p className="mb-2 italic">
+            By ticking the &quot;checkbox&quot; in the form, you agree to the
+            terms contained in our Privacy Policy and allow us to contact you in
+            the future.
+          </p>
         </div>
       </Modal>
       <TextField
@@ -164,8 +162,8 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         }}
         errors={errors}
       />
-      <div className={styles.divide}>
-        <div className={styles.divideLeft}>
+      <div className="flex flex-col md:flex-row w-full justify-between ">
+        <div className="md:w-[47%]">
           <TextField
             id="job_title"
             label="Job Title"
@@ -179,7 +177,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
             errors={errors}
           />
         </div>
-        <div className={styles.divideRight}>
+        <div className="md:w-[47%]">
           <SelectBox
             id="industry"
             label="Industry"
@@ -190,16 +188,21 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
           />
         </div>
       </div>
-      <div className={styles.terms}>
+      <div className="flex items-start">
         <input
+          className="w-5 h-5 mr-4 ml-1 shrink-0 cursor-pointer"
           {...register('terms_and_conditions', { required: 'required' })}
           name="terms_and_conditions"
           id="terms_and_conditions"
           type="checkbox"
         />
-        <Label id="terms_and_conditions" errors={errors}>
+        <Label
+          className="font-normal font-serif"
+          id="terms_and_conditions"
+          errors={errors}>
           I agree and accept to this{' '}
           <a
+            className="font-medium cursor-pointer text-blue-900"
             onClick={() => {
               setIsTermsShown(true)
             }}>
@@ -207,6 +210,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
           </a>
           / Saya setuju dengan{' '}
           <a
+            className="font-medium cursor-pointer text-blue-900"
             onClick={() => {
               setIsTermsShown(true)
             }}>
@@ -215,14 +219,11 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
           yang ada.
         </Label>
       </div>
-      <div className={styles.errorMessage}>
+      <div className="text-red-600 mb-5">
         {errorMessage ? `*${errorMessage}` : null}
       </div>
-      <div className={styles.buttonContainer}>
-        <Button
-          className={styles.submitButton}
-          type="submit"
-          color={Color.Primary}>
+      <div className="mx-auto min-w-[130px] w-1/3">
+        <Button className="w-full py-3" type="submit" color={Color.Primary}>
           Submit
         </Button>
       </div>
