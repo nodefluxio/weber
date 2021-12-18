@@ -23,7 +23,6 @@ type Props = {
   maxImageSize: number
   acceptedFileFormat: string
   handlePost?: (session_id: string, photo: string) => Promise<unknown>
-  addionalStepOneNode?: ReactNode
   customBannerUrl?: string
 }
 
@@ -38,7 +37,6 @@ export const AnalyticsPage: React.FC<Props> = ({
   maxImageSize,
   acceptedFileFormat,
   handlePost,
-  addionalStepOneNode,
   customBannerUrl
 }) => {
   const [photo, setPhoto] = useState('')
@@ -101,10 +99,9 @@ export const AnalyticsPage: React.FC<Props> = ({
       slug={slug}
       onModalClose={() => setOpenModal(false)}
       customBannerUrl={customBannerUrl}>
-      <div className={styles.container}>
+      <div className="container w-[90%] mx-auto pt-6 pb-12">
         {currentStep === 1 && (
-          <div className={styles.dropzoneNButton}>
-            {addionalStepOneNode}
+          <div className="flex flex-col items-center">
             <DropzoneOptions
               images={examples}
               onPhotoDrop={setPhoto}
@@ -112,7 +109,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               acceptedFileFormat={acceptedFileFormat}
             />
             {photo && (
-              <div className={styles.buttonContainer}>
+              <div className="mt-8">
                 <Button color={Color.Primary} onClick={handleAnalytics}>
                   Next Step
                 </Button>

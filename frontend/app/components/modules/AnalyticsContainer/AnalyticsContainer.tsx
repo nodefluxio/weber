@@ -40,10 +40,11 @@ export const AnalyticsContainer = ({
         longDescription={longDescription}
       />
       <Stepper
+        className="pt-8"
         steps={['Upload your photo', 'Check your results']}
         activeStep={currentStep}
       />
-      <div className="fluidContainer">{children}</div>
+      {children}
     </>
   )
 }
