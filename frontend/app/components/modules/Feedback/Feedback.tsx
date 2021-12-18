@@ -129,12 +129,12 @@ const Feedback = ({ id, onTryAgain, afterSubmit, className }: Props) => {
           <textarea
             id="comment"
             className="p-4 resize-none font-serif
-             h-32 rounded border focus:border-primary-300 mb-4 outline-none w-4/5 max-w-sm"
+             h-32 rounded border focus:border-primary-300 mb-4 outline-none w-full max-w-sm"
             placeholder="Tell us your experience"
             {...register('comment')}
           />
           <Button
-            className="mx-auto w-4/5 max-w-sm"
+            className="mx-auto w-full max-w-sm"
             type="submit"
             color={Color.Secondary}
             disabled={isDisabled || isLoading}>

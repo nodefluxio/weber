@@ -118,7 +118,7 @@ export const AnalyticsPage: React.FC<Props> = ({
           </div>
         )}
         {currentStep === 2 && (
-          <>
+          <div>
             <AnalyticsResultWrapper
               imageBase64={photo}
               handleTryAgain={() => refreshState()}>
@@ -140,7 +140,7 @@ export const AnalyticsPage: React.FC<Props> = ({
             {(isResult || errorMsg) && (
               <Feedback id={serviceID} onTryAgain={() => refreshState()} />
             )}
-          </>
+          </div>
         )}
       </div>
     </AnalyticsContainer>
