@@ -4,7 +4,6 @@ import { Color } from '../../../types/elements'
 import { Cam } from '../Cam/Cam'
 import { Button } from '../../elements/Button/Button'
 import { Spinner } from '@/elements/Spinner/Spinner'
-import styles from './FaceEnrollment.module.scss'
 import { parseCookies } from 'nookies'
 import { registerAccount } from '../../../api/paymentAPI'
 import { ENROLL_SNAPSHOT } from 'app/constants/localStorage'
@@ -20,6 +19,8 @@ type Props = {
     have_twin: boolean
   }
 }
+
+const wrapper = 'flex flex-col items-center text-center justify-center my-6'
 
 export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
   const [isPhotoTaken, setIsPhotoTaken] = useState(false)
@@ -101,18 +102,18 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
   }
 
   return (
-    <div className={styles.enrollWrapper}>
+    <div>
       {isPhotoTaken ? (
         isLoading ? (
-          <div className={styles.subtitle}>
-            <h2>Registering your account...</h2>
-            <Spinner />
-            <p>Please wait for a few moment...</p>
+          <div className={wrapper}>
+            <h2 className="text-2xl font-bold">Registering your account...</h2>
+            <Spinner className="my-12" />
+            <p className="font-serif">Please wait for a few moment...</p>
           </div>
         ) : (
-          <div className={styles.subtitle}>
-            <h2>{messages[+isSuccess].title}</h2>
-            <div className={styles.iconMessage}>
+          <div className={wrapper}>
+            <h2 className="text-2xl font-bold">{messages[+isSuccess].title}</h2>
+            <div className="mx-auto my-6">
               <Image
                 src={messages[+isSuccess].imgPath}
                 width={80}
@@ -120,27 +121,29 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
                 alt={isSuccess ? 'Success Sign' : 'Warning Sign'}
               />
             </div>
-            <p>{messages[+isSuccess].description}</p>
+            <p className="font-serif mb-6">
+              {messages[+isSuccess].description}
+            </p>
             <Button type="button" color={Color.Primary} onClick={handleClick}>
               {messages[+isSuccess].button}
             </Button>
           </div>
         )
       ) : (
-        <>
-          <div className={styles.subtitle}>
-            <h2>Take a selfie!</h2>
-            <p>
-              Ensure your face position is in the oval area <br />
-              Hold the camera at eye level. Look straight to the camera and smile!
-            </p>
+        <div className={wrapper}>
+          <h2 className="text-2xl font-bold">Take a selfie!</h2>
+          <p className="font-serif mt-4">
+            Ensure your face position is in the oval area <br />
+            Hold the camera at eye level. Look straight to the camera and smile!
+          </p>
+          <div className="mt-6">
+            <Cam
+              localkey={ENROLL_SNAPSHOT}
+              nextStep={() => getPhoto()}
+              overlayShape="circle"
+            />
           </div>
-          <Cam
-            localkey={ENROLL_SNAPSHOT}
-            nextStep={() => getPhoto()}
-            overlayShape="circle"
-          />
-        </>
+        </div>
       )}
     </div>
   )

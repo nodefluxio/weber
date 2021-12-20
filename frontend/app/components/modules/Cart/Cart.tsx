@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { Color, ShoppingItem } from '@/types/elements'
 import { useEffect, useState } from 'react'
 import { formatMoney } from '@/utils/utils'
-import styles from './Cart.module.scss'
 
 type Props = {
   item: ShoppingItem
@@ -20,41 +19,49 @@ export const Cart = ({ item, onBack, onCheckout }: Props) => {
   }, [quantity])
 
   return (
-    <div className={styles.cart}>
-      <p className={styles.title}>Cart</p>
+    <div className="max-w-[400px] m-auto font-serif">
+      <h2 className="px-4 font-sans font-bold text-2xl">Cart</h2>
       <hr />
-      <Button className={styles.backButton} onClick={onBack}>
+      <Button
+        className="p-0 text-2xl -scale-x-100 bg-none"
+        onClick={onBack}>
         ➜
       </Button>
 
-      <div className={styles.items}>
-        <div className={styles.imgContainer}>
+      <div className="flex justify-center">
+        <div
+          className="relative w-[150px] h-[100px] sm:w-[200px] sm:h-[200px]
+                    self-center mr-4">
           <Image
             src={`/assets/images/solutions/face-payment/${item.image}`}
             layout="fill"
             objectFit="contain"
           />
         </div>
-        <div className={styles.details}>
-          <h4 className={styles.name}>{item.name}</h4>
-          <p className={styles.price}>IDR {formatMoney(item.price)}</p>
-          <p className={styles.quantityText}>Quantity</p>
-          <div className={styles.quantityControl}>
+        <div className="flex flex-col items-center mr-4 min-w-[150px]">
+          <h4 className="font-bold text-center">{item.name}</h4>
+          <p className="mb-6">IDR {formatMoney(item.price)}</p>
+          <p>Quantity</p>
+          <div className="flex items-center mt-3 mb-6 text-xl">
             <span
+              className="cursor-pointer"
               onClick={() =>
                 quantity > 1 ? setQuantity(quantity - 1) : setQuantity(1)
               }>
-              {'\u02C3'}
+              {'\u02C2'}
             </span>
-            <p className={styles.quantity}>{quantity}</p>
+            <p className="inline-block text-center text-2xl mx-5 w-[30px]">
+              {quantity}
+            </p>
             <span
+              className="cursor-pointer"
               onClick={() =>
                 quantity < 99 ? setQuantity(quantity + 1) : setQuantity(99)
               }>
               {'\u02C3'}
             </span>
           </div>
-          <div className={styles.total}>
+          <div>
             <p>Total</p>
             <p>
               <strong>IDR {total}</strong>
@@ -62,16 +69,17 @@ export const Cart = ({ item, onBack, onCheckout }: Props) => {
           </div>
         </div>
       </div>
-
-      <hr />
-      <div className={styles.grandTotal}>
-        <p className={styles.grandTotalText}>Grand Total</p>
-        <p className={styles.totalCalc}>
+      <hr className="my-4" />
+      <div
+        className="flex justify-between items-center
+                      px-5 py-0 mr-4 my-8">
+        <p>Grand Total</p>
+        <p className="text-xl">
           <strong>IDR {total}</strong>
         </p>
       </div>
       <Button
-        className={styles.submitBtn}
+        className="block w-1/2 m-auto"
         color={Color.Primary}
         onClick={() => onCheckout({ ...item, quantity: quantity })}>
         Checkout
