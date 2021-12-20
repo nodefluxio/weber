@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Label } from '../Label/Label'
-import styles from './BigInput.module.scss'
 
 type Props = {
   id: string
