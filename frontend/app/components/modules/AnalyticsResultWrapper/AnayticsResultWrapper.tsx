@@ -18,7 +18,7 @@ export const AnalyticsResultWrapper = ({
       <div className="flex flex-col md:flex-row justify-center items-center">
         {imageBase64 && (
           <ResponsiveImage
-            className="h-48 w-full max-w-xs md:max-w-lg md:w-1/2 md:mr-8 md:h-80"
+            className="h-48 w-full max-w-xs md:max-w-lg md:w-1/2 md:mr-12 md:h-80"
             src={imageBase64}
             objectFit="cover"
             alt="inputed image"

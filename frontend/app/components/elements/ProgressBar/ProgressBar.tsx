@@ -1,19 +1,15 @@
-import { Color } from '@/types/elements'
-import styles from './ProgressBar.module.scss'
-
 type Props = {
   completed: number
-  bgColor: Color
 }
 
-export const ProgressBar = ({ bgColor, completed }: Props) => {
+export const ProgressBar = ({ completed }: Props) => {
   return (
-    <div className={styles.container}>
+    <div className="h-5 w-full rounded-full bg-gray-300">
       <div
-        className={`${styles.filler} ${bgColor && styles[bgColor]}`}
+        className={`h-full rounded-full text-right bg-primary-500 text-white`}
         style={{ width: completed + '%' }}>
         <span
-          className={styles.label}
+          className="px-1 text-white font-bold"
           role="progressbar"
           aria-valuenow={completed}
           aria-valuemin={0}
