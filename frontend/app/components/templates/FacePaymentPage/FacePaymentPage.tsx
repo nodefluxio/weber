@@ -15,7 +15,6 @@ import {
   ShoppingItem
 } from '../../../types/elements'
 import { parseCookies } from 'nookies'
-import styles from './FacePaymentPage.module.scss'
 import Feedback from '@/modules/Feedback/Feedback'
 import { ActivationForm } from '@/modules/ActivationForm/ActivationForm'
 import { PaymentPay } from '@/modules/PaymentPay/PaymentPay'
@@ -33,7 +32,10 @@ type Props = {
   long_description: string
 }
 
-const mainMenuInfo = ['Create an account to enable your face payment', 'Now, you can try to make transactions using face payment']
+const mainMenuInfo = [
+  'Create an account to enable your face payment',
+  'Now, you can try to make transactions using face payment'
+]
 
 export const FacePaymentPage = ({ id, name, long_description }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -130,14 +132,21 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
           'Finish'
         ]}
         activeStep={currentStepStepper}
+        className="pt-8"
       />
 
-      <div className={styles.facePaymentPageContainer}>
+      <div
+        className="flex justify-center items-center
+                    pt-8 pb-20 w-11/12 mx-auto my-4 
+                    min-h-[400px] sm:min-h-[560px] sm:w-full">
         {currentStep === 1 && (
-          <div className={styles.welcome}>
-            <h2>Welcome to {name} Demo App</h2>
-            <div className={styles.specialInstruction}>
-              <p className={styles.desc}>
+          <div className="text-center">
+            <h2 className="text-2xl">Welcome to {name} Demo App</h2>
+            <div
+              className="flex bg-amber-400 rounded 
+                        justify-center mx-auto my-8 h-min
+                        w-full sm:w-7/12">
+              <p className="m-4 text-lg">
                 Please access this demo via <strong>smartphone</strong> or any
                 device with at least <strong>HD camera</strong> resolution for{' '}
                 <strong>better performance</strong> and{' '}

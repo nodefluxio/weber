@@ -8,7 +8,6 @@ import { Label } from '../../elements/Label/Label'
 import { Star } from '../../elements/Star/Star'
 import { Color } from '../../../types/elements'
 import { FeedbackData } from '../../../types/elements'
-import styles from './Feedback.module.scss'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
 import { ButtonLink } from '@/elements/ButtonLink/ButtonLink'
 

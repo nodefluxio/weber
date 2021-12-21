@@ -3,7 +3,6 @@ import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
 import { TextField } from '../../elements/TextField/TextField'
 import { Label } from '../../elements/Label/Label'
-import styles from './PaymentForm.module.scss'
 import { parseCookies } from 'nookies'
 import { registerAccount } from '../../../api/paymentAPI'
 import { useState } from 'react'
@@ -69,17 +68,22 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
   }
 
   return (
-    <div className={styles.formWrapper}>
-      <div className={styles.subtitle}>
-        <h2>Dummy Wallet Registration</h2>
-        <p>
-          It&apos;s only dummy wallet registration, no need a card or top up anything from you <br />
-          You can use a dummy data for the privacy concern.<br/>
-          Please remember your phone number, since it will be used when you did the transaction.
+    <div className="flex flex-col">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-center">
+          Dummy Wallet Registration
+        </h2>
+        <p className="font-serif mt-4 text-center">
+          It&apos;s only dummy wallet registration, no need a card or top up
+          anything from you <br />
+          You can use a dummy data for the privacy concern.
+          <br />
+          Please remember your phone number, since it will be used when you did
+          the transaction.
         </p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.formOutline}>
+        <div className="shadow-xl rounded-lg p-8 mb-6">
           <TextField
             id="full_name"
             label="Name"
@@ -97,31 +101,36 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
             register={register}
             registerOptions={{
               required: 'required',
-              pattern: { value: /^[0-9]*$/, message: 'Please enter numbers only (0-9)' }
+              pattern: {
+                value: /^[0-9]*$/,
+                message: 'Please enter numbers only (0-9)'
+              }
             }}
             errors={errors}
           />
-          <div style={{ textAlign: 'center' }}>
+          <div className="text-center">
             <Label
               id={'have_twin'}
               errors={errors}
               label={'Do you have any twins?'}
             />
-            <div className={styles.radios}>
-              <label htmlFor="have_twin_yes">
+            <div className="flex flex-row justify-center mt-2">
+              <label htmlFor="have_twin_yes" className="font-serif">
                 <input
                   type="radio"
                   value="true"
                   id="have_twin_yes"
+                  className="w-6 h-6 mr-2 align-middle"
                   {...register('have_twin', { required: 'required' })}
                 />
                 Yes
               </label>
-              <label htmlFor="have_twin_no">
+              <label htmlFor="have_twin_no" className="font-serif ml-8">
                 <input
                   type="radio"
                   value="false"
                   id="have_twin_no"
+                  className="w-6 h-6 mr-2 align-middle"
                   {...register('have_twin', { required: 'required' })}
                 />
                 No
@@ -130,7 +139,7 @@ export const PaymentForm = ({ onNextStep, onInvalidSession }: Props) => {
           </div>
         </div>
         {errorMsg && <span>{errorMsg}</span>}
-        <div className={styles.buttonWrapper}>
+        <div className="flex justify-center">
           <Button type="submit" color={Color.Primary}>
             Next
           </Button>

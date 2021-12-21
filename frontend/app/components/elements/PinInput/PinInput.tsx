@@ -5,7 +5,6 @@ import {
   KeyboardEvent,
   useEffect
 } from 'react'
-import styles from './PinInput.module.scss'
 
 type Props = {
   message: string
@@ -13,11 +12,7 @@ type Props = {
   onPinChange: (arg: string) => void
 }
 
-export const PinInput = ({
-  message,
-  digits,
-  onPinChange
-}: Props) => {
+export const PinInput = ({ message, digits, onPinChange }: Props) => {
   const [pinCode, setPinCode] = useState(
     Array.from({ length: digits }, () => '')
   )
@@ -67,9 +62,12 @@ export const PinInput = ({
   }
 
   return (
-    <div className={styles.pinInputWrapper}>
-      {message && <span>{message}</span>}
-      <div className={styles.grid}>
+    <div
+      className="flex flex-col items-center justify-between
+                  mx-2 sm:mx-auto my-8 px-3 sm:px-6 py-12 rounded-lg
+                  shadow-[2px_4px_15px_rgba(0,0,0,0.2)]">
+      {message && <span className="text-center font-serif">{message}</span>}
+      <div className="flex flex-1 min-w-0 mt-4">
         {[...Array(digits)].map((_, i) => (
           <input
             key={i}
@@ -78,7 +76,10 @@ export const PinInput = ({
             type="password"
             maxLength={1}
             pattern="[0-9]*"
-            className={styles.pinInput}
+            className={`text-[150%] font-code w-9 h-9 sm:w-14 sm:h-14 outline-none
+                      rounded text-center border-[1px] border-neutral-500
+                      focus:border-[1.5px] focus:border-primary-500
+                      ${i > 0 ? 'ml-2 sm:ml-3' : ''}`}
             onChange={(event) => handleChange(event, i)}
             onKeyDown={(event) => handleKeyDown(event, i)}
             inputMode="numeric"
