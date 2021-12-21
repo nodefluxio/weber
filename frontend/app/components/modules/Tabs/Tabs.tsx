@@ -10,8 +10,8 @@ export const Tabs = ({ children }: Props) => {
   const [selectedTab, setSelectedTab] = useState(0)
 
   return (
-    <div className={styles.tabs}>
-      <ul>
+    <div className="flex flex-col">
+      <ul className={`${styles.tabs} rounded-2xl flex justify-center`}>
         {children.map((item, index) => (
           <TabTitle
             key={index}
