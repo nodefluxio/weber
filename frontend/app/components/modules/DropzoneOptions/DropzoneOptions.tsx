@@ -91,6 +91,7 @@ export const DropzoneOptions = ({
       layout="fill"
       objectFit="contain"
       key={photos[0].name}
+      alt="uploaded photo"
     />
   )
 
@@ -131,7 +132,7 @@ export const DropzoneOptions = ({
               key={i}>
               {/* eslint-disable @next/next/no-img-element*/}
               <img
-                className="w-full h-full bg-cover"
+                className="w-full h-full object-cover"
                 onClick={(e: MouseEvent<HTMLImageElement>) => {
                   const img = e.target as HTMLImageElement
                   onChoose(img.src)
