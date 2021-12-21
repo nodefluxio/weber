@@ -132,7 +132,7 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
           'Finish'
         ]}
         activeStep={currentStepStepper}
-        className="pt-8"
+        className="mt-8"
       />
 
       <div
