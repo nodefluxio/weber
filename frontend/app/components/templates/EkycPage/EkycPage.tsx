@@ -111,7 +111,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
         className="mt-8"
       />
 
-      <div className="container mx-auto w-4/5 min-h-[75vh] py-8 flex flex-col justify-center items-center text-center">
+      <div className="container mx-auto w-[90%] md:w-4/5 min-h-[75vh] py-8 flex flex-col justify-center items-center text-center">
         {currentStep === 1 && (
           <div className="flex flex-col items-center">
             <h3 className="pb-6 text-3xl">Welcome to e-KYC Demo</h3>
@@ -190,7 +190,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
                     </p>
                   )
                 ) : (
-                  <Spinner className='mx-auto my-8' />
+                  <Spinner className="mx-auto my-8" />
                 )}
               </div>
 
@@ -217,11 +217,11 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
                     </p>
                   )
                 ) : (
-                  <Spinner className='mx-auto my-8' />
+                  <Spinner className="mx-auto my-8" />
                 )}
               </div>
             </div>
-            <div className='font-bold m-8'>
+            <div className="font-bold m-8">
               <h3 className="pb-6 text-3xl">OCR KTP Result</h3>
               <div className="text-left">
                 {!loading ? (
@@ -238,7 +238,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
                     </p>
                   )
                 ) : (
-                  <Spinner className='mx-auto my-8' />
+                  <Spinner className="mx-auto my-8" />
                 )}
               </div>
             </div>
