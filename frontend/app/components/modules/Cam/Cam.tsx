@@ -1,4 +1,3 @@
-import styles from './Cam.module.scss'
 import Webcam from 'react-webcam'
 import {
   MouseEventHandler,
@@ -34,7 +33,7 @@ export const Cam = ({
   const [flash, setFlash] = useState(false)
   const [photo, setPhoto] = useState('')
 
-  const isMobile = useMediaQuery('(max-width: 480px)')
+  const isSm = useMediaQuery('(max-width: 640px)')
 
   useEffect(() => {
     const storedPhoto = localStorage.getItem(localkey)
@@ -64,12 +63,14 @@ export const Cam = ({
   }
 
   return (
-    <div className={styles.container}>
-      <div className={`${styles.content} ${flash ? styles.flash : ''}`}>
+    <div className="w-full">
+      <div className="relative">
         {!photo ? (
-          <div className={styles.webcamContainer}>
+          <div
+            className="border mb-4 border-primary-500 rounded relative 
+             w-[401px] h-[401px] max-w-[90vw] md:w-[450px] md:h-[337.5px]">
             <Webcam
-              className={styles.webcam}
+              className="rounded w-full h-full"
               audio={false}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
@@ -77,10 +78,10 @@ export const Cam = ({
                 videoConstraints
                   ? videoConstraints
                   : {
-                      width: { min: isMobile ? 420 : 450 },
-                      height: { min: isMobile ? 420 : 337.5 },
-                      aspectRatio: isMobile ? 1 : 1.333333,
-                      facingMode: { ideal: isMobile ? facingMode : '' },
+                      width: { min: isSm ? 420 : 450 },
+                      height: { min: isSm ? 420 : 337.5 },
+                      aspectRatio: isSm ? 1 : 1.333333,
+                      facingMode: { ideal: isSm ? facingMode : '' },
                       frameRate: { ideal: 30, max: 30 }
                     }
               }
@@ -89,47 +90,48 @@ export const Cam = ({
               mirrored={mirrored}
             />
             <Image
-              className={styles.overlayImg}
+              className="opacity-50 rounded z-10"
               src={`/assets/images/face-cam-overlay-${overlayShape}.png`}
               layout="fill"
               objectFit="cover"
+              alt="overlay shape"
             />
           </div>
         ) : (
           photo && (
-            <div className={styles.capturedPhotoContainer}>
+            <div
+              className="relative mb-4 w-[401px] h-[401px] 
+              max-w-[90vw] md:w-[450px] md:h-[337.5px] rounded max-h-[65vh] md:max-h-[unset]">
               <Image
-                className={styles.capturedPhoto}
+                className="rounded"
                 src={photo}
                 layout="fill"
-                objectFit="contain"
+                objectFit="fill"
                 alt="captured photos"
               />
             </div>
           )
         )}
       </div>
-
-      <div className={styles.btnGroup}>
+      <div className="flex flex-col md:flex-row justify-center">
         {!photo ? (
           <Button
+            className="mb-2 md:w-4/5 md:mb-0 md:mr-2"
             onClick={capture}
-            color={Color.Primary}
-            className={styles.btn}>
+            color={Color.Primary}>
             Take a photo
           </Button>
         ) : (
           <Button
+            className="mb-2 md:w-4/5 md:mb-0 md:mr-2"
             onClick={tryAgain}
-            color={Color.Primary}
-            className={styles.btn}>
+            color={Color.Primary}>
             Try Again
           </Button>
         )}
-
         <Button
-          color={Color.Primary}
-          className={styles.btn}
+          className="md:w-4/5"
+          color={Color.Secondary}
           onClick={nextStep}
           disabled={disabled}>
           Next
