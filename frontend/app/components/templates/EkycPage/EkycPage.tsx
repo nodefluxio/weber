@@ -257,7 +257,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
 
         {currentStep === 5 && (
           <div className="w-full">
-            <h3 className="pb-6 text-3xl">
+            <h3 className="mb-12 text-3xl">
               Thank you for Using e-KYC Demo App!
             </h3>
             <Feedback
