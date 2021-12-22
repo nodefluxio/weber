@@ -30,7 +30,6 @@ export const Cam = ({
 }: Props) => {
   const webcamRef = useRef<Webcam>(null)
   const [disabled, setDisabled] = useState(true)
-  const [flash, setFlash] = useState(false)
   const [photo, setPhoto] = useState('')
 
   const isSm = useMediaQuery('(max-width: 640px)')
