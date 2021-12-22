@@ -1,6 +1,7 @@
 import Image from 'next/image'
-import styles from './AnalyticsResult.module.scss'
 import resultMap from './analytics_result.json'
+import styles from './AnalyticsResult.module.scss'
+
 type Props = {
   result: any
   slug: string
@@ -26,8 +27,12 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
         )
       ) : fields[i].hasThumbnail && currentThumbnail ? (
         <div className={styles.field}>
-          <div className={styles.boundingBoxContainer}>
-            <Image src={currentThumbnail} layout="fill" />
+          <div className="w-11 h-11 relative mr-4">
+            <Image
+              src={currentThumbnail}
+              alt="result thumbnail"
+              layout="fill"
+            />
           </div>
           <div>
             <p className={styles.label}>{fields[i].label}</p>
@@ -131,7 +136,8 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
     }
   }
   return (
-    <div className={`${styles.resultsContainer} ${className}`}>
+    <div
+      className={`w-full max-h-96 overflow-y-auto grid grid-cols-2 ${styles.container} ${className}`}>
       {result &&
         displayResult()?.map((item, idx) => <div key={idx}>{item}</div>)}
     </div>

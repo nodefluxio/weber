@@ -22,7 +22,7 @@ export const ButtonLink = ({
     <Link href={href}>
       <a
         className={`py-3 px-5 bg-slate-50 font-bold cursor-pointer rounded-full inline-block
-      font-sans  disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors shadow
+      font-sans disabled:opacity-30 disabled:cursor-not-allowed transition-colors shadow
        ${
          color === Color.Primary &&
          'bg-primary-500 text-white hover:bg-primary-600'

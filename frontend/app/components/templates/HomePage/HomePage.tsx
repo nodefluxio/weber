@@ -166,7 +166,7 @@ export const HomePage = ({
                 key={idx}>
                 <div className="container flex flex-col items-center justify-center w-4/5 h-screen mx-auto sm:flex-row-reverse">
                   <ResponsiveImage
-                    className="w-4/5 mx-auto mt-6 mb-4 h-1/3 sm:ml-4 lg:h-1/2"
+                    className="w-4/5 mx-auto mt-6 mb-4 h-1/3 sm:ml-4 lg:h-full lg:w-1/2 lg:max-h-[400px]"
                     src={`/assets/images/${item.coverImg}`}
                     layout="fill"
                     objectFit="contain"
@@ -174,9 +174,11 @@ export const HomePage = ({
                     alt="hero-image"
                     priority
                   />
-                  <div className="flex flex-col justify-center w-full max-w-xs text-white lg:max-w-md">
+                  <div
+                    className="flex flex-col justify-center w-full max-w-xs  
+                  text-white lg:max-w-full lg:w-1/2">
                     <h1
-                      className={`font-bold mb-1 text-4xl lg:text-5xl ${
+                      className={`font-bold mb-1 text-4xl lg:text-5xl xl:text-6xl ${
                         item.color === Color.Tertiary && 'text-tertiary'
                       } ${
                         item.color === Color.Quaternary && 'text-quaternary'
@@ -184,7 +186,7 @@ export const HomePage = ({
                       {item.title}
                     </h1>
                     <hr className="my-4 border-2 border-solid rounded-md lg:my-6 w-28 border-secondary-500" />
-                    <h3 className="font-medium text lg:text-lg lg:max-w-sm">
+                    <h3 className="font-medium text lg:text-lg lg:max-w-sm xl:text-xl">
                       {item.secondTitle}
                     </h3>
                     <div className="w-6 mx-auto mt-6 cursor-pointer animate-bounce">

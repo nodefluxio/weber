@@ -109,6 +109,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
       <Stepper
         steps={['Start', 'Face Liveness', 'OCR KTP', 'Result', 'Finish']}
         activeStep={currentStep}
+        className="mt-8"
       />
 
       <div className={`${styles.container} fluidContainer`}>

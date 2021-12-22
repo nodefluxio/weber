@@ -1,5 +1,4 @@
 import { BaseSyntheticEvent, useEffect, useState } from 'react'
-import styles from './PaymentSetup.module.scss'
 import {
   MIN_PAYMENT,
   MAX_PAYMENT,
@@ -41,13 +40,16 @@ export const PaymentSetup = ({ onChange }: Props) => {
   }, [value])
 
   return (
-    <div className={styles.modalPayment}>
-      <h2>Set up your payment limit</h2>
-      <span className={styles.value}>{value.toLocaleString()}</span>
-      <p>
-        You&apos;re required to enter a PIN if the total purchase of items exceeds your entered amount
+    <div className="text-center px-6 py-2">
+      <h2 className="text-lg font-bold mb-4">Set up your payment limit</h2>
+      <span className="text-4xl font-extrabold text-primary-500">
+        {value.toLocaleString()}
+      </span>
+      <p className="font-serif my-4">
+        You&apos;re required to enter a PIN if the total purchase of items
+        exceeds your entered amount
       </p>
-      <div className={styles.sliderWrapper}>
+      <div className="mb-6">
         <input
           type="range"
           min={MIN_PAYMENT}
@@ -55,7 +57,7 @@ export const PaymentSetup = ({ onChange }: Props) => {
           step={STEP_PAYMENT}
           list="tickmarks"
           value={value}
-          className={styles.slider}
+          className="w-11/12 focus:outline-none"
           onChange={handleSlideChange}
         />
         <datalist id="tickmarks">
@@ -71,7 +73,9 @@ export const PaymentSetup = ({ onChange }: Props) => {
         placeholder={'Enter nominal'}
         maxLength={7}
         onChange={handleInputChange}
-        className={styles.inputNominal}
+        className="block mx-auto my-4 p-4 outline-none font-serif
+                  border-[1px] border-gray-500 rounded-sm
+                  focus:border-[1.5px] focus:border-primary-500"
       />
     </div>
   )

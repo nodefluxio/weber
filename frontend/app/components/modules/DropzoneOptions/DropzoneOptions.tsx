@@ -91,6 +91,7 @@ export const DropzoneOptions = ({
       layout="fill"
       objectFit="contain"
       key={photos[0].name}
+      alt="uploaded photo"
     />
   )
 
@@ -103,7 +104,7 @@ export const DropzoneOptions = ({
     <div className="w-full md:ml-11">
       <WarningDiv
         message={errorMsg}
-        className="flex justify-center mb-2 text-center"
+        className="flex justify-center md:mr-11 mb-2 text-center"
       />
       <div className="w-full mx-auto flex flex-col justify-center cursor-pointer md:flex-row lg:w-7/12">
         <div
@@ -131,7 +132,7 @@ export const DropzoneOptions = ({
               key={i}>
               {/* eslint-disable @next/next/no-img-element*/}
               <img
-                className="w-full h-full bg-cover"
+                className="w-full h-full object-cover"
                 onClick={(e: MouseEvent<HTMLImageElement>) => {
                   const img = e.target as HTMLImageElement
                   onChoose(img.src)

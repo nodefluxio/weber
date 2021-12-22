@@ -38,7 +38,7 @@ export const Navbar = () => {
   return (
     <nav
       className={`flex-1 h-16 lg:h-20 w-full uppercase z-40 fixed font-serif 
-      bg-gradient-to-r from-customPurple-100 to-customPurple-900 ${
+      bg-gradient-to-r from-customPurple-100 to-customPurple-900 px-2 ${
         scrolled && 'drop-shadow-lg'
       }
     ${router.pathname !== '/' ? 'from-primary-500 to-primary-500' : ''}`}>

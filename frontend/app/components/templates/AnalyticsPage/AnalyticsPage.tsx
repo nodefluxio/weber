@@ -7,7 +7,6 @@ import { Button } from '../../elements/Button/Button'
 import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
 import Feedback from '../../modules/Feedback/Feedback'
 import { Color } from '../../../types/elements'
-import styles from './AnalyticsPage.module.scss'
 import { CustomError } from 'app/errors/CustomError'
 import { Spinner } from 'app/components/elements/Spinner/Spinner'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
@@ -99,7 +98,7 @@ export const AnalyticsPage: React.FC<Props> = ({
       slug={slug}
       onModalClose={() => setOpenModal(false)}
       customBannerUrl={customBannerUrl}>
-      <div className="container w-[90%] mx-auto pt-6 pb-12">
+      <div className="container w-[90%] lg:w-4/5 mx-auto mt-8 pb-12">
         {currentStep === 1 && (
           <div className="flex flex-col items-center">
             <DropzoneOptions
@@ -118,8 +117,9 @@ export const AnalyticsPage: React.FC<Props> = ({
           </div>
         )}
         {currentStep === 2 && (
-          <>
+          <div>
             <AnalyticsResultWrapper
+              className="mb-8 md:mb-14"
               imageBase64={photo}
               handleTryAgain={() => refreshState()}>
               {isResult ? (
@@ -127,20 +127,20 @@ export const AnalyticsPage: React.FC<Props> = ({
               ) : errorMsg ? (
                 <WarningDiv
                   message={errorMsg}
-                  className={styles.analyticsWarning}
+                  className="block md:inline-block mx-auto"
                 />
               ) : (
-                <div className={styles.loadingState}>
+                <div className="text-center">
                   <h3>Loading your results...</h3>
-                  <Spinner />
-                  <p>Please wait a moment</p>
+                  <Spinner className="my-8 mx-auto" />
+                  <p className="font-serif">Please wait a moment</p>
                 </div>
               )}
             </AnalyticsResultWrapper>
             {(isResult || errorMsg) && (
               <Feedback id={serviceID} onTryAgain={() => refreshState()} />
             )}
-          </>
+          </div>
         )}
       </div>
     </AnalyticsContainer>

@@ -3,7 +3,6 @@ import { Modal } from '@/elements/Modal/Modal'
 import { Button } from '../../elements/Button/Button'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import styles from './ActivationForm.module.scss'
 import { Color } from '@/types/elements'
 import {
   MAX_PAYMENT,
@@ -68,14 +67,15 @@ export const ActivationForm = ({ nextStep }: Props) => {
         {isModalLoading ? (
           <Spinner />
         ) : isModalSuccess ? (
-          <div className={styles.activationSuccess}>
-            <h2>Activation Success</h2>
+          <div className="flex flex-col text-center mb-8">
+            <h2 className="text-xl font-bold mb-6">Activation Success</h2>
             <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} />
-            <div>
-              <p>Congratulations, your account has been activated!</p>
-              <div>Your balance</div>
-              <div className={styles.initBalance}>
-                {/* Mungkin butuh penyesuaian, kalo mau nilainya dipassing dari backend */}
+            <div className="mt-6">
+              <p className="font-serif">
+                Congratulations, your account has been activated!
+              </p>
+              <div className="mt-4">Your balance</div>
+              <div className="text-3xl font-extrabold text-primary-500">
                 {`IDR ${MAX_PAYMENT.toLocaleString()}`}
               </div>
             </div>
@@ -83,8 +83,10 @@ export const ActivationForm = ({ nextStep }: Props) => {
         ) : (
           <PaymentSetup onChange={setPayment} />
         )}
-        <div className={styles.warningMsg}>{warningMsg}</div>
-        <div className={styles.buttonWrapper}>
+        <div className="font-serif text-red-600 text-center mb-4">
+          {warningMsg}
+        </div>
+        <div className="text-center">
           <Button
             type="button"
             color={Color.Primary}
@@ -96,12 +98,16 @@ export const ActivationForm = ({ nextStep }: Props) => {
           </Button>
         </div>
       </Modal>
-      <div className={styles.pinInputWrapper}>
+      <div
+        className="w-full sm:w-[75%] md:w-[55%]
+                  mx-auto my-8 text-center max-w-[800px]">
         <div>
-          <h2>Create PIN</h2>
-          <p>
-            To ensure the security and convinience, you need to create a pin for double layer<br />
-            verification for payment above the limit. 
+          <h2 className="text-2xl font-bold mb-4">Create PIN</h2>
+          <p className="font-serif">
+            To ensure the security and convinience, you need to create a pin for
+            double layer
+            <br />
+            verification for payment above the limit.
           </p>
         </div>
         <PinInput
@@ -109,7 +115,7 @@ export const ActivationForm = ({ nextStep }: Props) => {
           digits={PIN_DIGIT_LENGTH}
           onPinChange={setPinCode}
         />
-        <div className={styles.warningMsg}>
+        <div className="font-serif text-red-600 text-center mb-4">
           {pinCode === '000000' &&
             'All zeros pin is not allowed. Please use other combination'}
         </div>
