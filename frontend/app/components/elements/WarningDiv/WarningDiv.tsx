@@ -9,7 +9,7 @@ export const WarningDiv = ({ message, className }: Props) => {
   return message ? (
     <div className={className}>
       <div
-        className={`text-yellow-700 flex flex-col sm:flex-row items-center justify-center py-3 px-3 ${
+        className={`text-yellow-700 flex flex-col sm:flex-row items-center justify-center px-3 py-1  ${
           message && 'bg-yellow-200 border-yellow-700 border rounded'
         }`}>
         {message && (
@@ -22,7 +22,9 @@ export const WarningDiv = ({ message, className }: Props) => {
             />
           </div>
         )}
-        <span className="mt-3 sm:mt-0 sm:ml-3 text-sm">{message}</span>
+        <span className="mt-3 sm:mt-0 sm:ml-3 text-sm font-serif">
+          {message}
+        </span>
       </div>
     </div>
   ) : (

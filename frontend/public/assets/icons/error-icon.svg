@@ -1,1 +1,13 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 174.85 174.85"><title>error-icon</title><circle cx="87.42" cy="87.42" r="85.42" style="fill:none;stroke:#a81e4f;stroke-linecap:round;stroke-miterlimit:10;stroke-width:4px"/><rect x="75.16" y="27.96" width="24.45" height="75.3" rx="3.38" style="fill:none;stroke:#a81e4f;stroke-linecap:round;stroke-miterlimit:10;stroke-width:4px"/><circle cx="87.42" cy="131.71" r="12.27" style="fill:none;stroke:#a81e4f;stroke-linecap:round;stroke-miterlimit:10;stroke-width:4px"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 174.9 174.9" style="enable-background:new 0 0 174.9 174.9;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#A16207;stroke-width:4;stroke-linecap:round;stroke-miterlimit:10;}
+</style>
+<title>error-icon</title>
+<circle class="st0" cx="87.4" cy="87.4" r="85.4"/>
+<path class="st0" d="M78.5,28h17.7c1.9,0,3.4,1.5,3.4,3.4v68.5c0,1.9-1.5,3.4-3.4,3.4H78.5c-1.9,0-3.4-1.5-3.4-3.4V31.3
+	C75.2,29.5,76.7,28,78.5,28z"/>
+<circle class="st0" cx="87.4" cy="131.7" r="12.3"/>
+</svg>
