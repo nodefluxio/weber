@@ -41,8 +41,9 @@ const ITEM_LIST: ShoppingItem[] = [
 type Props = {
   onAddToCart: (item: ShoppingItem) => void
   sessionId: string
+  className?: string
 }
-export const Catalog = ({ onAddToCart, sessionId }: Props) => {
+export const Catalog = ({ onAddToCart, sessionId, className }: Props) => {
   const [balance, setBalance] = useState<number>()
   useEffect(() => {
     const getAccountInfo = async () => {
@@ -57,7 +58,7 @@ export const Catalog = ({ onAddToCart, sessionId }: Props) => {
     getAccountInfo()
   }, [])
   return (
-    <div className="flex flex-col w-[90%] sm:w-[80%]">
+    <div className={`flex flex-col ${className}`}>
       <div
         className="flex self-end bg-primary-500 p-4 mb-8
                       rounded-lg text-neutral-100 sm:mr-3">
