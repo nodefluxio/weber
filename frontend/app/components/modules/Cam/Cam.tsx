@@ -51,8 +51,6 @@ export const Cam = ({
 
         setPhoto(snapshot)
         setDisabled(false)
-        setFlash(true)
-        setTimeout(() => setFlash(false), 1000)
       }
     }
   }, [webcamRef])
