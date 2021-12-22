@@ -6,7 +6,7 @@ type Props = {
 }
 
 export const WarningDiv = ({ message, className }: Props) => {
-  return (
+  return message ? (
     <div className={className}>
       <div
         className={`text-yellow-700 flex flex-col sm:flex-row items-center justify-center py-3 px-3 ${
@@ -25,5 +25,7 @@ export const WarningDiv = ({ message, className }: Props) => {
         <span className="mt-3 sm:mt-0 sm:ml-3 text-sm">{message}</span>
       </div>
     </div>
+  ) : (
+    <span></span>
   )
 }

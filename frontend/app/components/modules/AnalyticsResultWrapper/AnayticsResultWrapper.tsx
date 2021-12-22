@@ -20,7 +20,7 @@ export const AnalyticsResultWrapper = ({
           <ResponsiveImage
             className="h-48 w-full max-w-xs md:max-w-lg md:w-1/2 md:mr-12 md:h-80"
             src={imageBase64}
-            objectFit="cover"
+            objectFit="fill"
             alt="inputed image"
           />
         )}

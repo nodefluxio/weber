@@ -98,7 +98,7 @@ export const AnalyticsPage: React.FC<Props> = ({
       slug={slug}
       onModalClose={() => setOpenModal(false)}
       customBannerUrl={customBannerUrl}>
-      <div className="container w-[90%] lg:w-4/5 mx-auto pt-6 pb-12">
+      <div className="container w-[90%] lg:w-4/5 mx-auto mt-8 pb-12">
         {currentStep === 1 && (
           <div className="flex flex-col items-center">
             <DropzoneOptions

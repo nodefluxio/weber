@@ -41,11 +41,13 @@ export const Stepper = ({ steps, activeStep, className }: Props) => {
                     justify-center sm:hidden ${className}`}>
         <div
           className="flex items-center justify-center w-16 h-16 border-4
-                        border-primary-500 rounded-full text-xl font-bold">
+                        border-primary-500 rounded-full text-lg font-bold">
           {`${activeStep} of ${steps.length}`}
         </div>
         <div className="ml-8 text-right">
-          <p className="text-2xl font-semibold">{steps[activeStep - 1]}</p>
+          <p className="text-xl font-semibold font-sans">
+            {steps[activeStep - 1]}
+          </p>
           {activeStep < steps.length && <p>{`Next: ${steps[activeStep]}`}</p>}
         </div>
       </div>

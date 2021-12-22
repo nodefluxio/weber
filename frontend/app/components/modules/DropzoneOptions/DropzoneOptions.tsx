@@ -104,7 +104,7 @@ export const DropzoneOptions = ({
     <div className="w-full md:ml-11">
       <WarningDiv
         message={errorMsg}
-        className="flex justify-center mb-2 text-center"
+        className="flex justify-center md:mr-11 mb-2 text-center"
       />
       <div className="w-full mx-auto flex flex-col justify-center cursor-pointer md:flex-row lg:w-7/12">
         <div
