@@ -28,18 +28,3 @@
   width: 10px !important;
   height: 10px !important;
 }
-
-.sectionContainer {
-  padding: 0rem 80px;
-  @include tablet {
-    padding: 0rem 40px;
-  }
-  @include phone {
-    padding: 0rem 32px;
-  }
-}
-
-.fluidContainer {
-  margin: 0 auto;
-  max-width: 1280px;
-}

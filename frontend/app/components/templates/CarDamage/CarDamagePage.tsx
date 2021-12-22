@@ -171,6 +171,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
       />
 
       <Stepper
+        className="mt-8 mb-4"
         steps={['Enter Your Image', 'Result']}
         activeStep={currentStep}
       />
@@ -232,7 +233,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
               <>
                 {result ? (
                   <>
-                    <div>
+                    <div className="mb-8">
                       {Object.entries(selectedImage).map(
                         (selectedImageSide, i) => (
                           <HorizontalCard key={i} className="mb-4">

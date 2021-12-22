@@ -136,7 +136,7 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
       />
 
       <div
-        className="flex justify-center items-center
+        className="container flex justify-center items-center
                     pt-8 pb-20 w-11/12 mx-auto my-4 
                     min-h-[400px] sm:min-h-[560px] sm:w-full">
         {currentStep === 1 && (
