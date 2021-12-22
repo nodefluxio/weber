@@ -4,21 +4,15 @@
 @tailwind components;
 
 @layer components {
-  .field {
-    @apply w-full p-1 mr-3 flex items-center mb-2;
+  .container {
+    .field {
+      @apply w-full p-1 mr-3 flex items-center mb-2;
+    }
+    .label {
+      @apply font-semibold mb-1 font-sans text-xs;
+    }
+    .result {
+      @apply font-serif text-lg;
+    }
   }
-  .label {
-    @apply font-semibold mb-1 font-sans text-xs;
-  }
-  .result {
-    @apply font-serif text-lg;
-  }
-}
-
-.resultsContainer {
-  width: 100%;
-  max-height: 360px;
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
 }

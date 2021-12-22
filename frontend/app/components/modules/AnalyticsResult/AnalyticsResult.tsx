@@ -137,7 +137,7 @@ export const AnalyticsResult = ({ result, slug, className }: Props) => {
   }
   return (
     <div
-      className={`w-full max-h-96 overflow-y-auto grid grid-cols-2 ${className}`}>
+      className={`w-full max-h-96 overflow-y-auto grid grid-cols-2 ${styles.container} ${className}`}>
       {result &&
         displayResult()?.map((item, idx) => <div key={idx}>{item}</div>)}
     </div>
