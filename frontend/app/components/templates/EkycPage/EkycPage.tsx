@@ -12,7 +12,6 @@ import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/Request
 import { AnalyticsResult } from '../../modules/AnalyticsResult/AnalyticsResult'
 import { postEKYC } from '../../../api/solutionsAPI'
 import { getImageFromLocalStorage } from '../../../utils/localStorage/localStorage'
-import styles from './EkycPage.module.scss'
 import { Spinner } from '../../elements/Spinner/Spinner'
 import {
   FL_LOCAL_STORAGE,
@@ -112,12 +111,12 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
         className="mt-8"
       />
 
-      <div className={`${styles.container} fluidContainer`}>
+      <div className="container mx-auto w-4/5 min-h-[60vh] py-8 flex flex-col justify-center items-center text-center">
         {currentStep === 1 && (
-          <div>
-            <h3 className={styles.title}>Welcome to e-KYC Demo</h3>
-            <div className={styles.specialInstruction}>
-              <p className={styles.desc}>
+          <div className="flex flex-col items-center">
+            <h3 className="pb-6 text-3xl">Welcome to e-KYC Demo</h3>
+            <div className="bg-yellow-300 w-full md:w-7/12 border border-solid rounded-lg my-8 h-min">
+              <p className="m-4 text-lg">
                 Please access this demo via <strong>smartphone</strong> or any
                 device with at least <strong>HD camera</strong> resolution for{' '}
                 <strong>better performance</strong> and{' '}
@@ -137,7 +136,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
 
         {currentStep === 2 && (
           <div>
-            <h3 className={styles.title}>Take A Selfie Photo</h3>
+            <h3 className="pb-6 text-3xl">Take A Selfie Photo</h3>
             <Cam
               localkey={FL_LOCAL_STORAGE}
               nextStep={() => {
@@ -151,7 +150,7 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
 
         {currentStep === 3 && (
           <div>
-            <h3 className={styles.title}>KTP Photo</h3>
+            <h3 className="pb-6 text-3xl">KTP Photo</h3>
             <Cam
               localkey={KTP_LOCAL_STORAGE}
               nextStep={() => {
@@ -166,19 +165,19 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
         )}
 
         {currentStep === 4 && (
-          <div className={styles.result}>
-            <div className={styles.percentagesContainer}>
-              <div className={styles.percentage}>
-                <h3 className={styles.title}>Liveness result</h3>
+          <div className="w-full flex flex-col items-center">
+            <div className="w-full flex flex-col md:flex-row justify-around mb-8">
+              <div className="font-bold m-8">
+                <h3 className="pb-6 text-3xl">Liveness result</h3>
                 {!loading ? (
                   result?.service_data.face_liveness.job.result.result
                     .length === 1 ? (
                     <>
-                      <span>{`${Math.trunc(
+                      <span className="block font-thin text-7xl">{`${Math.trunc(
                         result.service_data.face_liveness.job.result.result[0]
                           .face_liveness.liveness * 100
                       )}%`}</span>
-                      <p>
+                      <p className="font-medium text-2xl">
                         {result.service_data.face_liveness.job.result.result[0]
                           .face_liveness.live
                           ? 'Verified'
@@ -186,24 +185,26 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
                       </p>
                     </>
                   ) : (
-                    <p>{result?.service_data.face_liveness.message}</p>
+                    <p className="font-medium text-2xl">
+                      {result?.service_data.face_liveness.message}
+                    </p>
                   )
                 ) : (
-                  <Spinner />
+                  <Spinner className='mx-auto my-8' />
                 )}
               </div>
 
-              <div className={styles.percentage}>
-                <h3 className={styles.title}>Face Match Result</h3>
+              <div className="font-bold m-8">
+                <h3 className="pb-6 text-3xl">Face Match Result</h3>
                 {!loading ? (
                   result?.service_data.face_match.job.result.result.length ===
                   1 ? (
                     <>
-                      <span>{`${Math.trunc(
+                      <span className="block font-thin text-7xl">{`${Math.trunc(
                         result.service_data.face_match.job.result.result[0]
                           .face_match.similarity * 100
                       )}%`}</span>
-                      <p>
+                      <p className="font-medium text-2xl">
                         {result.service_data.face_match.job.result.result[0]
                           .face_match.match
                           ? 'Verified'
@@ -211,36 +212,38 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
                       </p>
                     </>
                   ) : (
-                    <p>{result?.service_data.face_match.message}</p>
+                    <p className="font-medium text-2xl">
+                      {result?.service_data.face_match.message}
+                    </p>
                   )
                 ) : (
-                  <Spinner />
+                  <Spinner className='mx-auto my-8' />
                 )}
               </div>
             </div>
-            <div className={styles.ocrKtp}>
-              <h3 className={styles.title}>OCR KTP Result</h3>
-              <div className={styles.ocrKtpResult}>
+            <div className='font-bold m-8'>
+              <h3 className="pb-6 text-3xl">OCR KTP Result</h3>
+              <div className="text-left">
                 {!loading ? (
                   result?.service_data.ocr_ktp.job.result.result.length ===
                   1 ? (
                     <AnalyticsResult
-                      className={styles.analyticResultOcrKtp}
+                      className="ml-[12px]"
                       result={result.service_data.ocr_ktp.job.result.result[0]}
                       slug={'ocr-ktp'}
                     />
                   ) : (
-                    <p className={styles.ocrKtpErrorMessage}>
+                    <p className="text-center">
                       {result?.service_data.ocr_ktp.message}
                     </p>
                   )
                 ) : (
-                  <Spinner />
+                  <Spinner className='mx-auto my-8' />
                 )}
               </div>
             </div>
             <Button
-              className={styles.btn}
+              className="mt-8"
               color={Color.Primary}
               onClick={() => {
                 nextStep()
@@ -253,8 +256,8 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
         )}
 
         {currentStep === 5 && (
-          <div className={styles.review}>
-            <h3 className={styles.title}>
+          <div className="w-full">
+            <h3 className="pb-6 text-3xl">
               Thank you for Using e-KYC Demo App!
             </h3>
             <Feedback
