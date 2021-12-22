@@ -137,13 +137,13 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
 
       <div
         className="container flex justify-center items-center
-                    pt-8 pb-20 w-11/12 mx-auto my-4 
-                    min-h-[400px] sm:min-h-[560px] sm:w-full">
+                    w-full sm:w-4/5 mx-auto py-8
+                    min-h-[400px] sm:min-h-[75vh]">
         {currentStep === 1 && (
           <div className="text-center">
             <h2 className="text-2xl">Welcome to {name} Demo App</h2>
             <div
-              className="flex bg-amber-400 rounded 
+              className="flex bg-amber-300 rounded 
                         justify-center mx-auto my-8 h-min
                         w-full sm:w-7/12">
               <p className="m-4 text-lg">
