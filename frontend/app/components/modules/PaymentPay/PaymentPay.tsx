@@ -142,7 +142,7 @@ export const PaymentPay = ({
             label="Please enter your phone number:"
             onChange={setPhone}
           />
-          <span className="text-red-600 text-xl font-serif">{phoneError}</span>
+          <span className="text-red-600 text-lg font-serif">{phoneError}</span>
           <div className="flex mt-4 justify-center">
             <Button
               color={Color.Primary}

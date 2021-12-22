@@ -18,7 +18,7 @@ export const BigInput = ({ id, type, label, onChange }: Props) => {
   return (
     <div>
       <div className="flex justify-center mb-4">
-        <Label id={id} label={label} className="md:text-2xl"/>
+        <Label id={id} label={label} className="md:text-2xl" />
       </div>
       <input
         type={type}
