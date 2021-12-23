@@ -10,7 +10,7 @@ export const Stepper = ({ steps, activeStep, className }: Props) => {
   return (
     <>
       <ol
-        className={`hidden sm:flex w-full mx-auto justify-center overflow-hidden font-serif ${className}`}>
+        className={`hidden md:flex w-full mx-auto justify-center overflow-hidden font-serif ${className}`}>
         {steps.map((step: string, idx: number) => (
           // stepper item
           <li
@@ -21,7 +21,7 @@ export const Stepper = ({ steps, activeStep, className }: Props) => {
             {/* stepper bulletin */}
             <div
               className={`flex items-center justify-center mx-32 
-              sm:mx-[7vw] rounded-full w-7 h-7 ${
+              md:mx-[7vw] rounded-full w-7 h-7 ${
                 idx + 1 === activeStep ? 'bg-primary-500' : 'bg-neutral-300'
               } font-bold text-neutral-100`}>
               {idx + 1}
@@ -38,7 +38,7 @@ export const Stepper = ({ steps, activeStep, className }: Props) => {
       {/* Mobile View */}
       <div
         className={`flex flex-row items-center font-serif
-                    justify-center sm:hidden ${className}`}>
+                    justify-center md:hidden ${className}`}>
         <div
           className="flex items-center justify-center w-16 h-16 border-4
                         border-primary-500 rounded-full text-lg font-bold">
