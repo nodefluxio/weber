@@ -4,6 +4,10 @@ In physics, [Weber (Wb)](https://en.wikipedia.org/wiki/Weber_(unit)) is the SI d
 
 ## Getting started
 
+### Documentations
+- For [Frontend](https://github.com/nodefluxio/weber/tree/main/frontend#getting-started)
+- For [Backend](https://github.com/nodefluxio/weber/tree/main/backend#weber-backend)
+
 ### Prerequisites
 
 - Docker
