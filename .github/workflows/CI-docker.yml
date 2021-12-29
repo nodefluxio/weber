@@ -10,7 +10,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 jobs:
   push-image-backend:
-    needs: build-backend
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,7 +42,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   push-image-frontend:
-    needs: build-frontend
     runs-on: ubuntu-latest
     permissions:
       contents: read
