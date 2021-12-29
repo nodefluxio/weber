@@ -14,11 +14,9 @@ spec:
       labels:
         app: weber-backend
     spec:
-      imagePullSecrets:
-        - name: nodeflux-registry
       containers:
         - name: weber-backend
-          image: registry.gitlab.com/nodefluxio/demo-apps/weber/backend:latest
+          image: ghcr.io/nodefluxio/weber/backend:latest
           imagePullPolicy: Always
           env:
             - name: APP_HOST
@@ -44,7 +42,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: weber
-                  key: db_host
+                  key: db_demo
             - name: DB_PORT
               value: "5432"
             - name: SESSION_EXPIRATION
@@ -52,7 +50,7 @@ spec:
             - name: URL_ANALYTICS
               value: https://api.cloud.nodeflux.io/v1/analytics/
             - name: FACE_ID
-              value: "148197557409939457"
+              value: "233202122718184"
           ports:
             - containerPort: 8080
 
