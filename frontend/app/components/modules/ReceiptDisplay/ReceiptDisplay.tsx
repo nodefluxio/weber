@@ -1,6 +1,5 @@
 import React from 'react'
 import { OCRReceiptData, ReceiptItem } from '@/types/elements'
-import styles from './ReceiptDisplay.module.scss'
 import { formatMoneyOnChange } from '@/utils/utils'
 import { CodeSnippet } from '@/elements/CodeSnippet/CodeSnippet'
 import { Tabs } from '../Tabs/Tabs'
@@ -24,40 +23,36 @@ export const ReceiptDisplay = ({ result }: Props) => {
   const { ocr_receipt } = result
 
   return (
-    <div className={styles.receiptDisplayWrapper}>
+    <div className="relative">
       <Tabs>
         <Tab
           title="Text"
-          className={`${styles.receiptInfoWrapper} ${styles.receiptTextFormat}`}>
-          <div className={styles.receiptHeader}>
+          className="h-[400px] overflow-y-auto py-4 px-2 font-serif border border-primary-500 rounded-b">
+          <div className="mb-1 font-semibold">
             Merchant Address: {ocr_receipt.address}
           </div>
-          <div className={styles.receiptHeader}>
+          <div className="mb-1 font-semibold">
             Merchant Number: {ocr_receipt.number}
           </div>
-          <div className={styles.receiptHeader}>
+          <div className="mb-1 font-semibold">
             Merchant Date: {ocr_receipt.date}
           </div>
-          <table className={styles.receiptTable}>
+          <table className="text-left my-3 w-full border-t border-b border-gray-200">
             <thead>
               <tr>
-                <th style={{ padding: '0.5rem 0' }}>Description</th>
+                <th className="py-2">Description</th>
                 <th>qty</th>
-                <th className={styles.totalCell}>Price</th>
-                <th className={styles.totalCell}>Total</th>
+                <th className="text-right">Price</th>
+                <th className="text-right">Total</th>
               </tr>
             </thead>
             <tbody>
               {ocr_receipt.item.map((r: ReceiptItem, i: number) => (
                 <tr key={i}>
-                  <td style={{ padding: '0.25rem 0' }}>{r.name}</td>
+                  <td className="py-1">{r.name}</td>
                   <td>{r.qty}</td>
-                  <td className={styles.totalCell}>
-                    {formatMoneyOnChange(r.price)}
-                  </td>
-                  <td className={styles.totalCell}>
-                    {formatMoneyOnChange(r.total)}
-                  </td>
+                  <td className="text-right">{formatMoneyOnChange(r.price)}</td>
+                  <td className="text-right">{formatMoneyOnChange(r.total)}</td>
                 </tr>
               ))}
             </tbody>
@@ -68,19 +63,17 @@ export const ReceiptDisplay = ({ result }: Props) => {
                 (k, i) =>
                   additionalFields.includes(k.toLowerCase()) && (
                     <tr key={i}>
-                      <td style={{ paddingRight: '1rem' }}>
-                        {k.toUpperCase()}
-                      </td>
-                      <td style={{ textAlign: 'right' }}>
-                        {(ocr_receipt as any)[k]}
-                      </td>
+                      <td className="pr-4">{k.toUpperCase()}</td>
+                      <td className="text-right">{(ocr_receipt as any)[k]}</td>
                     </tr>
                   )
               )}
             </tbody>
           </table>
         </Tab>
-        <Tab title="JSON" className={styles.receiptInfoWrapper}>
+        <Tab
+          title="JSON"
+          className="h-[400px] border border-primary-500 rounded-b">
           <CodeSnippet code={JSON.stringify(result, null, 3)} lang="json" />
         </Tab>
       </Tabs>

@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import styles from './DownloadApp.module.scss'
 
 interface DownloadProps {
   appStoreUrl: string
@@ -14,12 +13,14 @@ export const DownloadApp: React.FC<DownloadProps> = ({
   onBadgeClick
 }) => {
   return (
-    <div className={styles.downloadAppWrapper}>
-      <span className={styles.downloadBanner}>
+    <div className="flex flex-col items-center w-[85%] m-auto py-2">
+      <span
+        className="text-lg sm:text-2xl font-extrabold
+                  text-center text-primary-500 mt-4 sm:mt-0">
         Download Citizen App for free
       </span>
-      <span className={styles.storeMessage}>For IOS and Android</span>
-      <div className={styles.badgeWrappers}>
+      <span className="font-serif text-lg mt-1 mb-5">For IOS and Android</span>
+      <div className="flex flex-col sm:flex-row">
         <Link href={appStoreUrl}>
           <a target="_blank" onClick={() => onBadgeClick()}>
             <Image
@@ -29,7 +30,7 @@ export const DownloadApp: React.FC<DownloadProps> = ({
             />
           </a>
         </Link>
-        <div className={styles.endItem}>
+        <div className="ml-0 mt-3 sm:mt-0 sm:ml-4">
           <Link href={googlePlayUrl}>
             <a target="_blank" onClick={() => onBadgeClick()}>
               <Image

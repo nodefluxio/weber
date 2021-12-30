@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- [FRONTEND] Intorducing Tailwind CSS Configurations
 
 ### Changed
 

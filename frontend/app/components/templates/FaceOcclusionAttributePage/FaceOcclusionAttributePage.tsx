@@ -5,7 +5,6 @@ import { Tab } from '@/elements/Tab/Tab'
 import { postFaceOcclusionAttribute } from '@/api/innovationsAPI'
 import { ProgressBar } from '@/elements/ProgressBar/ProgressBar'
 import {
-  Color,
   FaceAttributeAdditionalLabel,
   FaceAttributeLabel,
   FaceOcclusionLabel
@@ -20,7 +19,6 @@ import {
   FACE_OCCLUSION_LABEL,
   MAX_IMAGE_SIZE
 } from 'app/constants/constant'
-import styles from './FaceOcclusionAttributePage.module.scss'
 
 type Props = {
   id: number
@@ -107,45 +105,45 @@ export const FaceOcclusionAttributePage = ({
         '/assets/images/innovations/face-occlusion-attribute/banner.png'
       }>
       {result && (
-        <div className={styles.FOAResult}>
-          <Tabs>
-            <Tab className={styles.tab} title="Face Occlusion">
-              <p className={styles.msg}>
-                {isFaceOccluded
-                  ? 'One or more areas of your face are occluded!'
-                  : 'Your face is clear and free from occlusion!'}
-              </p>
-              {faceOcclusionDetections ? (
-                FACE_OCCLUSION_LABEL.map((label, idx) => (
-                  <div className={styles.content} key={idx}>
-                    <p>{label}</p>
-                    <ProgressBar
-                      bgColor={Color.Primary}
-                      completed={faceOcclusionDetections.get(label) || 0}
-                    />
-                  </div>
-                ))
-              ) : (
-                <p>{faceOcclusionMessage}</p>
-              )}
-            </Tab>
-            <Tab className={styles.tab} title="Face Attribute">
-              {faceAttributeDetections ? (
-                FACE_ATTRIBUTE_LABEL.map((label, idx) => (
-                  <div className={styles.content} key={idx}>
-                    <p>{label}</p>
-                    <ProgressBar
-                      bgColor={Color.Primary}
-                      completed={faceAttributeDetections.get(label) || 0}
-                    />
-                  </div>
-                ))
-              ) : (
-                <p>{faceAttributeMessage}</p>
-              )}
-            </Tab>
-          </Tabs>
-        </div>
+        <Tabs>
+          <Tab
+            className="mt-5 px-2 overflow-y-auto h-64"
+            title="Face Occlusion">
+            <p className="text-center font-serif mb-5">
+              {isFaceOccluded
+                ? 'One or more areas of your face are occluded!'
+                : 'Your face is clear and free from occlusion!'}
+            </p>
+            {faceOcclusionDetections ? (
+              FACE_OCCLUSION_LABEL.map((label, idx) => (
+                <div className="flex items-center mb-2 mx-2" key={idx}>
+                  <p className="capitalize w-40 font-serif">{label}</p>
+                  <ProgressBar
+                    completed={faceOcclusionDetections.get(label) || 0}
+                  />
+                </div>
+              ))
+            ) : (
+              <p>{faceOcclusionMessage}</p>
+            )}
+          </Tab>
+          <Tab
+            className="mt-5 px-2 overflow-y-auto h-64"
+            title="Face Attribute">
+            {faceAttributeDetections ? (
+              FACE_ATTRIBUTE_LABEL.map((label, idx) => (
+                <div className="flex items-center mb-2 mx-2" key={idx}>
+                  <p className="capitalize w-40 font-serif">{label}</p>
+                  <ProgressBar
+                    completed={faceAttributeDetections.get(label) || 0}
+                  />
+                </div>
+              ))
+            ) : (
+              <p>{faceAttributeMessage}</p>
+            )}
+          </Tab>
+        </Tabs>
       )}
     </AnalyticsPage>
   )

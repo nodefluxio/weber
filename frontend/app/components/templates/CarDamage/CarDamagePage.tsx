@@ -5,7 +5,6 @@ import { Modal } from '@/elements/Modal/Modal'
 import { RequestDemoFormPopup } from '../../modules/RequestDemoFormPopup/RequestDemoFormModal'
 import { Banner } from '@/modules/Banner/Banner'
 import { Stepper } from '@/elements/Stepper/Stepper'
-import styles from './CarDamagePage.module.scss'
 import { HorizontalCard } from '@/modules/HorizontalCard/HorizontalCard'
 import { CarDamage, Color } from '@/types/elements'
 import { HCardContent } from '@/modules/HCardContent/HCardContent'
@@ -172,21 +171,22 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
       />
 
       <Stepper
+        className="mt-8 mb-4"
         steps={['Enter Your Image', 'Result']}
         activeStep={currentStep}
       />
 
-      <div className={`${styles.carDamage} fluidContainer`}>
+      <div className="container mx-auto w-4/5 min-h-[60vh] md:w-3/5 md:min-h-[70vh] lg:w-2/5 lg:min-h[80vh]  flex flex-col justify-center items-center text-left py-8">
         {currentStep === 1 && (
           <>
-            <p className={styles.instruction}>Select image for each part:</p>
+            <p className="text-lg">Select image for each part:</p>
             {Object.entries(CAR_DAMAGE_SAMPLES).map((sample, i) => (
               <Fragment key={i}>
                 <HorizontalCard
                   title={sample[0][0].toUpperCase() + sample[0].substring(1)}
                   className={
                     getKeyValue(sample[0])(validationError) &&
-                    styles.dangerHighlight
+                    'border-4 border-solid border-error'
                   }>
                   {sample[1].map((imgSrc, j) => (
                     <ResponsiveImage
@@ -199,9 +199,9 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                       }}
                       src={imgSrc}
                       alt={`${sample[0]} car damage sample no. ${j + 1}`}
-                      className={`${styles.responsiveImage} ${
+                      className={`w-[64px] md:w-[96px] lg:w-[128px] h-[64px] md:h-[96px] lg:h-[128px] relative cursor-pointer ${
                         imgSrc === getKeyValue(sample[0])(selectedImage)
-                          ? styles.selected
+                          ? 'border-4 border-solid border-primary-500'
                           : ''
                       }`}
                       objectFit="cover"
@@ -209,7 +209,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                   ))}
                 </HorizontalCard>
                 {getKeyValue(sample[0])(validationError) && (
-                  <span className={styles.danger}>
+                  <span className="mt-4 text-error">
                     {getKeyValue(sample[0])(validationError)}
                   </span>
                 )}
@@ -217,7 +217,7 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
             ))}
             <Button
               color={Color.Primary}
-              className={styles.button}
+              className="mt-12"
               onClick={() =>
                 validateSelectedImage(selectedImage) &&
                 handleCarDamage(session_id)
@@ -233,10 +233,10 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
               <>
                 {result ? (
                   <>
-                    <div className={styles.carDamageResult}>
+                    <div className="mb-8">
                       {Object.entries(selectedImage).map(
                         (selectedImageSide, i) => (
-                          <HorizontalCard key={i} className={styles.result}>
+                          <HorizontalCard key={i} className="mb-4">
                             <HCardContent
                               imgSrc={selectedImageSide[1]}
                               imgAlt={`${selectedImageSide[0]} side image`}
@@ -253,18 +253,12 @@ export const CarDamagePage = ({ id, name, long_description }: Props) => {
                           </HorizontalCard>
                         )
                       )}
-                      <p
-                        className={
-                          styles.resultText
-                        }>{`Total Score: ${result.service_data.job.result.result[0].total_score}`}</p>
-                      <p
-                        className={
-                          styles.resultText
-                        }>{`Recomendation: ${result.service_data.job.result.result[0].recommendation}`}</p>
+                      <p className="text-lg">{`Total Score: ${result.service_data.job.result.result[0].total_score}`}</p>
+                      <p className="text-lg">{`Recomendation: ${result.service_data.job.result.result[0].recommendation}`}</p>
                     </div>
                   </>
                 ) : (
-                  <h2 className={styles.danger}>Oops, Something Went Wrong</h2>
+                  <h2 className="text-error">Oops, Something Went Wrong</h2>
                 )}
                 <Feedback id={id} onTryAgain={() => setCurrentStep(1)} />
               </>

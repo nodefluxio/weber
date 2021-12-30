@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import SyntaxHighlighter from 'react-syntax-highlighter'
+import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { googlecode } from 'react-syntax-highlighter/dist/cjs/styles/hljs'
 import Image from 'next/image'
-import styles from './CodeSnippet.module.scss'
 
 type Props = {
   code: string
@@ -20,16 +19,27 @@ export const CodeSnippet = ({ code, lang }: Props) => {
   }
 
   return (
-    <div className={styles.wholeSnippetContainer}>
-      <button className={styles.receiptButtonCopy} onClick={() => copyCode()}>
-        <Image src="/assets/icons/copy.svg" width={20} height={20} />
+    <div className="relative h-[inherit]">
+      <button
+        className="bg-black/30 text-white outline-none rounded top-4 
+        right-8 z-10 h-9 cursor-pointer p-2 absolute transition block hover:bg-black/60"
+        onClick={() => copyCode()}>
+        <Image
+          src="/assets/icons/copy.svg"
+          width={20}
+          height={20}
+          alt="copy button"
+        />
       </button>
       {isMessage && (
-        <div className={`${styles.receiptButtonCopy} ${styles.copyMessage}`}>
+        <div
+          className="bg-black/30 text-white outline-none rounded top-4 
+         z-10 h-9 cursor-pointer p-2 absolute transition block hover:bg-black/60
+         right-20 font-serif">
           Copied!
         </div>
       )}
-      <div className={styles.codeSnippetContainer}>
+      <div className="relative overflow-y-auto h-[inherit]">
         <SyntaxHighlighter language={lang} style={googlecode}>
           {code}
         </SyntaxHighlighter>

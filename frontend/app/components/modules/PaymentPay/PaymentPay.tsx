@@ -6,7 +6,6 @@ import { Color, PaymentAccountInfo } from '@/types/elements'
 import { PIN_DIGIT_LENGTH } from 'app/constants/amounts'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Cam } from '../Cam/Cam'
-import styles from './PaymentPay.module.scss'
 import { checkAccount, pay, resetBalance } from '@/api/paymentAPI'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { Spinner } from '@/elements/Spinner/Spinner'
@@ -136,15 +135,15 @@ export const PaymentPay = ({
   return (
     <>
       {step === 1 && (
-        <div className={styles.phoneNumber}>
+        <div className="block max-w-full">
           <BigInput
             type="tel"
             id="phone"
             label="Please enter your phone number:"
             onChange={setPhone}
           />
-          <span className={styles.danger}>{phoneError}</span>
-          <div className={styles.buttonWrapper}>
+          <span className="text-red-600 text-lg font-serif">{phoneError}</span>
+          <div className="flex mt-4 justify-center">
             <Button
               color={Color.Primary}
               onClick={() => {
@@ -156,29 +155,34 @@ export const PaymentPay = ({
         </div>
       )}
       {step === 2 && (
-        <div>
-          <div className={styles.subtitle}>
-            <h2>Take a selfie!</h2>
-            <p>
+        <div className="flex flex-col justify-center items-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold">Take a selfie!</h2>
+            <p className="font-serif mt-2">
               Ensure your face position is in the oval area <br />
-              Hold the camera at eye level. Look straight to the camera and smile!
+              Hold the camera at eye level. Look straight to the camera and
+              smile!
             </p>
           </div>
-          <Cam
-            localkey={FACE_MATCH_LIVENESS_SNAPSHOT}
-            overlayShape="circle"
-            nextStep={() => setStep(isPinRequired ? 3 : 4)}
-          />
+          <div className="mt-6">
+            <Cam
+              localkey={FACE_MATCH_LIVENESS_SNAPSHOT}
+              overlayShape="circle"
+              nextStep={() => setStep(isPinRequired ? 3 : 4)}
+            />
+          </div>
         </div>
       )}
       {step === 3 && (
-        <div className={styles.pinInputWrapper}>
-          <PinInput
-            message={'You’ve reached the limit, please input your pin'}
-            digits={PIN_DIGIT_LENGTH}
-            onPinChange={setPinCode}
-          />
-          <div className={styles.buttonWrapper}>
+        <div className="w-full sm:w-[60%]">
+          <div className="mx-auto">
+            <PinInput
+              message={"You've reached the limit, please input your pin"}
+              digits={PIN_DIGIT_LENGTH}
+              onPinChange={setPinCode}
+            />
+          </div>
+          <div className="mt-4 flex justify-center">
             <Button
               type="button"
               color={Color.Primary}
@@ -190,26 +194,43 @@ export const PaymentPay = ({
         </div>
       )}
       {step === 4 && (
-        <div className={styles.resultWrapper}>
-          <h2>{`Hello, ${paymentAccountInfo.full_name}`}</h2>
-
-          <p className={styles.balance}>
-            You have to pay <strong>{`IDR ${formatMoney(amount)}`}</strong>
-          </p>
-          <p className={styles.balance}>
-            Current Balance{' '}
-            <strong>{`IDR ${formatMoney(paymentAccountInfo.balance)}`}</strong>
-          </p>
+        <div
+          className="flex flex-col items-center justify-center
+                        w-full md:w-[35%] my-6 mx-0 font-serif">
+          <h2 className="text-2xl font-bold">{`Hello, ${paymentAccountInfo.full_name}`}</h2>
+          <div className="flex flex-col text-xl w-full my-4">
+            <div className="flex flex-row justify-between">
+              <p>You have to pay</p>
+              <p>
+                <strong>{`IDR ${formatMoney(amount)}`}</strong>
+              </p>
+            </div>
+            <div className="flex flex-row justify-between mt-2">
+              <p>Current balance</p>
+              <p>
+                <strong>{`IDR ${formatMoney(
+                  paymentAccountInfo.balance
+                )}`}</strong>
+              </p>
+            </div>
+            {isBalanceSufficient ? (
+              <div className="flex flex-row justify-between my-2">
+                <p>Remaining Balance</p>
+                <p>
+                  <strong>
+                    {`IDR ${formatMoney(paymentAccountInfo.balance - amount)}`}
+                  </strong>
+                </p>
+              </div>
+            ) : (
+              <p className="my-2">
+                <strong>Sorry, your balance is not enough</strong>
+              </p>
+            )}
+          </div>
           {isBalanceSufficient ? (
             <>
-              <p className={styles.balance}>
-                Remaining Balance{' '}
-                <strong>
-                  {`IDR ${formatMoney(paymentAccountInfo.balance - amount)}`}
-                </strong>
-              </p>
-
-              <div className={styles.confirmButtonWrapper}>
+              <div className="mt-5">
                 <Button
                   type="button"
                   color={Color.Primary}
@@ -232,25 +253,25 @@ export const PaymentPay = ({
             </>
           ) : (
             <>
-              <p className={styles.balance}>
-                <strong>Sorry, your balance is not enough</strong>
-              </p>
-              <div className={styles.btnGroup}>
+              <div className="flex justify-between">
                 <Button
                   type="button"
                   color={Color.Primary}
+                  className="m-2"
                   onClick={() => backToCatalog()}>
                   Back to Catalog
                 </Button>
                 <Button
                   type="button"
                   color={Color.Primary}
+                  className="m-2"
                   onClick={() => resolveResetBalance(sessionId)}>
                   Reset Balance
                 </Button>
                 <Button
                   type="button"
                   color={Color.Primary}
+                  className="m-2"
                   onClick={() => {
                     afterPay()
                   }}>
@@ -263,11 +284,17 @@ export const PaymentPay = ({
       )}
       {step === 5 &&
         (isLoading ? (
-          <Spinner />
+          <div className="flex flex-col items-center text-center">
+            <h2 className="text-xl font-bold">
+              Processing your transaction...
+            </h2>
+            <Spinner className="my-10" />
+            <p className="font-serif">Kindly wait for a moment</p>
+          </div>
         ) : (
-          <div className={styles.resultWrapper}>
-            <h2>
-              {isSuccess ? 'Payment Successful!' : 'Payment Unsuccessfull!'}
+          <div className="flex flex-col items-center text-center">
+            <h2 className="text-2xl font-bold mb-6">
+              {isSuccess ? 'Payment Successful' : 'Payment Unsuccessfull'}
             </h2>
             <Image
               src={`/assets/icons/${
@@ -277,9 +304,9 @@ export const PaymentPay = ({
               height={80}
               alt="thank you"
             />
-            <p>
+            <p className="font-serif mt-6 mb-8">
               {isSuccess
-                ? 'Thank you! your data will be deleted at the end of the day, You have to re-register if you want to try again on the next day.'
+                ? 'Thank you! your data will be deleted at the end of the day,\n You have to re-register if you want to try again on the next day.'
                 : message}
             </p>
             <Button

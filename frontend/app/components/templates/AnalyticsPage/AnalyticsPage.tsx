@@ -7,7 +7,6 @@ import { Button } from '../../elements/Button/Button'
 import { AnalyticsResultWrapper } from '../../modules/AnalyticsResultWrapper/AnayticsResultWrapper'
 import Feedback from '../../modules/Feedback/Feedback'
 import { Color } from '../../../types/elements'
-import styles from './AnalyticsPage.module.scss'
 import { CustomError } from 'app/errors/CustomError'
 import { Spinner } from 'app/components/elements/Spinner/Spinner'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
@@ -23,7 +22,6 @@ type Props = {
   maxImageSize: number
   acceptedFileFormat: string
   handlePost?: (session_id: string, photo: string) => Promise<unknown>
-  addionalStepOneNode?: ReactNode
   customBannerUrl?: string
 }
 
@@ -38,7 +36,6 @@ export const AnalyticsPage: React.FC<Props> = ({
   maxImageSize,
   acceptedFileFormat,
   handlePost,
-  addionalStepOneNode,
   customBannerUrl
 }) => {
   const [photo, setPhoto] = useState('')
@@ -101,10 +98,9 @@ export const AnalyticsPage: React.FC<Props> = ({
       slug={slug}
       onModalClose={() => setOpenModal(false)}
       customBannerUrl={customBannerUrl}>
-      <div className={styles.container}>
+      <div className="container w-[90%] lg:w-4/5 mx-auto mt-8 pb-12">
         {currentStep === 1 && (
-          <div className={styles.dropzoneNButton}>
-            {addionalStepOneNode}
+          <div className="flex flex-col items-center">
             <DropzoneOptions
               images={examples}
               onPhotoDrop={setPhoto}
@@ -112,7 +108,7 @@ export const AnalyticsPage: React.FC<Props> = ({
               acceptedFileFormat={acceptedFileFormat}
             />
             {photo && (
-              <div className={styles.buttonContainer}>
+              <div className="mt-8">
                 <Button color={Color.Primary} onClick={handleAnalytics}>
                   Next Step
                 </Button>
@@ -121,8 +117,9 @@ export const AnalyticsPage: React.FC<Props> = ({
           </div>
         )}
         {currentStep === 2 && (
-          <>
+          <div>
             <AnalyticsResultWrapper
+              className="mb-8 md:mb-14"
               imageBase64={photo}
               handleTryAgain={() => refreshState()}>
               {isResult ? (
@@ -130,20 +127,20 @@ export const AnalyticsPage: React.FC<Props> = ({
               ) : errorMsg ? (
                 <WarningDiv
                   message={errorMsg}
-                  className={styles.analyticsWarning}
+                  className="block md:inline-block mx-auto"
                 />
               ) : (
-                <div className={styles.loadingState}>
+                <div className="text-center">
                   <h3>Loading your results...</h3>
-                  <Spinner />
-                  <p>Please wait a moment</p>
+                  <Spinner className="my-8 mx-auto" />
+                  <p className="font-serif">Please wait a moment</p>
                 </div>
               )}
             </AnalyticsResultWrapper>
             {(isResult || errorMsg) && (
               <Feedback id={serviceID} onTryAgain={() => refreshState()} />
             )}
-          </>
+          </div>
         )}
       </div>
     </AnalyticsContainer>

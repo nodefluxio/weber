@@ -1,19 +1,16 @@
-.tabs {
-  display: flex;
-  flex-direction: column;
-  ul {
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
+@tailwind components;
+
+@layer components {
+  .tabs {
     li {
       &:first-child {
         button {
-          border-radius: 10px 0 0 0;
+          @apply rounded-tl-xl;
         }
       }
       &:last-child {
         button {
-          border-radius: 0 10px 0 0;
+          @apply rounded-tr-xl;
         }
       }
     }

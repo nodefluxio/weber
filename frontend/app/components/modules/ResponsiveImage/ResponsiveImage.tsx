@@ -1,7 +1,6 @@
-import Image from 'next/image'
-import styles from './ResponsiveImage.module.scss'
+import Image, { ImageProps } from 'next/image'
 
-type Props = {
+interface Props extends ImageProps {
   className?: string
   src: string
   alt: string
@@ -16,11 +15,12 @@ export const ResponsiveImage = ({
   alt,
   objectFit,
   imgClassName,
-  onClick
+  onClick,
+  ...props
 }: Props) => {
   return (
     <div
-      className={`${styles.responsiveImage} ${className}`}
+      className={`relative ${className}`}
       onClick={() => onClick && onClick()}>
       <Image
         className={imgClassName}
@@ -28,6 +28,7 @@ export const ResponsiveImage = ({
         alt={alt}
         layout="fill"
         objectFit={objectFit}
+        {...props}
       />
     </div>
   )

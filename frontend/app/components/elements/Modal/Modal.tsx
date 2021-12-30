@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import styles from './Modal.module.scss'
 type Props = {
   show: boolean
   onClose: () => void
@@ -20,14 +19,16 @@ export const Modal = ({ show, onClose, children }: Props) => {
   }
 
   const modalContent = show ? (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <div className={styles.header}>
+    <div
+      className="fixed top-0 right-0 left-0 bottom-0 
+      w-full h-full flex justify-center items-center bg-black/50  z-50">
+      <div className="bg-white w-[95%] py-8 px-4 relative rounded-2xl sm:w-[600px] overflow-y-auto max-h-[95vh] overflow-hidden">
+        <div className="absolute text-2xl top-8 right-4 ">
           <a href="#" onClick={handleCloseClick}>
             x
           </a>
         </div>
-        <div className={styles.body}>{children}</div>
+        {children}
       </div>
     </div>
   ) : null

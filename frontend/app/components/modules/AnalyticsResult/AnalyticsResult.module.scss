@@ -1,35 +1,18 @@
 @import '../../../styles/abstracts/mixins';
 @import '../../../styles/abstracts/variables';
-.resultsContainer {
-  width: 100%;
-  max-height: 360px;
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
 
-  .field {
-    width: 100%;
-    padding: 4px;
-    margin-right: 12px;
-    display: flex;
-    align-items: center;
-    .boundingBoxContainer {
-      width: 40px;
-      height: 40px;
-      position: relative;
-      margin-right: 1rem;
+@tailwind components;
+
+@layer components {
+  .container {
+    .field {
+      @apply w-full p-1 mr-3 flex items-center mb-2;
     }
     .label {
-      font-weight: 600;
-      margin: 0 0 4px 0;
-      font-size: 0.8rem;
-      font-family: $primary-font;
+      @apply font-semibold mb-1 font-sans text-xs;
     }
     .result {
-      margin: 0;
-      font-size: 1.2rem;
-      font-family: $secondary-font;
+      @apply font-serif text-lg;
     }
-    margin-bottom: 8px;
   }
 }

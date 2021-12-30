@@ -1,7 +1,6 @@
 import { useState, ReactElement, useEffect } from 'react'
 import { Button } from '../../elements/Button/Button'
 import { Color } from '../../../types/elements'
-import styles from './Carousel.module.scss'
 
 type Props = {
   children: ReactElement[]
@@ -54,17 +53,22 @@ export const Carousel = ({
   }
 
   return (
-    <div className={`${styles.carousel} ${className}`}>
+    <div className={`w-full h-full relative ${className}`}>
       {children.map((child, index) => (
         <div
           key={index}
-          className={`${styles.slide} ${
-            slideIndex === index + 1 && styles.slideActive
+          className={`relative  ${
+            slideIndex === index + 1 ? 'block' : 'hidden'
           }`}>
           {child}
         </div>
       ))}
-      <div className={`${styles.dot} ${vertical && styles.vertical}`}>
+      {/* dot */}
+      <div
+        className={`absolute  bottom-8 left-1/2 -translate-x-1/2 flex ${
+          vertical &&
+          'bottom-1/2 left-[unset] right-[5%] -translate-x-1/2 translate-y-1/2 flex-col'
+        }`}>
         {children.map((_, index) => (
           <div
             key={index}
@@ -72,8 +76,13 @@ export const Carousel = ({
               setIsDotClicked(true)
               moveDot(index + 1)
             }}
-            className={`${styles.dotItem} ${
-              slideIndex === index + 1 && styles.dotActive
+            className={`w-4 h-4 rounded-full mx-1.5 cursor-pointer ${
+              vertical && 'mx-0 my-1.5'
+            } ${
+              // dot active
+              slideIndex === index + 1
+                ? 'bg-secondary-500 cursor-auto'
+                : 'bg-white'
             }`}></div>
         ))}
       </div>
@@ -82,23 +91,23 @@ export const Carousel = ({
           <Button
             color={Color.Secondary}
             type={'button'}
-            rounded={true}
             onClick={() => {
               setIsDotClicked(true)
               prev()
             }}
-            className={styles.prev}>
+            className="absolute left-[5vw] top-[90vh] sm:top-[50vh] -scale-x-100
+            w-12 h-12 py-2 px-4 rounded-full text-white">
             ➜
           </Button>
           <Button
             color={Color.Secondary}
             type={'button'}
-            rounded={true}
             onClick={() => {
               setIsDotClicked(true)
               next()
             }}
-            className={styles.next}>
+            className="absolute right-[5vw] top-[90vh] sm:top-[50vh]
+            w-12 h-12 py-2 px-4 rounded-full text-white">
             ➜
           </Button>
         </>

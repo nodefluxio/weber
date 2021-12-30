@@ -1,51 +1,47 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import styles from './CardFull.module.scss'
 import { ReactNode } from 'react'
 
 type Props = {
-  img: string
-  title: string
   href: string
+  children: ReactNode
   isExternal?: boolean
   isPopUp?: boolean
   target?: string
   onClick?: () => void
-  children: ReactNode
+  className?: string
 }
 
 export const CardFull = ({
-  img,
-  title,
   href,
   target,
   onClick,
   isExternal = false,
   isPopUp = false,
-  children
+  children,
+  className
 }: Props) => {
   const anchor = isPopUp ? (
-    <a onClick={() => onClick && onClick()}>Try it now</a>
+    <a
+      className="text-transparent absolute top-0 left-0 right-0 bottom-0 content-['']"
+      onClick={() => onClick && onClick()}>
+      Try it now
+    </a>
   ) : (
-    <a href={href} target={target} onClick={() => onClick && onClick()}>
+    <a
+      className="text-transparent absolute top-0 left-0 right-0 bottom-0 content-['']"
+      href={href}
+      target={target}
+      onClick={() => onClick && onClick()}>
       Try it now
     </a>
   )
 
   return (
-    <div className={styles.card}>
-      <div className={styles.imgContainer}>
-        <Image
-          alt={`image of ${title}`}
-          src={img}
-          layout="fill"
-          objectFit="contain"
-          quality={100}
-        />
-      </div>
-
+    <div
+      className={`relative w-full m-auto overflow-hidden 
+      text-white rounded-3xl bg-primary-500 
+       md:hover:bg-primary-600 transition-colors ${className}`}>
       {children}
-
       {isExternal ? anchor : <Link href={href}>{anchor}</Link>}
     </div>
   )

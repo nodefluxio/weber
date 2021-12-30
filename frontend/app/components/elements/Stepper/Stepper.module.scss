@@ -1,65 +1,18 @@
 @import '../../../styles/abstracts/variables';
-@import '../../../styles/abstracts/mixins';
 
-.stepper {
-  display: flex;
-  margin: auto;
-  width: 80%;
-  justify-content: center;
-  padding: 5rem 0 0 0;
-  overflow: hidden;
-  @include tablet {
-    width: 100%;
-  }
-  .stepperItem {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    @include tablet {
-      display: none;
-
-      &.current {
-        display: flex;
-      }
-
-      &.next {
-        display: flex;
-      }
-    }
-
-    p {
-      font-weight: 500;
-    }
-
-    &:not(:last-child) {
-      &:after {
-        --circle-size: clamp(2rem, 5vw, 2.2rem);
-        --spacing: clamp(0.5rem, 2vw, 0.5rem);
-        content: '';
-        position: relative;
-        top: calc(var(--circle-size) / 2);
-        width: calc(100% - var(--circle-size) - calc(var(--spacing) * 2));
-        left: calc(50% + calc(var(--circle-size) / 2 + var(--spacing)));
-        height: 2px;
-        background-color: lighten($primary-color, 55%);
-        order: -1;
-      }
-    }
-    .stepperBulletin {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      margin: 0 7vw;
-      @include tablet {
-        margin: 0 8rem;
-      }
-    }
-
-    .active {
-      background: $primary-color;
-    }
-    .inactive {
-      background: lighten($primary-color, 55%);
+.stepperItem {
+  &:not(:last-child) {
+    &:after {
+      --circle-size: clamp(2rem, 5vw, 2.2rem);
+      --spacing: clamp(0.5rem, 2vw, 0.5rem);
+      content: '';
+      position: relative;
+      top: calc(var(--circle-size) / 2);
+      width: calc(100% - var(--circle-size) - calc(var(--spacing) * 2));
+      left: calc(50% + calc(var(--circle-size) / 2 + var(--spacing)));
+      height: 1px;
+      background-color: rgb(212 212 212);
+      order: -1;
     }
   }
 }

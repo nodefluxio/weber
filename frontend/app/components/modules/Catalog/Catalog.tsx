@@ -1,4 +1,3 @@
-import styles from './Catalog.module.scss'
 import { Button } from '@/elements/Button/Button'
 import { CardImage } from '../CardImage/CardImage'
 import { Card } from '../Card/Card'
@@ -42,8 +41,9 @@ const ITEM_LIST: ShoppingItem[] = [
 type Props = {
   onAddToCart: (item: ShoppingItem) => void
   sessionId: string
+  className?: string
 }
-export const Catalog = ({ onAddToCart, sessionId }: Props) => {
+export const Catalog = ({ onAddToCart, sessionId, className }: Props) => {
   const [balance, setBalance] = useState<number>()
   useEffect(() => {
     const getAccountInfo = async () => {
@@ -58,34 +58,41 @@ export const Catalog = ({ onAddToCart, sessionId }: Props) => {
     getAccountInfo()
   }, [])
   return (
-    <div className={styles.catalogContainer}>
-      <div className={styles.balance}>
+    <div className={`flex flex-col ${className}`}>
+      <div
+        className="flex self-end bg-primary-500 p-4 mb-8
+                      rounded-lg text-neutral-100 sm:mr-3">
         <Image
           src="/assets/icons/balance-icon.svg"
           width={20}
           height={20}
           alt="balance-icon"
         />
-        <p>Rp. {balance ? formatMoney(balance) : 0}</p>
+        <p className="ml-4">Rp. {balance ? formatMoney(balance) : 0}</p>
       </div>
-      <div className={styles.catalog}>
+      <div className="flex flex-wrap m-auto">
         {ITEM_LIST.map((item) => (
-          <div key={item.id} className={styles.item}>
-            <Card className={styles.card} color={Color.Secondary}>
+          <div key={item.id} className="flex-[1_0_40%]">
+            <Card className="w-[95%] mb-[5%]">
               <CardImage
-                className={styles.cardImage}
+                className="relative w-[100px] h-[100px]
+                           mx-auto my-8 sm:w-[200px] sm:h-[200px]"
                 img={`/assets/images/solutions/face-payment/${item.image}`}
                 layout="fill"
                 objectFit="contain"
                 alt={item.name}
               />
-              <CardContent className={styles.cardContent}>
-                <h3>{item.name}</h3>
-                <div className={styles.row}>
-                  <p>IDR {formatMoney(item.price)}</p>
+              <CardContent className="p-4 sm:p-8 text-neutral-100">
+                <h3 className="h-[48px] mb-4">{item.name}</h3>
+                <div
+                  className="flex flex-col items-start justify-between
+                                sm:flex-row sm:items-center">
+                  <p className="mt-4 block font-extrabold">
+                    IDR {formatMoney(item.price)}
+                  </p>
                   <Button
-                    className={styles.btn}
-                    color={Color.Primary}
+                    className="mt-4 self-center text-sm md:self-center md:mt-0"
+                    color={Color.Secondary}
                     onClick={() => onAddToCart(item)}
                     rect>
                     Add to cart

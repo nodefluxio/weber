@@ -1,46 +1,30 @@
 @import './base/base';
 @import './abstracts/mixins';
 @import './abstracts/variables';
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.sectionContainer {
-  padding: 0rem 80px;
-  @include tablet {
-    padding: 0rem 40px;
+@layer components {
+  .title-line {
+    @apply font-extrabold text-2xl md:text-3xl text-primary-500 
+    text-center relative mb-8 sm:mb-12 after:block after:w-24 after:rounded-full
+    after:h-[3px] after:bg-secondary-500 after:absolute after:top-[120%] after:left-1/2
+    after:-translate-x-1/2 after:-translate-y-1/2;
   }
-  @include phone {
-    padding: 0rem 32px;
+  .section-padding {
+    @apply pt-8 pb-7 sm:pt-14 sm:pb-12;
+  }
+  .custom-swiper-slide {
+    @apply w-4/5 sm:w-11/12;
   }
 }
-.swiper-button-next,
-.swiper-button-prev {
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: $primary-font;
-  background-color: $secondary-color;
-  width: 50px !important;
-  height: 50px !important;
-  &:hover,
-  &:focus {
-    background-color: darken($secondary-color, 10%);
-  }
-  padding: 10px 16px;
-  line-height: 1.33;
-  border-radius: 25px;
-  &::after {
-    font-size: 18px !important;
-
-    color: $white-text;
-    content: '➜' !important;
-  }
+.swiper-pagination-bullet-active {
+  background: rgb(69 229 183) !important;
 }
-.swiper-button-prev {
-  &::after {
-    transform: scaleX(-1);
-  }
-}
-
-.fluidContainer {
-  margin: 0 auto;
-  max-width: 1280px;
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
 }

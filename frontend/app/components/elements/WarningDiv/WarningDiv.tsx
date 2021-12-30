@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import styles from './WarningDiv.module.scss'
 
 type Props = {
   message: string
@@ -7,23 +6,28 @@ type Props = {
 }
 
 export const WarningDiv = ({ message, className }: Props) => {
-  return (
+  return message ? (
     <div className={className}>
       <div
-        className={`${styles.warningDivWrapper} ${
-          message && styles.warningDivWrapperActive
+        className={`text-yellow-700 flex flex-col sm:flex-row items-center justify-center px-3 py-1  ${
+          message && 'bg-yellow-200 border-yellow-700 border rounded'
         }`}>
         {message && (
-          <div className={styles.warningImageWrapper}>
+          <div className="flex-shrink-0 flex items-center">
             <Image
               src={'/assets/icons/error-icon.svg'}
               width={32}
               height={32}
+              alt="alert symbol"
             />
           </div>
         )}
-        <span className={styles.messageSpan}>{message}</span>
+        <span className="mt-3 sm:mt-0 sm:ml-3 text-sm font-serif">
+          {message}
+        </span>
       </div>
     </div>
+  ) : (
+    <span></span>
   )
 }

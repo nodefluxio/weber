@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import Image from 'next/image'
-import styles from './HCardContent.module.scss'
 
 type Props = {
   title: string
@@ -11,13 +10,13 @@ type Props = {
 
 export const HCardContent = ({ imgSrc, imgAlt, title, children }: Props) => {
   return (
-    <div className={styles.hCardContent}>
-      <div className={styles.image}>
+    <div className="flex">
+      <div className="relative w-[128px] h-[128px] mr-12">
         <Image src={imgSrc} alt={imgAlt} layout="fill" objectFit="cover" />
       </div>
-      <div className={styles.body}>
-        <h2 className={styles.title}>{title}</h2>
-        <div className={styles.content}>{children}</div>
+      <div className="text-left">
+        <h2 className="mb-2">{title}</h2>
+        <div className="mb-2">{children}</div>
       </div>
     </div>
   )

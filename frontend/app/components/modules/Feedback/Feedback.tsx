@@ -8,17 +8,17 @@ import { Label } from '../../elements/Label/Label'
 import { Star } from '../../elements/Star/Star'
 import { Color } from '../../../types/elements'
 import { FeedbackData } from '../../../types/elements'
-import styles from './Feedback.module.scss'
-import Link from 'next/link'
 import { WarningDiv } from '@/elements/WarningDiv/WarningDiv'
+import { ButtonLink } from '@/elements/ButtonLink/ButtonLink'
 
-interface ReviewProp {
+type Props = {
   id: number
   onTryAgain: () => void
   afterSubmit?: () => void
+  className?: string
 }
 
-const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
+const Feedback = ({ id, onTryAgain, afterSubmit, className }: Props) => {
   const [rating, setRating] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -69,70 +69,79 @@ const Feedback: React.FC<ReviewProp> = ({ id, onTryAgain, afterSubmit }) => {
     }
   }
 
-  return isSubmitted && isSuccess ? (
-    <div className={styles.thankYou}>
-      <div style={{ marginBottom: '1rem' }}>
-        <Image src={'/assets/icons/thankyou.svg'} width={90} height={90} />
-      </div>
-      <h3>{message}</h3>
-      <div className={styles.buttons}>
-        <Button type="button" color={Color.Primary} onClick={onTryAgain}>
-          Try again with another photo
-        </Button>
-        <Link passHref href="/">
-          <Button type="link" color={Color.Secondary}>
-            Explore More
-          </Button>
-        </Link>
-      </div>
-    </div>
-  ) : (
-    <form
-      className={styles.review}
-      method="post"
-      onSubmit={handleSubmit(onSubmit)}>
-      <h3>How was your experience?</h3>
-      {isSubmitted && (
-        <WarningDiv message={message} className={styles.warningDiv} />
-      )}
-      <div className={styles.starFlex}>
-        {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            onClick={() => {
-              setValue('rating', i + 1)
-              setRating(i + 1)
-            }}
-            className={`${styles.star} ${
-              i + 1 <= rating ? styles.colored : styles.idle
-            }`}
+  return (
+    <div className={`w-full text-center ${className}`}>
+      {isSubmitted && isSuccess ? (
+        <div className="flex flex-col items-center justify-center text-centers">
+          <Image
+            src={'/assets/icons/thankyou.svg'}
+            width={90}
+            height={90}
+            alt="thankyou svg"
           />
-        ))}
-      </div>
-      <div className={styles.commentLabel}>
-        <Label
-          id={'comment'}
-          errors={errors}
-          label={
-            watchRating < 4 ? 'Leave a comment (min. 20 characters)' : 'Comment'
-          }
-        />
-      </div>
-      <textarea
-        id="comment"
-        className={styles.comment}
-        placeholder="Tell us your experience"
-        {...register('comment')}
-      />
-      <div className={styles.buttonWrapper}>
-        <Button
-          type="submit"
-          color={Color.Secondary}
-          disabled={isDisabled || isLoading}>
-          {isLoading ? 'Sending feedback...' : 'Submit'}
-        </Button>
-      </div>
-    </form>
+          <h3 className="my-4 text-primary-500">{message}</h3>
+          <div className="flex flex-col max-w-sm">
+            <Button className="mb-4" color={Color.Primary} onClick={onTryAgain}>
+              Try again with another photo
+            </Button>
+            <ButtonLink href="/" color={Color.Secondary}>
+              Explore More
+            </ButtonLink>
+          </div>
+        </div>
+      ) : (
+        <form
+          className="flex flex-col items-center"
+          method="post"
+          onSubmit={handleSubmit(onSubmit)}>
+          <h3 className="text-primary-500 mb-4">How was your experience?</h3>
+          {isSubmitted && (
+            <WarningDiv message={message} className="inline-block" />
+          )}
+          <div className="flex mb-4">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                onClick={() => {
+                  setValue('rating', i + 1)
+                  setRating(i + 1)
+                }}
+                className="w-8 h-auto cursor-pointer mx-1"
+                svgClassName={
+                  i + 1 <= rating
+                    ? 'fill-secondary-500 transition-[fill] hover:fill-secondary-600'
+                    : 'fill-gray-300 transition-[fill] hover:fill-gray-400'
+                }
+              />
+            ))}
+          </div>
+          <Label
+            className="block font-serif font-normal mb-1"
+            id={'comment'}
+            errors={errors}
+            label={
+              watchRating < 4
+                ? 'Leave a comment (min. 20 characters)'
+                : 'Comment'
+            }
+          />
+          <textarea
+            id="comment"
+            className="p-4 resize-none font-serif
+             h-32 rounded border focus:border-primary-300 mb-4 outline-none w-full max-w-sm"
+            placeholder="Tell us your experience"
+            {...register('comment')}
+          />
+          <Button
+            className="mx-auto w-full max-w-sm"
+            type="submit"
+            color={Color.Secondary}
+            disabled={isDisabled || isLoading}>
+            {isLoading ? 'Sending feedback...' : 'Submit'}
+          </Button>
+        </form>
+      )}
+    </div>
   )
 }
 
