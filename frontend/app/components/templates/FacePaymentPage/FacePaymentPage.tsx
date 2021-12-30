@@ -137,7 +137,7 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
 
       <div
         className="container flex justify-center items-center
-                    w-full sm:w-4/5 mx-auto py-8
+                    w-[90%] sm:w-4/5 mx-auto py-8
                     min-h-[400px] sm:min-h-[75vh]">
         {currentStep === 1 && (
           <div className="text-center">
