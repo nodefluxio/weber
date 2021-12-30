@@ -19,7 +19,7 @@ export const Button = ({
   return (
     <button
       className={`py-3 px-5 bg-slate-50 font-bold cursor-pointer rounded-full
-      font-sans disabled:opacity-30 disabled:cursor-not-allowed transition-colors ${
+      font-sans disabled:opacity-30 disabled:cursor-not-allowed transition-colors shadow ${
         color === Color.Primary &&
         'bg-primary-500 text-white hover:bg-primary-600'
       } 
