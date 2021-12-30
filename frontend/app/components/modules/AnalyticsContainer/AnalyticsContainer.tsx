@@ -40,7 +40,7 @@ export const AnalyticsContainer = ({
         longDescription={longDescription}
       />
       <Stepper
-        className="mt-8 mx-4"
+        className="mt-8"
         steps={['Upload your photo', 'Check your results']}
         activeStep={currentStep}
       />
