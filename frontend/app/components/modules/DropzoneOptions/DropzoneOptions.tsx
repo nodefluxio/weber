@@ -23,9 +23,9 @@ export const DropzoneOptions = ({
     return i % 2 !== 0
   })
 
-  const ERROR_FILE_SIZE = `Please upload another image lower than ${
-    maxSize / 1000
-  }kB`
+  const ERROR_FILE_SIZE = `Please upload another image lower than ${getFileSizeWithUnit(
+    maxSize
+  )}`
   const ERROR_FILE_FORMAT = `Please upload ${parsedFileFormat.toString()} file only`
 
   const onDrop = useCallback((uploadedPhoto) => {
