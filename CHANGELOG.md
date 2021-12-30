@@ -5,11 +5,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
-- [FRONTEND] Intorducing Tailwind CSS Configurations
 
 ### Changed
 
 ### Removed
+
+## [1.1.1 - 30/12/2021]
+
+### Added
+
+- [FRONTEND] Implement Tailwind CSS Configurations
+
+## [1.1.0 - 29/12/2021]
+
+### Added
+
+- [DEPLOYMENT] Implement GitHub Action to build and push image to ghcr
 
 ## [1.0.0 - 13/12/2021]
 
