@@ -10,20 +10,22 @@ spec:
   selector:
     matchLabels:
       app: weber-frontend
-  template: 
+  template:
     metadata:
       labels:
         app: weber-frontend
     spec:
-      imagePullSecrets:
-        - name: nodeflux-registry
       containers:
         - name: weber-frontend
-          image: registry.gitlab.com/nodefluxio/demo-apps/weber/frontend:latest
+          image: ghcr.io/nodefluxio/weber/frontend:latest
           imagePullPolicy: Always
           env:
             - name: BACKEND_URL
               value: https://demo.nodeflux.io/weber/api/v1
+            - name: APP_DOWNLOAD_MODAL_SOLUTION
+              value: "Citizen Apps"
+            - name: EMAIL_MODAL_SOLUTION
+              value: "AML / PEP"
           ports:
             - containerPort: 3000
 
@@ -53,4 +55,3 @@ spec:
   service: weber-frontend.demo
   bypass_auth: true
   timeout_ms: 30000
-
