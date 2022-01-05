@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- [FRONTEND] Fix X button position in Modal
+
 ### Removed
 
 ## [1.1.1 - 30/12/2021]
