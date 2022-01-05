@@ -114,8 +114,8 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
       <div className="container mx-auto w-[90%] md:w-4/5 min-h-[75vh] py-8 flex flex-col justify-center items-center text-center">
         {currentStep === 1 && (
           <div className="flex flex-col items-center">
-            <h3 className="pb-6 text-3xl">Welcome to e-KYC Demo</h3>
-            <div className="bg-amber-300 w-full md:w-7/12 border border-solid rounded-lg my-8 h-min">
+            <h3 className="pb-6 text-2xl">Welcome to e-KYC Demo</h3>
+            <div className="bg-secondary-500 w-full md:w-7/12 border border-solid rounded-lg my-8 h-min">
               <p className="m-4 text-lg">
                 Please access this demo via <strong>smartphone</strong> or any
                 device with at least <strong>HD camera</strong> resolution for{' '}
