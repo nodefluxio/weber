@@ -252,7 +252,7 @@ export const HomePage = ({
               </SwiperSlide>
             ))}
           </Swiper>
-          <h2 className="title-line text-2xl pb-2">Partner's Solutions</h2>
+          <h2 className="title-line text-2xl pb-2">Partner&apos;s Solutions</h2>
           <Swiper
             className="w-full h-[460px] sm:h-[430px] md:h-[420px] lg:h-[430px]"
             pagination={pagination}
