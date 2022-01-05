@@ -251,6 +251,25 @@ export const HomePage = ({
                 </CardFull>
               </SwiperSlide>
             ))}
+          </Swiper>
+          <h2 className="title-line text-2xl pb-2">Partner's Solutions</h2>
+          <Swiper
+            className="w-full h-[460px] sm:h-[430px] md:h-[420px] lg:h-[430px]"
+            pagination={pagination}
+            centeredSlides={isMobile}
+            slidesPerView={'auto'}
+            spaceBetween={10}
+            grabCursor
+            breakpoints={{
+              '480': {
+                slidesPerView: 2,
+                spaceBetween: 20
+              },
+              '1024': {
+                slidesPerView: 3,
+                spaceBetween: 20
+              }
+            }}>
             {solutionPartners.map((solutionPartner) => (
               <SwiperSlide
                 className="custom-swiper-slide"
