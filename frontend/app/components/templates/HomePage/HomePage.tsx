@@ -1,6 +1,5 @@
 import { Color, Service } from '../../../types/elements'
 import { Card } from '../../modules/Card/Card'
-import { CardFull } from '../../modules/CardFull/CardFull'
 import { Carousel } from '../../modules/Carousel/Carousel'
 import { CarouselItem } from '../../modules/CarouselItem/CarouselItem'
 import { CardContent } from '../../modules/CardContent/CardContent'
