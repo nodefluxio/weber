@@ -27,7 +27,7 @@ export const SolutionCard = ({
       onClick={() => handleClick}>
       <div className="flex flex-col w-full relative">
         <ResponsiveImage
-          className="w-full h-[220px] xl:h-[300px] 2xl:h-[380px] mb-2"
+          className="w-full h-[220px] md:h-[280px] xl:h-[300px] 2xl:h-[380px] mb-2"
           alt={`image of ${solution.name}`}
           src={`/assets/images/solutions/${solution.thumbnail}`}
           objectFit="cover"
