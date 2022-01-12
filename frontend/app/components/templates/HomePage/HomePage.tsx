@@ -241,7 +241,7 @@ export const HomePage = ({
           </Swiper>
           <h2 className="title-line text-2xl pb-2">Partner&apos;s Solutions</h2>
           <Swiper
-            className="w-full h-[460px] sm:h-[430px] md:h-[420px] lg:h-[430px]"
+            className="w-full max-w-7xl h-[530px] md:h-[550px] xl:h-[540px] 2xl:h-[620px]"
             pagination={pagination}
             centeredSlides={isMobile}
             slidesPerView={'auto'}
