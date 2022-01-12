@@ -217,9 +217,7 @@ export const HomePage = ({
           className="container mx-auto sm:px-4 section-padding">
           <h2 className="title-line">Solutions</h2>
           <Swiper
-            className={`w-full max-w-7xl h-[530px] md:h-[550px] xl:h-[540px] 2xl:h-[620px] ${
-              !isMobile && 'align-swiper-middle'
-            }`}
+            className="w-full max-w-7xl h-[530px] md:h-[550px] xl:h-[540px] 2xl:h-[620px]"
             pagination={pagination}
             centeredSlides={isMobile}
             slidesPerView={'auto'}
@@ -232,6 +230,7 @@ export const HomePage = ({
               },
               '1024': {
                 slidesPerView: 3,
+                centerInsufficientSlides: true,
                 spaceBetween: 20
               }
             }}>
