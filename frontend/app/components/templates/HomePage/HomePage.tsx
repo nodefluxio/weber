@@ -1,6 +1,5 @@
 import { Color, Service } from '../../../types/elements'
 import { Card } from '../../modules/Card/Card'
-import { CardFull } from '../../modules/CardFull/CardFull'
 import { Carousel } from '../../modules/Carousel/Carousel'
 import { CarouselItem } from '../../modules/CarouselItem/CarouselItem'
 import { CardContent } from '../../modules/CardContent/CardContent'
@@ -21,6 +20,7 @@ import { RequestDemoFormPopup } from '@/modules/RequestDemoFormPopup/RequestDemo
 import { CustomError } from 'app/errors/CustomError'
 import { ButtonLink } from '@/elements/ButtonLink/ButtonLink'
 import { Intersection } from './Intersection'
+import { SolutionCard } from '@/modules/SolutionCard/SolutionCard'
 /* eslint-disable import/no-unresolved */
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Pagination } from 'swiper'
@@ -217,7 +217,7 @@ export const HomePage = ({
           className="container mx-auto sm:px-4 section-padding">
           <h2 className="title-line">Solutions</h2>
           <Swiper
-            className="w-full h-[460px] sm:h-[430px] md:h-[420px] lg:h-[430px]"
+            className="w-full max-w-7xl h-[530px] md:h-[550px] xl:h-[540px] 2xl:h-[620px] "
             pagination={pagination}
             centeredSlides={isMobile}
             slidesPerView={'auto'}
@@ -234,55 +234,28 @@ export const HomePage = ({
               }
             }}>
             {solutions.map((solution) => (
-              <SwiperSlide className="custom-swiper-slide" key={solution.id}>
-                <CardFull
-                  className="h-[420px] sm:h-[380px] md:h-[370px] lg:h-[380px]"
-                  href={`/solutions/${solution.slug}`}>
-                  <div className="flex flex-col w-full px-6 py-8">
-                    <ResponsiveImage
-                      className="w-full h-20 mb-2 lg:h-32 md:mb-4"
-                      alt={`image of ${solution.name}`}
-                      src={`/assets/images/solutions/${solution.thumbnail}`}
-                      objectFit="contain"
-                    />
-                    <h4 className="mb-2 text-lg">{solution.name}</h4>
-                    <p className="font-serif">{solution.short_description}</p>
-                  </div>
-                </CardFull>
+              <SwiperSlide key={solution.id} className="custom-swiper-slide">
+                <SolutionCard solution={solution} />
               </SwiperSlide>
             ))}
             {solutionPartners.map((solutionPartner) => (
               <SwiperSlide
-                className="custom-swiper-slide"
-                key={solutionPartner.id}>
-                <CardFull
-                  className="h-[420px] sm:h-[380px] md:h-[370px] lg:h-[380px]"
+                key={solutionPartner.id}
+                className="custom-swiper-slide">
+                <SolutionCard
                   isExternal
-                  isPopUp={
+                  isPopup={
                     solutionPartner.name === APP_DOWNLOAD_MODAL_SOLUTION ||
                     solutionPartner.name === EMAIL_MODAL_SOLUTION
                   }
-                  target="_blank"
-                  onClick={() =>
+                  handleClick={() =>
                     handleClickSolutionPartner(
                       solutionPartner.id,
                       solutionPartner.name
                     )
                   }
-                  href={solutionPartner.slug}>
-                  <div className="w-full px-6 py-8">
-                    <ResponsiveImage
-                      className="w-full h-20 mb-2 lg:h-32 md:mb-4"
-                      alt={`image of ${solutionPartner.name}`}
-                      src={`/assets/images/solutions/${solutionPartner.thumbnail}`}
-                      objectFit="contain"
-                    />
-                    <h4 className="mb-2 text-lg">{solutionPartner.name}</h4>
-                    <p className="font-serif">
-                      {solutionPartner.short_description}
-                    </p>
-                  </div>
-                </CardFull>
+                  solution={solutionPartner}
+                />
               </SwiperSlide>
             ))}
           </Swiper>

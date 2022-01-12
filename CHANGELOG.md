@@ -11,7 +11,9 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - [FRONTEND] Fix X button position in Modal
-- [FRONTEND] Change NIST logo to be smaller in larger device
+- [FRONTEND] Update solution card design
+- [FRONTEND] Change NIST logo to be smaller in larger device 
+
 
 ### Removed
 
