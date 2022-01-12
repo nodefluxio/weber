@@ -27,3 +27,5 @@ export const MAX_IMAGE_SIZE = 3000000 //3MB
 
 export const EMAIL_MODAL_SOLUTION =
   process.env.EMAIL_MODAL_SOLUTION || 'AML / PEP'
+
+export const GA_MEASUREMENT_ID = process.env.GA_MEASUREMENT_ID || 'G-654W9FSYX7'

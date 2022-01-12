@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [FRONTEND] Integrate Google Analytics
+
 ### Changed
 
 - [FRONTEND] Fix X button position in Modal
