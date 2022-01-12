@@ -217,7 +217,32 @@ export const HomePage = ({
           className="container mx-auto sm:px-4 section-padding">
           <h2 className="title-line">Solutions</h2>
           <Swiper
-            className="w-full max-w-7xl h-[530px] md:h-[550px] xl:h-[540px] 2xl:h-[620px] "
+            className="w-full max-w-7xl h-[530px] md:h-[550px] xl:h-[540px] 2xl:h-[620px]"
+            pagination={pagination}
+            centeredSlides={isMobile}
+            slidesPerView={'auto'}
+            spaceBetween={10}
+            grabCursor
+            breakpoints={{
+              '480': {
+                slidesPerView: 2,
+                spaceBetween: 20
+              },
+              '1024': {
+                slidesPerView: 3,
+                centerInsufficientSlides: true,
+                spaceBetween: 20
+              }
+            }}>
+            {solutions.map((solution) => (
+              <SwiperSlide key={solution.id} className="custom-swiper-slide">
+                <SolutionCard solution={solution} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <h2 className="title-line text-2xl pb-2">Partner&apos;s Solutions</h2>
+          <Swiper
+            className="w-full max-w-7xl h-[530px] md:h-[550px] xl:h-[540px] 2xl:h-[620px]"
             pagination={pagination}
             centeredSlides={isMobile}
             slidesPerView={'auto'}
@@ -233,11 +258,6 @@ export const HomePage = ({
                 spaceBetween: 20
               }
             }}>
-            {solutions.map((solution) => (
-              <SwiperSlide key={solution.id} className="custom-swiper-slide">
-                <SolutionCard solution={solution} />
-              </SwiperSlide>
-            ))}
             {solutionPartners.map((solutionPartner) => (
               <SwiperSlide
                 key={solutionPartner.id}
