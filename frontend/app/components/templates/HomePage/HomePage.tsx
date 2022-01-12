@@ -254,7 +254,6 @@ export const HomePage = ({
                       solutionPartner.name
                     )
                   }
-                  key={solutionPartner.id}
                   solution={solutionPartner}
                 />
               </SwiperSlide>
