@@ -6,9 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [FRONTEND] Integrate Google Analytics
+
 ### Changed
 
 - [FRONTEND] Fix X button position in Modal
+- [FRONTEND] Update solution card design
+- [FRONTEND] Change NIST logo to be smaller in larger device 
+
 
 ### Removed
 

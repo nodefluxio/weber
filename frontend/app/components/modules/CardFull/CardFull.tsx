@@ -40,7 +40,7 @@ export const CardFull = ({
     <div
       className={`relative w-full m-auto overflow-hidden 
       text-white rounded-3xl bg-primary-500 
-       md:hover:bg-primary-600 transition-colors ${className}`}>
+       md:hover:bg-primary-600 transition-colors hover:grayscale-[0.2]  ${className}`}>
       {children}
       {isExternal ? anchor : <Link href={href}>{anchor}</Link>}
     </div>

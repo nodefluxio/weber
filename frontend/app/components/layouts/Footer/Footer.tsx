@@ -51,7 +51,7 @@ export const Footer = () => {
               </div>
               <div className="flex items-center justify-center">
                 <ResponsiveImage
-                  className="w-2/5 h-20 mr-3 lg:w-1/3"
+                  className="w-2/5 h-20 mr-3 lg:w-1/5"
                   src="/assets/images/nist-logo.png"
                   objectFit="contain"
                   alt="NIST logo"
