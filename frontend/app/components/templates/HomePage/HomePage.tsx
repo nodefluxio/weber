@@ -264,6 +264,7 @@ export const HomePage = ({
                 className="custom-swiper-slide">
                 <SolutionCard
                   isExternal
+                  target="_blank"
                   isPopup={
                     solutionPartner.name === APP_DOWNLOAD_MODAL_SOLUTION ||
                     solutionPartner.name === EMAIL_MODAL_SOLUTION
