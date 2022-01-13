@@ -1,8 +1,13 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-
 ## [Unreleased]
+
+## [1.2.1 - 13/01/2022]
+### Changed
+
+- [FRONTEND] Fix solution card external link
+## [1.2.0 - 13/01/2022]
 
 ### Added
 
