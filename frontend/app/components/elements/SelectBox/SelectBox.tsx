@@ -28,6 +28,9 @@ export const SelectBox = ({
           rounded focus:outline-none focus:border-primary-500 font-serif bg-white text-sm sm:text-base"
           {...register(id, registerOptions)}
           {...otherProps}>
+          <option value="" disabled selected hidden>
+            Select option
+          </option>
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
               {opt.name}

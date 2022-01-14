@@ -11,10 +11,12 @@ import { setCookie } from 'nookies'
 import { useState } from 'react'
 import { SelectBox } from '../../elements/SelectBox/SelectBox'
 import data from './industry.json'
+import company_data from './company_size.json'
 import { Label } from '@/elements/Label/Label'
 import { Modal } from '@/elements/Modal/Modal'
 
 const Industries = data.Industries
+const { company_size_list } = company_data
 
 type Props = {
   onSuccess: () => void
@@ -26,6 +28,7 @@ type FormData = {
   company: string
   job_title: string
   industry: string
+  company_size: string
   terms_and_conditions: boolean
 }
 
@@ -150,19 +153,7 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
         }}
         errors={errors}
       />
-      <TextField
-        id="company"
-        label="Company"
-        placeholder="Company name"
-        type="text"
-        register={register}
-        registerOptions={{
-          required: 'required',
-          minLength: { value: 5, message: 'minimum length is 5' }
-        }}
-        errors={errors}
-      />
-      <div className="flex flex-col md:flex-row w-full justify-between ">
+      <div className="flex flex-col md:flex-row w-full justify-between">
         <div className="md:w-[47%]">
           <TextField
             id="job_title"
@@ -174,6 +165,32 @@ export const RequestDemoForm = ({ onSuccess }: Props) => {
               required: 'required',
               minLength: { value: 5, message: 'minimum length is 5' }
             }}
+            errors={errors}
+          />
+        </div>
+        <div className="md:w-[47%]">
+          <TextField
+            id="company"
+            label="Company Name"
+            placeholder="Company name"
+            type="text"
+            register={register}
+            registerOptions={{
+              required: 'required',
+              minLength: { value: 5, message: 'minimum length is 5' }
+            }}
+            errors={errors}
+          />
+        </div>
+      </div>
+      <div className="flex flex-col md:flex-row w-full justify-between mb-2">
+        <div className="md:w-[47%]">
+          <SelectBox
+            id="company_size"
+            label="Company Size"
+            options={company_size_list}
+            register={register}
+            registerOptions={{ required: 'required' }}
             errors={errors}
           />
         </div>
