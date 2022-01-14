@@ -20,11 +20,12 @@ export const SolutionCard = ({
 }: Props) => {
   return (
     <CardFull
-      href={`/solutions/${solution.slug}`}
+      className="cursor-pointer"
+      href={isExternal ? solution.slug : `/solutions/${solution.slug}`}
       isPopUp={isPopup}
       isExternal={isExternal}
       target={target}
-      onClick={() => handleClick}>
+      onClick={handleClick}>
       <div className="flex flex-col w-full relative">
         <ResponsiveImage
           className="w-full h-[220px] md:h-[280px] xl:h-[300px] 2xl:h-[380px] mb-2"

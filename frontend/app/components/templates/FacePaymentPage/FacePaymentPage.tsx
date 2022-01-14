@@ -141,9 +141,9 @@ export const FacePaymentPage = ({ id, name, long_description }: Props) => {
                     min-h-[400px] sm:min-h-[75vh]">
         {currentStep === 1 && (
           <div className="text-center">
-            <h2 className="text-2xl">Welcome to {name} Demo App</h2>
+            <h3 className="text-2xl">Welcome to {name} Demo App</h3>
             <div
-              className="flex bg-amber-300 rounded 
+              className="flex bg-secondary-500 rounded-lg
                         justify-center mx-auto my-8 h-min
                         w-full sm:w-7/12">
               <p className="m-4 text-lg">
