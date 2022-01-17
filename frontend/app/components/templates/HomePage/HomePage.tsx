@@ -300,9 +300,9 @@ export const HomePage = ({
                 <Card>
                   <ResponsiveImage
                     className="flex items-center justify-center w-full h-32 my-10"
-                    src={`/assets/images/analytics/${analytic.thumbnail}`}
+                    src={`/assets/images/analytics/${analytic.slug}/icon.png`}
                     objectFit="contain"
-                    alt={`Icon ${analytic.thumbnail}`}
+                    alt={`Icon ${analytic.name}`}
                   />
                   <CardContent className="relative px-6 py-8 sm:h-80 sm:pb-0">
                     <h4 className="mb-2 font-sans text-lg text-white">
