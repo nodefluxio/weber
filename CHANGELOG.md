@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
 - [BACKEND] Add company size field
 
+### Changed
+
+### Removed
 ## [1.2.1 - 13/01/2022]
 
 ### Changed
@@ -24,8 +29,6 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Update solution card design
 - [FRONTEND] Change NIST logo to be smaller in larger device
 - [FRONTEND] Add Partner Solutions Carousel
-
-### Removed
 
 ## [1.1.1 - 30/12/2021]
 
