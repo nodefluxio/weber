@@ -1,12 +1,17 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
 ## [Unreleased]
 
+- [BACKEND] Add company size field
+
 ## [1.2.1 - 13/01/2022]
+
 ### Changed
 
 - [FRONTEND] Fix solution card external link
+
 ## [1.2.0 - 13/01/2022]
 
 ### Added
@@ -19,7 +24,6 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Update solution card design
 - [FRONTEND] Change NIST logo to be smaller in larger device
 - [FRONTEND] Add Partner Solutions Carousel
-
 
 ### Removed
 
