@@ -3,7 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Changed
 
+- [FRONTEND] Modify analytic icon to use icon.png name instead of analytic thumbnail field
 - [BACKEND] Add company size field
 
 ## [1.2.1 - 13/01/2022]
