@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Changed
 
+### Added
+
 - [FRONTEND] Modify analytic icon to use icon.png name instead of analytic thumbnail field
+- [FRONTEND] Add company size field on visitor request form
 - [BACKEND] Add company size field
 
+### Changed
+
+### Removed
 ## [1.2.1 - 13/01/2022]
 
 ### Changed
@@ -26,8 +32,6 @@ All notable changes to this project will be documented in this file.
 - [FRONTEND] Update solution card design
 - [FRONTEND] Change NIST logo to be smaller in larger device
 - [FRONTEND] Add Partner Solutions Carousel
-
-### Removed
 
 ## [1.1.1 - 30/12/2021]
 
