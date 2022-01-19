@@ -3,17 +3,23 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
 ### Changed
+
+### Added
+
+### Changed
+
+### Removed
+
+## [1.3.1 - 19/01/2022]
 
 ### Added
 
 - [FRONTEND] Modify analytic icon to use icon.png name instead of analytic thumbnail field
 - [FRONTEND] Add company size field on visitor request form
-- [BACKEND] Add company size field
+- [BACKEND] Add company_size field on visitor db table
 
-### Changed
-
-### Removed
 ## [1.2.1 - 13/01/2022]
 
 ### Changed
