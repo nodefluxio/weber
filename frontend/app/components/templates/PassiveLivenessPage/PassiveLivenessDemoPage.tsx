@@ -13,7 +13,7 @@ type Props = {
   longDesc: string
 }
 
-export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
+export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
   const { session_id } = parseCookies()
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
@@ -21,7 +21,6 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
   const nextStep = async () => {
     if (session_id) {
       const page = currentStep + 1
-
       setCurrentStep(page)
     } else {
       setOpenModal(true)
