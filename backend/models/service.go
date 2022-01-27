@@ -55,6 +55,7 @@ type ServiceRequestInput struct {
 }
 
 type ServiceRequestResult struct {
+	ID     string                 `json:"id"`
 	Result map[string]interface{} `json:"result"`
 }
 
@@ -62,16 +63,6 @@ type ServiceRequestResultData struct {
 	Job     ServiceRequestResult `json:"job"`
 	Message string               `json:"message"`
 	Ok      bool                 `json:"ok"`
-}
-
-type ResponseResult struct {
-	ID string `json:"id"`
-}
-
-type ResponseResultData struct {
-	Job     ResponseResult `json:"job"`
-	Message string         `json:"message"`
-	Ok      bool           `json:"ok"`
 }
 
 type BoundingBox struct {

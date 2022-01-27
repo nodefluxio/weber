@@ -42,7 +42,7 @@ func GetDataAnalytic(service models.Service, requestData models.RequestData) dat
 }
 
 func RequestToAnalyticSync(dataAnalytic dataAnalytic, analyticSlug string) (models.ServiceRequestResultData, error) {
-	var data models.ServiceRequestResultData
+	var dataResponse models.ServiceRequestResultData
 
 	log.WithFields(log.Fields{
 		"data": dataAnalytic,
@@ -71,39 +71,38 @@ func RequestToAnalyticSync(dataAnalytic dataAnalytic, analyticSlug string) (mode
 			"error":   err,
 			"request": request,
 		}).Error("[CONTROLLER: RequestToAnalyticSync] error on request to analytic!")
-		return data, err
+		return dataResponse, err
 	}
 
 	defer response.Body.Close()
 
-	var dataResponse models.ResponseResultData
 	err = json.NewDecoder(response.Body).Decode(&dataResponse)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 			"data":  dataResponse,
 		}).Error("[CONTROLLER: RequestToAnalyticSync] error on decode response body!")
-		return data, err
+		return dataResponse, err
 	}
 
 	jobId := dataResponse.Job.ID
 	for i := 1; i <= 10; i++ {
-		data, err = getJobStatus(dataAnalytic, jobId)
-		if data.Job.Result["status"] == "success" {
+		dataResponse, err = getJobStatus(dataAnalytic, jobId)
+		if dataResponse.Job.Result["status"] == "success" {
 			break
 		}
 
 		time.Sleep(1 * time.Second)
 	}
 	if err != nil {
-		return data, err
+		return dataResponse, err
 	}
 
 	log.WithFields(log.Fields{
 		"data": dataResponse,
 	}).Info("[CONTROLLER: RequestToAnalyticSync] request to analytics sync successfully done")
 
-	return data, nil
+	return dataResponse, nil
 }
 
 func getJobStatus(dataAnalytic dataAnalytic, jobId string) (models.ServiceRequestResultData, error) {

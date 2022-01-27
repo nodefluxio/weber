@@ -56,6 +56,11 @@ func SetupRouter(ctrl *controllers.Controller) *gin.Engine {
 			facePayments.PATCH("/account", ctrl.UpdateFacePaymentAccount)
 			facePayments.PATCH("/reset-balance/:session_id", ctrl.ResetBalanceFacePaymentAccount)
 		}
+
+		passiveLiveness := apis.Group("/passive-liveness")
+		{
+			passiveLiveness.POST("", ctrl.CreatePassiveLivenessRequest)
+		}
 	}
 
 	return r
