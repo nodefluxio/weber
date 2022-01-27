@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { PassiveLivenessDemoPage } from '@/templates/PassiveLivenessPage/PassiveLivenessDemoPage'
+import { PassiveLivenesPage } from '@/templates/PassiveLivenessPage/PassiveLivenessPage'
 import { getServiceBySlug } from '../../app/api/analyticsAPI'
 
 interface Props {
@@ -8,13 +8,13 @@ interface Props {
   long_description: string
 }
 
-const Ekyc: React.FC<Props> = ({ name, long_description }) => {
+const PassiveLiveness: React.FC<Props> = ({ name, long_description }) => {
   return (
     <>
       <Head>
         <title>{`Solution | ${name} - Demo`}</title>
       </Head>
-      <PassiveLivenessDemoPage
+      <PassiveLivenesPage
         //   serviceId={id}
         name={name}
         longDesc={long_description}
@@ -25,7 +25,7 @@ const Ekyc: React.FC<Props> = ({ name, long_description }) => {
 
 export const getServerSideProps = async () => {
   try {
-    const res = await getServiceBySlug('passive-liveness-demo')
+    const res = await getServiceBySlug('passive-liveness-detection')
     return {
       props: {
         ...res?.data
@@ -38,4 +38,4 @@ export const getServerSideProps = async () => {
   }
 }
 
-export default Ekyc
+export default PassiveLiveness

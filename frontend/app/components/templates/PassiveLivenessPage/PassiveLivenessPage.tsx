@@ -22,7 +22,7 @@ type Props = {
   longDesc: string
 }
 
-export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
+export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
   const { session_id } = parseCookies()
 
   const [currentStep, setCurrentStep] = useState(1)
@@ -154,10 +154,12 @@ export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
                   result?.service_data.job.result.result.length === 1 ? (
                     <>
                       <span className="block font-thin text-7xl">{`${Math.trunc(
-                        result?.service_data.job.result.result[0].face_liveness.liveness * 100
+                        result?.service_data.job.result.result[0].face_liveness
+                          .liveness * 100
                       )}%`}</span>
                       <p className="font-medium text-2xl">
-                        {result?.service_data.job.result.result[0].face_liveness.live
+                        {result?.service_data.job.result.result[0].face_liveness
+                          .live
                           ? 'Verified'
                           : 'Not Verified'}
                       </p>
