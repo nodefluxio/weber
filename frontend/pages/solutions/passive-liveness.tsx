@@ -25,7 +25,7 @@ const PassiveLiveness: React.FC<Props> = ({ name, long_description }) => {
 
 export const getServerSideProps = async () => {
   try {
-    const res = await getServiceBySlug('passive-liveness-detection')
+    const res = await getServiceBySlug('passive-liveness')
     return {
       props: {
         ...res?.data
