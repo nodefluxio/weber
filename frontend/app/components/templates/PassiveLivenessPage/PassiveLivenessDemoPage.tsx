@@ -201,11 +201,7 @@ export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
             <span className="text-xl font-semibold mt-10">
               Is our liveness prediction true?
             </span>
-            <LivenessReview
-              id={0}
-              onChosen={() => console.log('Clicked!')}
-              className="my-4"
-            />
+            <LivenessReview id={0} className="my-4" />
           </div>
         )}
       </div>

@@ -8,7 +8,7 @@ import { parseCookies } from 'nookies'
 type Props = {
   id: number
   className?: string
-  onChosen: (arg: string) => void
+  onChosen?: (arg: string) => void
 }
 
 const options = [
