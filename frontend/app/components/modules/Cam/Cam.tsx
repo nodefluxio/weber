@@ -64,8 +64,8 @@ export const Cam = ({
       <div className="relative">
         {!photo ? (
           <div
-            className="border mb-4 border-primary-500 rounded relative 
-             w-[401px] h-[401px] max-w-[90vw] md:w-[450px] md:h-[337.5px]">
+            className="border mb-4 border-primary-500 rounded relative
+             w-[401px] h-[401px] max-w-[90vw] md:w-[450px] md:h-[337.5px]  mx-auto">
             <Webcam
               className="rounded w-full h-full"
               audio={false}
@@ -97,8 +97,8 @@ export const Cam = ({
         ) : (
           photo && (
             <div
-              className="relative mb-4 w-[401px] h-[401px] 
-              max-w-[90vw] md:w-[450px] md:h-[337.5px] rounded max-h-[65vh] md:max-h-[unset]">
+              className="relative mb-4 w-[401px] h-[401px]
+              max-w-[90vw] md:w-[450px] md:h-[337.5px] rounded max-h-[65vh] md:max-h-[unset] mx-auto">
               <Image
                 className="rounded"
                 src={photo}

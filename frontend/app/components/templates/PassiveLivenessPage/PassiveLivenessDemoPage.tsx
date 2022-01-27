@@ -4,9 +4,16 @@ import { Stepper } from '@/elements/Stepper/Stepper'
 import { Banner } from '@/modules/Banner/Banner'
 import { LivenessReview } from '@/modules/LivenessReview/LivenessReview'
 import { RequestDemoFormPopup } from '@/modules/RequestDemoFormPopup/RequestDemoFormModal'
-import { Color } from '@/types/elements'
+import { Color, FaceLiveness } from '@/types/elements'
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
+import Image from 'next/image'
+import { Cam } from '@/modules/Cam/Cam'
+import { PL_LOCAL_STORAGE } from 'app/constants/localStorage'
+import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
+import { NodefluxCloudResponse } from '@/types/responses'
+import { Spinner } from '@/elements/Spinner/Spinner'
+import { CustomError } from 'app/errors/CustomError'
 
 type Props = {
   // serviceId: number
@@ -16,12 +23,59 @@ type Props = {
 
 export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
   const { session_id } = parseCookies()
+
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [result, setResult] = useState<NodefluxCloudResponse<FaceLiveness>>()
+
+  const handlePassiveLiveness = async (sessionId: string) => {
+    if (sessionId) {
+      await resolvePassiveLiveness(sessionId)
+      setLoading(false)
+    } else {
+      setOpenModal(true)
+    }
+  }
+
+  const resolvePassiveLiveness = async (session_id: string) => {
+    try {
+      // const res = await postPassiveLiveness(
+      //   session_id,
+      //   getImageFromLocalStorage(PL_LOCAL_STORAGE, () => setCurrentStep(2))
+      // )
+      const res: NodefluxCloudResponse<FaceLiveness> = {
+        job: {
+          result: {
+            analytic_type: 'solution',
+            result: [{ live: true, liveness: 0.8 }],
+            status: 'ok'
+          }
+        },
+        message: 'ok',
+        ok: true
+      }
+
+      if (res) {
+        setResult(res)
+      }
+    } catch (e) {
+      if (e instanceof CustomError && e.statusCode === 401) {
+        setOpenModal(true)
+      } else {
+        console.error(e)
+      }
+    }
+  }
 
   const nextStep = async () => {
     if (session_id) {
       const page = currentStep + 1
+
+      if (page === 3) {
+        handlePassiveLiveness(session_id)
+      }
+
       setCurrentStep(page)
     } else {
       setOpenModal(true)
@@ -68,6 +122,77 @@ export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
             </Button>
           </div>
         )}
+
+        {currentStep === 2 && (
+          <div className="md:w-9/12 lg:w-6/12 2xl:w-4/12">
+            <h3 className="pb-6 text-3xl">Take A Selfie Photo</h3>
+            <p className="pb-4">
+              Please take a selfie and position your face according to the
+              frame. Your photo will be used for face liveness and face match
+              tests.
+            </p>
+            <Cam
+              localkey={PL_LOCAL_STORAGE}
+              nextStep={() => {
+                nextStep()
+                // createVisitorActivities(serviceId, session_id, 40)
+              }}
+              overlayShape="circle"
+            />
+          </div>
+        )}
+
+        {currentStep === 3 && (
+          <div className="w-full flex flex-col items-center">
+            <div className="w-full flex flex-col md:flex-row justify-around">
+              <div className="font-bold m-8">
+                <div
+                  className="relative mb-4 w-[200px] h-[200px]
+              max-w-[45vw] md:w-[225px] md:h-[168.75px] rounded max-h-[vh] md:max-h-[unset]">
+                  <Image
+                    className="rounded"
+                    src={getImageFromLocalStorage(PL_LOCAL_STORAGE, () =>
+                      setCurrentStep(1)
+                    )}
+                    layout="fill"
+                    objectFit="fill"
+                    alt="captured photos"
+                  />
+                </div>
+                <h3 className="pb-6 text-3xl">Liveness result</h3>
+                {!loading ? (
+                  result?.job.result.result.length === 1 ? (
+                    <>
+                      <span className="block font-thin text-7xl">{`${Math.trunc(
+                        result?.job.result.result[0].liveness * 100
+                      )}%`}</span>
+                      <p className="font-medium text-2xl">
+                        {result?.job.result.result[0].live
+                          ? 'Verified'
+                          : 'Not Verified'}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="font-medium text-2xl">{result?.message}</p>
+                  )
+                ) : (
+                  <Spinner className="mx-auto my-8" />
+                )}
+              </div>
+            </div>
+
+            <Button
+              color={Color.Primary}
+              onClick={() => {
+                nextStep()
+                // createVisitorActivities(serviceId, session_id, 80)
+              }}
+              disabled={loading}>
+              Next
+            </Button>
+          </div>
+        )}
+
         {currentStep === 4 && (
           <div className="flex flex-col">
             <h2 className="text-2xl font-bold">
