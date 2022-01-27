@@ -734,7 +734,7 @@ Create a service request for E-KYC solution.
 
 - **URL**
 
-  `/api/v1//ekyc`
+  `/api/v1/ekyc`
 
 - **Method**
 
@@ -1469,6 +1469,104 @@ Reset balance of face payment account to 1000000 (default)
 ```json
 {
   "message": "This session id does not have an active face payment account",
+  "ok": false
+}
+```
+
+</details>
+
+<details>
+<summary><b>Create A Service Request for Passive Face Liveness Detection</b></summary>
+Create a service request for Passive Face Liveness Detection solution.
+
+- **URL**
+
+  `/api/v1/passive-liveness`
+
+- **Method**
+
+  `POST`
+
+- **Request Payload**
+
+```json
+{
+  "session_id": "5ded0fec-beba-4e47-9cd0-705375b582c6",
+  "data": {
+    "additional_params": {},
+    "images": ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/"]
+  }
+}
+```
+
+- **Request Payload Data Type Attributes**
+
+```json
+{
+   "session_id": string,
+   "data": object {
+       "additional_params": object,
+       "images": string array
+   }
+}
+```
+
+- **Sample Success Response**
+
+  **Code**: 200 OK
+
+```json
+{
+    "message": "Service demo request success",
+    "ok": true,
+    "service_data": {
+        "job": {
+            "id": "1b3a6871b093fd2906b7672d848a7005f2ac5d3bdb91de29GIYDEMRNGAYS2MRX",
+            "result": {
+                "analytic_type": "FACE_LIVENESS",
+                "result": [
+                    {
+                        "face_liveness": {
+                            "live": false,
+                            "liveness": 0.00418900465592742
+                        }
+                    }
+                ],
+                "status": "success"
+            }
+        },
+        "message": "Face Liveness Underqualified",
+        "ok": true
+    }
+}
+```
+
+- **Data Type Attributes**
+
+```json
+{
+    "message": string,
+    "ok": boolean,
+    "service_data": object, 
+}
+```
+
+- **Sample Error Response**
+
+  **Code**: 401 Unauthorized
+
+```json
+{
+  "message": "Session ID is not valid",
+  "ok": false
+}
+```
+
+OR
+
+```json
+{
+  "message": "Session ID has expired",
   "ok": false
 }
 ```
