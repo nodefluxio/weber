@@ -116,6 +116,10 @@ export type FMEResultResponse = {
   }
 }
 
+export interface PassiveLiveness extends StandardResponse {
+  service_data: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>
+}
+
 export interface EKYCResultResponse extends StandardResponse {
   service_data: {
     face_liveness: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>

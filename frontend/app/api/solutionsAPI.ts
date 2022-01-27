@@ -1,6 +1,9 @@
 import { errorHandler } from '@/utils/errorHandler'
 import axios from 'axios'
-import { EKYCResultResponse } from '../types/responses'
+import {
+  EKYCResultResponse,
+  PassiveLiveness
+} from '../types/responses'
 
 export const postEKYC = async (
   sessionId: string,
@@ -20,6 +23,24 @@ export const postEKYC = async (
         face_match: {
           images: [facePhoto, ocrPhoto]
         }
+      }
+    })
+
+    return res.data
+  } catch (e) {
+    errorHandler(e)
+  }
+}
+
+export const postPassiveLiveness = async (
+  sessionId: string,
+  facePhoto: string
+): Promise<PassiveLiveness | undefined> => {
+  try {
+    const res = await axios.post<PassiveLiveness>('/passive-liveness', {
+      session_id: sessionId,
+      data: {
+        images: [facePhoto]
       }
     })
 

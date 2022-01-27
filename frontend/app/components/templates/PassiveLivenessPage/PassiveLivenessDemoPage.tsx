@@ -4,16 +4,17 @@ import { Stepper } from '@/elements/Stepper/Stepper'
 import { Banner } from '@/modules/Banner/Banner'
 import { LivenessReview } from '@/modules/LivenessReview/LivenessReview'
 import { RequestDemoFormPopup } from '@/modules/RequestDemoFormPopup/RequestDemoFormModal'
-import { Color, FaceLiveness } from '@/types/elements'
+import { Color } from '@/types/elements'
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import Image from 'next/image'
 import { Cam } from '@/modules/Cam/Cam'
 import { PL_LOCAL_STORAGE } from 'app/constants/localStorage'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
-import { NodefluxCloudResponse } from '@/types/responses'
+import { PassiveLiveness } from '@/types/responses'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { CustomError } from 'app/errors/CustomError'
+import { postPassiveLiveness } from '@/api/solutionsAPI'
 
 type Props = {
   // serviceId: number
@@ -27,7 +28,7 @@ export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [result, setResult] = useState<NodefluxCloudResponse<FaceLiveness>>()
+  const [result, setResult] = useState<PassiveLiveness>()
 
   const handlePassiveLiveness = async (sessionId: string) => {
     if (sessionId) {
@@ -40,21 +41,10 @@ export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
 
   const resolvePassiveLiveness = async (session_id: string) => {
     try {
-      // const res = await postPassiveLiveness(
-      //   session_id,
-      //   getImageFromLocalStorage(PL_LOCAL_STORAGE, () => setCurrentStep(2))
-      // )
-      const res: NodefluxCloudResponse<FaceLiveness> = {
-        job: {
-          result: {
-            analytic_type: 'solution',
-            result: [{ live: true, liveness: 0.8 }],
-            status: 'ok'
-          }
-        },
-        message: 'ok',
-        ok: true
-      }
+      const res = await postPassiveLiveness(
+        session_id,
+        getImageFromLocalStorage(PL_LOCAL_STORAGE, () => setCurrentStep(2))
+      )
 
       if (res) {
         setResult(res)
@@ -161,13 +151,13 @@ export const PassiveLivenessDemoPage = ({ name, longDesc }: Props) => {
                 </div>
                 <h3 className="pb-6 text-3xl">Liveness result</h3>
                 {!loading ? (
-                  result?.job.result.result.length === 1 ? (
+                  result?.service_data.job.result.result.length === 1 ? (
                     <>
                       <span className="block font-thin text-7xl">{`${Math.trunc(
-                        result?.job.result.result[0].liveness * 100
+                        result?.service_data.job.result.result[0].face_liveness.liveness * 100
                       )}%`}</span>
                       <p className="font-medium text-2xl">
-                        {result?.job.result.result[0].live
+                        {result?.service_data.job.result.result[0].face_liveness.live
                           ? 'Verified'
                           : 'Not Verified'}
                       </p>
