@@ -96,7 +96,7 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
       </Modal>
 
       <Banner
-        bannerUrl="/assets/images/solutions/ekyc/banner.png"
+        bannerUrl="/assets/images/solutions/passive-liveness/banner.png"
         analyticsName={name}
         longDescription={longDesc}
       />
