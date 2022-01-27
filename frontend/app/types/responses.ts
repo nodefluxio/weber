@@ -60,6 +60,7 @@ export type ServiceBySlugResponseData = {
 
 export interface NodefluxCloudResponse<T> extends StandardResponse {
   job: {
+    id: string
     result: {
       analytic_type: string
       result: [T]
