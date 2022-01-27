@@ -15,25 +15,42 @@ import { PassiveLiveness } from '@/types/responses'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { CustomError } from 'app/errors/CustomError'
 import { postPassiveLiveness } from '@/api/solutionsAPI'
+import { postActivities } from '@/api/activitiesAPI'
 
 type Props = {
-  // serviceId: number
+  serviceId: number
   name: string
   longDesc: string
 }
 
-export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
+export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
   const { session_id } = parseCookies()
 
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const [result, setResult] = useState<PassiveLiveness>()
+
+  const createVisitorActivities = async (
+    serviceId: number,
+    sessionId: string,
+    completeness: number
+  ) => {
+    try {
+      await postActivities(serviceId, sessionId, completeness)
+    } catch (e) {
+      if (e instanceof CustomError && e.statusCode === 401) {
+        setOpenModal(true)
+      } else {
+        console.error(e)
+      }
+    }
+  }
 
   const handlePassiveLiveness = async (sessionId: string) => {
     if (sessionId) {
       await resolvePassiveLiveness(sessionId)
-      setLoading(false)
+      setIsLoading(false)
     } else {
       setOpenModal(true)
     }
@@ -106,7 +123,7 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
               color={Color.Primary}
               onClick={() => {
                 nextStep()
-                //   createVisitorActivities(serviceId, session_id, 20)
+                createVisitorActivities(serviceId, session_id, 30)
               }}>
               Start
             </Button>
@@ -125,7 +142,7 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
               localkey={PL_LOCAL_STORAGE}
               nextStep={() => {
                 nextStep()
-                // createVisitorActivities(serviceId, session_id, 40)
+                createVisitorActivities(serviceId, session_id, 40)
               }}
               overlayShape="circle"
             />
@@ -134,11 +151,11 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
 
         {currentStep === 3 && (
           <div className="w-full flex flex-col items-center">
-            <div className="w-full flex flex-col md:flex-row justify-around">
-              <div className="font-bold m-8">
+            <div className="w-full flex flex-col justify-center">
+              <div className="mb-12">
                 <div
-                  className="relative mb-4 w-[200px] h-[200px]
-              max-w-[45vw] md:w-[225px] md:h-[168.75px] rounded max-h-[vh] md:max-h-[unset]">
+                  className="relative mb-12 mx-auto w-[200px] h-[200px]
+               md:w-[225px] md:h-[168.75px] rounded ">
                   <Image
                     className="rounded"
                     src={getImageFromLocalStorage(PL_LOCAL_STORAGE, () =>
@@ -149,15 +166,17 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
                     alt="captured photos"
                   />
                 </div>
-                <h3 className="pb-6 text-3xl">Liveness result</h3>
-                {!loading ? (
+                <h3 className="pb-6 text-3xl font-bold font-sans">
+                  Liveness result
+                </h3>
+                {!isLoading ? (
                   result?.service_data.job.result.result.length === 1 ? (
                     <>
-                      <span className="block font-thin text-7xl">{`${Math.trunc(
+                      <h4 className="block text-7xl mb-4">{`${Math.trunc(
                         result?.service_data.job.result.result[0].face_liveness
                           .liveness * 100
-                      )}%`}</span>
-                      <p className="font-medium text-2xl">
+                      )}%`}</h4>
+                      <p className="text-2xl font-serif">
                         {result?.service_data.job.result.result[0].face_liveness
                           .live
                           ? 'Verified'
@@ -165,7 +184,9 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
                       </p>
                     </>
                   ) : (
-                    <p className="font-medium text-2xl">{result?.message}</p>
+                    <p className="font-medium font-serif text-2xl">
+                      {result?.service_data.message}
+                    </p>
                   )
                 ) : (
                   <Spinner className="mx-auto my-8" />
@@ -177,9 +198,8 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
               color={Color.Primary}
               onClick={() => {
                 nextStep()
-                // createVisitorActivities(serviceId, session_id, 80)
               }}
-              disabled={loading}>
+              disabled={isLoading}>
               Next
             </Button>
           </div>
@@ -187,13 +207,19 @@ export const PassiveLivenessPage = ({ name, longDesc }: Props) => {
 
         {currentStep === 4 && (
           <div className="flex flex-col">
-            <h2 className="text-2xl font-bold">
-              Thank you for using the Liveness Demo App
-            </h2>
-            <span className="text-xl font-semibold mt-10">
-              Is our liveness prediction true?
-            </span>
-            <LivenessReview id={0} className="my-4" />
+            <LivenessReview
+              id={serviceId}
+              onChosen={() => {
+                createVisitorActivities(serviceId, session_id, 30)
+                localStorage.removeItem(PL_LOCAL_STORAGE)
+                setResult(undefined)
+                setIsLoading(true)
+              }}
+              onTryAgain={() => {
+                setCurrentStep(1)
+              }}
+              jobId={result?.service_data.job.id || 'jobId'}
+            />
           </div>
         )}
       </div>
