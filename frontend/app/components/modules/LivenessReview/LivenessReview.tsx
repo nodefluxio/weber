@@ -28,7 +28,7 @@ const options = [
   {
     rating: 2,
     label: "No, my selfie is a real selfie but I'm rejected",
-    comment: 'fasle reject'
+    comment: 'false reject'
   },
   {
     rating: 1,
