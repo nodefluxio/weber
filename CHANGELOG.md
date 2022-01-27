@@ -8,9 +8,17 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [BACKEND] Add new route `/passive-liveness` for Passive Face Liveness Detection
+- [BACKEND] Add controller to request face liveness analytic on nodeflux cloud
+- [BACKEND] Add new seed for Passive Face Liveness Detection
+
 ### Changed
 
+- [BACKEND] Change variable type `dataResponse` from `ResponseResult` to `ServiceRequestResultData`
+
 ### Removed
+
+- [BACKEND] Remove unnecessary type `ResponseResult` struct
 
 ## [1.3.1 - 19/01/2022]
 

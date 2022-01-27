@@ -296,6 +296,20 @@ func seedService(model *models.Model) {
 			CreatedAt:          time.Now(),
 			UpdatedAt:          time.Now(),
 		},
+		{
+			Name:               "Passive Face Liveness Detection",
+			Type:               "solution",
+			Slug:               "passive-liveness",
+			Thumbnail:          "passive-liveness.png",
+			AccessKey:          os.Getenv("ACCESS_KEY_PFL"),
+			Token:              os.Getenv("TOKEN_PFL"),
+			Timestamp:          os.Getenv("TIMESTAMP_PFL"),
+			ShortDescription:   "Liveness detection is a ML based solution to determine the likelihood of an organization interfacing with a physically present human being and an inanimate spoof artifact.",
+			LongDescription:    "Liveness detection is a Machine Learning based solution to determine the likelihood of an organization interfacing with a physically present human being and an inanimate spoof artifact.",
+			SpecialInstruction: "Special Instruction for Passive Face Liveness Detection",
+			CreatedAt:          time.Now(),
+			UpdatedAt:          time.Now(),
+		},
 		// Add new service here
 	}
 
