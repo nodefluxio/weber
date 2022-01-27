@@ -142,7 +142,7 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
               localkey={PL_LOCAL_STORAGE}
               nextStep={() => {
                 nextStep()
-                createVisitorActivities(serviceId, session_id, 40)
+                createVisitorActivities(serviceId, session_id, 70)
               }}
               overlayShape="circle"
             />
@@ -210,7 +210,7 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
             <LivenessReview
               id={serviceId}
               onChosen={() => {
-                createVisitorActivities(serviceId, session_id, 30)
+                createVisitorActivities(serviceId, session_id, 100)
                 localStorage.removeItem(PL_LOCAL_STORAGE)
                 setResult(undefined)
                 setIsLoading(true)
