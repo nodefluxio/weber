@@ -60,6 +60,7 @@ export type ServiceBySlugResponseData = {
 
 export interface NodefluxCloudResponse<T> extends StandardResponse {
   job: {
+    id: string
     result: {
       analytic_type: string
       result: [T]
@@ -114,6 +115,10 @@ export type FMEResultResponse = {
     match: boolean
     similarity: number
   }
+}
+
+export interface PassiveLiveness extends StandardResponse {
+  service_data: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>
 }
 
 export interface EKYCResultResponse extends StandardResponse {

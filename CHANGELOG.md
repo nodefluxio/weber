@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [FRONTEND] Add new solution: Passive Liveness Demo (Camera, API Call, Custom Feedback)
 - [BACKEND] Add new route `/passive-liveness` for Passive Face Liveness Detection
 - [BACKEND] Add controller to request face liveness analytic on nodeflux cloud
 - [BACKEND] Add new seed for Passive Face Liveness Detection
