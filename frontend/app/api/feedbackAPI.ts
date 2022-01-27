@@ -5,21 +5,24 @@ import { StandardResponse } from '../types/responses'
 type ReviewReqBody = {
   id: number
   session_id: string
-  rating: number
+  rating?: number
   comment: string
+  jobId?: string
 }
 
 export const postFeedback = async ({
   id,
   session_id,
   rating,
-  comment
+  comment,
+  jobId
 }: ReviewReqBody): Promise<StandardResponse | undefined> => {
   try {
     const res = await axios.post<StandardResponse>(`/feedback/${id}`, {
       session_id,
       rating,
-      comment
+      comment,
+      jobId
     })
     if (res.data.ok) {
       return res.data
