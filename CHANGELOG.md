@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 ### Changed
-
+- [FRONTEND] Update passive liveness thumbnail and banner
 ### Removed
 
 ## [1.4.0 - 27/01/2022]
