@@ -58,6 +58,14 @@ export const PaymentPay = ({
     paymentAccountInfo.minimum_payment
   ])
 
+  // To ensure localStorage stays empty
+  // when user refresh the page
+  useEffect(() => {
+    if (localStorage.getItem(FACE_MATCH_LIVENESS_SNAPSHOT)) {
+      localStorage.removeItem(FACE_MATCH_LIVENESS_SNAPSHOT)
+    }
+  }, [])
+
   const checkPhone = () => {
     if (paymentAccountInfo.phone !== phone) {
       setPhoneError('Your phone number does not match with the registered one')
