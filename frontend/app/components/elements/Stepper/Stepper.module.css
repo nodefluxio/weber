@@ -1,0 +1,12 @@
+.stepperItem:not(:last-child):after {
+  --circle-size: clamp(2rem, 5vw, 2.2rem);
+  --spacing: clamp(0.5rem, 2vw, 0.5rem);
+  content: '';
+  position: relative;
+  top: calc(var(--circle-size) / 2);
+  width: calc(100% - var(--circle-size) - calc(var(--spacing) * 2));
+  left: calc(50% + calc(var(--circle-size) / 2 + var(--spacing)));
+  height: 1px;
+  background-color: rgb(212 212 212);
+  order: -1;
+}
