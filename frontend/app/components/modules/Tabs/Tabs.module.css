@@ -1,0 +1,10 @@
+@tailwind components;
+
+@layer components {
+  .tabs li:first-child button {
+    @apply rounded-tl-xl;
+  }
+  .tabs li:last-child button {
+    @apply rounded-tr-xl;
+  }
+}
