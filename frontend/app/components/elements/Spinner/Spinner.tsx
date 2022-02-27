@@ -1,4 +1,4 @@
-import styles from './Spinner.module.scss'
+import styles from './Spinner.module.css'
 
 type Props = {
   className?: string
