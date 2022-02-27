@@ -1,9 +1,7 @@
-@import '../../../styles/abstracts/variables';
-
 .container {
   position: relative;
   display: flex;
   justify-content: center;
-  background-color: $white-bg;
+  background-color: var(--white-bg);
   padding: 3rem;
 }
