@@ -1,9 +1,15 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import {
+  Dispatch,
+  HTMLInputTypeAttribute,
+  SetStateAction,
+  useEffect,
+  useState
+} from 'react'
 import { Label } from '../Label/Label'
 
 type Props = {
   id: string
-  type: string
+  type: HTMLInputTypeAttribute
   label: string
   onChange: Dispatch<SetStateAction<string>>
 }

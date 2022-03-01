@@ -7,6 +7,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
   rect?: boolean
+  className?: string
 }
 
 export const Button = ({
