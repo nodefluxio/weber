@@ -3,7 +3,8 @@ const path = require('path')
 module.exports = {
   stories: [
     '../stories/**/*.stories.mdx',
-    '../stories/**/*.stories.@(js|jsx|ts|tsx)'
+    '../stories/**/*.stories.@(js|jsx|ts|tsx)',
+    '../app/**/*.stories.@(js|jsx|ts|tsx)'
   ],
   /** Expose public folder to storybook as static */
   staticDirs: ['../public'],
@@ -33,7 +34,8 @@ module.exports = {
      */
     config.resolve.alias = {
       ...config.resolve?.alias,
-      '@': [path.resolve(__dirname, '../src/'), path.resolve(__dirname, '../')]
+      '@/elements': path.resolve(__dirname, '../app/components/elements'),
+      '@/types': path.resolve(__dirname, '../app/types')
     }
 
     /**
@@ -50,7 +52,7 @@ module.exports = {
      */
     config.module.rules.push({
       test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader']
+      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
     })
     return config
   }
