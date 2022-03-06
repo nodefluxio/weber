@@ -8,7 +8,7 @@ export default {
   argTypes: {
     errors: {
       description:
-        'errors object from [React Hook Form](https://react-hook-form.com/api/useformstate)'
+        'Errors object from [useFormState](https://react-hook-form.com/api/useformstate)'
     }
   }
 } as ComponentMeta<typeof Label>

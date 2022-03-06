@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import resultMap from './analytics_result.json'
-import styles from './AnalyticsResult.module.scss'
+import styles from './AnalyticsResult.module.css'
 
 type Props = {
   result: any

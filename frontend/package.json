@@ -24,7 +24,6 @@
     "react-hook-form": "^7.17.1",
     "react-syntax-highlighter": "^15.4.5",
     "react-webcam": "^6.0.0",
-    "sass": "^1.42.1",
     "sharp": "^0.29.2",
     "swiper": "^7.3.1"
   },

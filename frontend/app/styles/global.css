@@ -1,11 +1,23 @@
-@import './base/base';
-@import './abstracts/mixins';
-@import './abstracts/variables';
 @import 'swiper/css';
 @import 'swiper/css/pagination';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-font: 'Montserrat', sans-serif;
+  --secondary-font: 'Hind', sans-serif;
+  --code-snippet-font: 'Consolas', ui-monospace, monospace;
+
+  --primary-color: #4c12a1;
+  --secondary-color: #45e5b7;
+  --tertiary-color: #439dff;
+  --quaternary-color: #eb5e3f;
+  --error-text: #bf1650;
+  --white-text: #fdfdfd;
+  --grey-text: #5f6368;
+  --white-bg: #fdfdfd;
+}
 
 @layer components {
   .title-line {
@@ -27,4 +39,21 @@
 .swiper-pagination-bullet {
   width: 10px !important;
   height: 10px !important;
+}
+
+pre,
+code {
+  font-family: 'Consolas', ui-monospace, monospace;
+  margin: 0;
+  padding: 0.5rem 0;
+  overflow-y: auto;
+  background: none !important;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+code::-webkit-scrollbar {
+  display: none;
+}
+code span {
+  font-family: 'Consolas', ui-monospace, monospace;
 }
