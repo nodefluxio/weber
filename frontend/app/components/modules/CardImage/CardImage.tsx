@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styles from './CardImage.module.scss'
+import styles from './CardImage.module.css'
 
 type Props = {
   img: string

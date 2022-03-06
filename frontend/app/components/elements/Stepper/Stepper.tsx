@@ -1,4 +1,4 @@
-import styles from './Stepper.module.scss'
+import styles from './Stepper.module.css'
 
 type Props = {
   steps: string[]
