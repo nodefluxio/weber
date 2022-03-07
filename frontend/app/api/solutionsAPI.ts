@@ -2,7 +2,7 @@ import { errorHandler } from '@/utils/errorHandler'
 import axios from 'axios'
 import {
   EKYCResultResponse,
-  PassiveLiveness
+  PassiveLivenessV4
 } from '../types/responses'
 
 export const postEKYC = async (
@@ -35,9 +35,9 @@ export const postEKYC = async (
 export const postPassiveLiveness = async (
   sessionId: string,
   facePhoto: string
-): Promise<PassiveLiveness | undefined> => {
+): Promise<PassiveLivenessV4 | undefined> => {
   try {
-    const res = await axios.post<PassiveLiveness>('/passive-liveness', {
+    const res = await axios.post<PassiveLivenessV4>('/passive-liveness', {
       session_id: sessionId,
       data: {
         images: [facePhoto]
