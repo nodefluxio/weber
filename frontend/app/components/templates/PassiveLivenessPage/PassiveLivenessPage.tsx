@@ -10,6 +10,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Cam } from '@/modules/Cam/Cam'
 import { PL_LOCAL_STORAGE } from 'app/constants/localStorage'
+import { FACE_LIVENESS_THRESHOLD } from 'app/constants/constant'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
 import { PassiveLivenessV4 } from '@/types/responses'
 import { Spinner } from '@/elements/Spinner/Spinner'
@@ -87,6 +88,14 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
     } else {
       setOpenModal(true)
     }
+  }
+
+  const calculateLiveness = (livenessScore: number): boolean => {
+    if (livenessScore < FACE_LIVENESS_THRESHOLD) {
+      return false;
+    }
+
+    return true;
   }
 
   return (
@@ -177,10 +186,10 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
                           .liveness * 100
                       )}%`}</h4>
                       <p className="text-2xl font-serif">
-                        {result?.service_data.job.result.result[0].face_liveness
-                          .doubt
-                          ? 'Not Verified'
-                          : 'Verified'}
+                        {calculateLiveness(result?.service_data.job.result.result[0].face_liveness
+                          .liveness)
+                          ? 'Verified'
+                          : 'Not Verified'}
                       </p>
                     </>
                   ) : (

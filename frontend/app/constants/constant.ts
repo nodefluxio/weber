@@ -29,3 +29,7 @@ export const EMAIL_MODAL_SOLUTION =
   process.env.EMAIL_MODAL_SOLUTION || 'AML / PEP'
 
 export const GA_MEASUREMENT_ID = process.env.GA_MEASUREMENT_ID || 'G-654W9FSYX7'
+
+// Reference: https://www.stephenlewis.me/notes/typescript-numeric-env-variables/
+const faceLivenessThreshold = parseInt(process.env.FACE_LIVENESS_THRESHOLD || '')
+export const FACE_LIVENESS_THRESHOLD = Number.isInteger(faceLivenessThreshold) ? faceLivenessThreshold : 0.7
