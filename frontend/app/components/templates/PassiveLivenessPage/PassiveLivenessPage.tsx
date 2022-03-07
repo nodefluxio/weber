@@ -11,7 +11,7 @@ import Image from 'next/image'
 import { Cam } from '@/modules/Cam/Cam'
 import { PL_LOCAL_STORAGE } from 'app/constants/localStorage'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
-import { PassiveLiveness } from '@/types/responses'
+import { PassiveLivenessV4 } from '@/types/responses'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { CustomError } from 'app/errors/CustomError'
 import { postPassiveLiveness } from '@/api/solutionsAPI'
@@ -29,7 +29,7 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [result, setResult] = useState<PassiveLiveness>()
+  const [result, setResult] = useState<PassiveLivenessV4>()
 
   const createVisitorActivities = async (
     serviceId: number,

@@ -4,6 +4,7 @@ import {
   CarDamageSeverity,
   CarDamageStatus,
   FaceLiveness,
+  FaceLivenessV4,
   FaceMatch,
   OCRKTP,
   PaymentAccountInfo,
@@ -119,6 +120,10 @@ export type FMEResultResponse = {
 
 export interface PassiveLiveness extends StandardResponse {
   service_data: NodefluxCloudResponse<{ face_liveness: FaceLiveness }>
+}
+
+export interface PassiveLivenessV4 extends StandardResponse {
+  service_data: NodefluxCloudResponse<{ face_liveness: FaceLivenessV4 }>
 }
 
 export interface EKYCResultResponse extends StandardResponse {
