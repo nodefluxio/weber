@@ -172,7 +172,7 @@ func GetResultFaceLiveness(service models.Service, input models.RequestData) (mo
 		"service":           service,
 	}).Info("[CONTROLLER: GetResultFaceLiveness] get result face liveness start...")
 
-	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness")
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness-v4")
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":  err,

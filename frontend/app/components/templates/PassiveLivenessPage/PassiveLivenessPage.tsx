@@ -178,9 +178,9 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
                       )}%`}</h4>
                       <p className="text-2xl font-serif">
                         {result?.service_data.job.result.result[0].face_liveness
-                          .live
-                          ? 'Verified'
-                          : 'Not Verified'}
+                          .doubt
+                          ? 'Not Verified'
+                          : 'Verified'}
                       </p>
                     </>
                   ) : (
