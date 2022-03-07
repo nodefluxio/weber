@@ -38,7 +38,7 @@ func (ctrl *Controller) CreatePassiveLivenessRequest(ctx *gin.Context) {
 	var service models.Service
 	ctrl.Model.GetServiceBySlug(&service, "passive-liveness")
 
-	serviceData, err := GetResultFaceLiveness(service, inputData.Data)
+	serviceData, err := GetResultPassiveLiveness(service, inputData.Data)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":        err,

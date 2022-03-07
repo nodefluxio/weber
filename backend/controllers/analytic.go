@@ -172,7 +172,7 @@ func GetResultFaceLiveness(service models.Service, input models.RequestData) (mo
 		"service":           service,
 	}).Info("[CONTROLLER: GetResultFaceLiveness] get result face liveness start...")
 
-	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness-v4")
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness")
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error":  err,
@@ -188,6 +188,37 @@ func GetResultFaceLiveness(service models.Service, input models.RequestData) (mo
 	log.WithFields(log.Fields{
 		"result": result,
 	}).Info("[CONTROLLER: GetResultFaceLiveness] get result face liveness successfully done")
+
+	return result, nil
+}
+
+func GetResultPassiveLiveness(service models.Service, input models.RequestData) (models.ServiceRequestResultData, error) {
+	var result models.ServiceRequestResultData
+	dataAnalytic := GetDataAnalytic(service, input)
+
+	log.WithFields(log.Fields{
+		"additional_params": input.AdditionalParams,
+		"total_images":      len(input.Images),
+		"data":              dataAnalytic,
+		"service":           service,
+	}).Info("[CONTROLLER: GetResultPassiveLiveness] get result face liveness v4 start...")
+
+	result, err := RequestToAnalyticSync(dataAnalytic, "face-liveness-v4")
+	if err != nil {
+		log.WithFields(log.Fields{
+			"error":  err,
+			"data":   dataAnalytic,
+			"result": result,
+			"slug":   "face-liveness",
+		}).Error("[CONTROLLER: GetResultPassiveLiveness] error on request to analytic face liveness v4!")
+
+		fmt.Println("Error during fetching API face liveness: ", err)
+		return result, err
+	}
+
+	log.WithFields(log.Fields{
+		"result": result,
+	}).Info("[CONTROLLER: GetResultPassiveLiveness] get result face liveness v4 successfully done")
 
 	return result, nil
 }
