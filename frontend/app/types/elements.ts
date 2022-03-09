@@ -47,6 +47,11 @@ export type FaceLiveness = {
   liveness: number
 }
 
+export type FaceLivenessV4 = {
+  doubt: boolean
+  liveness: number
+}
+
 export type FaceMatch = {
   match: boolean
   similarity: number

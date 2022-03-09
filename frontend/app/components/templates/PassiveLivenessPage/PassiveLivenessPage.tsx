@@ -10,8 +10,9 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Cam } from '@/modules/Cam/Cam'
 import { PL_LOCAL_STORAGE } from 'app/constants/localStorage'
+import { FACE_LIVENESS_THRESHOLD } from 'app/constants/constant'
 import { getImageFromLocalStorage } from '@/utils/localStorage/localStorage'
-import { PassiveLiveness } from '@/types/responses'
+import { PassiveLivenessV4 } from '@/types/responses'
 import { Spinner } from '@/elements/Spinner/Spinner'
 import { CustomError } from 'app/errors/CustomError'
 import { postPassiveLiveness } from '@/api/solutionsAPI'
@@ -29,7 +30,7 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [result, setResult] = useState<PassiveLiveness>()
+  const [result, setResult] = useState<PassiveLivenessV4>()
 
   const createVisitorActivities = async (
     serviceId: number,
@@ -87,6 +88,22 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
     } else {
       setOpenModal(true)
     }
+  }
+
+  const calculateLiveness = (livenessScore: number): boolean => {
+    if (livenessScore < FACE_LIVENESS_THRESHOLD) {
+      return false;
+    }
+
+    return true;
+  }
+
+  const calculateLivenessScore = (livenessScore: number): number => {
+    if (livenessScore < 0) {
+      return 0;
+    }
+
+    return livenessScore * 100;
   }
 
   return (
@@ -173,12 +190,12 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
                   result?.service_data.job.result.result.length === 1 ? (
                     <>
                       <h4 className="block text-7xl mb-4">{`${Math.trunc(
-                        result?.service_data.job.result.result[0].face_liveness
-                          .liveness * 100
+                        calculateLivenessScore(result?.service_data.job.result.result[0].face_liveness
+                          .liveness)
                       )}%`}</h4>
                       <p className="text-2xl font-serif">
-                        {result?.service_data.job.result.result[0].face_liveness
-                          .live
+                        {calculateLiveness(result?.service_data.job.result.result[0].face_liveness
+                          .liveness)
                           ? 'Verified'
                           : 'Not Verified'}
                       </p>
