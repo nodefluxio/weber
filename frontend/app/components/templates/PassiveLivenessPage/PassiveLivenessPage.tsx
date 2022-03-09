@@ -98,6 +98,14 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
     return true;
   }
 
+  const calculateLivenessScore = (livenessScore: number): number => {
+    if (livenessScore < 0) {
+      return 0;
+    }
+
+    return livenessScore * 100;
+  }
+
   return (
     <>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
@@ -182,8 +190,8 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
                   result?.service_data.job.result.result.length === 1 ? (
                     <>
                       <h4 className="block text-7xl mb-4">{`${Math.trunc(
-                        result?.service_data.job.result.result[0].face_liveness
-                          .liveness * 100
+                        calculateLivenessScore(result?.service_data.job.result.result[0].face_liveness
+                          .liveness)
                       )}%`}</h4>
                       <p className="text-2xl font-serif">
                         {calculateLiveness(result?.service_data.job.result.result[0].face_liveness
