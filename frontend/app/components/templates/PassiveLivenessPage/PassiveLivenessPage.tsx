@@ -90,12 +90,17 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
     }
   }
 
-  const calculateLiveness = (livenessScore: number): boolean => {
-    if (livenessScore < FACE_LIVENESS_THRESHOLD) {
-      return false;
+  const showMessageBasedOnLivenessResult = (livenessResult: PassiveLivenessV4): string => {
+    const livenessScore = livenessResult?.service_data.job.result.result[0].face_liveness.liveness;
+    if (livenessScore < 0) {
+      return livenessResult?.service_data.message || 'Not Verified'
     }
 
-    return true;
+    if (livenessScore < FACE_LIVENESS_THRESHOLD) {
+      return 'Not Verified';
+    }
+
+    return 'Verified';
   }
 
   const calculateLivenessScore = (livenessScore: number): number => {
@@ -194,10 +199,7 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
                           .liveness)
                       )}%`}</h4>
                       <p className="text-2xl font-serif">
-                        {calculateLiveness(result?.service_data.job.result.result[0].face_liveness
-                          .liveness)
-                          ? 'Verified'
-                          : 'Not Verified'}
+                        {showMessageBasedOnLivenessResult(result)}
                       </p>
                     </>
                   ) : (
