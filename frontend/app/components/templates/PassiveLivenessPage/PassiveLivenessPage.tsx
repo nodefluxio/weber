@@ -93,7 +93,7 @@ export const PassiveLivenessPage = ({ serviceId, name, longDesc }: Props) => {
   const showMessageBasedOnLivenessResult = (livenessResult: PassiveLivenessV4): string => {
     const livenessScore = livenessResult?.service_data.job.result.result[0].face_liveness.liveness;
     if (livenessScore < 0) {
-      return livenessResult?.service_data.message || 'Not Verified'
+      return livenessResult?.service_data.message || 'Not Verified';
     }
 
     if (livenessScore < FACE_LIVENESS_THRESHOLD) {
