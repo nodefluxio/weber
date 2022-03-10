@@ -2,7 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.4.2]
+
+### Changed
+
+- [FRONTEND] Change message if liveness score is -1
+
+## [1.4.1]
+
+### Added
+
+- [FRONTEND] Add default threshold 0.7
+
+### Changed
+
+- [FRONTEND] Adjustment for liveness-v4 endpoint response
+- [FRONTEND] Handle -1 liveness score
+- [BACKEND] Change endpoint liveness to v4
 
 ### Added
 
