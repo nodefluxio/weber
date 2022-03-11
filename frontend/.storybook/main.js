@@ -46,14 +46,7 @@ module.exports = {
       path.resolve(__dirname, '../public'),
       'node_modules'
     ]
-    /**
-     * Add *.scss support
-     * @see https://nebulab.it/blog/nextjs-tailwind-storybook/
-     */
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
-    })
+
     return config
   }
 }
