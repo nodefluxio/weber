@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.3]
+
+### Changed
+
+- [FRONTEND] Change screenshot dimension to 512 x 512
+
 ## [1.4.2]
 
 ### Changed
