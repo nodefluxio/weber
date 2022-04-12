@@ -73,8 +73,7 @@ export const Cam = ({
               screenshotFormat="image/jpeg"
               videoConstraints={
                 videoConstraints
-                  ? videoConstraints
-                  : {
+                  || {
                       width: { min: isSm ? 420 : 450 },
                       height: { min: isSm ? 420 : 337.5 },
                       aspectRatio: isSm ? 1 : 1.333333,
@@ -82,8 +81,8 @@ export const Cam = ({
                       frameRate: { ideal: 30, max: 30 }
                     }
               }
-              minScreenshotWidth={401}
-              minScreenshotHeight={301}
+              minScreenshotWidth={512}
+              minScreenshotHeight={512}
               mirrored={mirrored}
             />
             <Image
