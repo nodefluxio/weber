@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.4]
+
+### Changed
+
+- [FRONTEND] Adjust video constraint dimension to 512 x 512
+
 ## [1.4.3]
 
 ### Changed

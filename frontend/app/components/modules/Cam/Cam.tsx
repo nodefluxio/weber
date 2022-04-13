@@ -74,8 +74,8 @@ export const Cam = ({
               videoConstraints={
                 videoConstraints
                   || {
-                      width: { min: isSm ? 420 : 450 },
-                      height: { min: isSm ? 420 : 337.5 },
+                      width: { min: 512 },
+                      height: { min: 512 },
                       aspectRatio: isSm ? 1 : 1.333333,
                       facingMode: { ideal: isSm ? facingMode : '' },
                       frameRate: { ideal: 30, max: 30 }
