@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Color } from '../../../types/elements'
 import { Cam } from '../Cam/Cam'
@@ -44,6 +44,12 @@ export const FaceEnrollment = ({ openModal, payload, nextStep }: Props) => {
       button: 'Next'
     }
   ]
+
+  useEffect(() => {
+    if (localStorage.getItem(ENROLL_SNAPSHOT)) {
+      localStorage.removeItem(ENROLL_SNAPSHOT)
+    }
+  }, [])
 
   const getPhoto = () => {
     const photo = localStorage.getItem(ENROLL_SNAPSHOT)

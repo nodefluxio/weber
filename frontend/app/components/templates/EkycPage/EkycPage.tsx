@@ -1,5 +1,5 @@
 import { parseCookies } from 'nookies'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { postActivities } from '../../../api/activitiesAPI'
 import { Color } from '../../../types/elements'
 import { Button } from '../../elements/Button/Button'
@@ -33,6 +33,17 @@ export const EkycPage = ({ serviceId, name, longDesc }: Props) => {
   const [openModal, setOpenModal] = useState(false)
   const [result, setResult] = useState<EKYCResultResponse>()
   const [loading, setLoading] = useState(true)
+
+  // To ensure localStorage stays empty
+  // when user refresh the page
+  useEffect(() => {
+    if (localStorage.getItem(FL_LOCAL_STORAGE)) {
+      localStorage.removeItem(FL_LOCAL_STORAGE)
+    }
+    if (localStorage.getItem(KTP_LOCAL_STORAGE)) {
+      localStorage.removeItem(KTP_LOCAL_STORAGE)
+    }
+  }, [])
 
   const createVisitorActivities = async (
     serviceId: number,
