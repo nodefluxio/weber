@@ -45,6 +45,7 @@ export const HomePage = ({
   analytics,
   solutions,
   solutionPartners,
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   innovations
 }: Props) => {
   const heroContentItems: Array<HeroContentItem> = [
