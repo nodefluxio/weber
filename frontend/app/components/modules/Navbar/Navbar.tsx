@@ -70,7 +70,8 @@ export const Navbar = () => {
           }`}>
           <NavItem href="/#solutions">SOLUTIONS</NavItem>
           <NavItem href="/#analytics">ANALYTICS</NavItem>
-          <NavItem href="/#new-innovations">NEW INNOVATIONS</NavItem>
+          {/* Disable for temporary? */}
+          {/* <NavItem href="/#new-innovations">NEW INNOVATIONS</NavItem> */}
           <NavItem
             href="https://share.hsforms.com/1OKHV2jCyQ2SA3VCMoacgeQ3lep5"
             target="_blank">
