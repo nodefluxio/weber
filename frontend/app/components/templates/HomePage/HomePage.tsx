@@ -325,7 +325,7 @@ export const HomePage = ({
             ))}
           </ul>
         </section>
-        <Intersection
+        {/* <Intersection
           imgSrc="/assets/images/innovations-01.png"
           imgWidth={443}
           imgHeight={425}
@@ -364,7 +364,7 @@ export const HomePage = ({
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
       </div>
     </>
   )
